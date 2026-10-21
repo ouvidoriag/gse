@@ -1552,10 +1552,10 @@ if ($httpCode === 200) {
               O Portal do Desenvolvedor &amp; Gestão de Chaves de API é reservado exclusivamente para a conta <strong>Master</strong> da Prefeitura de Duque de Caxias.
             </p>
             <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
-              <a href="/login?redirect=/api" style="display:inline-flex;align-items:center;gap:8px;background:#004b87;color:#ffffff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95rem;">
+              <a href="${getApiPortalBasePrefix()}/login?redirect=${getApiPortalBasePrefix()}/docs" style="display:inline-flex;align-items:center;gap:8px;background:#004b87;color:#ffffff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95rem;">
                 <i class="ri-login-box-line"></i> Entrar como Administrador Master
               </a>
-              <a href="/" style="display:inline-flex;align-items:center;gap:8px;background:#e2e8f0;color:#334155;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95rem;">
+              <a href="${getApiPortalBasePrefix()}/" style="display:inline-flex;align-items:center;gap:8px;background:#e2e8f0;color:#334155;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95rem;">
                 <i class="ri-home-4-line"></i> Voltar ao Início (Hub)
               </a>
             </div>

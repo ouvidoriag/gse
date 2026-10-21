@@ -30,6 +30,8 @@ const PORT = config.port;
 app.set('trust proxy', 1);
 app.use(
   helmet({
+    crossOriginOpenerPolicy: false,
+    originAgentCluster: false,
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
@@ -162,19 +164,22 @@ apiPrefixes.forEach((prefix) => {
   app.use(prefix, sigemRouter);
 });
 
-// Endpoints retrocompatíveis diretos com /cds/api/*
-app.use('/cds/api/auth/login', loginLimiter);
-app.use('/cds/api/auth', authRouter);
-app.use('/cds/api/auth', cdsProfileRouter);
-app.use('/cds/api/services', cdsServicesRouter);
-app.use('/cds/api/admin', cdsAdminRouter);
-app.use('/cds/api/admin/api-keys', adminApiKeysRouter);
-app.use('/cds/api', cdsEmailRouter);
+// Endpoints retrocompatíveis diretos com /cds/api/* e /gse/cds/api/*
+['/cds/api', '/gse/cds/api'].forEach((cdsPrefix) => {
+  app.use(`${cdsPrefix}/auth/login`, loginLimiter);
+  app.use(`${cdsPrefix}/auth`, authRouter);
+  app.use(`${cdsPrefix}/auth`, cdsProfileRouter);
+  app.use(`${cdsPrefix}/services`, cdsServicesRouter);
+  app.use(`${cdsPrefix}/admin`, cdsAdminRouter);
+  app.use(`${cdsPrefix}/admin/api-keys`, adminApiKeysRouter);
+  app.use(cdsPrefix, cdsEmailRouter);
+});
 
 // Endpoints retrocompatíveis diretos com /sigem/api/* e /enderecos/api/*
-app.use('/sigem/api', sigemRouter);
-app.use('/sigem/api/comunidades', comunidadesRouter);
-app.use('/enderecos/api', sigemRouter);
+['/sigem/api', '/gse/sigem/api', '/enderecos/api', '/gse/enderecos/api'].forEach((sigPrefix) => {
+  app.use(sigPrefix, sigemRouter);
+  app.use(`${sigPrefix}/comunidades`, comunidadesRouter);
+});
 
 // ==========================================
 // 🖥️ ARQUIVOS ESTÁTICOS E FRONTENDS (GSE / CDS / SIGEM / HUB)
@@ -192,6 +197,11 @@ app.get([
   '/sigem/docs', '/sigem/api-docs'
 ], (_req, res) => {
   res.sendFile(path.join(publicDir, 'api', 'index.html'));
+});
+
+// Logo institucional garantido (evita 404 independentemente da URL base)
+app.get(['/logo.png', '/gse/logo.png', '/shared/logo.png', '/gse/shared/logo.png'], (_req, res) => {
+  res.sendFile(path.join(publicDir, 'shared', 'logo.png'));
 });
 
 // 1. Arquivos estáticos servidos na raiz e sob /gse

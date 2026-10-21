@@ -559,7 +559,7 @@
 
         <!-- CARD COM O LOGO INSTITUCIONAL -->
         <div class="logo-card-container">
-          <img src="/logo.png" alt="Prefeitura Municipal de Duque de Caxias" class="simac-logo-img">
+          <img src="/shared/logo.png" onerror="this.src='/logo.png'" alt="Prefeitura Municipal de Duque de Caxias" class="simac-logo-img">
         </div>
 
         <!-- TÍTULOS E SUBTÍTULOS OFICIAIS -->
@@ -719,6 +719,23 @@
       return '';
     }
 
+    // Sanitizador de destino para evitar loops de redirecionamento
+    function resolveSafeDestination(target, userRole, base) {
+      const defaultDest = (userRole === 'admin' ? `${base}/` : `${base}/cds/dashboard.html`);
+      if (!target) return defaultDest;
+      const t = target.trim();
+      if (t.startsWith('/login') || t.startsWith(`${base}/login`)) {
+        return defaultDest;
+      }
+      if (t === '/api' || t === '/docs' || t === `${base}/api`) {
+        return `${base}/docs`;
+      }
+      if (base && !t.startsWith(base) && t.startsWith('/')) {
+        return `${base}${t}`;
+      }
+      return t;
+    }
+
     // VERIFICA SE JÁ ESTÁ AUTENTICADO
     (function checkExistingSession() {
       try {
@@ -739,12 +756,11 @@
           
           const base = getAuthBasePrefix();
           const redirectParam = urlParams.get('redirect');
-          const defaultDest = (user.role === 'admin' ? `${base}/` : `${base}/cds/dashboard.html`);
-          const destination = redirectParam || defaultDest;
+          const destination = resolveSafeDestination(redirectParam, user.role, base);
           
           setTimeout(() => {
             window.location.href = destination;
-          }, 500);
+          }, 400);
         }
       } catch (e) {
         console.warn('Erro ao checar sessão ativa:', e);
@@ -835,19 +851,11 @@
           // Redirecionamento inteligente baseado no contexto atual e permissões
           const urlParams = new URLSearchParams(window.location.search);
           const redirectParam = urlParams.get('redirect');
-          
-          let destination = `${base}/`;
-          if (redirectParam) {
-            destination = redirectParam;
-          } else if (data.user.role === 'admin') {
-            destination = `${base}/`; // Administrador acessa o Hub GSE
-          } else {
-            destination = `${base}/cds/dashboard.html`; // Secretaria vai direto para o Painel da Carta de Serviços
-          }
+          const destination = resolveSafeDestination(redirectParam, data.user.role, base);
 
           setTimeout(() => {
             window.location.href = destination;
-          }, 600);
+          }, 500);
         } else {
           throw new Error(data.error || 'Credenciais inválidas. Verifique seu usuário e senha.');
         }
