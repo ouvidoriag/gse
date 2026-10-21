@@ -93,33 +93,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  // 1. Validação estrita do token com o backend
+  let authData = null;
   try {
-    // Valida o token e busca dados do usuário
     const response = await fetch(API_AUTH_ME, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
 
-    let data;
     if (response.ok) {
-      data = await response.json();
+      authData = await response.json();
     } else if (response.status === 404 && API_AUTH_ME.includes('/gse/')) {
       const fallbackRes = await fetch('/cds/api/auth/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (fallbackRes.ok) {
-        data = await fallbackRes.json();
+        authData = await fallbackRes.json();
       } else {
         throw new Error('Sessão expirada. Faça login novamente.');
       }
     } else {
       throw new Error('Sessão expirada. Faça login novamente.');
     }
-    currentUser = data.user;
+    currentUser = authData.user;
+  } catch (authErr) {
+    console.warn('⚠️ [Sessão CDS]: Falha ao validar token com o backend:', authErr.message);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('simac_auth_session');
+    const loginTarget = (CDS_BASE || '') + '/login';
+    window.location.href = loginTarget + '?expired=1&redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
+    return;
+  }
 
-    // Preenche cabeçalho e formulário de perfil inicial
+  // 2. Inicialização da Interface (Isolada de erros de autenticação)
+  try {
     updateUIForUser();
-
-    // Inicializa a página
     await loadCategories();
     await loadServices();
     renderPrioritiesCheckboxGrid();
@@ -132,41 +140,34 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (input) input.value = qParam;
       renderServices();
     }
-
-  } catch (err) {
-    console.error(err);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('simac_auth_session');
-    const loginTarget = (CDS_BASE || '') + '/login';
-    window.location.href = loginTarget + '?expired=1&redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
+  } catch (uiErr) {
+    console.error('⚠️ [CDS Dashboard]: Erro ao inicializar componentes da interface:', uiErr);
   }
 });
 
 // Atualiza elementos da interface após obter o usuário
 function updateUIForUser() {
+  if (!currentUser) return;
   const secBadge = document.getElementById('navbarSecName');
   const welcomeTitle = document.getElementById('welcomeTitle');
   const welcomeDesc = document.getElementById('welcomeDesc');
   const statsDesc = document.querySelector('.stats-desc');
+  const menuBtnAdmin = document.getElementById('menuBtnAdmin');
+  const formSecGroup = document.getElementById('formSecretariaGroup');
 
   if (currentUser.role === 'admin') {
-    // Administrador: a barra superior já exibe o crachá de identificação.
-    // Oculta o crachá secundário no banner para eliminar redundância visual.
     if (secBadge) secBadge.style.display = 'none';
-
     if (welcomeTitle) welcomeTitle.textContent = 'Painel Geral de Serviços';
     if (welcomeDesc) welcomeDesc.textContent = 'Catálogo consolidado de serviços municipais de todas as secretarias e órgãos da PMDC.';
     
-    document.getElementById('menuBtnAdmin').style.display = 'flex';
-    document.getElementById('formSecretariaGroup').style.display = 'block';
+    if (menuBtnAdmin) menuBtnAdmin.style.display = 'flex';
+    if (formSecGroup) formSecGroup.style.display = 'block';
     if (statsDesc) statsDesc.textContent = 'cadastrados em todo o portal';
 
-    loadAdminSecretariats();
-    loadAdminUsersList();
-    loadAdminApiKeysList();
+    loadAdminSecretariats().catch(() => {});
+    loadAdminUsersList().catch(() => {});
+    loadAdminApiKeysList().catch(() => {});
   } else {
-    // Representante de Secretaria: exibe o crachá institucional da pasta
     if (secBadge) {
       secBadge.style.display = 'inline-flex';
       secBadge.textContent = currentUser.secretariaNome || 'Secretaria Responsável';
@@ -175,11 +176,12 @@ function updateUIForUser() {
     if (welcomeTitle) welcomeTitle.textContent = currentUser.secretariaNome || 'Gestão da Secretaria';
     if (welcomeDesc) welcomeDesc.textContent = 'Gerencie os serviços públicos oficiais prestados pela sua pasta. Visualização restrita à sua jurisdição.';
 
-    document.getElementById('menuBtnAdmin').style.display = 'none';
-    document.getElementById('formSecretariaGroup').style.display = 'none';
+    if (menuBtnAdmin) menuBtnAdmin.style.display = 'none';
+    if (formSecGroup) formSecGroup.style.display = 'none';
     if (statsDesc) statsDesc.textContent = 'cadastrados para este órgão';
   }
-  document.getElementById('profileUsername').value = currentUser.username;
+  const profUser = document.getElementById('profileUsername');
+  if (profUser) profUser.value = currentUser.username || '';
 }
 
 // Alternar Abas (Tabs) do menu lateral
@@ -253,12 +255,14 @@ async function loadCategories() {
 
     categoriesList = await response.json();
 
-    container.innerHTML = categoriesList.map(c => `
-      <label class="priority-checkbox" for="formCategory_${c.id}">
-        <input type="checkbox" name="formCategories" id="formCategory_${c.id}" value="${c.id}">
-        ${c.name}
-      </label>
-    `).join('');
+    if (container) {
+      container.innerHTML = categoriesList.map(c => `
+        <label class="priority-checkbox" for="formCategory_${c.id}">
+          <input type="checkbox" name="formCategories" id="formCategory_${c.id}" value="${c.id}">
+          ${c.name}
+        </label>
+      `).join('');
+    }
 
   } catch (err) {
     showToast('Erro ao obter categorias.', 'error');
@@ -290,6 +294,7 @@ function updateStatusCounts() {
 
 function renderServices() {
   const container = document.getElementById('servicesList');
+  if (!container) return;
   
   // Aplica os filtros de categorias selecionados (se houver)
   let filtered = selectedCategoriesFilter.length > 0
@@ -388,6 +393,7 @@ function handleSearchInput() {
 
 function renderPrioritiesCheckboxGrid() {
   const container = document.getElementById('formPrioridadesGrid');
+  if (!container) return;
   container.innerHTML = PRIORIDADES_PADRAO.map((p, idx) => `
     <label class="priority-checkbox" for="formPriority_${idx}">
       <input type="checkbox" name="formPrioridades" id="formPriority_${idx}" value="${p}">
@@ -1336,23 +1342,27 @@ async function loadAdminSecretariats() {
 
     // Popula select de secretaria no cadastro do serviço
     const formSecSelect = document.getElementById('formSecretariaId');
-    formSecSelect.innerHTML = '<option value="">Selecione uma secretaria responsável...</option>';
-    allSecretarias.forEach(sec => {
-      const opt = document.createElement('option');
-      opt.value = sec.id;
-      opt.textContent = sec.name;
-      formSecSelect.appendChild(opt);
-    });
+    if (formSecSelect) {
+      formSecSelect.innerHTML = '<option value="">Selecione uma secretaria responsável...</option>';
+      allSecretarias.forEach(sec => {
+        const opt = document.createElement('option');
+        opt.value = sec.id;
+        opt.textContent = sec.name;
+        formSecSelect.appendChild(opt);
+      });
+    }
 
     // Popula select de secretaria no cadastro do usuário
     const userSecSelect = document.getElementById('adminUserSecretaria');
-    userSecSelect.innerHTML = '<option value="">Selecione uma secretaria...</option>';
-    allSecretarias.forEach(sec => {
-      const opt = document.createElement('option');
-      opt.value = sec.id;
-      opt.textContent = sec.name;
-      userSecSelect.appendChild(opt);
-    });
+    if (userSecSelect) {
+      userSecSelect.innerHTML = '<option value="">Selecione uma secretaria...</option>';
+      allSecretarias.forEach(sec => {
+        const opt = document.createElement('option');
+        opt.value = sec.id;
+        opt.textContent = sec.name;
+        userSecSelect.appendChild(opt);
+      });
+    }
 
   } catch (err) {
     console.error(err);
@@ -1362,6 +1372,7 @@ async function loadAdminSecretariats() {
 async function loadAdminUsersList() {
   const token = localStorage.getItem('token');
   const tableBody = document.getElementById('adminUsersTableBody');
+  if (!tableBody) return;
   tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 12px;">Carregando acessos...</td></tr>';
 
   try {

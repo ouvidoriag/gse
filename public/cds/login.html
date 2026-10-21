@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Redirecionando para o Login Unificado...</title>
-  <meta http-equiv="refresh" content="0; url=/login">
   <script>
-    window.location.replace('/login' + window.location.search);
+    const isGse = window.location.pathname.toLowerCase().startsWith('/gse');
+    const base = isGse ? '/gse' : '';
+    window.location.replace(base + '/login' + window.location.search);
   </script>
 </head>
 <body style="font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; background: #0b1325; color: #ffffff;">
