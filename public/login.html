@@ -710,6 +710,15 @@
     const btnTogglePassword = document.getElementById('btnTogglePassword');
     const eyeIcon = document.getElementById('eyeIcon');
 
+    // OBTÉM PREFIXO BASE DO SISTEMA (/gse, /cds, /sigem ou raiz)
+    function getAuthBasePrefix() {
+      const p = window.location.pathname.toLowerCase();
+      if (p.startsWith('/gse')) return '/gse';
+      if (p.startsWith('/cds')) return '/cds';
+      if (p.startsWith('/sigem')) return '/sigem';
+      return '';
+    }
+
     // VERIFICA SE JÁ ESTÁ AUTENTICADO
     (function checkExistingSession() {
       try {
@@ -728,8 +737,10 @@
           const user = JSON.parse(userStr);
           showAlert('success', 'Sessão ativa detectada. Carregando portal...', '<i class="ri-loader-4-line ri-spin"></i>');
           
+          const base = getAuthBasePrefix();
           const redirectParam = urlParams.get('redirect');
-          const destination = redirectParam || (user.role === 'admin' ? '/' : '/cds');
+          const defaultDest = (user.role === 'admin' ? `${base}/` : `${base}/cds/dashboard.html`);
+          const destination = redirectParam || defaultDest;
           
           setTimeout(() => {
             window.location.href = destination;
@@ -789,7 +800,10 @@
       btnSubmitText.innerHTML = '<span class="spinner"></span> <span>Autenticando...</span>';
 
       try {
-        const res = await fetch('/api/auth/login', {
+        const base = getAuthBasePrefix();
+        const loginUrl = (base && base !== '/sigem' ? `${base}/api/auth/login` : '/api/auth/login');
+
+        const res = await fetch(loginUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username: user, password: pass })
@@ -818,17 +832,17 @@
           };
           localStorage.setItem(SESSION_KEYS.simac, JSON.stringify(sessionData));
 
-          // Redirecionamento inteligente baseado em perfil e parâmetros
+          // Redirecionamento inteligente baseado no contexto atual e permissões
           const urlParams = new URLSearchParams(window.location.search);
           const redirectParam = urlParams.get('redirect');
           
-          let destination = '/';
+          let destination = `${base}/`;
           if (redirectParam) {
             destination = redirectParam;
           } else if (data.user.role === 'admin') {
-            destination = '/'; // Administrador acessa o Hub Integrado
+            destination = `${base}/`; // Administrador acessa o Hub GSE
           } else {
-            destination = '/cds/dashboard.html'; // Secretaria vai direto para o Painel Administrativo da Carta de Serviços
+            destination = `${base}/cds/dashboard.html`; // Secretaria vai direto para o Painel da Carta de Serviços
           }
 
           setTimeout(() => {

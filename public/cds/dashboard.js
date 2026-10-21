@@ -2,9 +2,27 @@
 // Carta de Serviço — Dashboard Controller (Conectado ao Backend)
 // ─────────────────────────────────────────────────────────────────────────────
 
-const API_AUTH_ME = '/cds/api/auth/me';
-const API_AUTH_PROFILE = '/cds/api/auth/profile';
-const API_SERVICES = '/cds/api/services';
+function getCdsBasePrefix() {
+  const p = window.location.pathname.toLowerCase();
+  if (p.startsWith('/gse')) return '/gse';
+  return '';
+}
+
+const CDS_BASE = getCdsBasePrefix();
+const API_AUTH_ME = CDS_BASE + '/cds/api/auth/me';
+const API_AUTH_PROFILE = CDS_BASE + '/cds/api/auth/profile';
+const API_SERVICES = CDS_BASE + '/cds/api/services';
+
+// Interceptor transparente de requisições fetch para rotas /cds/api sob /gse
+if (CDS_BASE) {
+  const _origFetch = window.fetch;
+  window.fetch = function (resource, init) {
+    if (typeof resource === 'string' && resource.startsWith('/cds/api/')) {
+      resource = CDS_BASE + resource;
+    }
+    return _origFetch.call(this, resource, init);
+  };
+}
 
 const PRIORIDADES_PADRAO = [
   'Sem prioridade',
@@ -46,7 +64,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!token) {
     // Se acessando dashboard.html especificamente, exige autenticação do servidor
     if (window.location.pathname.includes('dashboard')) {
-      window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
+      const loginTarget = (CDS_BASE || '') + '/login';
+      window.location.href = loginTarget + '?redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
       return;
     }
     // Caso contrário (consulta no catálogo /cds), ativa modo cidadão (leitura pública aberta)
@@ -109,7 +128,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('simac_auth_session');
-    window.location.href = '/login?expired=1&redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
+    const loginTarget = (CDS_BASE || '') + '/login';
+    window.location.href = loginTarget + '?expired=1&redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
   }
 });
 
@@ -180,7 +200,8 @@ function switchTab(tabId, menuBtn) {
 // Logout
 function handleLogout() {
   localStorage.clear();
-  window.location.href = '/login';
+  const loginTarget = (CDS_BASE || '') + '/login';
+  window.location.href = loginTarget;
 }
 
 // ── CARREGAMENTO DE DADOS ──────────────────────────────────────────────────

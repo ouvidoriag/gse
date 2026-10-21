@@ -3,19 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <script>
-    // SIMAC: Verificação de Autenticação Segura
+    // SIGEM / GSE: Verificação de Autenticação Segura
     (function checkAuth() {
       try {
+        const p = window.location.pathname.toLowerCase();
+        const base = p.startsWith('/gse') ? '/gse' : (p.startsWith('/sigem') ? '/sigem' : '');
+        const loginPath = (base || '') + '/login';
+
         let session = localStorage.getItem('simac_auth_session');
-    if (!session && localStorage.getItem('token')) {
-      try {
-        const u = JSON.parse(localStorage.getItem('user') || '{}');
-        session = JSON.stringify({ token: localStorage.getItem('token'), user: u, timestamp: Date.now() });
-        localStorage.setItem('simac_auth_session', session);
-      } catch (_) {}
-    }
+        if (!session && localStorage.getItem('token')) {
+          try {
+            const u = JSON.parse(localStorage.getItem('user') || '{}');
+            session = JSON.stringify({ token: localStorage.getItem('token'), user: u, timestamp: Date.now() });
+            localStorage.setItem('simac_auth_session', session);
+          } catch (_) {}
+        }
         if (!session) {
-          window.location.href = '/login';
+          window.location.href = loginPath;
           return;
         }
         const parsed = JSON.parse(session);
@@ -23,11 +27,13 @@
         // Sessão expira em 8 horas
         if (!parsed.timestamp || (now - parsed.timestamp > 8 * 60 * 60 * 1000)) {
           localStorage.removeItem('simac_auth_session');
-          window.location.href = '/login?expired=1';
+          window.location.href = loginPath + '?expired=1';
         }
       } catch (e) {
+        const p = window.location.pathname.toLowerCase();
+        const base = p.startsWith('/gse') ? '/gse' : (p.startsWith('/sigem') ? '/sigem' : '');
         localStorage.removeItem('simac_auth_session');
-        window.location.href = '/login';
+        window.location.href = (base || '') + '/login';
       }
     })();
   </script>

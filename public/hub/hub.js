@@ -8,9 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initGlobalSearch();
 });
 
+function getHubBasePrefix() {
+  const p = window.location.pathname.toLowerCase();
+  if (p.startsWith('/gse')) return '/gse';
+  return '';
+}
+
 async function loadHubStats() {
   try {
-    const res = await fetch('/api/hub/stats');
+    const base = getHubBasePrefix();
+    const res = await fetch(`${base}/api/hub/stats`);
     if (!res.ok) throw new Error('Falha ao obter métricas da API');
     const data = await res.json();
 
@@ -125,7 +132,8 @@ async function fetchSearchResults(query) {
     dropdown.innerHTML = '<div style="padding:12px;color:#64748b;font-size:13px;">Buscando em serviços e equipamentos...</div>';
     dropdown.style.display = 'block';
 
-    const res = await fetch(`/api/hub/search?q=${encodeURIComponent(query)}`);
+    const base = getHubBasePrefix();
+    const res = await fetch(`${base}/api/hub/search?q=${encodeURIComponent(query)}`);
     const data = await res.json();
 
     const servicos = data.results?.servicos || [];
@@ -147,7 +155,7 @@ async function fetchSearchResults(query) {
       servicos.forEach((s) => {
         const sName = s.name || s.title || '';
         html += `
-          <a href="/cds/index.html?q=${encodeURIComponent(sName)}" class="search-item">
+          <a href="${base}/cds/index.html?q=${encodeURIComponent(sName)}" class="search-item">
             <div>
               <div class="search-item-title">${escapeHtml(sName)}</div>
               <small style="color:#64748b;font-size:11px;">${escapeHtml(s.secretaria || '')}</small>
@@ -166,7 +174,7 @@ async function fetchSearchResults(query) {
         </div>`;
       equipamentos.forEach((eq) => {
         html += `
-          <a href="/sigem/index.html?q=${encodeURIComponent(eq.nome)}" class="search-item">
+          <a href="${base}/sigem/index.html?q=${encodeURIComponent(eq.nome)}" class="search-item">
             <div>
               <div class="search-item-title">${escapeHtml(eq.nome)}</div>
               <small style="color:#64748b;font-size:11px;">${escapeHtml(eq.bairro || '')} • ${escapeHtml(eq.categoria || '')}</small>

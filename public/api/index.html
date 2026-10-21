@@ -1619,12 +1619,19 @@ if ($httpCode === 200) {
       }, 3500);
     }
 
+    function getApiPortalBasePrefix() {
+      const p = window.location.pathname.toLowerCase();
+      if (p.startsWith('/gse')) return '/gse';
+      return '';
+    }
+
     async function carregarChaves() {
       const tbody = document.getElementById('keysTableBody');
       const countBadge = document.getElementById('countChavesBadge');
       
       try {
-        const res = await fetch('/api/v1/chaves');
+        const base = getApiPortalBasePrefix();
+        const res = await fetch(`${base}/api/v1/chaves`);
         const json = await res.json();
         
         if (!json.success || !json.data || json.data.length === 0) {
@@ -1725,7 +1732,8 @@ if ($httpCode === 200) {
 
     async function emitirChaveBackend(payload) {
       try {
-        const res = await fetch('/api/v1/chaves', {
+        const base = getApiPortalBasePrefix();
+        const res = await fetch(`${base}/api/v1/chaves`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -1767,7 +1775,8 @@ if ($httpCode === 200) {
       if (!confirmou) return;
 
       try {
-        const res = await fetch(`/api/v1/chaves/${id}`, { method: 'DELETE' });
+        const base = getApiPortalBasePrefix();
+        const res = await fetch(`${base}/api/v1/chaves/${id}`, { method: 'DELETE' });
         const json = await res.json();
         if (!json.success) {
           alert('Erro ao excluir: ' + (json.error || 'Erro desconhecido'));
@@ -1840,7 +1849,9 @@ if ($httpCode === 200) {
 
       const startTime = performance.now();
       try {
-        const res = await fetch(endpoint, {
+        const base = getApiPortalBasePrefix();
+        const targetEndpoint = (base && !endpoint.startsWith(base)) ? (base + endpoint) : endpoint;
+        const res = await fetch(targetEndpoint, {
           headers: {
             'X-API-Key': key,
             'Accept': 'application/json'

@@ -269,11 +269,12 @@
     }
 
     function simacLogout() {
-      if (confirm('Deseja realmente encerrar sua sessão e sair do SIMAC?')) {
+      if (confirm('Deseja realmente encerrar sua sessão e sair do sistema?')) {
         localStorage.removeItem('simac_auth_session');
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        window.location.href = '/login?logout=1';
+        const base = typeof window.getAppBasePath === 'function' ? window.getAppBasePath() : (window.location.pathname.startsWith('/gse') ? '/gse' : '');
+        window.location.href = (base || '') + '/login?logout=1';
       }
     }
 

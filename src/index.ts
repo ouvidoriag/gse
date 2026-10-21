@@ -113,133 +113,175 @@ const loginLimiter = rateLimit({
 });
 
 // Favicon handler
-app.get(['/favicon.ico', '/cds/favicon.ico', '/sigem/favicon.ico'], (_req, res) => {
+app.get(['/favicon.ico', '/gse/favicon.ico', '/cds/favicon.ico', '/sigem/favicon.ico'], (_req, res) => {
   res.status(204).end();
 });
 
 // ==========================================
-// 🚀 ROTAS DE API UNIFICADA
+// 🚀 ROTAS DE API UNIFICADA (/api e /gse/api)
 // ==========================================
-app.use('/api', apiLimiter);
+const apiPrefixes = ['/api', '/gse/api'];
 
-// 1. Auth Unificado
-app.use('/api/auth/login', loginLimiter);
-app.use('/api/auth', authRouter);
+apiPrefixes.forEach((prefix) => {
+  app.use(prefix, apiLimiter);
 
-// 2. Hub Geral
-app.use('/api/hub', hubRouter);
+  // 1. Auth Unificado
+  app.use(`${prefix}/auth/login`, loginLimiter);
+  app.use(`${prefix}/auth`, authRouter);
 
-// 3. Módulo Carta de Serviços (Rotas primárias e retrocompatíveis)
-app.use('/api/cds/services', cdsServicesRouter);
-app.use('/api/cds/admin', cdsAdminRouter);
-app.use('/api/cds/profile', cdsProfileRouter);
-app.use('/api/cds/email', cdsEmailRouter);
+  // 2. Hub Geral
+  app.use(`${prefix}/hub`, hubRouter);
 
-// Endpoints retrocompatíveis com /cds/api/*
+  // 3. Módulo Carta de Serviços
+  app.use(`${prefix}/cds/services`, cdsServicesRouter);
+  app.use(`${prefix}/cds/admin`, cdsAdminRouter);
+  app.use(`${prefix}/cds/profile`, cdsProfileRouter);
+  app.use(`${prefix}/cds/email`, cdsEmailRouter);
+
+  // 4. Módulo SIGEM
+  app.use(`${prefix}/sigem`, sigemRouter);
+
+  // 5. Módulo de Mobilidade e Ônibus Tarifa Zero
+  app.use(`${prefix}/onibus`, onibusRouter);
+  app.use(`${prefix}/v1/onibus`, onibusRouter);
+  app.use(`${prefix}/sigem/onibus`, onibusRouter);
+
+  // 6. Módulo de Comunidades, Favelas e Complexos Territoriais (SIMAC)
+  app.use(`${prefix}/comunidades`, comunidadesRouter);
+  app.use(`${prefix}/sigem/comunidades`, comunidadesRouter);
+  app.use(`${prefix}/v1/comunidades`, comunidadesRouter);
+
+  // 7. API Externa para Terceiros e Desenvolvedores (Exclusiva por API Key)
+  app.use(`${prefix}/v1`, externalApiRouter);
+  app.use(`${prefix}/public`, externalApiRouter);
+
+  // 8. Gestão Administrativa de Chaves de API (Admin com JWT)
+  app.use(`${prefix}/admin/api-keys`, adminApiKeysRouter);
+
+  // Compatibilidade com endpoints diretos do SIGEM no prefixo da API
+  app.use(prefix, sigemRouter);
+});
+
+// Endpoints retrocompatíveis diretos com /cds/api/*
 app.use('/cds/api/auth/login', loginLimiter);
 app.use('/cds/api/auth', authRouter);
 app.use('/cds/api/auth', cdsProfileRouter);
 app.use('/cds/api/services', cdsServicesRouter);
 app.use('/cds/api/admin', cdsAdminRouter);
+app.use('/cds/api/admin/api-keys', adminApiKeysRouter);
 app.use('/cds/api', cdsEmailRouter);
 
-// 4. Módulo SIGEM (Rotas primárias e retrocompatíveis)
-app.use('/api/sigem', sigemRouter);
+// Endpoints retrocompatíveis diretos com /sigem/api/* e /enderecos/api/*
 app.use('/sigem/api', sigemRouter);
+app.use('/sigem/api/comunidades', comunidadesRouter);
 app.use('/enderecos/api', sigemRouter);
 
-// 5. Módulo de Mobilidade e Ônibus Tarifa Zero
-app.use('/api/onibus', onibusRouter);
-app.use('/api/v1/onibus', onibusRouter);
-app.use('/api/sigem/onibus', onibusRouter);
-
-// 6. Módulo de Comunidades, Favelas e Complexos Territoriais (SIMAC)
-app.use('/api/comunidades', comunidadesRouter);
-app.use('/api/sigem/comunidades', comunidadesRouter);
-app.use('/sigem/api/comunidades', comunidadesRouter);
-app.use('/api/v1/comunidades', comunidadesRouter);
-
-// 7. API Externa para Terceiros e Desenvolvedores (Exclusiva por API Key)
-app.use('/api/v1', externalApiRouter);
-app.use('/api/public', externalApiRouter);
-
-// 8. Gestão Administrativa de Chaves de API (Admin com JWT)
-app.use('/api/admin/api-keys', adminApiKeysRouter);
-app.use('/cds/api/admin/api-keys', adminApiKeysRouter);
-
-app.use('/api', sigemRouter); // compatibilidade direta com rotas raiz /api/*
-
 // ==========================================
-// 🖥️ ARQUIVOS ESTÁTICOS E FRONTENDS
+// 🖥️ ARQUIVOS ESTÁTICOS E FRONTENDS (GSE / CDS / SIGEM / HUB)
 // ==========================================
 const baseDir = path.join(__dirname, '..');
 const publicDir = path.join(baseDir, 'public');
 
-// Portal do Desenvolvedor & Gestão da API (atende /api e /docs diretamente sem redirecionamento)
-app.get(['/api', '/api/', '/api/index.html', '/api/docs', '/docs', '/docs/', '/docs/index.html', '/api/v1/docs'], (_req, res) => {
+// 0. Portal do Desenvolvedor & Gestão da API (atende /api, /docs e /gse/docs diretamente sem redirecionamento)
+app.get([
+  '/api', '/api/', '/api/index.html', '/api/docs',
+  '/docs', '/docs/', '/docs/index.html', '/api/v1/docs',
+  '/gse/api', '/gse/api/', '/gse/api/index.html',
+  '/gse/docs', '/gse/docs/', '/gse/docs/index.html',
+  '/cds/docs', '/cds/api-docs',
+  '/sigem/docs', '/sigem/api-docs'
+], (_req, res) => {
   res.sendFile(path.join(publicDir, 'api', 'index.html'));
 });
 
-// 0. Arquivos públicos da raiz (logo.png, etc.) - desativa index automático para a raiz ser tratada pelas rotas
+// 1. Arquivos estáticos servidos na raiz e sob /gse
 app.use(express.static(publicDir, { index: false }));
+app.use('/gse', express.static(publicDir, { index: false }));
 
-// Servir assets estáticos do SIGEM com e sem prefixo /sigem (garante suporte a Nginx com e sem trailing slash)
-app.use('/sigem/css', express.static(path.join(publicDir, 'sigem', 'css')));
-app.use('/sigem/js', express.static(path.join(publicDir, 'sigem', 'js')));
-app.use('/css', express.static(path.join(publicDir, 'sigem', 'css')));
-app.use('/js', express.static(path.join(publicDir, 'sigem', 'js')));
+// 2. Recursos compartilhados (Barra de navegação PMDC, logos, tokens de design)
+app.use(['/shared', '/gse/shared'], express.static(path.join(publicDir, 'shared')));
 
-// Página Única de Login (compatível com todas as rotas e subpastas de Nginx)
-app.get(['/login', '/login.html', '/sigem/login', '/sigem/login.html', '/enderecos/login', '/enderecos/login.html'], (_req, res) => {
+// 3. Módulo Hub Integrado
+app.use(['/hub', '/gse/hub'], express.static(path.join(publicDir, 'hub')));
+
+// 4. Módulo Carta de Serviços
+app.use(['/cds', '/gse/cds'], express.static(path.join(publicDir, 'cds')));
+
+// 5. Módulo SIGEM & Endereços
+app.use(['/sigem', '/gse/sigem', '/enderecos', '/gse/enderecos'], express.static(path.join(publicDir, 'sigem')));
+app.use(['/sigem/css', '/gse/sigem/css', '/css', '/gse/css'], express.static(path.join(publicDir, 'sigem', 'css')));
+app.use(['/sigem/js', '/gse/sigem/js', '/js', '/gse/js'], express.static(path.join(publicDir, 'sigem', 'js')));
+
+// 6. Dados estáticos (JSONs/CSVs do SIGEM e equipamentos)
+app.use(['/dados', '/gse/dados', '/sigem/dados', '/gse/sigem/dados', '/enderecos/dados'], express.static(path.join(baseDir, 'dados')));
+
+// 7. Página Única de Autenticação / Login (Autocontida para todas as rotas e subpastas de Nginx)
+// Serve login.html diretamente SEM 302 redirect, evitando quebrar proxies reversos
+app.get([
+  '/login', '/login.html',
+  '/gse/login', '/gse/login.html',
+  '/cds/login', '/cds/login.html',
+  '/sigem/login', '/sigem/login.html',
+  '/enderecos/login', '/enderecos/login.html'
+], (_req, res) => {
   res.sendFile(path.join(publicDir, 'login.html'));
 });
 
-// Redirecionamento unificado de rotas antigas de login para /login
-app.get(['/cds/login.html'], (req, res) => {
-  const redirect = req.query.redirect ? `?redirect=${encodeURIComponent(String(req.query.redirect))}` : '';
-  res.redirect(`/login${redirect}`);
+// 8. Rotas de Telas do Módulo Carta de Serviços
+app.get([
+  '/cds', '/cds/', '/cds/index.html',
+  '/gse/cds', '/gse/cds/', '/gse/cds/index.html'
+], (_req, res) => {
+  res.sendFile(path.join(publicDir, 'cds', 'index.html'));
 });
 
-// 1. Recursos compartilhados (Barra de navegação PMDC, logo, tokens)
-app.use('/shared', express.static(path.join(publicDir, 'shared')));
+app.get([
+  '/cds/dashboard', '/cds/dashboard.html',
+  '/gse/cds/dashboard', '/gse/cds/dashboard.html'
+], (_req, res) => {
+  res.sendFile(path.join(publicDir, 'cds', 'dashboard.html'));
+});
 
-// 2. Dados estáticos (JSONs/CSVs do SIGEM)
-app.use('/dados', express.static(path.join(baseDir, 'dados')));
-app.use('/sigem/dados', express.static(path.join(baseDir, 'dados')));
-app.use('/enderecos/dados', express.static(path.join(baseDir, 'dados')));
-
-// 3. Módulo SIGEM & Endereços (atende /sigem e /enderecos)
-app.use('/sigem', express.static(path.join(publicDir, 'sigem')));
-app.use('/enderecos', express.static(path.join(publicDir, 'sigem')));
-
-app.get(['/sigem', '/sigem/', '/sigem/index.html', '/enderecos', '/enderecos/', '/enderecos/index.html'], (_req, res) => {
+// 9. Rotas de Telas do Módulo SIGEM & Endereços
+app.get([
+  '/sigem', '/sigem/', '/sigem/index.html',
+  '/gse/sigem', '/gse/sigem/', '/gse/sigem/index.html',
+  '/enderecos', '/enderecos/', '/enderecos/index.html',
+  '/gse/enderecos', '/gse/enderecos/'
+], (_req, res) => {
   res.sendFile(path.join(publicDir, 'sigem', 'index.html'));
 });
 
-app.get(['/sigem/gerenciador', '/enderecos/gerenciador', '/gerenciador', '/gerenciador.html'], (_req, res) => {
+app.get([
+  '/sigem/gerenciador', '/sigem/gerenciador.html',
+  '/sigem/gerenciador_enderecos.html',
+  '/gse/sigem/gerenciador', '/gse/sigem/gerenciador.html',
+  '/gse/sigem/gerenciador_enderecos.html',
+  '/enderecos/gerenciador', '/gerenciador', '/gerenciador.html'
+], (_req, res) => {
   res.sendFile(path.join(publicDir, 'sigem', 'gerenciador_enderecos.html'));
 });
 
-// 4. Módulo Carta de Serviços
-app.use('/cds', express.static(path.join(publicDir, 'cds')));
-
-// 5. Hub Integrado (Portal Raiz - Início)
-app.use('/hub', express.static(path.join(publicDir, 'hub')));
-
-// Suporte a modo SIGEM dedicado (quando executado na porta 3015 ou com APP_MODE=sigem)
+// 10. Suporte a modo SIGEM dedicado (quando executado com APP_MODE=sigem ou porta 3015)
 const isDedicatedSigem = process.env.APP_MODE === 'sigem' || String(config.port) === '3015';
 
-app.get(['/', '/index.html'], (_req, res) => {
+// 11. Portal Geral / Início (Hub GSE)
+app.get([
+  '/', '/index.html',
+  '/hub', '/hub/', '/hub/index.html',
+  '/gse', '/gse/', '/gse/index.html',
+  '/gse/hub', '/gse/hub/', '/gse/hub/index.html'
+], (_req, res) => {
   if (isDedicatedSigem) {
     return res.sendFile(path.join(publicDir, 'sigem', 'index.html'));
   }
   res.sendFile(path.join(publicDir, 'hub', 'index.html'));
 });
 
-// Fallbacks amigáveis
-app.get('/servicos', (_req, res) => res.redirect('/cds'));
+// 12. Fallbacks amigáveis
+app.get(['/servicos', '/gse/servicos'], (_req, res) => res.redirect('/cds'));
 
-// 404 Handler
+// 13. 404 Handler Inteligente
 app.use((req, res) => {
   if (req.path.startsWith('/api') || req.path.includes('/api/')) {
     return res.status(404).json({ error: 'Endpoint da API não encontrado', path: req.path });
@@ -268,16 +310,18 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
 // ==========================================
 const server = app.listen(PORT, async () => {
   console.log('================================================================');
-  console.log('🏛️  PREFEITURA MUNICIPAL DE DUQUE DE CAXIAS — PORTAL UNIFICADO');
+  console.log('🏛️  PREFEITURA MUNICIPAL DE DUQUE DE CAXIAS — SISTEMA GSE');
   console.log('================================================================');
   console.log(`🌐 Servidor ativo em:             http://localhost:${PORT}`);
-  console.log(`🌟 Portal Integrado (Hub):        http://localhost:${PORT}/`);
-  console.log(`📋 Carta de Serviços ao Cidadão:  http://localhost:${PORT}/cds`);
-  console.log(`🔐 Painel Carta de Serviços:      http://localhost:${PORT}/cds/dashboard.html`);
-  console.log(`🗺️  SIGEM — Mapa & Equipamentos:   http://localhost:${PORT}/sigem`);
-  console.log(`📊 API Unificada de Indicadores:  http://localhost:${PORT}/api/hub/stats`);
-  console.log(`🔑 API Externa v1 (API Key):      http://localhost:${PORT}/api/v1`);
-  console.log(`📖 Portal do Desenvolvedor:       http://localhost:${PORT}/docs`);
+  console.log(`🌟 Portal GSE (Oficial):          http://localhost:${PORT}/gse/`);
+  console.log(`📋 Carta de Serviços:            http://localhost:${PORT}/gse/cds`);
+  console.log(`🔐 Painel Administrativo:        http://localhost:${PORT}/gse/cds/dashboard.html`);
+  console.log(`🗺️  SIGEM — Endereços & GIS:      http://localhost:${PORT}/gse/sigem`);
+  console.log(`📖 API & Desenvolvedores:        http://localhost:${PORT}/gse/docs`);
+  console.log(`🔑 Login & Autenticação:         http://localhost:${PORT}/gse/login`);
+  console.log(`📊 API de Indicadores:           http://localhost:${PORT}/gse/api/hub/stats`);
+  console.log('----------------------------------------------------------------');
+  console.log('✨ Rotas raiz retrocompatíveis (/) mantidas ativas.');
   console.log('================================================================');
 
   // Testa conexões de banco de dados
