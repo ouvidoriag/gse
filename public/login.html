@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão Integrada — Prefeitura de Duque de Caxias | Acesso Restrito</title>
+  <meta name="description" content="Acesso restrito ao Painel Oficial Integrado de Duque de Caxias - RJ: Carta de Serviços, Endereços e SIGEM.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+
+  <style>
+    :root {
+      --navy-950: #070c18;
+      --navy-900: #0b1325;
+      --navy-800: #121e36;
+      --navy-700: #1c2e50;
+      --blue-600: #2563eb;
+      --blue-500: #3b82f6;
+      --blue-400: #60a5fa;
+      --cyan-400: #38bdf8;
+      --emerald-500: #10b981;
+      --emerald-400: #34d399;
+      --red-500: #ef4444;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      background: #f8fafc;
+      color: #0f172a;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* CONTAINER PRINCIPAL SPLIT */
+    .login-wrapper {
+      display: flex;
+      width: 100vw;
+      min-height: 100vh;
+    }
+
+    /* ========================================================
+       LADO ESQUERDO: APRESENTAÇÃO INSTITUCIONAL & LOGO
+    ======================================================== */
+    .showcase-side {
+      flex: 1;
+      background-color: #f8fafc;
+      background-image: 
+        linear-gradient(to right, rgba(203, 213, 225, 0.45) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(203, 213, 225, 0.45) 1px, transparent 1px);
+      background-size: 32px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 48px 36px 32px 36px;
+      position: relative;
+    }
+
+    /* Efeito de iluminação suave no fundo esquerdo */
+    .showcase-side::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      left: 30%;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .showcase-center {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 780px;
+      width: 100%;
+      margin: auto 0;
+    }
+
+    /* CARD DO LOGO */
+    .logo-card-container {
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 44px 56px;
+      box-shadow: 
+        0 24px 50px -15px rgba(15, 23, 42, 0.09),
+        0 1px 3px 0 rgba(15, 23, 42, 0.04),
+        0 0 0 1px rgba(226, 232, 240, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 660px;
+      width: 100%;
+      margin-bottom: 32px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .logo-card-container:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 30px 60px -18px rgba(15, 23, 42, 0.14),
+        0 0 0 1px rgba(59, 130, 246, 0.3);
+    }
+
+    .simac-logo-img {
+      width: 100%;
+      height: auto;
+      max-height: 280px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.06));
+    }
+
+    /* SUBTÍTULOS ABAIXO DO LOGO */
+    .showcase-titles {
+      margin-bottom: 24px;
+    }
+
+    .showcase-subtitle-1 {
+      font-size: 15px;
+      color: #64748b;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+    }
+
+    .showcase-subtitle-2 {
+      font-size: 16.5px;
+      color: #0f172a;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    /* BADGES DE RECURSOS DO SISTEMA */
+    .features-pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .feat-pill {
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 1px 2px rgba(37, 99, 235, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .feat-pill:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      transform: translateY(-1px);
+    }
+
+    .feat-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2563eb;
+      display: inline-block;
+    }
+
+    /* RODAPÉ DO LADO ESQUERDO */
+    .showcase-footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+    }
+
+    .footer-badge-pill {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 6px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .footer-subtext {
+      font-size: 11.5px;
+      color: #94a3b8;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    /* ========================================================
+       LADO DIREITO: PAINEL DARK DE LOGIN
+    ======================================================== */
+    .auth-side {
+      width: 480px;
+      min-width: 420px;
+      background: linear-gradient(175deg, #090f1d 0%, #0c1527 60%, #070d18 100%);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 56px 48px 36px 48px;
+      position: relative;
+      border-left: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: -15px 0 35px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Efeito de brilho ambiente superior */
+    .auth-side::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .auth-center {
+      margin: auto 0;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* TOPO DO FORMULÁRIO */
+    .auth-header {
+      margin-bottom: 28px;
+    }
+
+    .access-tag {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--cyan-400);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .access-tag::before {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 2px;
+      background: var(--cyan-400);
+      border-radius: 2px;
+    }
+
+    .auth-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .auth-desc {
+      font-size: 13.5px;
+      color: var(--gray-400);
+      line-height: 1.5;
+    }
+
+    /* FORMULÁRIO */
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      color: #64748b;
+      pointer-events: none;
+      transition: color 0.2s ease;
+    }
+
+    .auth-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 44px 0 42px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .auth-input::placeholder {
+      color: #475569;
+    }
+
+    .auth-input:focus {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.22);
+    }
+
+    .input-wrapper:focus-within .input-icon {
+      color: #60a5fa;
+    }
+
+    /* BOTÃO DE VISUALIZAR SENHA */
+    .password-toggle-btn {
+      position: absolute;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+    }
+
+    .password-toggle-btn:hover {
+      color: #94a3b8;
+    }
+
+    .password-toggle-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* MENSAGEM DE ERRO/AVISO */
+    .auth-alert {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      font-weight: 500;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .auth-alert.error {
+      display: flex;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .auth-alert.success {
+      display: flex;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    /* BOTÃO SUBMIT */
+    .auth-submit-btn {
+      width: 100%;
+      height: 48px;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14.5px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+      transition: all 0.2s ease;
+      margin-top: 4px;
+    }
+
+    .auth-submit-btn:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .auth-submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .auth-submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* SPINNER */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* STATUS DE CONEXÃO SEGURA */
+    .security-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #34d399;
+      margin: 26px auto 0 auto;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulseGreen 2s infinite;
+    }
+
+    /* RODAPÉ DO PAINEL DIREITO */
+    .auth-footer {
+      text-align: center;
+      font-size: 11.5px;
+      color: #64748b;
+      letter-spacing: 0.02em;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ANIMAÇÃO SHAKE DE ERRO */
+    .shake {
+      animation: shakeAnim 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    @keyframes shakeAnim {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 960px) {
+      .login-wrapper {
+        flex-direction: column;
+      }
+      .showcase-side {
+        padding: 32px 20px;
+        order: 2;
+      }
+      .auth-side {
+        width: 100%;
+        min-width: 100%;
+        padding: 40px 24px;
+        order: 1;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      }
+      .logo-card-container {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+
+    <!-- =======================================================
+         LADO ESQUERDO: SHOWCASE INSTITUCIONAL
+    ======================================================= -->
+    <main class="showcase-side">
+      <div class="showcase-center">
+
+        <!-- CARD COM O LOGO INSTITUCIONAL -->
+        <div class="logo-card-container">
+          <img src="/logo.png" alt="Prefeitura Municipal de Duque de Caxias" class="simac-logo-img">
+        </div>
+
+        <!-- TÍTULOS E SUBTÍTULOS OFICIAIS -->
+        <div class="showcase-titles">
+          <p class="showcase-subtitle-1">Portal Unificado — SIGEM &amp; Carta de Serviços</p>
+          <p class="showcase-subtitle-2">Prefeitura Municipal de Duque de Caxias · RJ</p>
+        </div>
+
+        <!-- PILLS COM RECURSOS DO SISTEMA UNIFICADO -->
+        <div class="features-pills">
+          <div class="feat-pill">
+            <span class="dot"></span>
+            <span>449 Equipamentos Públicos</span>
+          </div>
+          <div class="feat-pill">
+            <span class="dot"></span>
+            <span>372 Serviços Catalogados</span>
+          </div>
+          <div class="feat-pill">
+            <span class="dot"></span>
+            <span>Acesso Unificado SSO</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RODAPÉ INSTITUCIONAL -->
+      <footer class="showcase-footer">
+        <div class="footer-badge-pill">
+          <i class="ri-government-line" style="font-size: 15px; color: #2563eb;"></i>
+          <span>Prefeitura Municipal de Duque de Caxias · Base Oficial 2026</span>
+        </div>
+        <p class="footer-subtext">Secretarias, Rede de Saúde, Educação, Assistência Social, Segurança e Serviços</p>
+      </footer>
+    </main>
+
+    <!-- =======================================================
+         LADO DIREITO: PAINEL DARK DE AUTENTICAÇÃO
+    ======================================================= -->
+    <aside class="auth-side">
+      <div class="auth-center">
+
+        <!-- CABEÇALHO DO LOGIN -->
+        <div class="auth-header">
+          <div class="access-tag">Acesso Restrito</div>
+          <h1 class="auth-title">Bem-vindo de volta</h1>
+          <p class="auth-desc">Informe suas credenciais institucionais para acessar o SIGEM e a Carta de Serviços.</p>
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <form class="auth-form" id="loginForm" autocomplete="on">
+
+          <!-- ALERTA DE FEEDBACK -->
+          <div class="auth-alert" id="authAlert" role="alert">
+            <span id="alertIcon"><i class="ri-error-warning-line"></i></span>
+            <span id="alertText">Mensagem</span>
+          </div>
+
+          <!-- USUÁRIO -->
+          <div class="form-group">
+            <label class="form-label" for="username">Usuário</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                class="auth-input" 
+                placeholder="Digite seu usuário institucional" 
+                required 
+                autofocus
+                autocomplete="username"
+              >
+            </div>
+          </div>
+
+          <!-- SENHA -->
+          <div class="form-group">
+            <label class="form-label" for="password">Senha</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="auth-input" 
+                placeholder="••••••••" 
+                required
+                autocomplete="current-password"
+              >
+              <button type="button" class="password-toggle-btn" id="btnTogglePassword" title="Mostrar/ocultar senha" aria-label="Mostrar ou ocultar senha">
+                <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- BOTÃO SUBMIT -->
+          <button type="submit" class="auth-submit-btn" id="btnSubmit">
+            <span id="btnSubmitText">Entrar no Sistema</span>
+          </button>
+
+        </form>
+
+        <!-- STATUS DE CONEXÃO -->
+        <div style="display: flex; justify-content: center;">
+          <div class="security-status-badge">
+            <span class="pulse-dot"></span>
+            <span>Conexão criptografada e autenticada</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COPYRIGHT DO PAINEL DIREITO -->
+      <footer class="auth-footer">
+        Prefeitura Municipal de Duque de Caxias &copy; 2026 · Todos os direitos reservados
+      </footer>
+    </aside>
+
+  </div>
+
+  <script>
+    // CONFIGURAÇÃO DE SESSÃO
+    const SESSION_KEYS = {
+      token: 'token',
+      user: 'user',
+      simac: 'simac_auth_session'
+    };
+
+    // ELEMENTOS DO DOM
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const btnSubmitText = document.getElementById('btnSubmitText');
+    const authAlert = document.getElementById('authAlert');
+    const alertIcon = document.getElementById('alertIcon');
+    const alertText = document.getElementById('alertText');
+    const btnTogglePassword = document.getElementById('btnTogglePassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    // VERIFICA SE JÁ ESTÁ AUTENTICADO
+    (function checkExistingSession() {
+      try {
+        const token = localStorage.getItem(SESSION_KEYS.token);
+        const userStr = localStorage.getItem(SESSION_KEYS.user);
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.has('logout')) {
+          localStorage.removeItem(SESSION_KEYS.token);
+          localStorage.removeItem(SESSION_KEYS.user);
+          localStorage.removeItem(SESSION_KEYS.simac);
+          return;
+        }
+
+        if (token && userStr) {
+          const user = JSON.parse(userStr);
+          showAlert('success', 'Sessão ativa detectada. Carregando portal...', '<i class="ri-loader-4-line ri-spin"></i>');
+          
+          const redirectParam = urlParams.get('redirect');
+          const destination = redirectParam || (user.role === 'admin' ? '/' : '/cds');
+          
+          setTimeout(() => {
+            window.location.href = destination;
+          }, 500);
+        }
+      } catch (e) {
+        console.warn('Erro ao checar sessão ativa:', e);
+      }
+    })();
+
+    // MOSTRAR/OCULTAR SENHA
+    btnTogglePassword.addEventListener('click', () => {
+      const isPassword = passwordInput.getAttribute('type') === 'password';
+      passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+      
+      if (isPassword) {
+        eyeIcon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        `;
+      } else {
+        eyeIcon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        `;
+      }
+    });
+
+    // EXIBIR ALERTA
+    function showAlert(type, message, iconHtml) {
+      authAlert.className = `auth-alert ${type}`;
+      alertIcon.innerHTML = iconHtml || (type === 'success' ? '<i class="ri-checkbox-circle-fill"></i>' : '<i class="ri-error-warning-fill"></i>');
+      alertText.textContent = message;
+      authAlert.style.display = 'flex';
+    }
+
+    // OCULTAR ALERTA
+    function hideAlert() {
+      authAlert.style.display = 'none';
+    }
+
+    // SUBMIT DO FORMULÁRIO DE LOGIN
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+
+      const user = usernameInput.value.trim();
+      const pass = passwordInput.value.trim();
+
+      if (!user || !pass) {
+        showAlert('error', 'Por favor, preencha o usuário e a senha.');
+        return;
+      }
+
+      // ESTADO DE CARREGAMENTO
+      btnSubmit.disabled = true;
+      btnSubmitText.innerHTML = '<span class="spinner"></span> <span>Autenticando...</span>';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pass })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showAlert('success', 'Acesso autorizado com sucesso! Carregando sistema...', '<i class="ri-lock-unlock-line"></i>');
+
+          // 1. Grava Token JWT principal
+          localStorage.setItem(SESSION_KEYS.token, data.token);
+
+          // 2. Grava Objeto User para a barra compartilhada e perfil
+          localStorage.setItem(SESSION_KEYS.user, JSON.stringify(data.user));
+
+          // 3. Grava Sessão SIGEM (simac_auth_session) para SSO bidirecional
+          const sessionData = {
+            user: data.user.username,
+            name: data.user.name,
+            role: data.user.role,
+            secretariaId: data.user.secretariaId,
+            secretariaNome: data.user.secretariaNome,
+            token: data.token,
+            timestamp: Date.now()
+          };
+          localStorage.setItem(SESSION_KEYS.simac, JSON.stringify(sessionData));
+
+          // Redirecionamento inteligente baseado em perfil e parâmetros
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectParam = urlParams.get('redirect');
+          
+          let destination = '/';
+          if (redirectParam) {
+            destination = redirectParam;
+          } else if (data.user.role === 'admin') {
+            destination = '/'; // Administrador acessa o Hub Integrado
+          } else {
+            destination = '/cds/dashboard.html'; // Secretaria vai direto para o Painel Administrativo da Carta de Serviços
+          }
+
+          setTimeout(() => {
+            window.location.href = destination;
+          }, 600);
+        } else {
+          throw new Error(data.error || 'Credenciais inválidas. Verifique seu usuário e senha.');
+        }
+      } catch (err) {
+        btnSubmit.disabled = false;
+        btnSubmitText.textContent = 'Entrar no Sistema';
+
+        showAlert('error', err.message || 'Erro ao conectar ao servidor. Verifique suas credenciais.');
+
+        // EFEITO DE SHAKE NO FORMULÁRIO
+        loginForm.classList.add('shake');
+        setTimeout(() => {
+          loginForm.classList.remove('shake');
+        }, 500);
+
+        passwordInput.value = '';
+        passwordInput.focus();
+      }
+    });
+  </script>
+</body>
+</html>

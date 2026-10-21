@@ -1,0 +1,3080 @@
+CATÁLOGO OFICIAL DE TODAS AS ESCOLAS MUNICIPAIS DE DUQUE DE CAXIAS
+Total de Escolas Catalogadas: 205
+Fonte: Auge Educacional / SME Duque de Caxias
+================================================================================
+
+[1] CIEP Brizolão Municipalizado 120 - Monteiro Lobato
+Código da Escola: 33049670
+Distrito: 2º Distrito
+Endereço: Rodovia Washington Luiz - SN
+Bairro: São Judas Tadeu
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25265008
+Telefone(s): 
+E-mail: ciep2.monteirolobato@smeduquedecaxias.rj.gov.br
+Diretor: FERNANDO LUIS VIEIRA
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607330&exibirQuadro=false
+--------------------------------------------------
+
+[2] CIEP Municipalizado 015 - Henrique de Souza Filho Henfil
+Código da Escola: 33050406
+Distrito: 3º Distrito
+Endereço: Avenida 31 de Março - 88
+Bairro: Parque Paulista
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25261160
+Telefone(s): (21) 972856261
+E-mail: ciep3.henfil@smeduquedecaxias.rj.gov.br
+Diretor: MARCUS PAULO SILVA DE LIMA
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607389&exibirQuadro=false
+--------------------------------------------------
+
+[3] CIEP Municipalizado 097 - Carlos Chagas
+Código da Escola: 33048290
+Distrito: 1º Distrito
+Endereço: Avenida Perimetral República do Paraguai - s/n
+Bairro: Vila Sarapuíí
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25050100
+Telefone(s): (21) 36581905
+E-mail: ciep1.carloschagas@smeduquedecaxias.rj.gov.br
+Diretor: MARLI VIANA
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607264&exibirQuadro=false
+--------------------------------------------------
+
+[4] CIEP Municipalizado 220 - Yolanda Borges
+Código da Escola: 33099251
+Distrito: 2º Distrito
+Endereço: Av. Feliciano de Castilho - S/N
+Bairro: Chácara Rio - Petrópolis
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25231250
+Telefone(s): (21) 36542111
+E-mail: ciep2.yolandaborges@smeduquedecaxias.rj.gov.br
+Diretor: ISADORA ALVES GOMES
+Data de funcionamento: 14/11/2013
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607331&exibirQuadro=false
+--------------------------------------------------
+
+[5] CIEP Municipalizado 227 - Procópio Ferreira
+Código da Escola: 33103496
+Distrito: 3º Distrito
+Endereço: Avenida A - S/N
+Bairro: Nova Campinas
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25268010
+Telefone(s): (21) 36537114
+E-mail: ciep3.procopio@smeduquedecaxias.rj.gov.br
+Diretor: ELAINE TORRES DA SILVA
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607390&exibirQuadro=false
+--------------------------------------------------
+
+[6] CIEP Municipalizado 318 - Paulo Mendes Campos
+Código da Escola: 33099260
+Distrito: 2º Distrito
+Endereço: Av. Presidente Roosevelt - S/N
+Bairro: Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25212390
+Telefone(s): (21) 27733773
+E-mail: ciep2.paulomendescampos@smeduquedecaxias.rj.gov.br
+Diretor: RENATA BERSOT MANHAES
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607332&exibirQuadro=false
+--------------------------------------------------
+
+[7] CIEP Municipalizado 319 - Oduvaldo Viana Filho
+Código da Escola: 33101680
+Distrito: 3º Distrito
+Endereço: Avenida Hélio de Oliveira - S/N
+Bairro: Jardim Anhangá
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25264350
+Telefone(s): (21) 36560583
+E-mail: ciep3.oduvaldo@smeduquedecaxias.rj.gov.br
+Diretor: KATIA DE ARAUJO CHAGAS
+Data de funcionamento: 01/01/1998
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607391&exibirQuadro=false
+--------------------------------------------------
+
+[8] CIEP Municipalizado 328 - Marie Curie
+Código da Escola: 33104999
+Distrito: 2º Distrito
+Endereço: Rua Sergipe - SN
+Bairro: Chácara Arcampo - Vila Maria elena
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25221030
+Telefone(s): (21) 27785889
+E-mail: ciep2.mariecurie@smeduquedecaxias.rj.gov.br
+Diretor: ROSA PAULA ROSA CUNHA
+Data de funcionamento: 17/05/2010
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607333&exibirQuadro=false
+--------------------------------------------------
+
+[9] CIEP Municipalizado 330 - Maria da Glória Corrêa Lemos
+Código da Escola: 33101094
+Distrito: 3º Distrito
+Endereço: Avenida Automóvel Clube - Km 56
+Bairro: Santa Lúcia
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25272030
+Telefone(s): (21) 36503890
+E-mail: ciep3.mariadagloria@smeduquedecaxias.rj.gov.br
+Diretor: CLEIDE DA SILVA DE CARVALHO
+Data de funcionamento: 10/10/2007
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607392&exibirQuadro=false
+--------------------------------------------------
+
+[10] CIEP Municipalizado 338 - Célia Rabelo
+Código da Escola: 33099782
+Distrito: 4º Distrito
+Endereço: Rua Enéas Frutuoso - S/N
+Bairro: XERÉM
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245410
+Telefone(s): (21) 997394054
+E-mail: ciep4.celiarabelo@smeduquedecaxias.rj.gov.br
+Diretor: VIVIANE ROSANA PEIXOTO DA COSTA
+Data de funcionamento: 01/04/1998
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607425&exibirQuadro=false
+--------------------------------------------------
+
+[11] CIEP Municipalizado 405 - Ministro Santiago Dantas
+Código da Escola: 33097070
+Distrito: 1º Distrito
+Endereço: Rua Primeiro de Maio - 159
+Bairro: Vila Itamarati
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25070440
+Telefone(s): (21) 26712386
+E-mail: ciep1.santiagodantas@smeduquedecaxias.rj.gov.br
+Diretor: ANNE ALESSANDRA DE ANDRADE E SILVA
+Data de funcionamento: 01/04/1998
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607265&exibirQuadro=false
+--------------------------------------------------
+
+[12] CIEP Municipalizado 407 - Neusa Goulart Brizola
+Código da Escola: 33099170
+Distrito: 3º Distrito
+Endereço: Rua Real da Estrela - S/N
+Bairro: Parada Angélica
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25272230
+Telefone(s): (21) 0
+E-mail: ciep3.neusabrizola@smeduquedecaxias.rj.gov.br
+Diretor: SAMYRA HARB LISBOA
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607393&exibirQuadro=false
+--------------------------------------------------
+
+[13] Creche Comunitária Nossa Senhora das Graças
+Código da Escola: 88
+Distrito: Escolas da Rede
+Endereço: Rua Professor Mota Sobrinho - 28
+Bairro: Vila Ideal
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25010470
+Telefone(s): 
+E-mail: 
+Diretor: 
+Data de funcionamento: 
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=608093&exibirQuadro=false
+--------------------------------------------------
+
+[14] Creche Erenilda Faria Ferreira de Oliveira
+Código da Escola: 818181
+Distrito: 1º Distrito
+Endereço: Rua Souza Renha - 29
+Bairro: Parque Santa Marta
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25085210
+Telefone(s): 
+E-mail: creche1.erenildafariaferreiradeoliveira@smeduquedecaxias.rj.gov.br
+Diretor: 
+Data de funcionamento: 
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=608146&exibirQuadro=false
+--------------------------------------------------
+
+[15] Creche Municial Elzy Ferreira da Silva
+Código da Escola: 70070
+Distrito: Escolas da Rede
+Endereço: Rua Benjamin da Rocha Júnior - 415
+Bairro: São Bento
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045010
+Telefone(s): 
+E-mail: 
+Diretor: 
+Data de funcionamento: 
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=608102&exibirQuadro=false
+--------------------------------------------------
+
+[16] Creche Municipal Abne Marques de Abreu
+Código da Escola: 33445257
+Distrito: 1º Distrito
+Endereço: Rua Boa Viagem - S/N
+Bairro: Vila Centenário
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25030300
+Telefone(s): (21) 975337600
+E-mail: creche1.abne@smeduquedecaxias.rj.gov.br
+Diretor: MILENE DO NASCIMENTO MOREIRA
+Data de funcionamento: 07/07/2008
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607281&exibirQuadro=false
+--------------------------------------------------
+
+[17] Creche Municipal Elisa Mathias de Araújo
+Código da Escola: 33446229
+Distrito: 1º Distrito
+Endereço: Rua Paulo Biar - SN
+Bairro: Parque Felicidade
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25080420
+Telefone(s): (21) 987782601
+E-mail: creche1.elisamathias@smeduquedecaxias.rj.gov.br
+Diretor: DIEGO TAVARES DO NASCIMENTO
+Data de funcionamento: 13/07/2009
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607282&exibirQuadro=false
+--------------------------------------------------
+
+[18] Creche Municipal Fábio Tenório Cavalcanti
+Código da Escola: 33202168
+Distrito: 2º Distrito
+Endereço: Rua Vicente Guerrero - s/n
+Bairro: Vila Santo Antônio
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25040570
+Telefone(s): 
+E-mail: creche2.fabiotenorio@smeduquedecaxias.rj.gov.br
+Diretor: LETICIA DE SOUZA GONCALVES
+Data de funcionamento: 28/06/2024
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607910&exibirQuadro=false
+--------------------------------------------------
+
+[19] Creche Municipal Hydekel de Freitas Lima
+Código da Escola: 33553237
+Distrito: 1º Distrito
+Endereço: Rua Sargento Belmont de Oliveira - 55
+Bairro: Vila Ideal
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25010480
+Telefone(s): 
+E-mail: creche1.hydekel@smeduquedecaxias.rj.gov.br
+Diretor: 
+Data de funcionamento: 13/02/2025
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607947&exibirQuadro=false
+--------------------------------------------------
+
+[20] Creche Municipal Jussara Queiroz Leitão
+Código da Escola: 555
+Distrito: Escolas da Rede
+Endereço: Avenida Perimetral Pedro Lessa - 0
+Bairro: Jardim Leal
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25035800
+Telefone(s): 
+E-mail: 
+Diretor: 
+Data de funcionamento: 
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=608092&exibirQuadro=false
+--------------------------------------------------
+
+[21] Creche Municipal Katia Núbia Reis
+Código da Escola: 808080
+Distrito: Escolas da Rede
+Endereço: Estrada Carlos Mateus - 95
+Bairro: Parque Xerém
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245620
+Telefone(s): 
+E-mail: 
+Diretor: 
+Data de funcionamento: 
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=608109&exibirQuadro=false
+--------------------------------------------------
+
+[22] Creche Municipal Lucia de Fatima Bomfim de Castro e Silva
+Código da Escola: 33199159
+Distrito: 1º Distrito
+Endereço: Rua Mariz e Barros - 594
+Bairro: Jardim Vinte e Cinco de Agosto
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25071051
+Telefone(s): (21) 975336610
+E-mail: creche1.luciadefatima@smeduquedecaxias.rj.gov.br
+Diretor: MARCELO DE JESUS PEREIRA
+Data de funcionamento: 01/02/2024
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607813&exibirQuadro=false
+--------------------------------------------------
+
+[23] Creche Municipal Maria Emília de Oliveira
+Código da Escola: 828282
+Distrito: 1º Distrito
+Endereço: Rua Doutor Furquim Mendes - s/n
+Bairro: Vila Centenário
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25030170
+Telefone(s): 
+E-mail: 
+Diretor: 
+Data de funcionamento: 
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=608147&exibirQuadro=false
+--------------------------------------------------
+
+[24] Creche Municipal Profª João de Oliveira
+Código da Escola: 33048606
+Distrito: 1º Distrito
+Endereço: Rua Manuel Vieira - S/N
+Bairro: Centro
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25020210
+Telefone(s): (21) 26747177
+E-mail: creche1.joaodeoliveira@smeduquedecaxias.rj.gov.br
+Diretor: DEBORA GUEDES DOS ANJOS
+Data de funcionamento: 24/05/1987
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607284&exibirQuadro=false
+--------------------------------------------------
+
+[25] Creche Municipal Zelina Penido da Rosa
+Código da Escola: 33201730
+Distrito: 2º Distrito
+Endereço: Rua Professor Hélio Rangel - s/n
+Bairro: Jardim Primavera
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25223190
+Telefone(s): (21) 964780481
+E-mail: creche2.zelinapenido@smeduquedecaxias.rj.gov.br
+Diretor: DERIS DANIELA NASCIMENTO DE SOUZA
+Data de funcionamento: 25/09/2024
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607908&exibirQuadro=false
+--------------------------------------------------
+
+[26] Creche e Centro de Atendimento a Infância Caxiense - Amapá
+Código da Escola: 33144133
+Distrito: 4º Distrito
+Endereço: Rua Dalila - 8
+Bairro: AMAPÁ
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25235460
+Telefone(s): (21) 997041532
+E-mail: ccaic4.amapa@smeduquedecaxias.rj.gov.br
+Diretor: ROSANE CAPISTRANO MAXIMO FERREIRA
+Data de funcionamento: 24/03/2003
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607426&exibirQuadro=false
+--------------------------------------------------
+
+[27] Creche e Centro de Atendimento a Infância Caxiense - Campos Elíseos
+Código da Escola: 33158193
+Distrito: 2º Distrito
+Endereço: Rua Ricardo Xavier da Silveira - 04
+Bairro: Campos Elíseos
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25225040
+Telefone(s): (21) 27760268
+E-mail: ccaic2.camposeliseos@smeduquedecaxias.rj.gov.br
+Diretor: RENATA VIEIRA BATISTA
+Data de funcionamento: 23/10/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607335&exibirQuadro=false
+--------------------------------------------------
+
+[28] Creche e Centro de Atendimento a Infância Caxiense - Jardim Anhangá
+Código da Escola: 33151741
+Distrito: 3º Distrito
+Endereço: Avenida Amaro Martins - 22
+Bairro: Jardim Anhangá
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25264015
+Telefone(s): 
+E-mail: ccaic3.jdanhanga@smeduquedecaxias.rj.gov.br
+Diretor: MARIANE GUEDES XAVIER
+Data de funcionamento: 21/07/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607394&exibirQuadro=false
+--------------------------------------------------
+
+[29] Creche e Centro de Atendimento a Infância Caxiense - Jardim Gramacho
+Código da Escola: 33151733
+Distrito: 1º Distrito
+Endereço: Rua Paracatu - QD 84
+Bairro: Jardim Gramacho
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25055110
+Telefone(s): (21) 964543059
+E-mail: ccaic1.jdgramacho@smeduquedecaxias.rj.gov.br
+Diretor: DANIELLE NASCIMENTO DA SILVA
+Data de funcionamento: 21/07/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607266&exibirQuadro=false
+--------------------------------------------------
+
+[30] Creche e Centro de Atendimento a Infância Caxiense - Olavo Bilac
+Código da Escola: 33151717
+Distrito: 1º Distrito
+Endereço: Rua Leverger - 193
+Bairro: Olavo Bilac
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25036190
+Telefone(s): (21) 27725404
+E-mail: ccaic1.bilac@smeduquedecaxias.rj.gov.br
+Diretor: DENISE DE SOUZA FREIRE
+Data de funcionamento: 21/07/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607267&exibirQuadro=false
+--------------------------------------------------
+
+[31] Creche e Centro de Atendimento a Infância Caxiense - Parque Muísa
+Código da Escola: 33151709
+Distrito: 2º Distrito
+Endereço: Avenida Governador Leonel de Moura Brizola - 9422
+Bairro: São Bento
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045002
+Telefone(s): (21) 26993184
+E-mail: ccaic2.pqmuisa@smeduquedecaxias.rj.gov.br
+Diretor: PATRICIA CAITANO DA SILVA
+Data de funcionamento: 21/07/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607336&exibirQuadro=false
+--------------------------------------------------
+
+[32] Creche e Centro de Atendimento a Infância Caxiense - Xerém
+Código da Escola: 33151725
+Distrito: 4º Distrito
+Endereço: Rua Enéas Frutuoso - 134
+Bairro: Pedreira - Xerém
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245410
+Telefone(s): (21) 36585262
+E-mail: ccaic4.xerem@smeduquedecaxias.rj.gov.br
+Diretor: LILIANE GUARINO AMORIM
+Data de funcionamento: 21/07/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607427&exibirQuadro=false
+--------------------------------------------------
+
+[33] Creche e Escola Municipal Bairro Tabuleiro
+Código da Escola: 33051038
+Distrito: 4º Distrito
+Endereço: Estrada do Tabuleiro - S/N
+Bairro: Tabuleiro
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245750
+Telefone(s): (21) 37677557
+E-mail: escola4.tabuleiro@smeduquedecaxias.rj.gov.br
+Diretor: RAQUEL BENTO DA SILVA
+Data de funcionamento: 10/11/1988
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607428&exibirQuadro=false
+--------------------------------------------------
+
+[34] Creche e Escola Municipal Dona Leda Granja Victer
+Código da Escola: 33190070
+Distrito: 3º Distrito
+Endereço: Avenida A - S/N
+Bairro: Nova Campinas
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25268010
+Telefone(s): 
+E-mail: creche3.ledavicter@smeduquedecaxias.rj.gov.br
+Diretor: ILMA GONCALVES DA SILVA
+Data de funcionamento: 29/09/2020
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607395&exibirQuadro=false
+--------------------------------------------------
+
+[35] Creche e Escola Municipal Dr Álvaro Alberto
+Código da Escola: 33049106
+Distrito: 1º Distrito
+Endereço: Rua Deputado Romeiro Júnior - 273
+Bairro: Vila Meriti
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25020110
+Telefone(s): (21) 27716591
+E-mail: escola1.alvaroalberto@smeduquedecaxias.rj.gov.br
+Diretor: RITA DE CASSIA FERREIRA COUTINHO ANAPURUS
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607268&exibirQuadro=false
+--------------------------------------------------
+
+[36] Creche e Escola Municipal Gandur Assed
+Código da Escola: 33221600
+Distrito: 1º Distrito
+Endereço: Rua 01 - 2
+Bairro: Parque das Missões
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25086450
+Telefone(s): (21) 31055335
+E-mail: creche1.gandur@smeduquedecaxias.rj.gov.br
+Diretor: ADRIANA TOLEDO COELHO CAVALCANTE
+Data de funcionamento: 07/07/2008
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607269&exibirQuadro=false
+--------------------------------------------------
+
+[37] Creche e Escola Municipal Profªª Maria Anger Dias Guarino
+Código da Escola: 33094837
+Distrito: 2º Distrito
+Endereço: Rua Pedro Toledo - 9
+Bairro: Campos Elíseos
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25225430
+Telefone(s): 
+E-mail: escola2.mariaanger@smeduquedecaxias.rj.gov.br
+Diretor: DANIELLE SOARES DO NASCIMENTO
+Data de funcionamento: 16/04/1996
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607337&exibirQuadro=false
+--------------------------------------------------
+
+[38] Creche e Pré-Escola Municipal Ayrton Senna
+Código da Escola: 33130183
+Distrito: 2º Distrito
+Endereço: Rua C - 16
+Bairro: Jardim Primavera
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25213183
+Telefone(s): (21) 971582370
+E-mail: creche2.ayrtonsenna@smeduquedecaxias.rj.gov.br
+Diretor: NATHALIA NUNES CANTANHEDE
+Data de funcionamento: 18/10/1999
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607338&exibirQuadro=false
+--------------------------------------------------
+
+[39] Creche e Pré-Escola Municipal Joséé Ataíde da Silva
+Código da Escola: 33195684
+Distrito: 2º Distrito
+Endereço: Av. Pitágoras - S/N
+Bairro: Chácara Rio-Petrópolis
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25231210
+Telefone(s): (21) 36542064
+E-mail: creche2.josesilva@smeduquedecaxias.rj.gov.br
+Diretor: ROSANA CIPRIANO LAPA
+Data de funcionamento: 09/12/2022
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607340&exibirQuadro=false
+--------------------------------------------------
+
+[40] Creche e Pré-Escola Municipal Marluse Vicente da Silva
+Código da Escola: 33201722
+Distrito: 2º Distrito
+Endereço: Rua Pirangi - 300
+Bairro: Parque Eldorado
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25240490
+Telefone(s): 
+E-mail: creche2.marlusevicente@smeduquedecaxias.rj.gov.br
+Diretor: LUCIANE DOS SANTOS MARTINS
+Data de funcionamento: 09/12/2020
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607893&exibirQuadro=false
+--------------------------------------------------
+
+[41] Creche e Pré-Escola Municipal Profªª Rosalita da Silva Netto
+Código da Escola: 33191905
+Distrito: 3º Distrito
+Endereço: Rua AQ - SN
+Bairro: Jardim Anhangá
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25264542
+Telefone(s): 
+E-mail: creche3.rosalitanetto@smeduquedecaxias.rj.gov.br
+Diretor: ISABELA BOLORINI JARA
+Data de funcionamento: 30/06/2022
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607401&exibirQuadro=false
+--------------------------------------------------
+
+[42] Creche e Pré-escola Municipal Benízio Joséé da Silva
+Código da Escola: 33139741
+Distrito: 1º Distrito
+Endereço: Rua da Mina - S/N
+Bairro: Parque Senhor do Bonfim
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25025050
+Telefone(s): (21) 26748652
+E-mail: creche1.benizio@smeduquedecaxias.rj.gov.br
+Diretor: ANDREIA COSTA DA SILVA DE OLIVEIRA
+Data de funcionamento: 05/12/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607270&exibirQuadro=false
+--------------------------------------------------
+
+[43] Creche e Pré-escola Municipal Comunitária São Sebastião
+Código da Escola: 33048592
+Distrito: 1º Distrito
+Endereço: Rua Expedicionário José Amaro - 1353
+Bairro: Vila São Luís
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25065090
+Telefone(s): (21) 27838368
+E-mail: creche1.saosebastiao@smeduquedecaxias.rj.gov.br
+Diretor: ROSIMERI RIBEIRO
+Data de funcionamento: 11/06/2007
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607271&exibirQuadro=false
+--------------------------------------------------
+
+[44] Creche e Pré-escola Municipal Deputado Joséé Carlos Coutinho
+Código da Escola: 33196303
+Distrito: 3º Distrito
+Endereço: Rodovia Rio Magé - 14
+Bairro: Jardim Anhangá
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25264665
+Telefone(s): (21) 977479062
+E-mail: creche3.josecoutinho@smeduquedecaxias.rj.gov.br
+Diretor: ELAINE CRISTINA CARDOSO FINTELMAN XAVIER
+Data de funcionamento: 09/12/2022
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607396&exibirQuadro=false
+--------------------------------------------------
+
+[45] Creche e Pré-escola Municipal Graciesse Luiza Silva Lourenço
+Código da Escola: 33447284
+Distrito: 1º Distrito
+Endereço: Avenida Leandro da Mota - 159
+Bairro: Doutor Laureano
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25060190
+Telefone(s): (21) 36514955
+E-mail: creche1.graciesse@smeduquedecaxias.rj.gov.br
+Diretor: BARBARA SILVA DE LUCENA
+Data de funcionamento: 07/07/2008
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607272&exibirQuadro=false
+--------------------------------------------------
+
+[46] Creche e Pré-escola Municipal Iracy Moreira Theodoro
+Código da Escola: 33221413
+Distrito: 1º Distrito
+Endereço: Rua Alcantara - S/N
+Bairro: Prainha
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25015580
+Telefone(s): (21) 37775189
+E-mail: creche1.iracy@smeduquedecaxias.rj.gov.br
+Diretor: MICHELE SIQUEIRA RIBEIRO COMINOTI
+Data de funcionamento: 17/10/2007
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607273&exibirQuadro=false
+--------------------------------------------------
+
+[47] Creche e Pré-escola Municipal Irmã Arnalda da Silva Neves
+Código da Escola: 33445265
+Distrito: 3º Distrito
+Endereço: Estrada Cachoeira das Dores - 1693
+Bairro: Taquara
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25275130
+Telefone(s): (21) 27873121
+E-mail: creche3.irmaarnalda@smeduquedecaxias.rj.gov.br
+Diretor: LUCIANA VIANA DE AZEVEDO
+Data de funcionamento: 17/09/2008
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607397&exibirQuadro=false
+--------------------------------------------------
+
+[48] Creche e Pré-escola Municipal Jornalista Susana Naspolini
+Código da Escola: 33195676
+Distrito: 2º Distrito
+Endereço: Avenida Actura - S/N
+Bairro: Campos Elíseos
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25225210
+Telefone(s): (21) 957847575
+E-mail: creche2.susananaspolini@smeduquedecaxias.rj.gov.br
+Diretor: CLAUDIA BELO DA SILVA
+Data de funcionamento: 09/12/2022
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607339&exibirQuadro=false
+--------------------------------------------------
+
+[49] Creche e Pré-escola Municipal Maria Joséé da Conceição
+Código da Escola: 33221227
+Distrito: 1º Distrito
+Endereço: Rua Viçosa - S/N
+Bairro: Jardim Leal
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25035330
+Telefone(s): 
+E-mail: creche1.mariajosedaconceicao@smeduquedecaxias.rj.gov.br
+Diretor: LUCIANA BARBOSA FERNANDES
+Data de funcionamento: 03/03/2008
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607274&exibirQuadro=false
+--------------------------------------------------
+
+[50] Creche e Pré-escola Municipal Monsenhor Librelotto
+Código da Escola: 33050473
+Distrito: 3º Distrito
+Endereço: Rua Y - 110
+Bairro: Imbariê
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25271020
+Telefone(s): (21) 966415590
+E-mail: creche3.librelotto@smeduquedecaxias.rj.gov.br
+Diretor: PRISCILA ANDRADE MALINOSKY
+Data de funcionamento: 19/09/1991
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607398&exibirQuadro=false
+--------------------------------------------------
+
+[51] Creche e Pré-escola Municipal Parteira Odete Maria de Oliveira
+Código da Escola: 33153604
+Distrito: 1º Distrito
+Endereço: Rua Aristides Caire - S/N
+Bairro: Olavo Bilac
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25035170
+Telefone(s): (21) 964019766
+E-mail: creche1.parteiraodete@smeduquedecaxias.rj.gov.br
+Diretor: ANA PAULA DOS SANTOS BANDEIRA
+Data de funcionamento: 31/05/2005
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607275&exibirQuadro=false
+--------------------------------------------------
+
+[52] Creche e Pré-escola Municipal Pequeno Guerreiro
+Código da Escola: 33195714
+Distrito: 1º Distrito
+Endereço: Rua 1º de Maio - 109
+Bairro: Itatiaia
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25070440
+Telefone(s): (21) 988664316
+E-mail: creche1.pequenoguerreiro@smeduquedecaxias.rj.gov.br
+Diretor: PATRICIA COELHO DIAS
+Data de funcionamento: 09/12/2022
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607276&exibirQuadro=false
+--------------------------------------------------
+
+[53] Creche e Pré-escola Municipal Poetisa Cecília Meireles
+Código da Escola: 33094845
+Distrito: 1º Distrito
+Endereço: Avenida Perimetral República do Paraguai - 120
+Bairro: Sarapuíí
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25050100
+Telefone(s): (21) 965185716
+E-mail: creche1.ceciliameireles@smeduquedecaxias.rj.gov.br
+Diretor: SANDRA REGINA MONTEIRO
+Data de funcionamento: 14/12/1995
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607277&exibirQuadro=false
+--------------------------------------------------
+
+[54] Creche e Pré-escola Municipal Profªª Armanda Álvaro Alberto
+Código da Escola: 33050465
+Distrito: 3º Distrito
+Endereço: Avenida A - SN
+Bairro: Nova Campinas
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25265000
+Telefone(s): (21) 26547861
+E-mail: creche3.armanda@smeduquedecaxias.rj.gov.br
+Diretor: ROSEMARY COSTA PEREIRA ALVES
+Data de funcionamento: 14/12/1989
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607399&exibirQuadro=false
+--------------------------------------------------
+
+[55] Creche e Pré-escola Municipal Profªª Dalva Lazaroni de Moraes
+Código da Escola: 33195730
+Distrito: 3º Distrito
+Endereço: Rua B, L, V e Delta - SN
+Bairro: Conjunto 22 de Abril - Imbariê
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25271660
+Telefone(s): (21) 964542657
+E-mail: creche3.dalvalazaroni@smeduquedecaxias.rj.gov.br
+Diretor: CRISSIA GIGLIO DA COSTA
+Data de funcionamento: 30/06/2022
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607400&exibirQuadro=false
+--------------------------------------------------
+
+[56] Creche e Pré-escola Municipal Profªª Jesuína de Fátima Andrade
+Código da Escola: 33139750
+Distrito: 2º Distrito
+Endereço: Rua Ester Quintela de Jesus - SN
+Bairro: PILAR
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25235010
+Telefone(s): (21) 36543878
+E-mail: creche2.jesuinaandrade@smeduquedecaxias.rj.gov.br
+Diretor: FERNANDA MARTINS BORGES
+Data de funcionamento: 02/04/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607341&exibirQuadro=false
+--------------------------------------------------
+
+[57] Creche e Pré-escola Municipal Profªª Laura D Aquino Longo
+Código da Escola: 33153590
+Distrito: 1º Distrito
+Endereço: Rua Curuçá - S/N
+Bairro: Olavo Bilac
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25035300
+Telefone(s): (21) 37774623
+E-mail: creche1.lauradaquino@smeduquedecaxias.rj.gov.br
+Diretor: MARIA ANGELINA SEQUEIROS DA SILVA
+Data de funcionamento: 31/05/2005
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607278&exibirQuadro=false
+--------------------------------------------------
+
+[58] Creche e Pré-escola Municipal Profªª Maria Lucia Andrade Ribeiro
+Código da Escola: 33158487
+Distrito: 2º Distrito
+Endereço: Av. Tereza Cristina - S/N
+Bairro: Chácara Rio-Petrópolis
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25230480
+Telefone(s): (21) 36564581
+E-mail: creche2.marialucia@smeduquedecaxias.rj.gov.br
+Diretor: DENISE IBIAPINA MELO DE JESUS
+Data de funcionamento: 28/04/2009
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607342&exibirQuadro=false
+--------------------------------------------------
+
+[59] Creche e Pré-escola Municipal Profªª Marília da Silva Siqueira
+Código da Escola: 33221405
+Distrito: 4º Distrito
+Endereço: Estrada de Xerém - 27
+Bairro: Xerém
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245390
+Telefone(s): 
+E-mail: creche4.mariliasiqueira@smeduquedecaxias.rj.gov.br
+Diretor: ALZIRA VARGAS DE OLIVEIRA GASPARELLI
+Data de funcionamento: 26/11/2007
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607429&exibirQuadro=false
+--------------------------------------------------
+
+[60] Creche e Pré-escola Municipal Profªª Rosa Angélica Fonseca de Oliveira
+Código da Escola: 33444250
+Distrito: 2º Distrito
+Endereço: Rua da Fortuna - 73
+Bairro: Pilar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25231250
+Telefone(s): (21) 27730918
+E-mail: creche2.rosaangelica@smeduquedecaxias.rj.gov.br
+Diretor: PATRICIA CRISTINA PORTO CASTRO
+Data de funcionamento: 28/04/2009
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607343&exibirQuadro=false
+--------------------------------------------------
+
+[61] Creche e Pré-escola Municipal Severina dos Ramos da Silva
+Código da Escola: 33446237
+Distrito: 2º Distrito
+Endereço: Av. Feliciano Castilho - S/N
+Bairro: Chácara Rio-Petrópolis
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25231250
+Telefone(s): (21) 36542064
+E-mail: creche2.severinasilva@smeduquedecaxias.rj.gov.br
+Diretor: 
+Data de funcionamento: 07/07/2008
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607344&exibirQuadro=false
+--------------------------------------------------
+
+[62] Creche e Pré-escola Municipal Teresa de Lisieux
+Código da Escola: 33158479
+Distrito: 1º Distrito
+Endereço: Itabira - 575
+Bairro: Vila Itamarati
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25070260
+Telefone(s): (21) 26531230
+E-mail: creche1.teresalisieux@smeduquedecaxias.rj.gov.br
+Diretor: DEBORAH MELISSA NUNES GROETAERS
+Data de funcionamento: 29/12/2010
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607279&exibirQuadro=false
+--------------------------------------------------
+
+[63] Creche e Pré-escola Municipal Ubaldina Alves da Silva
+Código da Escola: 33442339
+Distrito: 1º Distrito
+Endereço: Avenida Pistoia - SN
+Bairro: Gramacho
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25055052
+Telefone(s): (21) 26993109
+E-mail: creche1.ubaldina@smeduquedecaxias.rj.gov.br
+Diretor: LEIDE JANE SILVA DE ALMEIDA
+Data de funcionamento: 03/03/2008
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607280&exibirQuadro=false
+--------------------------------------------------
+
+[64] Creche e Pré-escola Municipal Vereador Joséé Carlos Theodoro
+Código da Escola: 33144095
+Distrito: 2º Distrito
+Endereço: Av. Presidente Roosevelt - S/N
+Bairro: Parque Independência - Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25212390
+Telefone(s): (21) 26785472
+E-mail: creche2.josetheodoro@smeduquedecaxias.rj.gov.br
+Diretor: FATIMA AURORA DA CONCEICAO CORREIA
+Data de funcionamento: 19/08/2002
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607345&exibirQuadro=false
+--------------------------------------------------
+
+[65] E E M Alberto Santos Dumont
+Código da Escola: 33049939
+Distrito: 2º Distrito
+Endereço: Rua Petrolina - S/N
+Bairro: Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25211010
+Telefone(s): (21) 27780882
+E-mail: escola2.santosdumont@smeduquedecaxias.rj.gov.br
+Diretor: RENATA VEIGA DA SILVA AGUIAR
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607346&exibirQuadro=false
+--------------------------------------------------
+
+[66] E E M Bairro California
+Código da Escola: 33049955
+Distrito: 2º Distrito
+Endereço: Rua Telcarin - S/N
+Bairro: Pilar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25233260
+Telefone(s): 
+E-mail: escola2.california@smeduquedecaxias.rj.gov.br
+Diretor: ANA PAULA RODRIGUES DA SILVA DE SOUZA
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607347&exibirQuadro=false
+--------------------------------------------------
+
+[67] E E M Castro Alves
+Código da Escola: 33048851
+Distrito: 1º Distrito
+Endereço: Rua Guarani - 268
+Bairro: Vila Guanabara
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25080250
+Telefone(s): (21) 36736745
+E-mail: escola1.castroalves@smeduquedecaxias.rj.gov.br
+Diretor: CLAUDIA MARCIA BORGES DA SILVA DE SOUZA
+Data de funcionamento: 01/01/1980
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607285&exibirQuadro=false
+--------------------------------------------------
+
+[68] E E M General Tibúrcio
+Código da Escola: 33048894
+Distrito: 1º Distrito
+Endereço: Avenida Perimetral Doutor Juscelino Kubitschek de Oliveira - 4160
+Bairro: Doutor Laureano
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25060200
+Telefone(s): 
+E-mail: escola1.tiburcio@smeduquedecaxias.rj.gov.br
+Diretor: RENATA CARNEVALE DE SOUZA
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607286&exibirQuadro=false
+--------------------------------------------------
+
+[69] E E M Gustavo Armbrust
+Código da Escola: 33048924
+Distrito: 1º Distrito
+Endereço: Praça Otávio Carneiro - QD 39
+Bairro: Olavo Bilac
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25036460
+Telefone(s): 
+E-mail: escola1.gustavoarmbrust@smeduquedecaxias.rj.gov.br
+Diretor: ISABEL CRISTINA DAS DORES GOMES TIBURCIO
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607287&exibirQuadro=false
+--------------------------------------------------
+
+[70] E E M Manoel Joaquim Salgueiro
+Código da Escola: 33048967
+Distrito: 1º Distrito
+Endereço: Rua Tuiuti - 257
+Bairro: Jardim Vinte e Cinco de Agosto
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25070390
+Telefone(s): 
+E-mail: escola1.joaquimsalgueiro@smeduquedecaxias.rj.gov.br
+Diretor: PATRICIA CAVALCANTE DOS SANTOS ANDRADE
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607288&exibirQuadro=false
+--------------------------------------------------
+
+[71] E E M Marechal Mascarenhas de Moraes
+Código da Escola: 33050007
+Distrito: 2º Distrito
+Endereço: Estrada Belmont - S/N
+Bairro: Bom Retiro
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25223540
+Telefone(s): (21) 27733358
+E-mail: escola2.mascarenhasdemoraes@smeduquedecaxias.rj.gov.br
+Diretor: ANA PAULA MENEZES ANDRADE
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607348&exibirQuadro=false
+--------------------------------------------------
+
+[72] E E M Oswaldo Cruz
+Código da Escola: 33048983
+Distrito: 1º Distrito
+Endereço: Estrada da Covanca - 446
+Bairro: Parque Lafaiete
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25025500
+Telefone(s): (21) 26744435
+E-mail: escola1.oswaldocruz@smeduquedecaxias.rj.gov.br
+Diretor: MONICA BARBOZA GUEDES
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607289&exibirQuadro=false
+--------------------------------------------------
+
+[73] E E M Profªª Maria de Araújo da Silva
+Código da Escola: 33050562
+Distrito: 3º Distrito
+Endereço: Rua General Francisco Lima e Silva - S/N
+Bairro: Taquara
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25275070
+Telefone(s): (21) 27876439
+E-mail: escola3.mariadearaujo@smeduquedecaxias.rj.gov.br
+Diretor: ROBERTA ROSA DOS SANTOS RIBEIRO
+Data de funcionamento: 01/04/1998
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607402&exibirQuadro=false
+--------------------------------------------------
+
+[74] E E M Profªª Mariana Nunes Passos
+Código da Escola: 33050821
+Distrito: 4º Distrito
+Endereço: Rua da Felicidade - 35
+Bairro: Barreiro
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25253017
+Telefone(s): (21) 976187092
+E-mail: escola4.mariananpassos@smeduquedecaxias.rj.gov.br
+Diretor: FABIA MOREIRA SILVA
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607430&exibirQuadro=false
+--------------------------------------------------
+
+[75] E E M Sergipe
+Código da Escola: 33050830
+Distrito: 4º Distrito
+Endereço: Praça do Xerém - 22
+Bairro: XERÉM
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245700
+Telefone(s): (21) 39003193
+E-mail: escola4.sergipe@smeduquedecaxias.rj.gov.br
+Diretor: MARCIA GALARANI DO NASCIMENTO
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607431&exibirQuadro=false
+--------------------------------------------------
+
+[76] E E M Tancredo Neves
+Código da Escola: 33050856
+Distrito: 2º Distrito
+Endereço: Rua Dr. Josias de Freitas - S/N
+Bairro: Parque Eldorado - Santa Cruz da Serra
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25240470
+Telefone(s): (21) 995764922
+E-mail: escola2.tancredoneves@smeduquedecaxias.rj.gov.br
+Diretor: GLAUCIA SEIXAS DE CARVALHO
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607349&exibirQuadro=false
+--------------------------------------------------
+
+[77] E M Albert Sabin
+Código da Escola: 33049041
+Distrito: 2º Distrito
+Endereço: Rua Almirante Custódio de Melo - s/n
+Bairro: Cangulo
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25221133
+Telefone(s): (21) 971945241
+E-mail: creche2.albertsabin@smeduquedecaxias.rj.gov.br
+Diretor: MARIA HELENA DOS SANTOS SIMOES
+Data de funcionamento: 12/05/1993
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607350&exibirQuadro=false
+--------------------------------------------------
+
+[78] E M Aline Gonçalves de Lima
+Código da Escola: 33151750
+Distrito: 1º Distrito
+Endereço: Rua Assembléia - s/n
+Bairro: Parque Beira Mar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25085330
+Telefone(s): (21) 27750155
+E-mail: escola1.aline@smeduquedecaxias.rj.gov.br
+Diretor: DIEGO TAVARES DO NASCIMENTO
+Data de funcionamento: 21/07/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607290&exibirQuadro=false
+--------------------------------------------------
+
+[79] E M Almirante Tamandaré
+Código da Escola: 33050589
+Distrito: 3º Distrito
+Endereço: Av. Automóvel Clube - Km 52
+Bairro: Jardim Rotsen - Imbariê
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25272030
+Telefone(s): (21) 982608093
+E-mail: escola3.tamandare@smeduquedecaxias.rj.gov.br
+Diretor: RODRIGO RODRIGUES ABRAHAO
+Data de funcionamento: 29/05/1978
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607403&exibirQuadro=false
+--------------------------------------------------
+
+[80] E M Alto da Boa Vista
+Código da Escola: 33049050
+Distrito: 1º Distrito
+Endereço: Rua Leverger - 193
+Bairro: Olavo Bilac
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25036190
+Telefone(s): (21) 27824142
+E-mail: escola1.boavista@smeduquedecaxias.rj.gov.br
+Diretor: CARLA AMARAL COSENZA
+Data de funcionamento: 14/12/1989
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607291&exibirQuadro=false
+--------------------------------------------------
+
+[81] E M Ana Nery
+Código da Escola: 33049068
+Distrito: 1º Distrito
+Endereço: Rua Porto Seguro - S/N
+Bairro: Vila São Sebastião
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25051080
+Telefone(s): (21) 27598222
+E-mail: escola1.ananery@smeduquedecaxias.rj.gov.br
+Diretor: IRACEMA DE LIMA AGUIAR
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607293&exibirQuadro=false
+--------------------------------------------------
+
+[82] E M Ana de Souza Herdy
+Código da Escola: 33449244
+Distrito: 1º Distrito
+Endereço: Rua Tenente José Dias - 0
+Bairro: Lagunas e Dourados
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25011380
+Telefone(s): (21) 976580914
+E-mail: escola1.anaherdy@smeduquedecaxias.rj.gov.br
+Diretor: PATRICIA MATASSOLI DO NASCIMENTO MITRIONE
+Data de funcionamento: 08/05/2009
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607292&exibirQuadro=false
+--------------------------------------------------
+
+[83] E M Anton Dworsak
+Código da Escola: 33050074
+Distrito: 2º Distrito
+Endereço: Rua Geraldo Rocha - S/N
+Bairro: Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25213342
+Telefone(s): (21) 36546741
+E-mail: escola2.antondworsak@smeduquedecaxias.rj.gov.br
+Diretor: ROSANGELA MARTINS DA SILVA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607351&exibirQuadro=false
+--------------------------------------------------
+
+[84] E M Anísio Spinola Teixeira
+Código da Escola: 33135231
+Distrito: 1º Distrito
+Endereço: Rua Petrópolis - 77
+Bairro: Corte Oito
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25030060
+Telefone(s): (21) 986908075
+E-mail: escola1.anisioteixeira@smeduquedecaxias.rj.gov.br
+Diretor: PATRICIA BLANCO DA FONSECA
+Data de funcionamento: 28/03/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607294&exibirQuadro=false
+--------------------------------------------------
+
+[85] E M Barro Branco
+Código da Escola: 33050600
+Distrito: 3º Distrito
+Endereço: Av. Pedro Álvares Cabral - SN
+Bairro: Jardim Barro Branco
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25267120
+Telefone(s): (21) 36528355
+E-mail: escola3.barrobranco@smeduquedecaxias.rj.gov.br
+Diretor: MONICA VENANCIO DA SILVA VIDAL
+Data de funcionamento: 11/09/1987
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607405&exibirQuadro=false
+--------------------------------------------------
+
+[86] E M Barão da Taquara
+Código da Escola: 33050597
+Distrito: 3º Distrito
+Endereço: Praça São Paulo - 119
+Bairro: Taquara
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25270390
+Telefone(s): (21) 36665917
+E-mail: escola3.taquara@smeduquedecaxias.rj.gov.br
+Diretor: ALESSANDRA GUEDES DOS ANJOS
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607404&exibirQuadro=false
+--------------------------------------------------
+
+[87] E M Barão do Amapá
+Código da Escola: 33050872
+Distrito: 4º Distrito
+Endereço: Rua Dalila - SN
+Bairro: Amapá
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25235460
+Telefone(s): (21) 219659232
+E-mail: escola4.amapa@smeduquedecaxias.rj.gov.br
+Diretor: MARCIO PEREIRA MORAES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607432&exibirQuadro=false
+--------------------------------------------------
+
+[88] E M Barão do Rio Branco
+Código da Escola: 33049076
+Distrito: 1º Distrito
+Endereço: Rua Joaquim José Soares - S/N
+Bairro: Gramacho
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25035185
+Telefone(s): (21) 26713569
+E-mail: escola1.riobranco@smeduquedecaxias.rj.gov.br
+Diretor: DANIELLE NUNES CRUZ
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607295&exibirQuadro=false
+--------------------------------------------------
+
+[89] E M Bom Retiro
+Código da Escola: 33050090
+Distrito: 2º Distrito
+Endereço: Praça Felipe de Olievira - S/N
+Bairro: Bom Retiro
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25223770
+Telefone(s): 
+E-mail: escola2.bomretiro@smeduquedecaxias.rj.gov.br
+Diretor: CRISTINA AUGUSTA FREITAS BENTO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607352&exibirQuadro=false
+--------------------------------------------------
+
+[90] E M Brasil-Itália
+Código da Escola: 33117985
+Distrito: 4º Distrito
+Endereço: Estrada do Aviário - s/nº
+Bairro: Xerém
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25250597
+Telefone(s): (24) 981107276
+E-mail: escola4.brasilitalia@smeduquedecaxias.rj.gov.br
+Diretor: VIVIANE VEIGA LIPPI SILVA
+Data de funcionamento: 07/05/1998
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607433&exibirQuadro=false
+--------------------------------------------------
+
+[91] E M Brasília
+Código da Escola: 33050880
+Distrito: 4º Distrito
+Endereço: Rua João Santos Sobrinho - 16
+Bairro: Vila Bonança
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25255480
+Telefone(s): (21) 36539173
+E-mail: escola4.brasilia@smeduquedecaxias.rj.gov.br
+Diretor: FABIOLA FRANCO DUARTE BARBOSA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607434&exibirQuadro=false
+--------------------------------------------------
+
+[92] E M CARLOS DRUMMOND DE ANDRADE
+Código da Escola: 33135258
+Distrito: 3º Distrito
+Endereço: Rua Goindira - 343
+Bairro: Imbariê
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25266070
+Telefone(s): (21) 972352360
+E-mail: escola3.carlosdrummond@smeduquedecaxias.rj.gov.br
+Diretor: GEISILANE SILVA DE SA
+Data de funcionamento: 28/03/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607407&exibirQuadro=false
+--------------------------------------------------
+
+[93] E M Campos Elíseos
+Código da Escola: 33165769
+Distrito: 2º Distrito
+Endereço: Av. Tiradentes - S/N
+Bairro: Campos Elíseos
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25070971
+Telefone(s): (21) 27737267
+E-mail: escola2.camposeliseos@smeduquedecaxias.rj.gov.br
+Diretor: ANNA CAROLINA FIALHO REGO
+Data de funcionamento: 08/05/2012
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607353&exibirQuadro=false
+--------------------------------------------------
+
+[94] E M Capitão Fuzileiro Naval Eduardo Gomes de Oliveira
+Código da Escola: 33050619
+Distrito: 3º Distrito
+Endereço: Rua da Lapa - SN
+Bairro: Parada Morabi - Imbariê
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25265180
+Telefone(s): (21) 26782778
+E-mail: escola3.eduardogomes@smeduquedecaxias.rj.gov.br
+Diretor: JARDEL RABELO DE ALMEIDA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607406&exibirQuadro=false
+--------------------------------------------------
+
+[95] E M Carlota Machado
+Código da Escola: 33049084
+Distrito: 1º Distrito
+Endereço: Rua Manuel Vieira - S/N
+Bairro: Centenário
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25020120
+Telefone(s): (21) 37777241
+E-mail: escola1.carlotamachado@smeduquedecaxias.rj.gov.br
+Diretor: CAMILA SAINT MARTIN DE OLIVEIRA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607296&exibirQuadro=false
+--------------------------------------------------
+
+[96] E M Castro Alves
+Código da Escola: 33050899
+Distrito: 4º Distrito
+Endereço: Rua Maurícia - SN
+Bairro: Jardim Olimpo
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25255350
+Telefone(s): (21) 36539685
+E-mail: escola4.castroalves@smeduquedecaxias.rj.gov.br
+Diretor: FABIA CELI DUARTE DO NASCIMENTO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607435&exibirQuadro=false
+--------------------------------------------------
+
+[97] E M Cidade dos Meninos
+Código da Escola: 33177783
+Distrito: 2º Distrito
+Endereço: Rua São Luiz - 21
+Bairro: Pilar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25235150
+Telefone(s): 
+E-mail: escola2.pilar@smeduquedecaxias.rj.gov.br
+Diretor: RITA DE CASSIA DA COSTA MIGUEL
+Data de funcionamento: 05/01/2016
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607354&exibirQuadro=false
+--------------------------------------------------
+
+[98] E M Cora Coralina
+Código da Escola: 33146829
+Distrito: 1º Distrito
+Endereço: Avenida Darcy Vargas - 21
+Bairro: Gramacho
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25035250
+Telefone(s): (21) 36663075
+E-mail: escola1.cora@smeduquedecaxias.rj.gov.br
+Diretor: JOAO PEDRO EDUARDO DO NASCIMENTO
+Data de funcionamento: 12/05/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607297&exibirQuadro=false
+--------------------------------------------------
+
+[99] E M Coração de Jesus
+Código da Escola: 33050902
+Distrito: 4º Distrito
+Endereço: Estrada São Lourenço - S/N
+Bairro: Mantiquira
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25243150
+Telefone(s): (21) 990598791
+E-mail: escola4.coracaodejesus@smeduquedecaxias.rj.gov.br
+Diretor: GISELLE CRISTINE DA SILVA MENDES BITTENCOURT
+Data de funcionamento: 17/10/1969
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607436&exibirQuadro=false
+--------------------------------------------------
+
+[100] E M Coronel Eliseu
+Código da Escola: 33050104
+Distrito: 2º Distrito
+Endereço: Rua Antônio Gonçalves Martins - SN
+Bairro: Parque Comercial
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25041700
+Telefone(s): (21) 27594890
+E-mail: escola2.eliseu@smeduquedecaxias.rj.gov.br
+Diretor: VANIA LUCIA DOS SANTOS DE AVIZ
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607355&exibirQuadro=false
+--------------------------------------------------
+
+[101] E M Darcy Ribeiro
+Código da Escola: 33126879
+Distrito: 1º Distrito
+Endereço: Rua Paulo Moreno - 662
+Bairro: Lagunas e Dourados
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25011350
+Telefone(s): (21) 36511368
+E-mail: escola1.darcyribeiro@smeduquedecaxias.rj.gov.br
+Diretor: ALESSANDRA CRISTINE CEZAR SEGURA
+Data de funcionamento: 07/04/1999
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607298&exibirQuadro=false
+--------------------------------------------------
+
+[102] E M Darcy Vargas
+Código da Escola: 33049092
+Distrito: 1º Distrito
+Endereço: Rua Dr. João Clementino - 817
+Bairro: Vila Leopoldina
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25036120
+Telefone(s): (21) 977043958
+E-mail: escola1.darcyvargas@smeduquedecaxias.rj.gov.br
+Diretor: LUCIANA ALEIXO DA SILVA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607299&exibirQuadro=false
+--------------------------------------------------
+
+[103] E M Dr Ely Combat
+Código da Escola: 33135240
+Distrito: 4º Distrito
+Endereço: Rua Rio Grande do Sul - 17
+Bairro: XERÉM
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25250080
+Telefone(s): (21) 339002701
+E-mail: escola4.elycombat@smeduquedecaxias.rj.gov.br
+Diretor: LUCIEN VIVIANE SAMPAIO DINIZ
+Data de funcionamento: 27/01/2000
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607437&exibirQuadro=false
+--------------------------------------------------
+
+[104] E M Dr Gastão Reis
+Código da Escola: 33049114
+Distrito: 1º Distrito
+Endereço: Rua Petrópolis - 405
+Bairro: Corte Oito
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25030060
+Telefone(s): (21) 965601031
+E-mail: escola1.gastaoreis@smeduquedecaxias.rj.gov.br
+Diretor: ALESSANDRA DE FATIMA BOAVENTURA MAIDANA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607300&exibirQuadro=false
+--------------------------------------------------
+
+[105] E M Dr Manoel Reis
+Código da Escola: 33050112
+Distrito: 2º Distrito
+Endereço: Rua das Tamarindas - S/N
+Bairro: Campos Elíseos
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25225000
+Telefone(s): (21) 979712622
+E-mail: escola2.manoelreis@smeduquedecaxias.rj.gov.br
+Diretor: SILVIA TOSTA SUZANO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607356&exibirQuadro=false
+--------------------------------------------------
+
+[106] E M Dr Ricardo Augusto de Azeredo Vianna
+Código da Escola: 33146837
+Distrito: 1º Distrito
+Endereço: Avenida Deputado Almeida Franco - 1
+Bairro: Olavo Bilac
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25025350
+Telefone(s): (21) 27834852
+E-mail: escola1.ricardoaugusto@smeduquedecaxias.rj.gov.br
+Diretor: ANA PAULA DA SILVA LAGE
+Data de funcionamento: 06/07/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607301&exibirQuadro=false
+--------------------------------------------------
+
+[107] E M Drª Zilda Arns Neumann
+Código da Escola: 33158517
+Distrito: 2º Distrito
+Endereço: Rua General San Martin - 42
+Bairro: Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25049670
+Telefone(s): (21) 996456012
+E-mail: escola2.zildaarns@smeduquedecaxias.rj.gov.br
+Diretor: ALDERALICE SAMPAIO DE OLIVEIRA DE JESUS
+Data de funcionamento: 26/02/2010
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607357&exibirQuadro=false
+--------------------------------------------------
+
+[108] E M Embaixador Oswaldo Aranha
+Código da Escola: 33050910
+Distrito: 4º Distrito
+Endereço: Rua João Aires - SN
+Bairro: Parque Xerém
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245640
+Telefone(s): (21) 977434320
+E-mail: escola4.oswaldoaranha@smeduquedecaxias.rj.gov.br
+Diretor: JANETE PEREIRA FERRAZ
+Data de funcionamento: 04/08/1993
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607438&exibirQuadro=false
+--------------------------------------------------
+
+[109] E M Eulina Pinto de Barros
+Código da Escola: 33050120
+Distrito: 2º Distrito
+Endereço: Estrada do Calundu - S/N
+Bairro: Parque Nossa Senhora do Carmo
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25040610
+Telefone(s): (21) 27813461
+E-mail: escola2.eulinapinto@smeduquedecaxias.rj.gov.br
+Diretor: ALBA VALERIA DE OLIVEIRA FARIA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607358&exibirQuadro=false
+--------------------------------------------------
+
+[110] E M Expedicionário Aquino de Araújo
+Código da Escola: 33049149
+Distrito: 1º Distrito
+Endereço: Rua Gal. Manoel Rabelo - 593
+Bairro: Vila São Luis
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25065050
+Telefone(s): (21) 27715591
+E-mail: escola1.aquinoaraujo@smeduquedecaxias.rj.gov.br
+Diretor: JAQUELINE PACHECO OLIMPIO
+Data de funcionamento: 01/01/1980
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607302&exibirQuadro=false
+--------------------------------------------------
+
+[111] E M Francisco Barboza Leite
+Código da Escola: 33099065
+Distrito: 3º Distrito
+Endereço: Rua 2 - S/N
+Bairro: Santa Lúcia
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25271685
+Telefone(s): (21) 36503996
+E-mail: escola3.barbozaleite@smeduquedecaxias.rj.gov.br
+Diretor: CAMILE AMELIA MOREIRA
+Data de funcionamento: 29/07/1997
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607408&exibirQuadro=false
+--------------------------------------------------
+
+[112] E M Francisco Oswaldo Neves Dornelles
+Código da Escola: 33202346
+Distrito: 2º Distrito
+Endereço: Rua Maturim - s/n
+Bairro: Campos Elíseos
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25225665
+Telefone(s): (21) 994385072
+E-mail: escola2.franciscodornelles@smeduquedecaxias.rj.gov.br
+Diretor: ANA CRISTINA DA SILVA DE JESUS
+Data de funcionamento: 28/06/2024
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607909&exibirQuadro=false
+--------------------------------------------------
+
+[113] E M General Mourão Filho
+Código da Escola: 33050635
+Distrito: 3º Distrito
+Endereço: Rua Violeta - S/N
+Bairro: Jardim Anhangá
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25268420
+Telefone(s): 
+E-mail: escola3.mouraofilho@smeduquedecaxias.rj.gov.br
+Diretor: ROSILANI MACEDO DE AZEVEDO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607409&exibirQuadro=false
+--------------------------------------------------
+
+[114] E M General Sampaio
+Código da Escola: 33049157
+Distrito: 1º Distrito
+Endereço: Avenida Perimetral Doutor Juscelino Kubitschek de Oliveira - 3374
+Bairro: Doutor Laureano
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25060200
+Telefone(s): (21) 982663174
+E-mail: escola1.sampaio@smeduquedecaxias.rj.gov.br
+Diretor: HIOLINA PEREIRA MENDES VELOSO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607303&exibirQuadro=false
+--------------------------------------------------
+
+[115] E M Governador Mario Covas Junior
+Código da Escola: 33050082
+Distrito: 2º Distrito
+Endereço: Rua Maciel Monteiro - 246
+Bairro: Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25220460
+Telefone(s): 
+E-mail: escola2.mariocovas@smeduquedecaxias.rj.gov.br
+Diretor: CINTIA CECI REZENDE NICOLAU
+Data de funcionamento: 26/03/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607359&exibirQuadro=false
+--------------------------------------------------
+
+[116] E M Helena Aguiar de Medeiros
+Código da Escola: 33049165
+Distrito: 1º Distrito
+Endereço: Rua Cel. Alberto de Mello - S/N
+Bairro: Centenário
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25030150
+Telefone(s): (21) 971818709
+E-mail: escola1.helenaaguiar@smeduquedecaxias.rj.gov.br
+Diretor: RACHEL CRISTINA TÁVORA NEVES CAJAZEIRA
+Data de funcionamento: 10/05/1983
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607304&exibirQuadro=false
+--------------------------------------------------
+
+[117] E M Hermínia Caldas da Silva
+Código da Escola: 33049173
+Distrito: 1º Distrito
+Endereço: Rua Otávio Áscoli - S/N
+Bairro: Vila Centenário
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25030040
+Telefone(s): (21) 992967907
+E-mail: escola1.herminiacaldas@smeduquedecaxias.rj.gov.br
+Diretor: MARIA ISABEL SANTOS DE JESUS
+Data de funcionamento: 17/07/1991
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607305&exibirQuadro=false
+--------------------------------------------------
+
+[118] E M Imaculada Conceição
+Código da Escola: 33050139
+Distrito: 2º Distrito
+Endereço: Alameda Paula Liliane - S/N
+Bairro: Figueira
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25230570
+Telefone(s): (21) 974898525
+E-mail: escola2.imaculada@smeduquedecaxias.rj.gov.br
+Diretor: EDILEA CRUZ CORREIA DOS ANJOS
+Data de funcionamento: 03/09/1969
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607360&exibirQuadro=false
+--------------------------------------------------
+
+[119] E M Intercultural México - Profªª Nilcelina dos Santos Ferreira
+Código da Escola: 33050180
+Distrito: 2º Distrito
+Endereço: Rua dos Serrados - S/N
+Bairro: Santa Cruz da Serra
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25251070
+Telefone(s): (21) 27775321
+E-mail: escola2.nilcelina@smeduquedecaxias.rj.gov.br
+Diretor: SUZANA OLIVEIRA DE JESUS
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607361&exibirQuadro=false
+--------------------------------------------------
+
+[120] E M Itamar Franco
+Código da Escola: 33197997
+Distrito: 1º Distrito
+Endereço: Rua Dezenove - s/nº
+Bairro: Parque das Missões
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25086570
+Telefone(s): 
+E-mail: escola1.itamarfranco@smeduquedecaxias.rj.gov.br
+Diretor: LILIANE DA SILVA OLIVEIRA VIEIRA
+Data de funcionamento: 14/09/2023
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607510&exibirQuadro=false
+--------------------------------------------------
+
+[121] E M Jardim Anhangá
+Código da Escola: 33050643
+Distrito: 3º Distrito
+Endereço: Rua M - SN
+Bairro: Jardim Anhangá
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25264510
+Telefone(s): (21) 36509628
+E-mail: escola3.jdanhanga@smeduquedecaxias.rj.gov.br
+Diretor: ADRIANA PEREIRA DA SILVA
+Data de funcionamento: 11/09/1987
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607410&exibirQuadro=false
+--------------------------------------------------
+
+[122] E M Jardim Gramacho
+Código da Escola: 33049181
+Distrito: 1º Distrito
+Endereço: Rua Condeúba - S/N
+Bairro: Jardim Gramacho
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25055040
+Telefone(s): (21) 26761800
+E-mail: escola1.jdgramacho@smeduquedecaxias.rj.gov.br
+Diretor: JAQUELINE DOS SANTOS VICENTE
+Data de funcionamento: 04/08/1993
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607306&exibirQuadro=false
+--------------------------------------------------
+
+[123] E M Jayme Fichman
+Código da Escola: 33050147
+Distrito: 2º Distrito
+Endereço: Av. Uruguaiana - S/N
+Bairro: Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25212440
+Telefone(s): (21) 40403811
+E-mail: escola2.jaymefichman@smeduquedecaxias.rj.gov.br
+Diretor: MAXSUEL QUENIL PIMENTEL RODRIGUES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607362&exibirQuadro=false
+--------------------------------------------------
+
+[124] E M Joaquim da Silva Peçanha
+Código da Escola: 33049190
+Distrito: 1º Distrito
+Endereço: Rua Felisberto Freitas - S/N
+Bairro: Parque Beira Mar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25085480
+Telefone(s): (21) 26998123
+E-mail: escola1.joaquimp@smeduquedecaxias.rj.gov.br
+Diretor: VANISE DE CASSIA DE ARAUJO DUTRA GOMES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607307&exibirQuadro=false
+--------------------------------------------------
+
+[125] E M Jornalista Moacyr Padilha
+Código da Escola: 33050155
+Distrito: 2º Distrito
+Endereço: Rua Visconde de Itaboraí - S/N
+Bairro: Vila Maria Helena
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25251560
+Telefone(s): 
+E-mail: escola2.moacyrpadilha@smeduquedecaxias.rj.gov.br
+Diretor: ROSANGELA CORREA BERMUTE
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607363&exibirQuadro=false
+--------------------------------------------------
+
+[126] E M Joséé Camilo dos Santos
+Código da Escola: 33139784
+Distrito: 2º Distrito
+Endereço: Av. Presidente Kennedy - S/N
+Bairro: Vila Rosário
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045030
+Telefone(s): (21) 994463933
+E-mail: escola2.josecamilo@smeduquedecaxias.rj.gov.br
+Diretor: BARBARA CONCEIÇÃO SANTIAGO ROSA MATTOS
+Data de funcionamento: 02/04/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607364&exibirQuadro=false
+--------------------------------------------------
+
+[127] E M Joséé Medeiros Cabral
+Código da Escola: 33153582
+Distrito: 1º Distrito
+Endereço: Rua Avaré - QD 112
+Bairro: Jardim Gramacho
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25056310
+Telefone(s): (21) 26735460
+E-mail: escola1.jmedeiros@smeduquedecaxias.rj.gov.br
+Diretor: DANYELLE CRISTINA DIAS FREITAS
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607308&exibirQuadro=false
+--------------------------------------------------
+
+[128] E M Laurentina Cardoso Duarte
+Código da Escola: 33146845
+Distrito: 1º Distrito
+Endereço: Rua Alberto de Oliveira - S/N
+Bairro: Parque Beira Mar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25085261
+Telefone(s): (21) 26523309
+E-mail: escola1.laurentinaduarte@smeduquedecaxias.rj.gov.br
+Diretor: ANDREA BERG TEIXEIRA
+Data de funcionamento: 22/03/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607309&exibirQuadro=false
+--------------------------------------------------
+
+[129] E M Leni Fernandes do Nascimento
+Código da Escola: 33050929
+Distrito: 4º Distrito
+Endereço: Rua Silvio Caldas - S/N
+Bairro: Chapéu do Sol - Xerem
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245790
+Telefone(s): (21) 37773854
+E-mail: escola4.lenifernandes@smeduquedecaxias.rj.gov.br
+Diretor: MARCIA ZAMPAROLE DE OLIVEIRA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607439&exibirQuadro=false
+--------------------------------------------------
+
+[130] E M Lions
+Código da Escola: 33049220
+Distrito: 1º Distrito
+Endereço: Avenida Perimetral Presidente Tancredo Neves - 1067
+Bairro: Vila Itamarati
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25070096
+Telefone(s): (21) 959464814
+E-mail: escola1.lions@smeduquedecaxias.rj.gov.br
+Diretor: ROBERTO SOUZA DE MENEZES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607310&exibirQuadro=false
+--------------------------------------------------
+
+[131] E M Luiz Gama Borges
+Código da Escola: 33050651
+Distrito: 3º Distrito
+Endereço: Rua Malherbe - SN
+Bairro: Parque Paulista
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25261440
+Telefone(s): (21) 26750297
+E-mail: escola3.luizgamaborges@smeduquedecaxias.rj.gov.br
+Diretor: FELYPE LOPES BASTOS
+Data de funcionamento: 21/07/1988
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607411&exibirQuadro=false
+--------------------------------------------------
+
+[132] E M Marcílio Dias
+Código da Escola: 33050163
+Distrito: 2º Distrito
+Endereço: Rua C - S/N
+Bairro: Parque Independência - Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25211300
+Telefone(s): (21) 40043303
+E-mail: escola2.marciliodias@smeduquedecaxias.rj.gov.br
+Diretor: DOMINIQUE HAMMERS BARROS DE AMORIM
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607365&exibirQuadro=false
+--------------------------------------------------
+
+[133] E M Marechal Floriano Peixoto
+Código da Escola: 33050660
+Distrito: 3º Distrito
+Endereço: Rua Lúcia Helena Faccini - 08
+Bairro: Vila Araci
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25272540
+Telefone(s): (21) 976966527
+E-mail: escola3.florianopeixoto@smeduquedecaxias.rj.gov.br
+Diretor: SIMONE MARTELLETO FELIPE DE SOUZA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607412&exibirQuadro=false
+--------------------------------------------------
+
+[134] E M Marechal Mallet
+Código da Escola: 33049246
+Distrito: 1º Distrito
+Endereço: Rua Dr. Carlos Esteves - S/N
+Bairro: Vila Guanabara
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25065005
+Telefone(s): (21) 27823623
+E-mail: escola1.mallet@smeduquedecaxias.rj.gov.br
+Diretor: CLAUDETE DE SOUZA RAMOS
+Data de funcionamento: 20/12/1978
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607311&exibirQuadro=false
+--------------------------------------------------
+
+[135] E M Maria Clara Machado
+Código da Escola: 33146861
+Distrito: 2º Distrito
+Endereço: Av. Gomes Freire - 420
+Bairro: Pantanal
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25040160
+Telefone(s): 
+E-mail: escola2.mclaramachado@smeduquedecaxias.rj.gov.br
+Diretor: OSMAR MENEZES DA SILVA
+Data de funcionamento: 07/04/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607366&exibirQuadro=false
+--------------------------------------------------
+
+[136] E M Marilândia
+Código da Escola: 33050171
+Distrito: 2º Distrito
+Endereço: Rua Maranhão - 90
+Bairro: Campos Elíseos
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25225590
+Telefone(s): (21) 985588442
+E-mail: escola2.marilandia@smeduquedecaxias.rj.gov.br
+Diretor: RENATA BARBOSA IGNACIO LIMA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607368&exibirQuadro=false
+--------------------------------------------------
+
+[137] E M Mauro de Castro
+Código da Escola: 33146853
+Distrito: 1º Distrito
+Endereço: Rua Caramuru - 84
+Bairro: Jardim Gramacho
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25055340
+Telefone(s): (21) 36590690
+E-mail: escola1.maurodecastro@smeduquedecaxias.rj.gov.br
+Diretor: NAISE MARTINS
+Data de funcionamento: 02/07/2003
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607312&exibirQuadro=false
+--------------------------------------------------
+
+[138] E M Minas Gerais
+Código da Escola: 33050198
+Distrito: 2º Distrito
+Endereço: Rua Knauber - S/N
+Bairro: Parque Fluminense
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25046560
+Telefone(s): (21) 31353088
+E-mail: escola2.minasgerais@smeduquedecaxias.rj.gov.br
+Diretor: CARLA CRISTIANE PEREIRA DO NASCIMENTO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607334&exibirQuadro=false
+--------------------------------------------------
+
+[139] E M Monteiro Lobato
+Código da Escola: 33050201
+Distrito: 2º Distrito
+Endereço: Rua do Rosário - 118
+Bairro: Campos Elíseos
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25225430
+Telefone(s): (21) 27760312
+E-mail: escola2.monteirolobato@smeduquedecaxias.rj.gov.br
+Diretor: JOSE LUIS GOMES PEREIRA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607369&exibirQuadro=false
+--------------------------------------------------
+
+[140] E M Montese
+Código da Escola: 33050945
+Distrito: 4º Distrito
+Endereço: Rua Havana - 41
+Bairro: Vila Canaan
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25255170
+Telefone(s): (21) 976008660
+E-mail: escola4.montese@smeduquedecaxias.rj.gov.br
+Diretor: TAMARA ANDRADE DE CARVALHO BITENCOURT
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607440&exibirQuadro=false
+--------------------------------------------------
+
+[141] E M Márcio Fiat
+Código da Escola: 33050937
+Distrito: 3º Distrito
+Endereço: Rua São Cristóvão - S/N
+Bairro: Parada Angélica
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25272292
+Telefone(s): (21) 219867586
+E-mail: escola3.marciofiat@smeduquedecaxias.rj.gov.br
+Diretor: JESSICA ANDRADE CORTAT
+Data de funcionamento: 13/01/1993
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607413&exibirQuadro=false
+--------------------------------------------------
+
+[142] E M Nossa Senhora Aparecida
+Código da Escola: 33050228
+Distrito: 2º Distrito
+Endereço: Rua São Paulo - S/N
+Bairro: São Judas Tadeu
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25240050
+Telefone(s): (21) 997868865
+E-mail: escola2.nsaparecida@smeduquedecaxias.rj.gov.br
+Diretor: ESTHER CARVALHO BALEIXO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607370&exibirQuadro=false
+--------------------------------------------------
+
+[143] E M Nossa Senhora do Pilar
+Código da Escola: 33050236
+Distrito: 2º Distrito
+Endereço: Av. Nossa Senhora do Pilar - 300
+Bairro: Pilar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25230270
+Telefone(s): (21) 27735872
+E-mail: escola2.nspilar@smeduquedecaxias.rj.gov.br
+Diretor: ANA VITORIA DOS SANTOS SIQUEIRA BRAGA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607371&exibirQuadro=false
+--------------------------------------------------
+
+[144] E M Nova Campinas
+Código da Escola: 33050678
+Distrito: 3º Distrito
+Endereço: Rua 12 - S/N
+Bairro: Nova Campinas
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25271020
+Telefone(s): (21) 970616097
+E-mail: escola3.novacampinas@smeduquedecaxias.rj.gov.br
+Diretor: PAULO JOSE ASSUMPÇAO DOS SANTOS
+Data de funcionamento: 03/01/1992
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607414&exibirQuadro=false
+--------------------------------------------------
+
+[145] E M Nísia Vilela Fernandes
+Código da Escola: 33050244
+Distrito: 2º Distrito
+Endereço: Avenida Governador Leonel de Moura Brizola - SN
+Bairro: São Bento
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045002
+Telefone(s): (21) 970370502
+E-mail: escola2.nisiavilela@smeduquedecaxias.rj.gov.br
+Diretor: MARCIO SAMPAIO DE ANDRADE
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607372&exibirQuadro=false
+--------------------------------------------------
+
+[146] E M Olinda Bonturi Bolsonaro
+Código da Escola: 33196265
+Distrito: 2º Distrito
+Endereço: Avenida Nelson Mauro - 159
+Bairro: Jardim Santa Rita
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25212060
+Telefone(s): (21) 976420588
+E-mail: escola2.olindabolsonaro@smeduquedecaxias.rj.gov.br
+Diretor: KAREN GUIMARAES DA SILVA
+Data de funcionamento: 28/06/2022
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607373&exibirQuadro=false
+--------------------------------------------------
+
+[147] E M Parque Capivari
+Código da Escola: 33050953
+Distrito: 4º Distrito
+Endereço: Av. Marquês de Barbacena - SN
+Bairro: Parque Capivari
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25245230
+Telefone(s): (21) 26763539
+E-mail: escola4.pqcapivari@smeduquedecaxias.rj.gov.br
+Diretor: VALERIA VIEIRA ALVES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607441&exibirQuadro=false
+--------------------------------------------------
+
+[148] E M Pastor Ernani Batista de Lima
+Código da Escola: 33195668
+Distrito: 4º Distrito
+Endereço: Rua Antônio Guedes - 1999
+Bairro: Santo Antônio - Xerém
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25250550
+Telefone(s): (21) 977140932
+E-mail: escola4.ernanilima@smeduquedecaxias.rj.gov.br
+Diretor: MARIA JULIA DE OLIVEIRA DE ALMEIDA
+Data de funcionamento: 09/12/2022
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607442&exibirQuadro=false
+--------------------------------------------------
+
+[149] E M Paulo Roberto de Moraes Loureiro
+Código da Escola: 33135266
+Distrito: 2º Distrito
+Endereço: Av. Governador Leonel de Moura Brizola - 9422
+Bairro: São Bento
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045030
+Telefone(s): (21) 31350924
+E-mail: escola2.pauloroberto@smeduquedecaxias.rj.gov.br
+Diretor: ANDREIA SOARES DA SILVA
+Data de funcionamento: 28/03/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607374&exibirQuadro=false
+--------------------------------------------------
+
+[150] E M Paulo Rodrigues Pereira
+Código da Escola: 33112770
+Distrito: 3º Distrito
+Endereço: Rua Voltaire - SN
+Bairro: IMBARIÊ
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25275300
+Telefone(s): 
+E-mail: escola3.paulorodrigues@smeduquedecaxias.rj.gov.br
+Diretor: ISALINA COSTA PEREIRA
+Data de funcionamento: 21/03/1998
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607415&exibirQuadro=false
+--------------------------------------------------
+
+[151] E M Pedro Paulo da Silva
+Código da Escola: 33139776
+Distrito: 3º Distrito
+Endereço: Rua 20 - SN
+Bairro: Santa Cruz da Serra
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25260220
+Telefone(s): (21) 964738119
+E-mail: escola3.pedropaulo@smeduquedecaxias.rj.gov.br
+Diretor: ROSANGELA DE FARIA DA SILVA
+Data de funcionamento: 02/04/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607416&exibirQuadro=false
+--------------------------------------------------
+
+[152] E M Pedro Rodrigues do Carmo
+Código da Escola: 33050252
+Distrito: 2º Distrito
+Endereço: Rua Dom Pedro I - S/N
+Bairro: Cangulo - Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25220650
+Telefone(s): (21) 26770495
+E-mail: escola2.pedrorodrigues@smeduquedecaxias.rj.gov.br
+Diretor: IZABEL CHRISTINA DE SALES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607375&exibirQuadro=false
+--------------------------------------------------
+
+[153] E M Presidente Costa e Silva
+Código da Escola: 33050260
+Distrito: 2º Distrito
+Endereço: Estrada São Lourenço - 112
+Bairro: Capivari
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25243150
+Telefone(s): (21) 996587542
+E-mail: escola2.costaesilva@smeduquedecaxias.rj.gov.br
+Diretor: ANA CRISTINA DE ALMEIDA COELHO HORNERO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607376&exibirQuadro=false
+--------------------------------------------------
+
+[154] E M Presidente Vargas
+Código da Escola: 33050961
+Distrito: 4º Distrito
+Endereço: Estrada do Rio Paty - 5003
+Bairro: Fazenda São Lourenço
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25250000
+Telefone(s): (21) 997981340
+E-mail: escola4.presidentevargas@smeduquedecaxias.rj.gov.br
+Diretor: CLEIA MARIA SILBERNAGEL DE MOURA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607443&exibirQuadro=false
+--------------------------------------------------
+
+[155] E M Profª Alberto Ribeiro Vasconcelos
+Código da Escola: 33144125
+Distrito: 2º Distrito
+Endereço: Avenida Governador Leonel de Moura Brizola - 7778
+Bairro: São Bento
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045002
+Telefone(s): (21) 26994426
+E-mail: escola2.albertovasconcelos@smeduquedecaxias.rj.gov.br
+Diretor: CARLA MARIA ALVES SIMPLICIO
+Data de funcionamento: 23/04/2003
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607377&exibirQuadro=false
+--------------------------------------------------
+
+[156] E M Profª Jair Alves de Freitas
+Código da Escola: 33049270
+Distrito: 1º Distrito
+Endereço: Rua Rocha Pita - S/N
+Bairro: Prainha
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25015655
+Telefone(s): (21) 36576827
+E-mail: escola1.jairalves@smeduquedecaxias.rj.gov.br
+Diretor: JULIO CEZAR RODRIGUES REIS
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607314&exibirQuadro=false
+--------------------------------------------------
+
+[157] E M Profª Joséé de Souza Herdy
+Código da Escola: 33449236
+Distrito: 1º Distrito
+Endereço: Rua Pereira Passos - 1000
+Bairro: Parque Beira Mar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25085300
+Telefone(s): 
+E-mail: escola1.joseherdy@smeduquedecaxias.rj.gov.br
+Diretor: LUCIANA CORREA SANTOPIETRO
+Data de funcionamento: 08/05/2009
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607315&exibirQuadro=false
+--------------------------------------------------
+
+[158] E M Profª João Faustino de França Sobrinho
+Código da Escola: 33050279
+Distrito: 2º Distrito
+Endereço: Rua Gericinó - 113
+Bairro: Parque Eldorado - Santa Cruz da Serra
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25240170
+Telefone(s): (21) 36568452
+E-mail: escola2.joaofaustino@smeduquedecaxias.rj.gov.br
+Diretor: FABIO RODRIGUES MILIONI
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607380&exibirQuadro=false
+--------------------------------------------------
+
+[159] E M Profª Motta Sobrinho
+Código da Escola: 33049297
+Distrito: 1º Distrito
+Endereço: Rua Paraná - 739
+Bairro: Paulicéia
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25071000
+Telefone(s): (21) 34916915
+E-mail: escola1.mottasobrinho@smeduquedecaxias.rj.gov.br
+Diretor: MARIA DE FATIMA BOCAFOLI ZANON
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607317&exibirQuadro=false
+--------------------------------------------------
+
+[160] E M Profª Oneres Nunes Oliveira
+Código da Escola: 33144117
+Distrito: 1º Distrito
+Endereço: Rua Barbosa Araújo - 265
+Bairro: Parque Felicidade
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25080140
+Telefone(s): (21) 964037350
+E-mail: escola1.oneres@smeduquedecaxias.rj.gov.br
+Diretor: ALINE SILVA RAMOS
+Data de funcionamento: 10/04/2003
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607319&exibirQuadro=false
+--------------------------------------------------
+
+[161] E M Profª Paulo Freire
+Código da Escola: 33112789
+Distrito: 2º Distrito
+Endereço: Rua José de Azevedo - 156
+Bairro: Jardim das Oliveiras - Pq. Comercial
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045270
+Telefone(s): (21) 999642519
+E-mail: escola2.paulofreire@smeduquedecaxias.rj.gov.br
+Diretor: JULIA MARIA MACHADO DOS SANTOS
+Data de funcionamento: 07/05/1998
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607381&exibirQuadro=false
+--------------------------------------------------
+
+[162] E M Profª Raul de Oliveira
+Código da Escola: 33050970
+Distrito: 4º Distrito
+Endereço: Travessa Mato Grosso - 60
+Bairro: Santa Cruz da Serra
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25240230
+Telefone(s): (21) 995091540
+E-mail: escola4.rauldeoliveira@smeduquedecaxias.rj.gov.br
+Diretor: MARCIA CAMPOS RIBEIRO
+Data de funcionamento: 04/05/1977
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607445&exibirQuadro=false
+--------------------------------------------------
+
+[163] E M Profª Romeu Menezes dos Santos
+Código da Escola: 33049211
+Distrito: 1º Distrito
+Endereço: Rua José Luis Rodrigues Calazans - 355
+Bairro: Lagunas e Dourados
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25011320
+Telefone(s): (21) 31343729
+E-mail: escola1.romeumenezes@smeduquedecaxias.rj.gov.br
+Diretor: ANA CRISTINA FIRMINO DA CONCEIÇÃO CABRAL
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607320&exibirQuadro=false
+--------------------------------------------------
+
+[164] E M Profª Vilmar Bastos Furtado
+Código da Escola: 33129088
+Distrito: 2º Distrito
+Endereço: Rua João Raimundo - SN
+Bairro: Vila Santo Antônio - Pq. Comercial
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25041400
+Telefone(s): (21) 983699485
+E-mail: escola2.vilmarbastos@smeduquedecaxias.rj.gov.br
+Diretor: TATIANA DA SILVA ANJOS
+Data de funcionamento: 27/01/2000
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607383&exibirQuadro=false
+--------------------------------------------------
+
+[165] E M Profª Walter Russo de Souza
+Código da Escola: 33146888
+Distrito: 2º Distrito
+Endereço: Estrada Velha do Pilar - 50
+Bairro: Chácaras Rio-Petrópolis
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25230610
+Telefone(s): (21) 976225237
+E-mail: escola2.walterrusso@smeduquedecaxias.rj.gov.br
+Diretor: CLAUDIA CUNHA DE OLIVEIRA IGNACIO
+Data de funcionamento: 10/03/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607384&exibirQuadro=false
+--------------------------------------------------
+
+[166] E M Profªª Aila Saldanha do Couto
+Código da Escola: 33050864
+Distrito: 4º Distrito
+Endereço: Rua Ibitinga - 23/24
+Bairro: Igreja Velha
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25250310
+Telefone(s): (21) 36584294
+E-mail: escola4.ailasaldanha@smeduquedecaxias.rj.gov.br
+Diretor: RAQUEL BELLIZZI IGNEZ SANTANA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607444&exibirQuadro=false
+--------------------------------------------------
+
+[167] E M Profªª Amélia Câmara dos Santos
+Código da Escola: 33146870
+Distrito: 2º Distrito
+Endereço: Rua Cearense - 8
+Bairro: Pilar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25233400
+Telefone(s): (21) 987587258
+E-mail: escola2.ameliacamara@smeduquedecaxias.rj.gov.br
+Diretor: ANDREIA MACHADO PESTANA MAIA
+Data de funcionamento: 10/03/2004
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607378&exibirQuadro=false
+--------------------------------------------------
+
+[168] E M Profªª Carmem Correa de Carvalho Reis Braz
+Código da Escola: 33050694
+Distrito: 3º Distrito
+Endereço: Av. Coronel Sisson - S/N
+Bairro: Imbariê
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25266000
+Telefone(s): 
+E-mail: escola3.carmemcorrea@smeduquedecaxias.rj.gov.br
+Diretor: BRUNA MEDINA MELO
+Data de funcionamento: 27/05/1985
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607417&exibirQuadro=false
+--------------------------------------------------
+
+[169] E M Profªª Carmen Lucia Resende Alvin da Silva
+Código da Escola: 33126860
+Distrito: 3º Distrito
+Endereço: Rua Projetada - 3
+Bairro: Santa Cruz da Serra
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25255220
+Telefone(s): (21) 26758086
+E-mail: escola3.carmenlucia@smeduquedecaxias.rj.gov.br
+Diretor: PATRICIA PORTELA DE ASSIS
+Data de funcionamento: 14/04/2000
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607418&exibirQuadro=false
+--------------------------------------------------
+
+[170] E M Profªª Dalva Borges da Cunha
+Código da Escola: 33158460
+Distrito: 3º Distrito
+Endereço: Avenida Automóvel Clube - Km 53
+Bairro: Taquara
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25070180
+Telefone(s): (21) 27876189
+E-mail: escola3.dalvaborges@smeduquedecaxias.rj.gov.br
+Diretor: REGINA CELIA ALMEIDA DOS SANTOS
+Data de funcionamento: 01/03/2011
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607419&exibirQuadro=false
+--------------------------------------------------
+
+[171] E M Profªª Dulce Trindade Braga
+Código da Escola: 33176914
+Distrito: 3º Distrito
+Endereço: Avenida Hélio de Oliveira - s/nº
+Bairro: Jardim Anhangá
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25264350
+Telefone(s): (21) 26782529
+E-mail: escola3.dulcetrindade@smeduquedecaxias.rj.gov.br
+Diretor: KATIA REGINA SANTIAGO
+Data de funcionamento: 19/04/2016
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607420&exibirQuadro=false
+--------------------------------------------------
+
+[172] E M Profªª Elisabeth Lopes Cabral
+Código da Escola: 33158509
+Distrito: 2º Distrito
+Endereço: Rua Maurício Maia Ramos - 00
+Bairro: Parque Fluminense
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045110
+Telefone(s): (21) 977254649
+E-mail: escola2.elisabethlopes@smeduquedecaxias.rj.gov.br
+Diretor: ALETHEA DE SOUZA FIGUEIREDO
+Data de funcionamento: 31/08/2010
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607379&exibirQuadro=false
+--------------------------------------------------
+
+[173] E M Profªª Hilda do Carmo Siqueira
+Código da Escola: 33049289
+Distrito: 1º Distrito
+Endereço: Rua Campos - 55
+Bairro: Bar dos Cavaleiros
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25015420
+Telefone(s): (21) 964381109
+E-mail: escola1.hildadocarmo@smeduquedecaxias.rj.gov.br
+Diretor: GRACIANA SERAFIM
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607313&exibirQuadro=false
+--------------------------------------------------
+
+[174] E M Profªª Maria Joséé de Oliveira
+Código da Escola: 33144109
+Distrito: 1º Distrito
+Endereço: Avenida Henrique Valadares - 2316
+Bairro: Parque Lafaiete
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25010030
+Telefone(s): (21) 27826103
+E-mail: escola1.mjoliveira@smeduquedecaxias.rj.gov.br
+Diretor: ANGELICA FAGUNDES DE OLIVEIRA
+Data de funcionamento: 28/02/2003
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607316&exibirQuadro=false
+--------------------------------------------------
+
+[175] E M Profªª Maria das Graças Cardoso Bighi
+Código da Escola: 33153612
+Distrito: 2º Distrito
+Endereço: Rua Barão do Rio Branco - SN
+Bairro: Saracuruna
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25212665
+Telefone(s): (21) 27763314
+E-mail: escola2.mariadasgracas@smeduquedecaxias.rj.gov.br
+Diretor: VALESCA ABDON DANTAS
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607367&exibirQuadro=false
+--------------------------------------------------
+
+[176] E M Profªª Olga Teixeira de Oliveira
+Código da Escola: 33049300
+Distrito: 1º Distrito
+Endereço: Rua MAria Luiza Reis - 155
+Bairro: Engenho do Porto
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25015045
+Telefone(s): (21) 26528422
+E-mail: escola1.olgateixeira@smeduquedecaxias.rj.gov.br
+Diretor: JOSE ANDRE ALVES DE CASTRO
+Data de funcionamento: 23/10/1990
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607318&exibirQuadro=false
+--------------------------------------------------
+
+[177] E M Profªª Sônia Regina Scudese Dessemone Pinto
+Código da Escola: 33139768
+Distrito: 2º Distrito
+Endereço: Rua Visconde de Inhaúma - SN
+Bairro: Pilar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25230180
+Telefone(s): 
+E-mail: escola2.soniascudese@smeduquedecaxias.rj.gov.br
+Diretor: MARIA ALESSANDRA BATISTA TARGINO
+Data de funcionamento: 02/04/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607382&exibirQuadro=false
+--------------------------------------------------
+
+[178] E M Profªª Zilla Junger da Silva
+Código da Escola: 33049319
+Distrito: 1º Distrito
+Endereço: Avenida Winston Churchill - 434
+Bairro: Senhor do Bonfim
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25025230
+Telefone(s): (21) 26735100
+E-mail: escola1.zillajunger@smeduquedecaxias.rj.gov.br
+Diretor: HELENA SILVA VIANA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607321&exibirQuadro=false
+--------------------------------------------------
+
+[179] E M Regina Celi da Silva Cerdeira
+Código da Escola: 33049130
+Distrito: 2º Distrito
+Endereço: Avenida Perimetral Primavera - 10
+Bairro: Jardim Primavera
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25215255
+Telefone(s): (21) 977380286
+E-mail: escola2.reginaceli@smeduquedecaxias.rj.gov.br
+Diretor: MARIO JUNIOR DA SILVA MARTINS
+Data de funcionamento: 20/03/1990
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607385&exibirQuadro=false
+--------------------------------------------------
+
+[180] E M Roberto Weguellin de Abreu
+Código da Escola: 33050708
+Distrito: 3º Distrito
+Endereço: Rua M - 179
+Bairro: Imbariê
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25271540
+Telefone(s): (21) 27755409
+E-mail: escola3.weguelin@smeduquedecaxias.rj.gov.br
+Diretor: ROBSON RODRIGUES DE CARVALHO
+Data de funcionamento: 07/12/1990
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607421&exibirQuadro=false
+--------------------------------------------------
+
+[181] E M Rotary
+Código da Escola: 33050716
+Distrito: 3º Distrito
+Endereço: Rua Alagoas - 12
+Bairro: Santa Cruz da Serra
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25255070
+Telefone(s): (21) 40400278
+E-mail: escola3.rotary@smeduquedecaxias.rj.gov.br
+Diretor: ANA ALICE FIDELIS DE OLIVEIRA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607422&exibirQuadro=false
+--------------------------------------------------
+
+[182] E M Ruy Barbosa
+Código da Escola: 33049327
+Distrito: 1º Distrito
+Endereço: Avenida Rio Branco - 20
+Bairro: Gramacho
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25035245
+Telefone(s): (21) 36581760
+E-mail: escola1.ruybarbosa@smeduquedecaxias.rj.gov.br
+Diretor: GEFFERSON MENDES FARIA
+Data de funcionamento: 20/03/1990
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607322&exibirQuadro=false
+--------------------------------------------------
+
+[183] E M Santa Luzia
+Código da Escola: 33050686
+Distrito: 3º Distrito
+Endereço: Rua Nossa Senhora da Glória - S/N
+Bairro: Parque A Equitativa
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25260380
+Telefone(s): (21) 976364179
+E-mail: escola3.santaluzia@smeduquedecaxias.rj.gov.br
+Diretor: ADRIANA DE CASSIA AVELAR DE SOUZA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607423&exibirQuadro=false
+--------------------------------------------------
+
+[184] E M Santa Rita
+Código da Escola: 33050996
+Distrito: 4º Distrito
+Endereço: Rua Márcio Santos Silva - s/nº
+Bairro: Mantiquira
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25250410
+Telefone(s): (21) 26795309
+E-mail: escola4.santarita@smeduquedecaxias.rj.gov.br
+Diretor: ELIANI BASILIO DA COSTA
+Data de funcionamento: 10/11/1988
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607446&exibirQuadro=false
+--------------------------------------------------
+
+[185] E M Santa Terezinha
+Código da Escola: 33049254
+Distrito: 1º Distrito
+Endereço: Rua David de Oliveira - S/N
+Bairro: Parque Lafaiete
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25015210
+Telefone(s): (21) 39002489
+E-mail: escola1.stterezinha@smeduquedecaxias.rj.gov.br
+Diretor: CARLA DOS SANTOS
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607323&exibirQuadro=false
+--------------------------------------------------
+
+[186] E M Santo Agostinho
+Código da Escola: 33051003
+Distrito: 4º Distrito
+Endereço: Rua Jair Gomes Jardim - S/N
+Bairro: Mantiquira
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25250572
+Telefone(s): (21) 37773551
+E-mail: escola4.stagostinho@smeduquedecaxias.rj.gov.br
+Diretor: GABRIELA BILHEIRO ALVES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607447&exibirQuadro=false
+--------------------------------------------------
+
+[187] E M Santo Amaro
+Código da Escola: 33051011
+Distrito: 4º Distrito
+Endereço: RUA ANTÔNIO GUEDES - 1999
+Bairro: SANTO ANTÔNIO
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25253550
+Telefone(s): (21) 977140932
+E-mail: escola4.stamaro@smeduquedecaxias.rj.gov.br
+Diretor: LETICIA FERRAREZ AMORIM DE OLIVEIRA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607448&exibirQuadro=false
+--------------------------------------------------
+
+[188] E M Santo Izidro
+Código da Escola: 33051020
+Distrito: 4º Distrito
+Endereço: Estrada do Cantão - 24
+Bairro: Parque Eldorado
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25240517
+Telefone(s): 
+E-mail: escola4.stizidro@smeduquedecaxias.rj.gov.br
+Diretor: DEBORA SANTOS FONTES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607449&exibirQuadro=false
+--------------------------------------------------
+
+[189] E M Sargento João Délio dos Santos
+Código da Escola: 33050988
+Distrito: 4º Distrito
+Endereço: Avenida Brasil - 560
+Bairro: Fazenda Piranema
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25250200
+Telefone(s): (21) 27649039
+E-mail: escola4.joaodelio@smeduquedecaxias.rj.gov.br
+Diretor: CRISTINA ALVES DE SOUZA
+Data de funcionamento: 22/09/1978
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607450&exibirQuadro=false
+--------------------------------------------------
+
+[190] E M Senador Afonso Arinos
+Código da Escola: 33050724
+Distrito: 3º Distrito
+Endereço: Avenida A - SN
+Bairro: Nova Campinas
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25268010
+Telefone(s): (21) 39000825
+E-mail: escola3.afonsoarinos@smeduquedecaxias.rj.gov.br
+Diretor: LUZIA DE SOUZA SILVA
+Data de funcionamento: 25/05/1992
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607424&exibirQuadro=false
+--------------------------------------------------
+
+[191] E M Senor Abravanel Silvio Santos
+Código da Escola: 33202354
+Distrito: 1º Distrito
+Endereço: Rua Jotão - s/n
+Bairro: Jardim Leal
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25035500
+Telefone(s): 
+E-mail: esola1.silviosantos@smeduquedecaxias.rj.gov.br
+Diretor: RAFAEL ELLER DE ARAUJO
+Data de funcionamento: 30/10/2024
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607913&exibirQuadro=false
+--------------------------------------------------
+
+[192] E M Sergipe
+Código da Escola: 33049335
+Distrito: 1º Distrito
+Endereço: Rua Laurindo Rabelo - 927
+Bairro: Doutor Laureano
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25060198
+Telefone(s): (21) 27822617
+E-mail: escola1.sergipe@smeduquedecaxias.rj.gov.br
+Diretor: SILNEIA ARAUJO DE LIMA MORAES
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607324&exibirQuadro=false
+--------------------------------------------------
+
+[193] E M Sete de Setembro
+Código da Escola: 33050066
+Distrito: 2º Distrito
+Endereço: Rua F - S/N
+Bairro: Conjunto Nova Esperança - São Bento
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25045080
+Telefone(s): (21) 982646139
+E-mail: escola2.setedesetembro@smeduquedecaxias.rj.gov.br
+Diretor: ELIZABETH SIQUEIRA DA CUNHA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607386&exibirQuadro=false
+--------------------------------------------------
+
+[194] E M Solano Trindade
+Código da Escola: 33050295
+Distrito: 2º Distrito
+Endereço: Rua da Felicidade - 3
+Bairro: Pilar
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25230140
+Telefone(s): (21) 977489019
+E-mail: escola2.solanotrindade@smeduquedecaxias.rj.gov.br
+Diretor: LIVIA MELO DE SOUZA
+Data de funcionamento: 28/12/1988
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607387&exibirQuadro=false
+--------------------------------------------------
+
+[195] E M Todos os Santos
+Código da Escola: 33049343
+Distrito: 1º Distrito
+Endereço: Rua Expedicionário Aquino de Araújo - S/N
+Bairro: Engenho do Porto
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25015100
+Telefone(s): (21) 36572352
+E-mail: escola1.todosossantos@smeduquedecaxias.rj.gov.br
+Diretor: NILCIDEIA FERREIRA DANTAS DA SILVA
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607325&exibirQuadro=false
+--------------------------------------------------
+
+[196] E M Ulysses Silveira Guimarães
+Código da Escola: 33201668
+Distrito: 3º Distrito
+Endereço: Rua Almirante Cochrane - S/N
+Bairro: Santa Lucia - Imbariê
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25265232
+Telefone(s): (21) 972352360
+E-mail: ESCOLA3.ULYSSESGUIMARAES@SMEDUQUEDECAXIAS.RJ.GOV.BR
+Diretor: ANDREA BOLORINI JARA
+Data de funcionamento: 25/06/2024
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607861&exibirQuadro=false
+--------------------------------------------------
+
+[197] E M Vila Operária
+Código da Escola: 33049351
+Distrito: 1º Distrito
+Endereço: Rua Badjer da Silveira - 9
+Bairro: Vila Operária
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25080520
+Telefone(s): (21) 36571563
+E-mail: escola1.vilaoperaria@smeduquedecaxias.rj.gov.br
+Diretor: SUYAN TRINDADE MACHADO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607326&exibirQuadro=false
+--------------------------------------------------
+
+[198] E M Vinte e um de Abril
+Código da Escola: 33049360
+Distrito: 1º Distrito
+Endereço: Rua Vinte e Um de Abril - 250
+Bairro: Vila São Luiz
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25065155
+Telefone(s): (21) 26716680
+E-mail: escola1.21deabril@smeduquedecaxias.rj.gov.br
+Diretor: CRISTIANE BARRETO DE CARVALHO
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607327&exibirQuadro=false
+--------------------------------------------------
+
+[199] E M Visconde de Itaboraí
+Código da Escola: 33049378
+Distrito: 1º Distrito
+Endereço: Avenida Nilo Peçanha - 2279
+Bairro: Bar dos Cavaleiros
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25015001
+Telefone(s): (21) 26534143
+E-mail: escola1.itaborai@smeduquedecaxias.rj.gov.br
+Diretor: GILMARA SILVA DE ALMEIDA DE CAMPOS
+Data de funcionamento: 06/07/1984
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607328&exibirQuadro=false
+--------------------------------------------------
+
+[200] E M Waldemar Zveiter
+Código da Escola: 33202613
+Distrito: 2º Distrito
+Endereço: Praça Projetada - s/n
+Bairro: Jardim Balneário Ana Clara
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25221124
+Telefone(s): 
+E-mail: escola2.waldemarzveiter@smeduquedecaxias.rj.gov.br
+Diretor: FATIMA LUIZA FIDELIS CABRAL
+Data de funcionamento: 
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607912&exibirQuadro=false
+--------------------------------------------------
+
+[201] E M Wanda Gomes Soares
+Código da Escola: 33135223
+Distrito: 2º Distrito
+Endereço: Av. Visconde de Itaúna - 61
+Bairro: Jardim Primavera
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25214415
+Telefone(s): (21) 39622235
+E-mail: escola2.wandagomes@smeduquedecaxias.rj.gov.br
+Diretor: LUCIANA JARDIM CASTRO
+Data de funcionamento: 20/09/2001
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607388&exibirQuadro=false
+--------------------------------------------------
+
+[202] E M Wilson de Oliveira Simões
+Código da Escola: 33153620
+Distrito: 1º Distrito
+Endereço: Rua Prefeito Braulino Matos Reis - 1410
+Bairro: Copacabana
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25060440
+Telefone(s): (21) 26723450
+E-mail: escola1.wilsondeoliveira@smeduquedecaxias.rj.gov.br
+Diretor: FERNANDA MONTEIRO DE MELLO
+Data de funcionamento: 02/03/2006
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607329&exibirQuadro=false
+--------------------------------------------------
+
+[203] E M Ziraldo Alves Pinto
+Código da Escola: 33199183
+Distrito: 3º Distrito
+Endereço: Avenida 31 de Março - SN
+Bairro: Parque Paulista
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25261000
+Telefone(s): (21) 965954092
+E-mail: escola3.ziraldo@smeduquedecaxias.rj.gov.br
+Diretor: FABIANA SANT ANNA DE SOUSA
+Data de funcionamento: 06/05/2024
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607855&exibirQuadro=false
+--------------------------------------------------
+
+[204] Escola de Transição
+Código da Escola: 8888
+Distrito: Escolas da Rede
+Endereço: Rua Prefeito José Carlos Lacerda- SME - 1424
+Bairro: Jardim Vinte e Cinco de Agosto
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25071120
+Telefone(s): 
+E-mail: 
+Diretor: 
+Data de funcionamento: 02/10/2023
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607508&exibirQuadro=false
+--------------------------------------------------
+
+[205] Pré-Escola Municipal Laura Menezes de Freitas Lima
+Código da Escola: 33048614
+Distrito: 1º Distrito
+Endereço: Rua Mariz e Barros - 205
+Bairro: Jardim Vinte e Cinco de Agosto
+Município: Duque de Caxias
+Estado: Rio de Janeiro
+CEP: 25071051
+Telefone(s): (21) 26536465
+E-mail: creche1.lauramenezes@smeduquedecaxias.rj.gov.br
+Diretor: TATIANE CHAGAS LEMOS
+Data de funcionamento: 11/11/1982
+URL: https://duque.augeeducacional.com.br/MapaCoordenadoria/detEscola.do?codUnidade=607283&exibirQuadro=false
+--------------------------------------------------
+

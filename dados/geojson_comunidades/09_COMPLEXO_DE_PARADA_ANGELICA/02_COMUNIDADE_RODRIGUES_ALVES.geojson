@@ -1,0 +1,103 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE RODRIGUES ALVES",
+        "complexo": "COMPLEXO DE PARADA ANGÉLICA",
+        "comunidade_pasta": "COMUNIDADE RODRIGUES ALVES",
+        "styleUrl": "#com_vermelho_escuro0",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade Rodrigues Alves",
+        "Complexo": "Complexo de Parada Angélica",
+        "Distrito": "3° Distrito",
+        "IDS_comunidade": "0.485",
+        "Classe_comunidade": "Situação crítica / prioridade máxima",
+        "kml_fill_color": "b07f00aa",
+        "fill": "#aa007f",
+        "fill-opacity": 0.6902,
+        "kml_stroke_color": "ff7f00aa",
+        "stroke": "#aa007f",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.22096416899996,
+              -22.64413107799994
+            ],
+            [
+              -43.22365765331541,
+              -22.64706348459875
+            ],
+            [
+              -43.21349501730823,
+              -22.64673922537646
+            ],
+            [
+              -43.21302172425149,
+              -22.64569836812188
+            ],
+            [
+              -43.21325636917268,
+              -22.64390859653495
+            ],
+            [
+              -43.2146177778073,
+              -22.64259046903155
+            ],
+            [
+              -43.21190163171256,
+              -22.63926377886844
+            ],
+            [
+              -43.21103808654177,
+              -22.63808485569627
+            ],
+            [
+              -43.21061479433935,
+              -22.63841841805639
+            ],
+            [
+              -43.21011055149704,
+              -22.63750760968675
+            ],
+            [
+              -43.21037765949368,
+              -22.63669989848215
+            ],
+            [
+              -43.21167834164761,
+              -22.6359589163758
+            ],
+            [
+              -43.21263908861365,
+              -22.63518735790147
+            ],
+            [
+              -43.21351576456154,
+              -22.63433866796524
+            ],
+            [
+              -43.21849323999992,
+              -22.64110618399998
+            ],
+            [
+              -43.22026736499998,
+              -22.64319058099996
+            ],
+            [
+              -43.22096416899996,
+              -22.64413107799994
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

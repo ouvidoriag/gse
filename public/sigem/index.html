@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    // SIMAC: Verificação de Autenticação Segura
+    (function checkAuth() {
+      try {
+        let session = localStorage.getItem('simac_auth_session');
+    if (!session && localStorage.getItem('token')) {
+      try {
+        const u = JSON.parse(localStorage.getItem('user') || '{}');
+        session = JSON.stringify({ token: localStorage.getItem('token'), user: u, timestamp: Date.now() });
+        localStorage.setItem('simac_auth_session', session);
+      } catch (_) {}
+    }
+        if (!session) {
+          window.location.href = '/login';
+          return;
+        }
+        const parsed = JSON.parse(session);
+        const now = Date.now();
+        // Sessão expira em 8 horas
+        if (!parsed.timestamp || (now - parsed.timestamp > 8 * 60 * 60 * 1000)) {
+          localStorage.removeItem('simac_auth_session');
+          window.location.href = '/login?expired=1';
+        }
+      } catch (e) {
+        localStorage.removeItem('simac_auth_session');
+        window.location.href = '/login';
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Endereços e Equipamentos — Prefeitura de Duque de Caxias</title>
+  <link rel="icon" type="image/png" href="/logo.png">
+  <meta name="description" content="Plataforma oficial de cadastro, edição, geocodificação e gestão de endereços dos equipamentos públicos de Duque de Caxias - RJ.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" />
+
+  <!-- Folhas de Estilos Modulares do SIGEM -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link rel="stylesheet" href="css/smart-analysis.css">
+<link rel="stylesheet" href="/shared/nav.css">
+<script src="/shared/nav.js"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR ESQUERDO ESTILO SGA / SIGEM (MENU LATERAL) -->
+    <aside class="sidebar-nav" id="sidebarNav">
+
+      <!-- CABEÇALHO DA SIDEBAR -->
+      <div class="sidebar-header">
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Recolher / Expandir Menu" aria-label="Alternar menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="sidebar-brand-box" title="Portal Integrado PMDC">
+          <div class="sidebar-logo-badge"><i class="ri-government-line"></i></div>
+          <div class="sidebar-brand-text">
+            <span class="sidebar-app-title">SIGEM</span>
+            <span class="sidebar-app-sub">Gestão e Acompanhamento</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ITENS DE MENU DA SIDEBAR -->
+      <div class="sidebar-menu-scroll">
+
+        <div class="sidebar-section-header">VISTAS DO SIGEM</div>
+
+        <!-- 1. BASE DE EQUIPAMENTOS E ENDEREÇOS -->
+        <div class="sidebar-nav-item active" onclick="navigateTab('equipamentos', this)" data-tab="equipamentos" id="navItemEquipamentos" title="Painel de Equipamentos e Endereços">
+          <div class="nav-icon-box"><i class="ri-building-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Equipamentos</span>
+            <span class="nav-sub-title" id="badgeTotalEquip">466 cadastrados</span>
+          </div>
+        </div>
+
+        <!-- 2. COMPLEXOS & HUBS -->
+        <div class="sidebar-nav-item" onclick="navigateTab('hubs', this)" data-tab="hubs" title="Complexos e Polos Compartilhados">
+          <div class="nav-icon-box"><i class="ri-community-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Hubs &amp; Complexos</span>
+            <span class="nav-sub-title">12 prédios compartilhados</span>
+          </div>
+        </div>
+
+        <!-- 3. MAPA GEORREFERENCIADO -->
+        <div class="sidebar-nav-item" onclick="navigateTab('mapa', this)" data-tab="mapa" title="Mapa Georreferenciado SIG">
+          <div class="nav-icon-box"><i class="ri-map-2-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Mapa SIG</span>
+            <span class="nav-sub-title">Camada ESRI &amp; Satélite</span>
+          </div>
+        </div>
+
+        <!-- 4. RELATÓRIOS & DADOS -->
+        <div class="sidebar-nav-item" onclick="navigateTab('relatorios', this)" data-tab="relatorios" title="Indicadores e Relatórios">
+          <div class="nav-icon-box"><i class="ri-bar-chart-box-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Indicadores &amp; Dados</span>
+            <span class="nav-sub-title">Exportação CSV e JSON</span>
+          </div>
+        </div>
+
+        <!-- 5. CONFIGURAÇÕES -->
+        <div class="sidebar-nav-item" onclick="navigateTab('config', this)" data-tab="config" title="Configurações do Sistema">
+          <div class="nav-icon-box"><i class="ri-settings-4-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Configurações</span>
+            <span class="nav-sub-title">Sistema e APIs</span>
+          </div>
+        </div>
+
+        <div class="sidebar-section-header">AÇÕES DO SISTEMA</div>
+
+        <!-- 7. BOTÃO NOVO EQUIPAMENTO -->
+        <button class="sidebar-action-btn" onclick="openNewEquipModal()" title="Cadastrar novo equipamento público">
+          <span class="action-icon"><i class="ri-add-circle-line"></i></span>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Novo Equipamento</span>
+            <span class="nav-sub-title">Cadastrar novo órgão</span>
+          </div>
+        </button>
+
+        <!-- 8. BOTÃO MODO PLANILHA -->
+        <button class="sidebar-action-btn" onclick="toggleSpreadsheetMode()" id="btnSpreadsheetMode" title="Ativar edição rápida em linha">
+          <span class="action-icon"><i class="ri-table-line"></i></span>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Modo Planilha</span>
+            <span class="nav-sub-title">Edição inline em grade</span>
+          </div>
+        </button>
+
+      </div>
+
+      <!-- RODAPÉ DA SIDEBAR: USUÁRIO E LOGOUT -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card">
+          <div class="sidebar-avatar" id="sidebarAvatar">W</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name" id="sidebarUserName">Wellington Ribeiro</span>
+            <span class="sidebar-user-role" id="sidebarUserRole">Membro</span>
+          </div>
+        </div>
+        <button class="sidebar-logout-btn" onclick="simacLogout()" title="Encerrar sessão no sistema">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sair</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ÁREA PRINCIPAL DO DASHBOARD -->
+    <div class="app-main">
+
+      <!-- BARRA SUPERIOR INSTITUCIONAL (ESTILO SCREENSHOT) -->
+      <header class="top-dashboard-bar">
+        <nav class="top-bar-center" aria-label="Navegação rápida de módulos">
+          <div class="top-nav-tabs">
+            <a href="/" class="top-nav-tab" id="topTabHub" title="Ir para o Início / Hub Geral">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>Início (Hub)</span>
+            </a>
+            <a href="/cds/dashboard.html" class="top-nav-tab" id="topTabCds" title="Ir para a Carta de Serviços">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+              <span>Carta de Serviços</span>
+            </a>
+            <a href="/sigem" class="top-nav-tab active" id="topTabSigem" title="Ir para o SIGEM — Endereços e Cartografia">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+              <span>Endereços &amp; GIS</span>
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <!-- CORPO PRINCIPAL -->
+      <main class="main-body">
+
+        <!-- BANNER DE SAUDAÇÃO IDÊNTICO À FOTO MODELO -->
+        <div class="hero-greeting-box">
+          <h1 class="hero-greeting-title" id="heroGreetingTitle">Bom dia, Wellington!</h1>
+          <p class="hero-greeting-date" id="heroGreetingDate">28/09/2026 · Sistema Integrado de Gestão de Endereços Municipais</p>
+        </div>
+
+    <!-- ABA 1: TABELA DE EQUIPAMENTOS & ENDEREÇOS -->
+    <section id="viewEquipamentos" class="view-section active">
+
+      <!-- CARDS KPI DE GESTÃO -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-blue"><i class="ri-building-line"></i></div>
+          <div class="kpi-meta">
+            <span class="kpi-value" id="kpiTotal">466</span>
+            <span class="kpi-label">Total de Equipamentos</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-green"><i class="ri-checkbox-circle-line"></i></div>
+          <div class="kpi-meta">
+            <span class="kpi-value" id="kpiAtivos">0</span>
+            <span class="kpi-label">Endereços Ativos</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-amber"><i class="ri-time-line"></i></div>
+          <div class="kpi-meta">
+            <span class="kpi-value" id="kpiPendentes">466</span>
+            <span class="kpi-label">Pendentes de Revisão</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-red"><i class="ri-alert-line"></i></div>
+          <div class="kpi-meta">
+            <span class="kpi-value" id="kpiDesatualizados">0</span>
+            <span class="kpi-label">Desatualizados / Incompletos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BARRA DE PESQUISA E FILTROS -->
+      <div class="toolbar-box">
+        <div class="search-filter-group">
+          <div class="search-input-wrap">
+            <span><i class="ri-search-line"></i></span>
+            <input type="text" id="searchEquip" class="search-input" placeholder="Buscar por nome, logradouro, bairro, CEP, telefone ou órgão..." oninput="onSearchInput()">
+          </div>
+
+          <select id="filterDistrito" class="filter-select" onchange="onFilterChange()">
+            <option value="">Todos os Distritos</option>
+            <option value="1">1º Distrito (Centro / Caxias)</option>
+            <option value="2">2º Distrito (Campos Elíseos)</option>
+            <option value="3">3º Distrito (Imbariê)</option>
+            <option value="4">4º Distrito (Xerém)</option>
+          </select>
+
+          <select id="filterSecretaria" class="filter-select" onchange="onFilterChange()" title="Filtrar por Secretaria Gestora">
+            <option value="">Todas as Secretarias</option>
+            <option value="SMS">Saúde (SMS - 95)</option>
+            <option value="SMEDC">Educação (SMEDC - 209)</option>
+            <option value="SEASDIH">Assistência Social (SEASDIH - 47)</option>
+            <option value="FUNDEC">FUNDEC (35)</option>
+            <option value="SMG">Governo (SMG - 33)</option>
+            <option value="SMO">Obras e Defesa Civil (SMO - 23)</option>
+            <option value="SMDC">Defesa Civil (SMDC - 4)</option>
+            <option value="SMDET">Desenv. Econômico (SMDET - 2)</option>
+            <option value="SMSEG">Segurança Pública (SMSEG - 1)</option>
+          </select>
+
+          <select id="filterCategoria" class="filter-select" onchange="onFilterChange()">
+            <option value="">Todas as Categorias</option>
+            <option value="Educação">Educação (SMEDC)</option>
+            <option value="Saúde">Saúde (SMS)</option>
+            <option value="Assistência">Assistência Social (SEASDIH)</option>
+            <option value="Segurança">Segurança Pública (SMSP)</option>
+            <option value="Administração">Administração / Governo</option>
+            <option value="FUNDEC">FUNDEC / Cursos</option>
+            <option value="Cemit">Cemitérios e Serviços Funerários</option>
+            <option value="Transporte">Mobilidade e Transporte (Trem)</option>
+          </select>
+
+          <select id="filterStatus" class="filter-select" onchange="onFilterChange()">
+            <option value="">Todos os Status</option>
+            <option value="Ativo">Ativo</option>
+            <option value="Pendente de revisão">Pendente de revisão</option>
+            <option value="Desatualizado">Desatualizado</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button id="btnMinhaSecretaria" class="btn btn-secondary btn-sm" style="display: none;" onclick="filtrarMinhaSecretaria()"><i class="ri-user-star-line"></i> Meus Equipamentos</button>
+          <button class="btn btn-secondary btn-sm" onclick="clearFilters()">Limpar Filtros</button>
+        </div>
+      </div>
+
+      <!-- TABELA DE DADOS -->
+      <div class="table-container" id="tableContainer">
+        <div class="table-responsive">
+          <table class="data-table" id="equipTable">
+            <thead>
+              <tr>
+                <th style="width: 40px;">#</th>
+                <th style="min-width: 260px;">Nome do Equipamento</th>
+                <th style="width: 150px;">Bairro</th>
+                <th style="min-width: 300px;">Endereço Oficial</th>
+                <th style="width: 110px;">CEP</th>
+                <th style="width: 140px;">Telefone</th>
+                <th style="width: 110px;">Status</th>
+                <th style="width: 130px; text-align: right;">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="equipTableBody">
+              <!-- Renderizado via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- BARRA DE PAGINAÇÃO -->
+        <div class="pagination-bar">
+          <div id="paginationInfo">Mostrando 1–25 de 466 endereços cadastrados</div>
+          <div class="pagination-pages" id="paginationButtons">
+            <!-- Botões gerados via JS -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ABA 2: HUBS / POLOS INTEGRADOS -->
+    <section id="viewHubs" class="view-section">
+      <div class="toolbar-box">
+        <div>
+          <h2 style="font-size: 16px; font-weight: 800; color: var(--navy-900);">Complexos & Polos Governamentais Integrados</h2>
+          <p style="font-size: 12px; color: var(--text-muted);">Edifícios sede e polos municipais que abrigam múltiplos órgãos e secretarias no mesmo endereço.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openNewHubModal()">
+          <span><i class="ri-add-line"></i></span>
+          <span>Novo Complexo</span>
+        </button>
+      </div>
+
+      <div class="hub-grid" id="hubsContainer">
+        <!-- Populado via JS -->
+      </div>
+    </section>
+
+    <!-- ABA 3: MAPA DIGITAL GEORREFERENCIADO -->
+    <section id="viewMapa" class="view-section">
+      <!-- BARRA DE CONTROLE DE CAMADAS DO MAPA -->
+      <div class="toolbar-box" style="margin-bottom: 12px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+          <span style="font-size: 12px; font-weight: 800; color: var(--navy-900); text-transform: uppercase;">Camadas no Mapa:</span>
+          
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;">
+            <input type="checkbox" id="layerToggleHubs" checked onchange="updateMapLayers()">
+            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-community-line"></i> Complexos / Polos (12 Hubs)</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;">
+            <input type="checkbox" id="layerToggleEquips" checked onchange="updateMapLayers()">
+            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-map-pin-2-line"></i> Equipamentos (<span id="mapEquipCount">466 pontos</span>)</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;" title="Limites Oficiais dos 42 Bairros Municipais (Lei Municipal nº 1.488)">
+            <input type="checkbox" id="layerToggleBairros" onchange="toggleVectorLayer('bairros')">
+            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-shape-line" style="color: #6366f1;"></i> Bairros Oficiais (42)</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;" title="Limites dos 4 Distritos Administrativos">
+            <input type="checkbox" id="layerToggleDistritos" onchange="toggleVectorLayer('distritos')">
+            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-pie-chart-line" style="color: #0284c7;"></i> Distritos (4)</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;" title="Linha Férrea e Estações de Trem">
+            <input type="checkbox" id="layerToggleTrem" onchange="toggleVectorLayer('trem')">
+            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-train-line" style="color: #ea580c;"></i> Trem &amp; Estações</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none; background: #fff7ed; padding: 2px 8px; border-radius: 6px; border: 1px solid #fed7aa;" title="10 Grandes Complexos e Comunidades Oficiais (SIMAC)">
+            <input type="checkbox" id="layerToggleComunidades" onchange="toggleVectorLayer('comunidades')">
+            <span style="display: inline-flex; align-items: center; gap: 4px; color: #c2410c;"><i class="ri-community-line" style="color: #ea580c;"></i> <strong>Comunidades &amp; Complexos (105)</strong></span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none; background: #faf5ff; padding: 2px 8px; border-radius: 6px; border: 1px solid #e9d5ff;" title="Contorno Oficial do Município de Duque de Caxias">
+            <input type="checkbox" id="layerToggleLimiteCaxias" onchange="toggleVectorLayer('limite_caxias')">
+            <span style="display: inline-flex; align-items: center; gap: 4px; color: #7e22ce;"><i class="ri-shield-line" style="color: #9333ea;"></i> <strong>Limite Caxias</strong></span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none; background: #eff6ff; padding: 2px 8px; border-radius: 6px; border: 1px solid #bfdbfe;" title="Rotas Municipais dos Ônibus Tarifa Zero (20 linhas)">
+            <input type="checkbox" id="layerToggleOnibus" onchange="toggleVectorLayer('onibus')">
+            <span style="display: inline-flex; align-items: center; gap: 4px; color: #1d4ed8;"><i class="ri-bus-fill" style="color: #2563eb;"></i> <strong>Rotas Ônibus (20)</strong></span>
+          </label>
+
+          <label id="containerToggleParadas" style="display: none; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none; background: #f0fdf4; padding: 2px 8px; border-radius: 6px; border: 1px solid #bbf7d0;" title="Mostrar todas as 1.795 paradas dos ônibus municipais">
+            <input type="checkbox" id="layerToggleParadas" onchange="toggleParadasLayer()">
+            <span style="display: inline-flex; align-items: center; gap: 4px; color: #15803d;"><i class="ri-map-pin-range-line" style="color: #16a34a;"></i> Paradas (1.795)</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;" title="Unidades de Conservação Ambiental (Federal, Estadual e Municipal)">
+            <input type="checkbox" id="layerToggleUcs" onchange="toggleVectorLayer('ucs')">
+            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-leaf-line" style="color: #16a34a;"></i> UCs Ambientais</span>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;" title="Rios, Rios Principais e Hidrografia">
+            <input type="checkbox" id="layerToggleHidro" onchange="toggleVectorLayer('hidro')">
+            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-drop-line" style="color: #0284c7;"></i> Rios &amp; Hidrografia</span>
+          </label>
+
+          <!-- Alternador de Visão de Mapa (Ruas / Satélite) -->
+          <div class="map-layer-switch-box" style="position: static; box-shadow: none; border-color: var(--border);">
+            <button type="button" class="map-layer-switch-btn active" id="btnMainMapStreet" onclick="setMainMapMode('street')" title="Mapa de Vias e Ruas">
+              <i class="ri-map-2-line"></i> Ruas
+            </button>
+            <button type="button" class="map-layer-switch-btn" id="btnMainMapSat" onclick="setMainMapMode('satellite')" title="Satélite Ortofoto de Alta Resolução">
+              <i class="ri-earth-line"></i> Satélite
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+          <!-- PESQUISA POR NOME / TERMO NO MAPA SIG -->
+          <div class="search-input-wrap" style="position: relative; min-width: 250px; max-width: 340px;">
+            <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--gray-400); pointer-events: none;"><i class="ri-search-line"></i></span>
+            <input type="text" id="mapSearchInput" class="search-input" placeholder="Pesquisar por nome no mapa..." oninput="updateMapLayers()" onkeydown="if(event.key==='Enter') zoomToFirstMapMatch()" style="padding: 6px 26px 6px 30px; font-size: 12px; height: 32px;" title="Digite o nome de uma escola, hospital, posto ou órgão para localizar instantaneamente">
+            <button type="button" id="btnClearMapSearch" onclick="clearMapSearch()" style="display: none; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 14px; color: var(--gray-400); cursor: pointer; padding: 2px;" title="Limpar pesquisa">&times;</button>
+          </div>
+
+          <select id="mapFilterDistrito" class="filter-select" onchange="updateMapLayers()" style="padding: 6px 10px; font-size: 12px;">
+            <option value="">Todos os Distritos</option>
+            <option value="1">1º Distrito (Centro)</option>
+            <option value="2">2º Distrito (Campos Elíseos)</option>
+            <option value="3">3º Distrito (Imbariê)</option>
+            <option value="4">4º Distrito (Xerém)</option>
+          </select>
+
+          <select id="mapFilterCategoria" class="filter-select" onchange="updateMapLayers()" style="padding: 6px 10px; font-size: 12px;">
+            <option value="">Todas as Categorias</option>
+            <option value="Saúde">Saúde</option>
+            <option value="Educação">Educação</option>
+            <option value="Assistência">Assistência Social</option>
+            <option value="Segurança">Segurança Pública</option>
+            <option value="Cemit">Cemitérios</option>
+            <option value="Transporte">Mobilidade / Trem</option>
+          </select>
+
+          <select id="selectLinhaOnibus" class="filter-select" onchange="filterOnibusLine(this.value)" style="display: none; padding: 6px 10px; font-size: 12px; border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; font-weight: 700; max-width: 250px;">
+            <option value="">🚌 Todas as Linhas (20)</option>
+          </select>
+
+          <button class="btn btn-secondary btn-sm" onclick="fitAllMap()">
+            <span><i class="ri-focus-3-line"></i></span>
+            <span>Enquadrar Duque de Caxias</span>
+          </button>
+
+          <button id="btnToggleSmartAnalysis" class="btn btn-sm btn-analysis-toggle" onclick="toggleSmartAnalysisPagePanel()" title="Abrir painel de análise de cobertura territorial e simulação">
+            <i class="ri-radar-line" style="font-size: 15px;"></i>
+            <span id="txtBtnSmartAnalysis">Análise Territorial Inteligente</span>
+            <i id="iconBtnSmartAnalysis" class="ri-arrow-down-s-line" style="font-size: 14px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- PAINEL INTEGRADO NA PÁGINA: ANÁLISE TERRITORIAL INTELIGENTE & SIMULAÇÃO -->
+      <div id="smartAnalysisPanel" class="smart-analysis-page-panel" style="display: none;">
+        <!-- BARRA SUPERIOR DO PAINEL -->
+        <div class="analysis-panel-top">
+          <div class="analysis-status-badge">
+            <div class="analysis-radar-icon"><i class="ri-radar-fill"></i></div>
+            <div>
+              <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Análise Territorial de Cobertura</div>
+              <div style="font-size: 11px; color: #64748b;">Duque de Caxias · 467,6 km² · 4 Distritos · 105 Favelas e Comunidades</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="SmartAnalysis.exportReport()" title="Exportar dados técnicos da análise em JSON">
+              <i class="ri-download-2-line"></i> Exportar JSON
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="toggleSmartAnalysisPagePanel()" title="Ocultar painel de análise">
+              <i class="ri-close-line"></i> Ocultar
+            </button>
+          </div>
+        </div>
+
+        <!-- GRID DE 3 COLUNAS -->
+        <div class="analysis-panel-grid">
+          <!-- COLUNA 1: RAIO & PARÂMETROS -->
+          <div class="analysis-card">
+            <div class="analysis-card-header">
+              <i class="ri-ruler-2-line" style="color: #4f46e5;"></i>
+              <span>Raio de Atendimento &amp; Filtros</span>
+            </div>
+
+            <!-- Seleção de Raio -->
+            <div style="margin-bottom: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <span style="font-size: 11px; font-weight: 700; color: #334155;">Raio de Influência:</span>
+                <span id="analysisRadiusDisplay" style="font-size: 13px; font-weight: 800; color: #4338ca;">500 metros</span>
+              </div>
+              <div class="analysis-pill-group">
+                <button type="button" class="analysis-pill-btn" data-radius="300" onclick="setAnalysisRadius(300)">300m</button>
+                <button type="button" class="analysis-pill-btn active" data-radius="500" onclick="setAnalysisRadius(500)">500m</button>
+                <button type="button" class="analysis-pill-btn" data-radius="1000" onclick="setAnalysisRadius(1000)">1 km</button>
+                <button type="button" class="analysis-pill-btn" data-radius="2000" onclick="setAnalysisRadius(2000)">2 km</button>
+                <button type="button" class="analysis-pill-btn" data-radius="3000" onclick="setAnalysisRadius(3000)">3 km</button>
+              </div>
+              <input type="range" id="analysisRadiusSlider" class="analysis-range-slider" min="100" max="3000" step="50" value="500" oninput="setAnalysisRadius(this.value)">
+            </div>
+
+            <!-- Parâmetros de Camadas -->
+            <div class="analysis-checks-wrap">
+              <label class="analysis-check-item">
+                <input type="checkbox" id="optShowBuffers" checked onchange="SmartAnalysis.updateOption('showBuffers', this.checked)">
+                <span>Exibir raios de cobertura no mapa</span>
+              </label>
+              <label class="analysis-check-item" title="Destaca onde 2 ou mais equipamentos cobrem a mesma área">
+                <input type="checkbox" id="optShowOverlaps" checked onchange="SmartAnalysis.updateOption('showOverlaps', this.checked)">
+                <span><strong>Destacar sobreposições</strong> (áreas com 2+ equipamentos)</span>
+              </label>
+              <label class="analysis-check-item" title="Destaca as comunidades fora do raio de cobertura">
+                <input type="checkbox" id="optShowUncovered" checked onchange="SmartAnalysis.updateOption('showUncovered', this.checked)">
+                <span>Destacar comunidades em déficit de atendimento</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- COLUNA 2: DIAGNÓSTICO OFICIAL DUQUE DE CAXIAS -->
+          <div class="analysis-card">
+            <div class="analysis-card-header">
+              <i class="ri-government-line" style="color: #059669;"></i>
+              <span>Diagnóstico Duque de Caxias (467,6 km² · 4 Distritos)</span>
+            </div>
+
+            <div class="analysis-kpi-grid">
+              <div class="analysis-kpi-item">
+                <div class="analysis-kpi-num" id="kpiAnalysisTotal">209</div>
+                <div class="analysis-kpi-tit">Equipamentos</div>
+                <div class="analysis-kpi-desc" id="kpiAnalysisEquipSub">Georreferenciados</div>
+              </div>
+              <div class="analysis-kpi-item">
+                <div class="analysis-kpi-num" id="kpiAnalysisArea">140 km²</div>
+                <div class="analysis-kpi-tit">Área Coberta Est.</div>
+                <div class="analysis-kpi-desc" id="kpiAnalysisAreaPct">~30% do Município</div>
+              </div>
+              <div class="analysis-kpi-item" style="border-top: 3px solid #10b981;">
+                <div class="analysis-kpi-num" id="kpiAnalysisComsCovered" style="color: #059669;">33 / 105</div>
+                <div class="analysis-kpi-tit">Favelas Atendidas</div>
+                <div class="analysis-kpi-desc" id="kpiAnalysisComsPct" style="color: #059669;">31.4% de cobertura</div>
+              </div>
+              <div class="analysis-kpi-item" style="border-top: 3px solid #ef4444;">
+                <div class="analysis-kpi-num" id="kpiAnalysisComsUnserved" style="color: #dc2626;">72</div>
+                <div class="analysis-kpi-tit">Favelas em Déficit</div>
+                <div class="analysis-kpi-desc" style="color: #dc2626;">Fora do raio</div>
+              </div>
+            </div>
+
+            <!-- Distribuição por Distritos Oficiais de Duque de Caxias -->
+            <div class="analysis-districts-grid" id="analysisDistrictsGrid">
+              <!-- Preenchido dinamicamente com 1º, 2º, 3º e 4º Distritos -->
+            </div>
+          </div>
+
+          <!-- COLUNA 3: SIMULAÇÃO DE NOVA UNIDADE & COMUNIDADES PRIORITÁRIAS -->
+          <div class="analysis-card">
+            <div class="analysis-card-header">
+              <i class="ri-magic-line" style="color: #d97706;"></i>
+              <span>Simular Novo Equipamento &amp; Prioridades</span>
+            </div>
+
+            <!-- Caixa de Simulação -->
+            <div class="analysis-sim-box" id="analysisSimBox">
+              <div style="font-size: 11px; color: #78350f; line-height: 1.35; margin-bottom: 6px;">
+                Clique no botão abaixo e em seguida <strong>clique no mapa</strong> para simular onde uma nova escola/unidade traria maior ganho de atendimento.
+              </div>
+
+              <div style="display: flex; gap: 6px;">
+                <button type="button" id="btnStartSimulation" class="analysis-btn-sim-action" onclick="SmartAnalysis.startSimulation()">
+                  <i class="ri-map-pin-add-line"></i> Simular Nova Unidade no Mapa
+                </button>
+                <button type="button" id="btnClearSimulation" class="analysis-btn-sim-clear" style="display: none;" onclick="SmartAnalysis.clearSimulation()">
+                  <i class="ri-delete-bin-line"></i> Limpar
+                </button>
+              </div>
+
+              <!-- Banner de Ganho em Tempo Real -->
+              <div id="analysisSimImpactNotice" style="display: none; margin-top: 6px; padding: 6px 8px; border-radius: 6px; background: #ecfdf5; border: 1px solid #a7f3d0; font-size: 11px; color: #047857;">
+                <strong><i class="ri-checkbox-circle-fill"></i> Ganho da Simulação:</strong> <span id="analysisSimImpactText">Calculando...</span>
+              </div>
+            </div>
+
+            <!-- Lista Rápida de Comunidades Desassistidas -->
+            <div style="margin-top: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase;">
+                <span>Favelas fora do raio (<span id="analysisUnservedBadge">72</span>)</span>
+                <span style="font-size: 9px; color: #64748b; text-transform: none;">Clique para voar</span>
+              </div>
+              <div class="analysis-unserved-scroll" id="analysisUnservedList">
+                <!-- Preenchido dinamicamente -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="mapContainer"></div>
+    </section>
+
+    <!-- ABA 4: RELATÓRIOS & EXPORTAÇÕES -->
+    <section id="viewRelatorios" class="view-section">
+      <div class="hub-card" style="padding: 24px;">
+        <h2 style="font-size: 18px; font-weight: 800; color: var(--navy-900); margin-bottom: 4px;">Relatórios Oficiais e Exportação de Dados</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Exporte o banco de endereços consolidado em formatos abertos para auditoria ou integração SIG.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+          <div style="padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-subtle);">
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 6px;"><i class="ri-file-code-line" style="color: var(--blue-600); font-size: 16px;"></i> Base Completa (JSON)</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">Todos os 466 equipamentos com coordenadas exatas, distritos, bairros, telefones e vínculos.</p>
+            <button class="btn btn-primary btn-sm" onclick="exportData('equipamentos', 'json')">Baixar JSON Oficial</button>
+          </div>
+
+          <div style="padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-subtle);">
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 6px;"><i class="ri-file-excel-2-line" style="color: var(--emerald-600); font-size: 16px;"></i> Planilha Tabulada (CSV)</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">Compatível com Microsoft Excel, LibreOffice Calc e Google Sheets (delimitador ';').</p>
+            <button class="btn btn-navy btn-sm" onclick="exportData('equipamentos', 'csv')">Baixar Planilha CSV</button>
+          </div>
+
+          <div style="padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-subtle);">
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 6px;"><i class="ri-building-2-line" style="color: var(--navy-700); font-size: 16px;"></i> Catálogo de Complexos (Hubs)</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">Mapeamento dos 12 edifícios governamentais compartilhados e seus órgãos instalados.</p>
+            <button class="btn btn-secondary btn-sm" onclick="exportHubsData('csv')">Exportar Hubs CSV</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 5: CONFIGURAÇÕES -->
+    <section id="viewConfig" class="view-section">
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 960px;">
+
+        <!-- CABEÇALHO DA SEÇÃO -->
+        <div class="hub-card" style="padding: 24px;">
+          <h2 style="font-size: 18px; font-weight: 800; color: var(--navy-900); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+            <i class="ri-settings-4-line" style="color: var(--primary);"></i> Configurações & Gestão do Sistema
+          </h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Controle de persistência local, integração de serviços de mapas, integridade da base oficial e sessão de acesso.</p>
+        </div>
+
+        <!-- GRID DE CARDS DE CONFIGURAÇÃO -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
+
+          <!-- CARD 1: GOOGLE GEOCODING API -->
+          <div class="hub-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <h3 style="font-size: 15px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 8px;">
+                  <i class="ri-google-fill" style="color: #ea4335; font-size: 18px;"></i> Google Geocoding API
+                </h3>
+                <span id="configGoogleKeyBadge" class="badge-status badge-status-desatualizado">Desconectada</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;" id="configGoogleKeyDesc">
+                Permite geocodificação com precisão métrica de telhado (ROOFTOP) no mapa de cadastro. Quando desconectada, o sistema utiliza a base cartográfica municipal e OpenStreetMap.
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 8px;">
+              <button class="btn btn-primary btn-sm" onclick="openGoogleKeyModal()"><i class="ri-key-2-line"></i> Gerenciar Chave de API</button>
+            </div>
+          </div>
+
+          <!-- CARD 2: BANCO DE DADOS LOCAL -->
+          <div class="hub-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <h3 style="font-size: 15px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 8px;">
+                  <i class="ri-database-2-line" style="color: var(--blue-600); font-size: 18px;"></i> Base Oficial do Município
+                </h3>
+                <span class="badge-status badge-status-ativo">2026 Calibrada</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 0;">
+                Total de <strong>449 equipamentos públicos</strong> e <strong>12 complexos governamentais</strong> cadastrados e georreferenciados nos 4 distritos municipais.
+              </p>
+            </div>
+          </div>
+
+          <!-- CARD 3: SESSÃO E SEGURANÇA -->
+          <div class="hub-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <h3 style="font-size: 15px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 8px;">
+                  <i class="ri-user-shield-line" style="color: var(--emerald-600); font-size: 18px;"></i> Sessão do Operador
+                </h3>
+                <span class="badge-status badge-status-ativo">Autenticado</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
+                Operador ativo: <strong style="color: var(--navy-900);" id="configUserName">Wellington Ribeiro</strong><br>
+                Perfil: <span id="configUserRole">Membro</span> · Acesso seguro ao painel municipal.
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 8px;">
+              <button class="btn btn-secondary btn-sm" style="color: var(--red-600);" onclick="simacLogout()"><i class="ri-logout-box-r-line"></i> Encerrar Sessão</button>
+            </div>
+          </div>
+
+        </div>
+      
+        <!-- ========================================================================= -->
+        <!-- SEÇÃO RESTRITA: PAINEL DE GOVERNANÇA & ADMINISTRAÇÃO (APENAS ADM) -->
+        <!-- ========================================================================= -->
+        <div id="adminConfigSection" style="display: none; flex-direction: column; gap: 20px;">
+
+          <div class="hub-card" style="padding: 20px 24px; background: linear-gradient(135deg, #0f1b2d 0%, #1e3352 100%); color: #ffffff; border: none; box-shadow: var(--shadow-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <span style="background: rgba(239, 68, 68, 0.25); border: 1px solid rgba(239, 68, 68, 0.5); color: #fca5a5; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.05em;">Acesso Restrito ADM</span>
+                  <h3 style="font-size: 17px; font-weight: 800; color: #ffffff; margin: 0; display: flex; align-items: center; gap: 6px;">
+                    <i class="ri-shield-keyhole-line" style="color: #38bdf8;"></i> Painel de Governança &amp; Administração
+                  </h3>
+                </div>
+                <p style="font-size: 12px; color: #94a3b8; margin: 0;">Gestão exclusiva de rastreabilidade de acessos, histórico de alterações dos operadores e criação de categorias oficiais.</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;">
+                  <i class="ri-shield-check-line" style="color: #34d399; font-size: 14px;"></i>
+                  <span>Auditoria &amp; Rastreabilidade Forense Ativa</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- GRID DE CARDS EXCLUSIVOS DO ADMINISTRADOR -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
+
+            <!-- CARD ADM 1: LOGS DE AUDITORIA & RASTREABILIDADE -->
+            <div class="hub-card" style="padding: 22px; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #3b82f6;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                  <h3 style="font-size: 15px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 8px;">
+                    <i class="ri-file-list-3-line" style="color: #2563eb; font-size: 18px;"></i> Logs de Alterações &amp; Acessos
+                  </h3>
+                  <span class="badge-status badge-status-ativo" id="badgeTotalLogs">Auditoria Ativa</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">
+                  Rastreabilidade total das ações no SQLite: quem acessou o sistema (logins com IP), registros criados (<code style="color: #059669; font-weight: 600;">INSERT</code>), modificados (<code style="color: #0284c7; font-weight: 600;">UPDATE</code>) e excluídos (<code style="color: #dc2626; font-weight: 600;">DELETE</code>) com comparativo antes e depois.
+                </p>
+                <div style="background: var(--surface-subtle); border: 1px solid var(--border); border-radius: 4px; padding: 12px; display: flex; justify-content: space-around; margin-bottom: 14px; text-align: center;">
+                  <div>
+                    <div style="font-size: 18px; font-weight: 800; color: #7c3aed;" id="kpiLogins">--</div>
+                    <div style="font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Acessos</div>
+                  </div>
+                  <div style="border-right: 1px solid var(--border);"></div>
+                  <div>
+                    <div style="font-size: 18px; font-weight: 800; color: #059669;" id="kpiInserts">--</div>
+                    <div style="font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Adicionados</div>
+                  </div>
+                  <div style="border-right: 1px solid var(--border);"></div>
+                  <div>
+                    <div style="font-size: 18px; font-weight: 800; color: #0284c7;" id="kpiUpdates">--</div>
+                    <div style="font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Alterados</div>
+                  </div>
+                  <div style="border-right: 1px solid var(--border);"></div>
+                  <div>
+                    <div style="font-size: 18px; font-weight: 800; color: #dc2626;" id="kpiDeletes">--</div>
+                    <div style="font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase;">Excluídos</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; margin-top: 6px;">
+                <button class="btn btn-primary btn-sm" onclick="openAuditoriaModal()">
+                  <i class="ri-history-line"></i> Visualizar Logs de Auditoria
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="abrirAuditoriaRawJson()" title="Abrir JSON oficial autenticado">
+                  <i class="ri-code-box-line"></i> API JSON
+                </button>
+              </div>
+            </div>
+
+            <!-- CARD ADM 2: GESTÃO DE CATEGORIAS MUNICIPAIS -->
+            <div class="hub-card" style="padding: 22px; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                  <h3 style="font-size: 15px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 8px;">
+                    <i class="ri-price-tag-3-line" style="color: #059669; font-size: 18px;"></i> Categorias Oficiais
+                  </h3>
+                  <span class="badge-status badge-status-ativo" id="badgeTotalCategorias">-- Ativas</span>
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
+                  Gerencie as categorias de classificação dos órgãos públicos e secretarias. Novas categorias passam a estar disponíveis automaticamente nos filtros e no cadastro.
+                </p>
+                <div id="adminCategoriasChips" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; max-height: 130px; overflow-y: auto; padding: 4px 0;">
+                  <!-- Carregado via JS -->
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; margin-top: 6px;">
+                <button class="btn btn-primary btn-sm" onclick="openNovaCategoriaModal()" style="background: #059669; border-color: #059669;">
+                  <i class="ri-add-circle-line"></i> Criar Nova Categoria
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+</div>
+    </section>
+
+      </main>
+    </div> <!-- /app-main -->
+  </div> <!-- /app-layout -->
+
+  <!-- ========================================================================= -->
+  <!-- MODAL DE CADASTRO / EDIÇÃO TOTAL DE EQUIPAMENTO & ENDEREÇO -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="modalEquip">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalEquipTitle">Editar Tudo — Equipamento & Endereço</h3>
+          <p id="modalEquipSubtitle">Preencha os dados e utilize o mapa interativo para calibrar a localização exata.</p>
+        </div>
+        <button class="modal-close" onclick="closeEquipModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="editEquipId">
+
+        <!-- SEÇÃO 1: DADOS INSTITUCIONAIS -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="ri-government-line" style="color: var(--primary); font-size: 18px;"></i>
+            <span>1. Identificação Institucional</span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-ctrl">
+              <label>Nome Oficial do Equipamento <span class="req">*</span></label>
+              <input type="text" id="editEquipNome" placeholder="Ex: Hospital Municipal Dr. Moacyr Rodrigues do Carmo">
+            </div>
+
+            <div class="form-ctrl">
+              <label>Sigla / Nome Abreviado</label>
+              <input type="text" id="editEquipSigla" placeholder="Ex: HMMRC">
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-ctrl">
+              <label>Categoria Oficial <span class="req">*</span></label>
+              <select id="editEquipCat">
+                <option value="Saúde (SMS)">Saúde (SMS)</option>
+                <option value="Educação (SMEDC)">Educação (SMEDC)</option>
+                <option value="Assistência Social (SEASDIH)">Assistência Social (SEASDIH)</option>
+                <option value="Segurança Pública (SMSP)">Segurança Pública (SMSP)</option>
+                <option value="Administração / Fazenda">Administração / Fazenda</option>
+                <option value="FUNDEC">FUNDEC / Cursos Profissionalizantes</option>
+                <option value="Cultura e Turismo">Cultura e Turismo</option>
+                <option value="Serviços Públicos e Obras">Serviços Públicos e Obras</option>
+              </select>
+            </div>
+
+            <div class="form-ctrl">
+              <label>Secretaria Responsável</label>
+              <input type="text" id="editEquipSecResp" placeholder="Ex: Secretaria Municipal de Saúde">
+            </div>
+
+            <div class="form-ctrl">
+              <label>Status Cadastral <span class="req">*</span></label>
+              <select id="editEquipStatus">
+                <option value="Ativo">Ativo</option>
+                <option value="Pendente de revisão">Pendente de revisão</option>
+                <option value="Desatualizado">Desatualizado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO 2: ENDEREÇO & VIA CEP -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="ri-map-pin-line" style="color: var(--primary); font-size: 18px;"></i>
+            <span>2. Endereço Completo & Localização Postal</span>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-ctrl">
+              <label>CEP (8 dígitos) <span class="req">*</span></label>
+              <div class="input-with-button">
+                <input type="text" id="editEquipCep" placeholder="25000-000" maxlength="9">
+                <button type="button" class="btn btn-secondary btn-xs" onclick="buscarCepModal()" title="Preencher automaticamente via ViaCEP"><i class="ri-search-line"></i> Buscar</button>
+              </div>
+            </div>
+
+            <div class="form-ctrl">
+              <label>Distrito <span class="req">*</span></label>
+              <select id="editEquipDist">
+                <option value="1">1º Distrito (Centro / Caxias)</option>
+                <option value="2">2º Distrito (Campos Elíseos)</option>
+                <option value="3">3º Distrito (Imbariê)</option>
+                <option value="4">4º Distrito (Xerém)</option>
+              </select>
+            </div>
+
+            <div class="form-ctrl">
+              <label>Bairro Oficial <span class="req">*</span></label>
+              <input type="text" id="editEquipBairro" list="listBairrosModal" placeholder="Ex: 25 de Agosto">
+              <datalist id="listBairrosModal">
+                  <option value="25 de Agosto">25 de Agosto</option>
+                  <option value="Amapá">Amapá</option>
+                  <option value="Bar dos Cavaleiros">Bar dos Cavaleiros</option>
+                  <option value="Barreiro">Barreiro</option>
+                  <option value="Barão do Amapá">Barão do Amapá</option>
+                  <option value="Beira Mar">Beira Mar</option>
+                  <option value="Bom Retiro">Bom Retiro</option>
+                  <option value="Campos Elíseos">Campos Elíseos</option>
+                  <option value="Cangulo">Cangulo</option>
+                  <option value="Capivari">Capivari</option>
+                  <option value="Centenário">Centenário</option>
+                  <option value="Centro">Centro</option>
+                  <option value="Centro / Gramacho">Centro / Gramacho</option>
+                  <option value="Chacrinha">Chacrinha</option>
+                  <option value="Chapéu do Sol">Chapéu do Sol</option>
+                  <option value="Chácaras Arcampo">Chácaras Arcampo</option>
+                  <option value="Chácaras Rio-Petrópolis">Chácaras Rio-Petrópolis</option>
+                  <option value="Cidade dos Meninos">Cidade dos Meninos</option>
+                  <option value="Conjunto 22 de Abril">Conjunto 22 de Abril</option>
+                  <option value="Conjunto Nova Esperança">Conjunto Nova Esperança</option>
+                  <option value="Copacabana">Copacabana</option>
+                  <option value="Corte Oito">Corte Oito</option>
+                  <option value="Cristovão Colombo">Cristovão Colombo</option>
+                  <option value="Doutor Laureano">Doutor Laureano</option>
+                  <option value="Engenho do Porto">Engenho do Porto</option>
+                  <option value="Fazenda Piranema">Fazenda Piranema</option>
+                  <option value="Fazenda São Lourenço">Fazenda São Lourenço</option>
+                  <option value="Figueira">Figueira</option>
+                  <option value="Gramacho">Gramacho</option>
+                  <option value="Igreja Velha">Igreja Velha</option>
+                  <option value="Imbariê">Imbariê</option>
+                  <option value="Itatiaia">Itatiaia</option>
+                  <option value="Itinerante (Todos os Distritos)">Itinerante (Todos os Distritos)</option>
+                  <option value="Jardim Anhangá">Jardim Anhangá</option>
+                  <option value="Jardim Balneário Ana Clara">Jardim Balneário Ana Clara</option>
+                  <option value="Jardim Barro Branco">Jardim Barro Branco</option>
+                  <option value="Jardim Gramacho">Jardim Gramacho</option>
+                  <option value="Jardim Leal">Jardim Leal</option>
+                  <option value="Jardim Olimpo">Jardim Olimpo</option>
+                  <option value="Jardim Primavera">Jardim Primavera</option>
+                  <option value="Jardim Rotsen">Jardim Rotsen</option>
+                  <option value="Jardim Santa Rita">Jardim Santa Rita</option>
+                  <option value="Jardim Vila Nova">Jardim Vila Nova</option>
+                  <option value="Jardim Vinte e Cinco de Agosto">Jardim Vinte e Cinco de Agosto</option>
+                  <option value="Jardim das Oliveiras">Jardim das Oliveiras</option>
+                  <option value="Lagunas e Dourados">Lagunas e Dourados</option>
+                  <option value="Mantiquira">Mantiquira</option>
+                  <option value="Nossa Senhora do Carmo">Nossa Senhora do Carmo</option>
+                  <option value="Nova Campinas">Nova Campinas</option>
+                  <option value="Olavo Bilac">Olavo Bilac</option>
+                  <option value="Pantanal">Pantanal</option>
+                  <option value="Parada Angélica">Parada Angélica</option>
+                  <option value="Parada Morabi">Parada Morabi</option>
+                  <option value="Parque Beira Mar">Parque Beira Mar</option>
+                  <option value="Parque Capivari">Parque Capivari</option>
+                  <option value="Parque Comercial">Parque Comercial</option>
+                  <option value="Parque Duque">Parque Duque</option>
+                  <option value="Parque Eldorado">Parque Eldorado</option>
+                  <option value="Parque Equitativa">Parque Equitativa</option>
+                  <option value="Parque Felicidade">Parque Felicidade</option>
+                  <option value="Parque Fluminense">Parque Fluminense</option>
+                  <option value="Parque Independência">Parque Independência</option>
+                  <option value="Parque Lafaiete">Parque Lafaiete</option>
+                  <option value="Parque Nossa Senhora do Carmo">Parque Nossa Senhora do Carmo</option>
+                  <option value="Parque Paulista">Parque Paulista</option>
+                  <option value="Parque Santa Marta">Parque Santa Marta</option>
+                  <option value="Parque Senhor do Bonfim">Parque Senhor do Bonfim</option>
+                  <option value="Parque Xerém">Parque Xerém</option>
+                  <option value="Parque das Missões">Parque das Missões</option>
+                  <option value="Paulicéia">Paulicéia</option>
+                  <option value="Pedreira">Pedreira</option>
+                  <option value="Periquitos">Periquitos</option>
+                  <option value="Pilar">Pilar</option>
+                  <option value="Prainha">Prainha</option>
+                  <option value="Santa Cruz da Serra">Santa Cruz da Serra</option>
+                  <option value="Santa Isabel">Santa Isabel</option>
+                  <option value="Santa Lúcia">Santa Lúcia</option>
+                  <option value="Santo Antônio">Santo Antônio</option>
+                  <option value="Saracuruna">Saracuruna</option>
+                  <option value="Sarapuí">Sarapuí</option>
+                  <option value="Senhor do Bonfim">Senhor do Bonfim</option>
+                  <option value="São Bento">São Bento</option>
+                  <option value="São Judas Tadeu">São Judas Tadeu</option>
+                  <option value="Tabuleiro">Tabuleiro</option>
+                  <option value="Taquara">Taquara</option>
+                  <option value="Trevo das Missões">Trevo das Missões</option>
+                  <option value="Vila Araci">Vila Araci</option>
+                  <option value="Vila Bonança">Vila Bonança</option>
+                  <option value="Vila Canaã">Vila Canaã</option>
+                  <option value="Vila Centenário">Vila Centenário</option>
+                  <option value="Vila Flavia">Vila Flavia</option>
+                  <option value="Vila Guanabara">Vila Guanabara</option>
+                  <option value="Vila Ideal">Vila Ideal</option>
+                  <option value="Vila Itamarati">Vila Itamarati</option>
+                  <option value="Vila Leopoldina">Vila Leopoldina</option>
+                  <option value="Vila Maria Helena">Vila Maria Helena</option>
+                  <option value="Vila Meriti">Vila Meriti</option>
+                  <option value="Vila Nossa Senhora das Graças">Vila Nossa Senhora das Graças</option>
+                  <option value="Vila Operária">Vila Operária</option>
+                  <option value="Vila Rosário">Vila Rosário</option>
+                  <option value="Vila Santo Antônio">Vila Santo Antônio</option>
+                  <option value="Vila Sarapuí">Vila Sarapuí</option>
+                  <option value="Vila São Luís">Vila São Luís</option>
+                  <option value="Vila São Sebastião">Vila São Sebastião</option>
+                  <option value="Xerém">Xerém</option>
+              </datalist>
+            </div>
+          </div>
+
+          <div class="form-row" style="grid-template-columns: 2fr 1fr;">
+            <div class="form-ctrl">
+              <label>Logradouro Oficial (Rua / Av / Praça) <span class="req">*</span></label>
+              <input type="text" id="editEquipLogradouro" placeholder="Ex: Avenida Brigadeiro Lima e Silva">
+            </div>
+
+            <div class="form-ctrl">
+              <label>Número do Imóvel <span class="req">*</span></label>
+              <input type="text" id="editEquipNumero" placeholder="Ex: 131 ou s/nº">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-ctrl">
+              <label>Complemento / Pavimento / Bloco</label>
+              <input type="text" id="editEquipPredioSala" placeholder="Ex: Bloco A, Sala 204">
+            </div>
+
+            <div class="form-ctrl">
+              <label>Ponto de Referência</label>
+              <input type="text" id="editEquipRef" placeholder="Ex: Próximo à Praça do Pacificador">
+            </div>
+          </div>
+
+          <div class="form-ctrl">
+            <label>Prédio Compartilhado (Hub / Complexo Vinculado)</label>
+            <select id="editEquipHubSelect">
+              <!-- Populado via JS -->
+            </select>
+          </div>
+        </div>
+
+        <!-- SEÇÃO 3: LOCALIZAÇÃO NO MAPA & GEOCODIFICAÇÃO (FLUXO PERFEITO) -->
+        <div class="form-section">
+          <div class="form-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <i class="ri-map-2-line" style="color: var(--primary); font-size: 18px;"></i>
+              <span>3. Localização no Mapa & Geocodificação (Precisão Cirúrgica)</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-xs" id="btnConfigGoogleKeyInModal" onclick="openGoogleKeyModal()" style="font-size: 11px;">
+              <i class="ri-google-fill" style="color: #ea4335;"></i> Configurar Chave Google
+            </button>
+          </div>
+
+          <!-- Guia do Fluxo -->
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 4px; padding: 10px 14px; font-size: 12px; color: #1e40af; line-height: 1.4; margin-bottom: 10px;">
+            <strong><i class="ri-focus-3-line"></i> Instruções para calibração de ponto:</strong><br>
+            1. Preencha o <strong>Logradouro</strong>, <strong>Número</strong> e <strong>Bairro</strong> e clique em <strong>Obter Coordenadas Exatas (ROOFTOP)</strong>.<br>
+            2. Ative a visão de <strong>Satélite</strong> no canto superior do mapa para visualizar o telhado e o portão do prédio.<br>
+            3. Dê um clique direto no portão de entrada ou arraste o pino para calibrar metro a metro.
+          </div>
+
+          <!-- Barra de Ações de Geoprocessamento -->
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px;">
+            <button type="button" class="btn btn-primary btn-sm" onclick="geolocalizarEnderecoCompletoModal()" id="btnGeocodeModal" title="Geocodificar com Google ROOFTOP ou Base Municipal">
+              <i class="ri-map-pin-2-line"></i>
+              <span>Obter Coordenadas Exatas (ROOFTOP)</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="buscarNomePredioNoGoogle()" id="btnBuscarNomeGoogleModal" title="Buscar pelo nome do prédio público no Google Maps">
+              <i class="ri-building-line"></i>
+              <span>Buscar Nome do Prédio no Google</span>
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="ativarAjusteManualModal()" id="btnAjusteManualModal">
+              <i class="ri-drag-move-line"></i>
+              <span>Ajustar no Satélite</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="abrirGmapsLocalizacaoAtual()" title="Abrir Google Street View ou Maps em outra aba para comparar a fachada">
+              <i class="ri-external-link-line"></i>
+              <span>Ver no Google Maps</span>
+            </button>
+            <span id="geocodeStatusBadge" style="font-size: 11px; padding: 4px 10px; border-radius: 6px; display: none;"></span>
+          </div>
+
+          <!-- Mini Mapa com Pin Arrastável e Seletor de Camadas Ruas / Satélite -->
+          <div style="position: relative;">
+            <div id="modalMiniMap"></div>
+            
+            <!-- Alternador de Camada no Mini Mapa -->
+            <div class="map-layer-switch-box">
+              <button type="button" class="map-layer-switch-btn active" id="btnMiniMapStreet" onclick="setModalMapMode('street')" title="Mapa de Vias e Ruas">
+                <i class="ri-map-2-line"></i> Ruas
+              </button>
+              <button type="button" class="map-layer-switch-btn" id="btnMiniMapSat" onclick="setModalMapMode('satellite')" title="Satélite Ortofoto de Alta Resolução">
+                <i class="ri-earth-line"></i> Satélite
+              </button>
+            </div>
+
+            <div id="manualAdjustmentBanner" style="display: none; position: absolute; bottom: 8px; left: 8px; right: 8px; z-index: 1000; background: rgba(15, 23, 42, 0.94); color: #ffffff; padding: 8px 14px; border-radius: 6px; font-size: 11px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.35);">
+              <i class="ri-focus-3-line" style="color: #38bdf8; margin-right: 4px;"></i><strong>Ajuste Fino Ativo:</strong> Clique na imagem de satélite ou arraste o marcador exatamente no portão ou telhado do imóvel.
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="form-ctrl">
+              <label>Latitude (GPS) <span class="req">*</span></label>
+              <input type="text" id="editEquipLat" placeholder="-22.785000" style="font-family: monospace;">
+            </div>
+            <div class="form-ctrl">
+              <label>Longitude (GPS) <span class="req">*</span></label>
+              <input type="text" id="editEquipLon" placeholder="-43.305000" style="font-family: monospace;">
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO 4: CONTATO & COMUNICAÇÃO -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="ri-phone-line" style="color: var(--primary); font-size: 18px;"></i>
+            <span>4. Canais de Atendimento & Contato</span>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-ctrl">
+              <label>Telefone Principal</label>
+              <input type="text" id="editEquipTel" placeholder="(21) 2773-5500">
+            </div>
+
+            <div class="form-ctrl">
+              <label>Telefone Secundário / Ramal</label>
+              <input type="text" id="editEquipTelSec" placeholder="(21) 2672-8889">
+            </div>
+
+            <div class="form-ctrl">
+              <label>WhatsApp Oficial</label>
+              <input type="text" id="editEquipWhats" placeholder="(21) 99999-9999">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-ctrl">
+              <label>E-mail Oficial</label>
+              <input type="email" id="editEquipEmail" placeholder="contato@duquedecaxias.rj.gov.br">
+            </div>
+
+            <div class="form-ctrl">
+              <label>Horário de Funcionamento</label>
+              <input type="text" id="editEquipHorario" placeholder="Segunda a sexta, das 09h às 17h">
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO 5: OBSERVAÇÕES -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <i class="ri-file-text-line" style="color: var(--primary); font-size: 18px;"></i>
+            <span>5. Descrição de Atividades & Observações</span>
+          </div>
+
+          <div class="form-ctrl">
+            <label>Descrição dos Serviços Prestados</label>
+            <textarea id="editEquipDesc" rows="3" placeholder="Descreva as atribuições, exames, atendimentos ou serviços deste equipamento..."></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-foot">
+        <div>
+          <button type="button" class="btn btn-danger-outline btn-sm" id="btnModalDeleteEquip" onclick="deleteCurrentModalEquip()" style="display: none;"><i class="ri-delete-bin-line"></i> Excluir Registro</button>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeEquipModal()">Cancelar</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="saveEquipModal()"><i class="ri-save-line"></i> Salvar Alterações</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE VISUALIZAÇÃO (FICHA CADASTRAL COMPLETA) -->
+  <div class="modal-backdrop" id="modalViewEquip" onclick="if(event.target === this) closeViewModal()">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-head">
+        <div>
+          <h3 id="viewModalNome">Detalhes do Endereço</h3>
+          <p id="viewModalCat">Ficha Cadastral do Equipamento Público</p>
+        </div>
+        <button class="modal-close" onclick="closeViewModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" id="viewModalBody" style="font-size: 13px; line-height: 1.5;">
+        <!-- Preenchido via JS -->
+      </div>
+
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeViewModal()">Fechar</button>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="abrirRotaGmaps()"><i class="ri-map-pin-user-line"></i> Abrir no Google Maps</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="abrirEdicaoDeVisualizacao()"><i class="ri-edit-line"></i> Editar Este Endereço</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIGURAÇÃO DA CHAVE GOOGLE MAPS -->
+  <div class="modal-backdrop" id="modalGoogleKey" onclick="if(event.target === this) closeGoogleKeyModal()">
+    <div class="modal-box" style="max-width: 540px;">
+      <div class="modal-head">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 8px;">
+            <i class="ri-google-fill" style="color: #ea4335; font-size: 20px;"></i>
+            <span>Google Geocoding API — Precisão Cirúrgica (ROOFTOP)</span>
+          </h3>
+          <p>Configuração da API oficial para cravar o pino exatamente no lote/fachada do imóvel.</p>
+        </div>
+        <button class="modal-close" onclick="closeGoogleKeyModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" style="gap: 14px;">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; padding: 12px 14px; font-size: 12px; color: #166534; line-height: 1.5;">
+          <strong><i class="ri-information-line"></i> Por que usar a Google Geocoding API?</strong><br>
+          • <strong>location_type: ROOFTOP:</strong> Retorna o número e o telhado exato do imóvel em Duque de Caxias.<br>
+          • <strong>Segurança Total:</strong> Sua chave fica armazenada apenas no seu navegador local (<code style="background: white; padding: 1px 4px; border-radius: 4px;">localStorage</code>).<br>
+          • <strong>Gratuidade:</strong> Toda conta do Google Cloud recebe <strong>US$ 200,00/mês grátis</strong> (~40.000 requisições).
+        </div>
+
+        <div class="form-ctrl">
+          <label style="font-weight: 700;">Chave de API do Google Cloud (API Key): <span class="req">*</span></label>
+          <input type="text" id="inputGoogleApiKey" placeholder="Ex: AIzaSyA1b2C3d4E5f6G7..." style="font-family: monospace; font-size: 13px;">
+          <small style="color: var(--text-muted); font-size: 11px; margin-top: 2px;">Necessário ativar a <strong>Geocoding API</strong> e <strong>Places API</strong> no Google Cloud Console.</small>
+        </div>
+
+        <div id="googleKeyStatusMessage" style="display: none; padding: 10px 12px; border-radius: 6px; font-size: 12px;"></div>
+      </div>
+
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="testGoogleApiKey()">
+          <i class="ri-shield-check-line"></i> Testar Conexão em Caxias
+        </button>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="removeGoogleApiKey()">Remover Chave</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="saveGoogleApiKey()"><i class="ri-check-line"></i> Salvar Chave</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- MODAL DE AUDITORIA & LOGS DE GOVERNANÇA (EXCLUSIVO ADM) -->
+  <div class="modal-backdrop" id="modalAuditoria" onclick="if(event.target === this) closeAuditoriaModal()">
+    <div class="modal-box" style="max-width: 1260px; width: 96%; max-height: 94vh;">
+      <div class="modal-head" style="background: #0f1b2d; color: #ffffff; border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="background: rgba(239, 68, 68, 0.25); border: 1px solid rgba(239, 68, 68, 0.5); color: #fca5a5; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 4px; text-transform: uppercase;">ADM</span>
+            <h3 style="color: #ffffff; margin: 0; font-size: 17px; display: flex; align-items: center; gap: 8px;">
+              <i class="ri-file-history-line" style="color: #38bdf8;"></i> Registro de Auditoria &amp; Logs de Governança
+            </h3>
+          </div>
+          <p style="color: #94a3b8; font-size: 12px; margin-top: 2px;">
+            Rastreabilidade detalhada: data/hora, operador, IP, computador/dispositivo, lotação e comparativo antes e depois.
+          </p>
+        </div>
+        <button class="modal-close" onclick="closeAuditoriaModal()" style="color: #94a3b8;">&times;</button>
+      </div>
+
+      <!-- TOOLBAR DE FILTROS DO MODAL -->
+      <div style="padding: 12px 24px; background: #f8fafc; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;" id="auditFilterButtons">
+          <button class="btn btn-primary btn-xs audit-filter-btn active" onclick="filtrarAuditoriaPorOperacao('', this)">Todos</button>
+          <button class="btn btn-secondary btn-xs audit-filter-btn" onclick="filtrarAuditoriaPorOperacao('auth', this)"><i class="ri-login-circle-line"></i> Acessos (Login)</button>
+          <button class="btn btn-secondary btn-xs audit-filter-btn" onclick="filtrarAuditoriaPorOperacao('INSERT', this)"><i class="ri-add-line"></i> Inserções</button>
+          <button class="btn btn-secondary btn-xs audit-filter-btn" onclick="filtrarAuditoriaPorOperacao('UPDATE', this)"><i class="ri-edit-line"></i> Alterações</button>
+          <button class="btn btn-secondary btn-xs audit-filter-btn" onclick="filtrarAuditoriaPorOperacao('DELETE', this)"><i class="ri-delete-bin-line"></i> Exclusões</button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <input type="text" id="auditSearchInput" placeholder="Buscar operador, IP, máquina, local..." style="padding: 5px 10px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; width: 250px;" oninput="onAuditSearchInput()">
+          <button class="btn btn-secondary btn-xs" onclick="carregarAuditoriaLogs(true)" title="Recarregar logs em tempo real">
+            <i class="ri-refresh-line"></i> Atualizar
+          </button>
+        </div>
+      </div>
+
+      <!-- CORPO COM TABELA DE LOGS -->
+      <div class="modal-body" style="padding: 0; max-height: calc(92vh - 200px); overflow-y: auto;">
+        <div id="auditLoading" style="display: none; padding: 40px; text-align: center; color: var(--text-muted);">
+          <i class="ri-loader-4-line ri-spin" style="font-size: 28px; color: var(--blue-600);"></i>
+          <p style="margin-top: 8px; font-size: 13px;">Carregando logs de auditoria do servidor...</p>
+        </div>
+
+        <table class="data-table" id="auditTable" style="margin: 0; border: none; width: 100%;">
+          <thead style="position: sticky; top: 0; background: #ffffff; z-index: 10;">
+            <tr>
+              <th style="width: 130px;">Data &amp; Hora</th>
+              <th style="width: 140px;">Operador / Login</th>
+              <th style="width: 175px;">Origem (IP / Máquina)</th>
+              <th style="width: 180px;">Lotação / Localização</th>
+              <th style="width: 95px;">Operação</th>
+              <th style="width: 125px;">Alvo / Tabela</th>
+              <th>Detalhes da Modificação</th>
+            </tr>
+          </thead>
+          <tbody id="auditTableBody">
+            <!-- Renderizado via JS -->
+          </tbody>
+        </table>
+
+        <div id="auditEmptyState" style="display: none; padding: 50px 20px; text-align: center; color: var(--text-muted);">
+          <i class="ri-inbox-line" style="font-size: 36px; color: var(--gray-400);"></i>
+          <p style="margin-top: 8px; font-size: 13px;">Nenhum log encontrado para os filtros selecionados.</p>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <div style="font-size: 12px; color: var(--text-muted);" id="auditPaginationInfo">
+          Carregando registros...
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeAuditoriaModal()">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE DETALHES DO DIFF DE AUDITORIA -->
+  <div class="modal-backdrop" id="modalDiffAuditoria" onclick="if(event.target === this) closeDiffModal()" style="z-index: 1050;">
+    <div class="modal-box" style="max-width: 760px;">
+      <div class="modal-head">
+        <div>
+          <h3 id="diffModalTitle"><i class="ri-git-commit-line" style="color: var(--blue-600);"></i> Detalhes da Alteração</h3>
+          <p id="diffModalSubtitle">Comparativo detalhado de dados antes e depois da operação.</p>
+        </div>
+        <button class="modal-close" onclick="closeDiffModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="diffModalBody" style="font-size: 12px; line-height: 1.5; max-height: 60vh; overflow-y: auto;">
+        <!-- Preenchido via JS -->
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeDiffModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CADASTRO DE NOVA CATEGORIA (EXCLUSIVO ADM) -->
+  <div class="modal-backdrop" id="modalNovaCategoria" onclick="if(event.target === this) closeNovaCategoriaModal()">
+    <div class="modal-box" style="max-width: 520px;">
+      <div class="modal-head">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 8px;">
+            <i class="ri-price-tag-3-line" style="color: #059669; font-size: 20px;"></i>
+            <span>Nova Categoria Oficial</span>
+          </h3>
+          <p>Cadastre uma nova classificação que ficará disponível em todo o sistema SIGEM.</p>
+        </div>
+        <button class="modal-close" onclick="closeNovaCategoriaModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-ctrl">
+          <label>Nome da Categoria <span class="req">*</span></label>
+          <input type="text" id="inputNovaCatNome" placeholder="Ex: Esporte, Juventude e Lazer">
+        </div>
+
+        <div class="form-ctrl">
+          <label>Macrosetor Governamental <span class="req">*</span></label>
+          <input type="text" id="inputNovaCatMacro" placeholder="Ex: Cidadania e Serviços Públicos" value="Administração e Serviços">
+        </div>
+
+        <div class="form-row">
+          <div class="form-ctrl">
+            <label>Ícone de Categoria</label>
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <input type="text" id="inputNovaCatIcone" value="ri-folder-line" style="width: 140px; font-size: 12px;" placeholder="ri-folder-line">
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary btn-xs" onclick="document.getElementById('inputNovaCatIcone').value='ri-football-line'" title="Esporte"><i class="ri-football-line"></i></button>
+                <button type="button" class="btn btn-secondary btn-xs" onclick="document.getElementById('inputNovaCatIcone').value='ri-tree-line'" title="Meio Ambiente"><i class="ri-tree-line"></i></button>
+                <button type="button" class="btn btn-secondary btn-xs" onclick="document.getElementById('inputNovaCatIcone').value='ri-theater-line'" title="Cultura"><i class="ri-theater-line"></i></button>
+                <button type="button" class="btn btn-secondary btn-xs" onclick="document.getElementById('inputNovaCatIcone').value='ri-briefcase-line'" title="Administração"><i class="ri-briefcase-line"></i></button>
+                <button type="button" class="btn btn-secondary btn-xs" onclick="document.getElementById('inputNovaCatIcone').value='ri-bus-line'" title="Transportes"><i class="ri-bus-line"></i></button>
+                <button type="button" class="btn btn-secondary btn-xs" onclick="document.getElementById('inputNovaCatIcone').value='ri-hammer-line'" title="Obras"><i class="ri-hammer-line"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-ctrl">
+            <label>Cor Identificadora</label>
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <input type="color" id="inputNovaCatCor" value="#059669" style="width: 45px; height: 34px; padding: 2px; border-radius: 4px; cursor: pointer;">
+              <div style="display: flex; gap: 3px; align-items: center;">
+                <span onclick="document.getElementById('inputNovaCatCor').value='#3b82f6'" style="width: 18px; height: 18px; border-radius: 50%; background: #3b82f6; cursor: pointer; display: inline-block;"></span>
+                <span onclick="document.getElementById('inputNovaCatCor').value='#10b981'" style="width: 18px; height: 18px; border-radius: 50%; background: #10b981; cursor: pointer; display: inline-block;"></span>
+                <span onclick="document.getElementById('inputNovaCatCor').value='#f59e0b'" style="width: 18px; height: 18px; border-radius: 50%; background: #f59e0b; cursor: pointer; display: inline-block;"></span>
+                <span onclick="document.getElementById('inputNovaCatCor').value='#8b5cf6'" style="width: 18px; height: 18px; border-radius: 50%; background: #8b5cf6; cursor: pointer; display: inline-block;"></span>
+                <span onclick="document.getElementById('inputNovaCatCor').value='#ec4899'" style="width: 18px; height: 18px; border-radius: 50%; background: #ec4899; cursor: pointer; display: inline-block;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="novaCatAlert" style="display: none; padding: 8px 12px; border-radius: 6px; font-size: 12px;"></div>
+      </div>
+
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeNovaCategoriaModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btnSalvarNovaCat" onclick="salvarNovaCategoria()" style="background: #059669; border-color: #059669;">
+          <i class="ri-check-line"></i> Salvar no SQLite
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE DETALHES DA COMUNIDADE (SIMAC) -->
+  <div class="modal-backdrop" id="modalComunidade" onclick="if(event.target === this) closeComunidadeModal()">
+    <div class="modal-box" style="max-width: 680px; max-height: 90vh; display: flex; flex-direction: column;">
+      <div class="modal-head">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+            <span id="modalComComplexoBadge" style="font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px;"></span>
+            <span id="modalComDistrito" style="font-size: 12px; color: #64748b; font-weight: 600;"></span>
+          </div>
+          <h3 id="modalComNome" style="margin: 0; font-size: 18px; font-weight: 700; color: #0f172a;"></h3>
+        </div>
+        <button class="modal-close" onclick="closeComunidadeModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 16px 20px; overflow-y: auto; flex: 1;">
+        <!-- Indicadores Rápidos -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 16px;">
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+            <div style="font-size: 11px; color: #64748b; font-weight: 600;">Total de Ruas</div>
+            <div id="modalComTotalRuas" style="font-size: 18px; font-weight: 700; color: #0f172a;"></div>
+          </div>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+            <div style="font-size: 11px; color: #64748b; font-weight: 600;">IDS Social</div>
+            <div id="modalComIds" style="font-size: 18px; font-weight: 700; color: #0f172a;">-</div>
+          </div>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+            <div style="font-size: 11px; color: #64748b; font-weight: 600;">Prioridade</div>
+            <div id="modalComPrioridade" style="font-size: 13px; font-weight: 700; color: #ea580c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
+          </div>
+        </div>
+
+        <!-- Ruas Mapeadas com Busca -->
+        <div style="margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h4 style="margin: 0; font-size: 14px; font-weight: 700; color: #0f172a;"><i class="ri-road-map-line"></i> Ruas, Travessas e Becos Mapeados</h4>
+            <span id="modalComRuasContador" style="font-size: 12px; color: #64748b;"></span>
+          </div>
+          <input type="text" id="modalComFiltroRuas" placeholder="Buscar entre as ruas desta comunidade..." oninput="filtrarRuasModalComunidade()" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; margin-bottom: 8px; box-sizing: border-box;">
+          <div id="modalComListaRuas" style="max-height: 180px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; background: #fafafa; font-size: 13px; line-height: 1.8;"></div>
+        </div>
+
+        <!-- CEPs e Bairros Vinculados -->
+        <div style="margin-bottom: 16px;">
+          <h4 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 700; color: #0f172a;"><i class="ri-mail-line"></i> CEPs de Referência</h4>
+          <div id="modalComListaCeps" style="font-size: 12px; color: #334155; line-height: 1.6;"></div>
+        </div>
+
+        <!-- Equipamentos Públicos no Raio -->
+        <div>
+          <h4 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 700; color: #0f172a;"><i class="ri-building-line"></i> Equipamentos Públicos no Raio de Atendimento</h4>
+          <div id="modalComListaEquips" style="font-size: 12px; color: #334155;"></div>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeComunidadeModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+<!-- TOAST NOTIFICATION -->
+  <div class="toast-msg" id="toastMsg">
+    <i class="ri-checkbox-circle-fill" style="color: #10b981; font-size: 18px;"></i>
+    <span id="toastText">Operação realizada com sucesso!</span>
+  </div>
+
+  <!-- DADOS E SCRIPTS -->
+    <!-- Módulos JavaScript do SIGEM -->
+  <script src="libs/turf.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/smart-analysis.js"></script>
+  <script src="js/modals.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

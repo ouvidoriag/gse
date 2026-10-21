@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão da Carta de Serviços — Prefeitura de Duque de Caxias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="/shared/nav.css">
+  <script src="/shared/nav.js"></script>
+
+  <style>
+    :root {
+      --primary-dark: #001428;
+      --primary: #003366;
+      --primary-light: #004d99;
+      --accent-gold: #ffcc00;
+      --accent-gold-hover: #e6b800;
+      --bg-page: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --error: #ef4444;
+      --success: #10b981;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Sub-Hero Header PMDC (Alinhado com Hub e SIGEM) */
+    .cds-hero {
+      background: linear-gradient(135deg, #001428 0%, #002b55 50%, #004080 100%);
+      color: #ffffff;
+      padding: 36px 32px 42px;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .cds-hero-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .cds-hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .cds-hero-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .cds-hero-title {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+    }
+
+    .cds-hero-subtitle {
+      font-size: 0.98rem;
+      color: #cbd5e1;
+      margin-top: 4px;
+      max-width: 680px;
+    }
+
+    .sec-badge {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid var(--accent-gold);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .sec-badge::before {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: currentColor;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3'/%3E%3C/svg%3E") no-repeat center / contain;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3'/%3E%3C/svg%3E") no-repeat center / contain;
+    }
+
+    /* Layout Geral */
+    .dashboard-layout {
+      max-width: 1400px;
+      width: 100%;
+      margin: -20px auto 40px;
+      padding: 0 24px;
+      display: flex;
+      gap: 24px;
+      flex: 1;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Sidebar Lateral */
+    .sidebar {
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .menu-item {
+      background: transparent;
+      border: none;
+      text-align: left;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: 100%;
+      outline: none;
+    }
+
+    .menu-item svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .menu-item:hover {
+      background: #f1f5f9;
+      color: var(--primary);
+      transform: translateX(2px);
+    }
+
+    .menu-item.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 51, 102, 0.25);
+    }
+
+    /* Filtros por Categoria */
+    .filter-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .filter-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 6px;
+    }
+
+    .filter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .filter-list::-webkit-scrollbar {
+      width: 5px;
+    }
+    .filter-list::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: none;
+      text-align: left;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      outline: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.35;
+      display: flex;
+      align-items: center;
+      min-height: 28px;
+    }
+
+    .filter-btn:hover {
+      background: #f1f5f9;
+      color: var(--primary);
+    }
+
+    .filter-btn.active {
+      background: #e0f2fe;
+      color: var(--primary);
+      font-weight: 700;
+      border-left: 2.5px solid var(--primary);
+      border-radius: 0 5px 5px 0;
+      padding-left: 7.5px;
+    }
+
+    /* Stats Card Lateral */
+    .stats-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stats-icon-wrap {
+      width: 48px;
+      height: 48px;
+      background: #e0f2fe;
+      color: #0284c7;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .stats-value {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      line-height: 1;
+    }
+
+    .stats-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+
+    .stats-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Conteúdo Principal */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Welcome Card */
+    .welcome-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .welcome-card h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .welcome-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Barra de Ações e Busca */
+    .actions-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 14px;
+      width: 100%;
+      max-width: 360px;
+      transition: all 0.2s;
+    }
+
+    .search-wrap:focus-within {
+      border-color: var(--accent-gold);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+    }
+
+    .search-wrap input {
+      border: none;
+      background: transparent;
+      outline: none;
+      padding: 6px 8px;
+      font-size: 14px;
+      font-weight: 500;
+      width: 100%;
+      color: var(--text-main);
+    }
+
+    .actions-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-action {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 6px 13px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .btn-action:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-add-service {
+      background: linear-gradient(135deg, #003366 0%, #004d99 100%);
+      color: #ffffff;
+      border: 1px solid rgba(0, 51, 102, 0.8);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 3px rgba(0, 51, 102, 0.2);
+    }
+
+    .btn-add-service:hover {
+      background: linear-gradient(135deg, #00264d 0%, #003d80 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0, 51, 102, 0.28);
+    }
+
+    /* Lista de Serviços (Cards) */
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .service-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .service-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 51, 102, 0.08);
+      border-color: #cbd5e1;
+    }
+
+    .service-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .service-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.3;
+      letter-spacing: -0.2px;
+    }
+
+    .service-category {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 12px;
+    }
+
+    .service-badge-cat {
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .service-badge-sec {
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      border: 1px solid #bfdbfe;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .service-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-action-sm {
+      padding: 4px 9px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+      outline: none;
+      line-height: 1.3;
+    }
+
+    .btn-action-sm svg {
+      width: 12px !important;
+      height: 12px !important;
+    }
+
+    .btn-action-edit {
+      background: #f0f7ff;
+      color: #0284c7;
+      border: 1px solid #bae6fd;
+    }
+
+    .btn-action-edit:hover {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
+    }
+
+    .btn-action-delete {
+      background: #fff5f5;
+      color: #e11d48;
+      border: 1px solid #fecdd3;
+    }
+
+    .btn-action-delete:hover {
+      background: #e11d48;
+      color: #ffffff;
+      border-color: #e11d48;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(225, 29, 72, 0.2);
+    }
+
+    .btn-action-view {
+      background: #f0fdf4;
+      color: #16a34a;
+      border: 1px solid #bbf7d0;
+    }
+
+    .btn-action-view:hover {
+      background: #16a34a;
+      color: #ffffff;
+      border-color: #16a34a;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.2);
+    }
+
+    .btn-action-toggle-status {
+      background: #fffbeb;
+      color: #d97706;
+      border: 1px solid #fde68a;
+    }
+
+    .btn-action-toggle-status:hover {
+      background: #d97706;
+      color: #ffffff;
+      border-color: #d97706;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.2);
+    }
+
+    .btn-action-toggle-status.btn-status-show {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+
+    .btn-action-toggle-status.btn-status-show:hover {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+    }
+
+    .service-badge-status {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      line-height: 1.2;
+    }
+
+    .service-badge-status.badge-published {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .service-badge-status.badge-hidden {
+      background: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    /* Tabs de filtro por Status */
+    .status-tabs-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .status-tab-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .status-tab-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .status-tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0, 51, 102, 0.25);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot-published { background: #10b981; }
+    .dot-hidden { background: #f59e0b; }
+
+    /* Modal de Visualização Rica */
+    .view-modal-hero {
+      background: linear-gradient(135deg, #001428 0%, #002b55 60%, #004080 100%);
+      color: #ffffff;
+      padding: 24px 28px;
+      border-radius: 8px 8px 0 0;
+      position: relative;
+    }
+
+    .view-modal-hero h2 {
+      font-size: 21px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .view-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .view-section-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .view-section-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .view-section-content {
+      font-size: 13.5px;
+      color: #334155;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    /* Steps Timeline */
+    .view-steps-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .view-step-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .view-step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #003366;
+      color: #ffffff;
+      font-size: 11.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0,51,102,0.25);
+      margin-top: 2px;
+    }
+
+    .view-step-text {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      color: #1e293b;
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    /* Document chips */
+    .view-docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    .view-doc-chip {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    /* Metrics Grid */
+    .view-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .view-metric-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+
+    .view-metric-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .view-metric-val {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* Priority Tags */
+    .view-priority-tag {
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Contacts */
+    .view-contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #1e293b;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .view-contact-item:hover {
+      background: #e2e8f0;
+      color: #003366;
+    }
+
+    /* Modal de Validação Dupla de Exclusão */
+    .delete-service-box {
+      background: #fff5f5;
+      border: 1px solid #fecdd3;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 14px 0;
+    }
+
+    .delete-service-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #991b1b;
+      margin-bottom: 4px;
+    }
+
+    .delete-service-sub {
+      font-size: 12px;
+      color: #b91c1c;
+    }
+
+    .delete-warning-callout {
+      background: #fff1f2;
+      border-left: 4px solid #e11d48;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 12.5px;
+      color: #881337;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    .delete-confirm-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      outline: none;
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+
+    .delete-confirm-input:focus {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+    }
+
+    .delete-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #334155;
+      margin-top: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .btn-danger-confirm {
+      background: #dc2626;
+      color: #ffffff;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-danger-confirm:hover:not(:disabled) {
+      background: #b91c1c;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    }
+
+    .btn-danger-confirm:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #viewServiceModal, #viewServiceModal * {
+        visibility: visible !important;
+      }
+      #viewServiceModal {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: transparent !important;
+        display: block !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      #viewServiceModal .modal-box {
+        max-width: 100% !important;
+        max-height: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+      }
+      #viewServiceModal .modal-footer,
+      #viewServiceModal .btn-close-modal {
+        display: none !important;
+      }
+      .view-modal-hero {
+        background: #003366 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag-cat {
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .tag-sec {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .status-published { background: #dcfce7; color: #15803d; }
+    .status-draft { background: #fef3c7; color: #b45309; }
+    .status-archived { background: #fee2e2; color: #b91c1c; }
+
+    .service-desc {
+      font-size: 0.92rem;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .service-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .service-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .service-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-icon-action {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: #334155;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-icon-action:hover {
+      background: #e2e8f0;
+      color: var(--primary);
+    }
+
+    .btn-danger:hover {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fca5a5;
+    }
+
+    /* Profile e Admin Cards */
+    .profile-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .profile-card h2, .profile-card h3 {
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .profile-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .profile-error-box {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    /* Modais */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 900px;
+      height: 90%;
+      max-height: 800px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.show .modal-box {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #001428 0%, #003366 100%);
+      color: #ffffff;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      color: #ffffff;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      opacity: 0.8;
+      line-height: 1;
+      padding: 0 4px;
+    }
+
+    .btn-close-modal:hover {
+      opacity: 1;
+      color: var(--accent-gold);
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Formulários */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 8px;
+    }
+
+    .form-group.full {
+      grid-column: span 2;
+    }
+
+    .form-section-title {
+      grid-column: span 2;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--primary);
+      letter-spacing: 0.8px;
+      border-bottom: 2px solid #e0f2fe;
+      padding-bottom: 6px;
+      margin: 12px 0 4px;
+    }
+
+    .form-divider {
+      grid-column: span 2;
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+      background: #ffffff;
+      color: var(--text-main);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .multi-entry-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .multi-entry-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .multi-entry-row input {
+      flex: 1;
+    }
+
+    .btn-remove-row {
+      background: #fff1f2;
+      color: #e11d48;
+      border: 1px solid #fecdd3;
+      padding: 0 9px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      transition: all 0.15s;
+    }
+
+    .btn-remove-row:hover {
+      background: #e11d48;
+      color: #ffffff;
+    }
+
+    .btn-add-row {
+      align-self: flex-start;
+      background: #f8fafc;
+      color: #0284c7;
+      border: 1px dashed #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-add-row:hover {
+      background: #f0f9ff;
+      border-color: #0284c7;
+      color: #0369a1;
+    }
+
+    .priorities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      background: #ffffff;
+    }
+
+    .priority-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 14px 24px;
+      background: var(--primary-dark);
+      color: white;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      font-weight: 700;
+      font-size: 14px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 200000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--error); }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-layout { flex-direction: column; }
+      .sidebar { width: 100%; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+      .priorities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR PADRONIZADA (MENU LATERAL) -->
+    <aside class="sidebar-nav" id="sidebarNav">
+
+      <!-- CABEÇALHO DA SIDEBAR -->
+      <div class="sidebar-header">
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Recolher / Expandir Menu" aria-label="Alternar menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="sidebar-brand-box" title="Portal Integrado PMDC">
+          <div class="sidebar-logo-badge"><i class="ri-government-line"></i></div>
+          <div class="sidebar-brand-text">
+            <span class="sidebar-app-title">CARTA DE SERVIÇOS</span>
+            <span class="sidebar-app-sub">Gestão Municipal</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ITENS DE MENU DA SIDEBAR -->
+      <div class="sidebar-menu-scroll">
+
+        <div class="sidebar-section-header">VISTAS DA CARTA</div>
+        <div class="sidebar-nav-item active menu-item" id="menuBtnServices" onclick="switchTab('services-tab', this)" title="Catálogo de Serviços">
+          <div class="nav-icon-box"><i class="ri-file-list-3-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Serviços Catalogados</span>
+            <span class="nav-sub-title" id="badgeTotalServicos">372 serviços</span>
+          </div>
+        </div>
+        <div class="sidebar-nav-item menu-item" id="menuBtnAdmin" onclick="switchTab('admin-tab', this)" style="display:none;" title="Painel de Administração">
+          <div class="nav-icon-box"><i class="ri-shield-keyhole-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Administração</span>
+            <span class="nav-sub-title">Gestão Setorial</span>
+          </div>
+        </div>
+        <div class="sidebar-nav-item menu-item" id="menuBtnProfile" onclick="switchTab('profile-tab', this)" title="Configurações da Conta">
+          <div class="nav-icon-box"><i class="ri-user-settings-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Minha Conta</span>
+            <span class="nav-sub-title">Credenciais de Acesso</span>
+          </div>
+        </div>
+
+        <div class="sidebar-section-header">AÇÕES DO SISTEMA</div>
+        <button class="sidebar-action-btn" onclick="openAddModal()" title="Cadastrar novo serviço público">
+          <span class="action-icon"><i class="ri-add-circle-line"></i></span>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Novo Serviço</span>
+            <span class="nav-sub-title">Cadastrar na Carta</span>
+          </div>
+        </button>
+        <button class="sidebar-action-btn" onclick="exportToExcel()" title="Exportar serviços em planilha Excel">
+          <span class="action-icon"><i class="ri-file-excel-2-line"></i></span>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Exportar Planilha</span>
+            <span class="nav-sub-title">Download formato XLSX</span>
+          </div>
+        </button>
+
+      </div>
+
+      <!-- RODAPÉ DA SIDEBAR: USUÁRIO E LOGOUT -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card">
+          <div class="sidebar-avatar" id="sidebarAvatar">AM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name" id="sidebarUserName">Administrador Master</span>
+            <span class="sidebar-user-role" id="sidebarUserRole">MASTER</span>
+          </div>
+        </div>
+        <button class="sidebar-logout-btn" onclick="pmdcLogout()" title="Encerrar sessão no sistema">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sair</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ÁREA PRINCIPAL DO DASHBOARD -->
+    <div class="app-main">
+
+      <!-- BARRA SUPERIOR PADRONIZADA (ESTILO SCREENSHOT) -->
+      <header class="top-dashboard-bar">
+        <nav class="top-bar-center" aria-label="Navegação rápida de módulos">
+          <div class="top-nav-tabs">
+            <a href="/" class="top-nav-tab" id="topTabHub" title="Ir para o Início / Hub Geral">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>Início (Hub)</span>
+            </a>
+            <a href="/cds/dashboard.html" class="top-nav-tab active" id="topTabCds" title="Ir para a Carta de Serviços">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+              <span>Carta de Serviços</span>
+            </a>
+            <a href="/sigem" class="top-nav-tab" id="topTabSigem" title="Ir para o SIGEM — Endereços e Cartografia">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+              <span>Endereços &amp; GIS</span>
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <!-- CORPO PRINCIPAL DA CARTA -->
+      <main class="main-body" style="padding: 24px 32px; flex: 1;">
+        
+        <!-- Header da Página com Estatística e Filtro por Categoria -->
+        <div style="display: flex; gap: 20px; align-items: stretch; margin-bottom: 24px; flex-wrap: wrap;">
+          
+          <!-- Card de Estatísticas -->
+          <div class="stats-card" style="margin: 0; min-width: 260px;">
+            <div class="stats-icon-wrap">
+              <i class="ri-file-list-3-line" style="font-size: 22px;"></i>
+            </div>
+            <div>
+              <div class="stats-value" id="statsTotalCount">0</div>
+              <div class="stats-label">Serviços Catalogados</div>
+              <div class="stats-desc">para esta secretaria</div>
+            </div>
+          </div>
+
+          <!-- Filtro por Categoria Horizontal / Card -->
+          <div class="filter-section" id="sidebarFilterWrapper" style="margin: 0; flex: 1; min-width: 300px; background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 18px; box-shadow: var(--shadow-sm);">
+            <div class="filter-title" style="margin-bottom: 8px; font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Filtrar por Categoria</div>
+            <div class="filter-list" id="sidebarFilterList" style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="filter-btn active" id="filterBtnTodos" onclick="clearCategoryFilters(this)">Todos os Serviços</button>
+            </div>
+          </div>
+
+        </div>
+
+        <main class="main-content">
+      
+      <!-- Aba 1: Serviços -->
+      <div id="services-tab" class="tab-content active">
+        
+        <div class="welcome-card">
+          <div>
+            <h2 id="welcomeTitle">Painel de Serviços</h2>
+            <p id="welcomeDesc">Gerencie o catálogo oficial de serviços da sua secretaria. Todas as alterações são refletidas em tempo real.</p>
+          </div>
+        </div>
+
+        <div class="actions-bar">
+          <div class="search-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); flex-shrink: 0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <label for="searchServiceInput" class="sr-only">Buscar serviço por nome</label>
+            <input type="text" id="searchServiceInput" placeholder="Buscar serviço por nome..." oninput="handleSearchInput()">
+          </div>
+
+          <div class="actions-btns">
+            <button class="btn-action" onclick="exportToExcel()" title="Exportar serviços em planilha Excel XLSX">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Exportar Planilha
+            </button>
+            <button class="btn-add-service" onclick="openAddModal()">
+              <span>+</span> Novo Serviço
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de Filtros por Status (Todos / Publicados / Ocultos) -->
+        <div class="status-tabs-wrap">
+          <button class="status-tab-btn active" id="statusFilterAll" onclick="filterByStatus('all', this)">
+            Todos (<span id="countAll">0</span>)
+          </button>
+          <button class="status-tab-btn" id="statusFilterPublished" onclick="filterByStatus('published', this)">
+            <span class="status-dot dot-published"></span> Publicados (<span id="countPublished">0</span>)
+          </button>
+          <button class="status-tab-btn" id="statusFilterHidden" onclick="filterByStatus('hidden', this)">
+            <span class="status-dot dot-hidden"></span> Ocultos (<span id="countHidden">0</span>)
+          </button>
+        </div>
+
+        <div class="services-list" id="servicesList">
+          <div style="text-align: center; padding: 40px; color: var(--text-muted);">Carregando serviços municipais...</div>
+        </div>
+      </div>
+
+      <!-- Aba 2: Minha Conta (Configurações) -->
+      <div id="profile-tab" class="tab-content">
+        <div class="profile-card">
+          <h2>Configurações da Conta</h2>
+          <p class="profile-subtitle">Gerencie os dados de acesso da sua secretaria ao portal da Carta de Serviço.</p>
+          
+          <div class="profile-error-box" id="profileErrorBox"></div>
+
+          <form id="profileForm" onsubmit="handleProfileUpdate(event)">
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="profileUsername">Usuário de Acesso (Login)</label>
+                <input type="text" id="profileUsername" required placeholder="Digite o nome de usuário">
+              </div>
+
+              <div class="form-group full">
+                <label for="profilePassword">Nova Senha</label>
+                <input type="password" id="profilePassword" placeholder="Deixe em branco para manter a senha atual" autocomplete="new-password">
+                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">A nova senha deve ter no mínimo 6 caracteres.</p>
+              </div>
+              
+              <div class="form-group full">
+                <button type="submit" class="btn-add-service" id="btnSaveProfile" style="align-self: flex-start;">
+                  Salvar Alterações
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Aba 3: Administração (Secretarias e Operadores) -->
+      <div id="admin-tab" class="tab-content">
+        <div class="profile-card" style="margin-bottom: 24px;">
+          <h2>Gestão de Contas e Secretarias</h2>
+          <p class="profile-subtitle">Cadastre novas secretarias municipais e configure os logins e senhas de acesso dos operadores setoriais.</p>
+          
+          <div style="display: flex; gap: 12px; margin-top: 16px;">
+            <button class="btn-add-service" onclick="openAdminSecretariaModal()">
+              + Nova Secretaria
+            </button>
+            <button class="btn-action" onclick="openAdminUserModal()">
+              + Novo Usuário (Login)
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <h3>Lista de Acessos por Secretaria</h3>
+          <div style="overflow-x: auto; margin-top: 16px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 12px; text-transform: uppercase;">
+                  <th style="padding: 12px 8px;">Secretaria / Órgão</th>
+                  <th style="padding: 12px 8px;">Usuário (Login)</th>
+                  <th style="padding: 12px 8px;">Perfil</th>
+                  <th style="padding: 12px 8px; text-align: right;">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersTableBody">
+                <!-- Populado dinamicamente via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Painel de Chaves de API para Integrações de Terceiros -->
+        <div class="profile-card" style="margin-top: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3>Chaves de API & Integrações de Terceiros</h3>
+              <p class="profile-subtitle" style="margin-bottom: 0;">Emita e administre credenciais de acesso para desenvolvedores, secretarias externas e sistemas parceiros.</p>
+            </div>
+            <button class="btn-add-service" onclick="openCreateApiKeyModal()" style="font-size: 13px;">
+              + Nova Chave de API
+            </button>
+          </div>
+
+          <div style="overflow-x: auto; margin-top: 20px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 11.5px; text-transform: uppercase;">
+                  <th style="padding: 12px 8px;">Cliente / Órgão</th>
+                  <th style="padding: 12px 8px;">Chave (Token)</th>
+                  <th style="padding: 12px 8px;">Limites (Min / Dia)</th>
+                  <th style="padding: 12px 8px;">Consumo Hoje</th>
+                  <th style="padding: 12px 8px;">Status</th>
+                  <th style="padding: 12px 8px; text-align: right;">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="adminApiKeysTableBody">
+                <!-- Populado dinamicamente via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modal Overlay para Formulário CRUD de Serviço -->
+  <div class="modal-overlay" id="serviceModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="modalTitle">Cadastrar Novo Serviço</h2>
+        <button class="btn-close-modal" onclick="closeModal()">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <form id="serviceForm">
+          <input type="hidden" id="formServiceId">
+          
+          <div class="form-grid">
+            <div class="form-section-title">Identificação</div>
+
+            <div class="form-group full" id="formSecretariaGroup" style="display: none;">
+              <label for="formSecretariaId">Secretaria Responsável *</label>
+              <select id="formSecretariaId">
+                <option value="">Selecione uma secretaria...</option>
+              </select>
+            </div>
+            
+            <div class="form-group full">
+              <label for="formNome">Nome do Serviço *</label>
+              <input type="text" id="formNome" required placeholder="Ex: Matrícula na Rede Pública Municipal de Ensino">
+            </div>
+            
+            <div class="form-group full">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label style="margin-bottom: 0;">Categorias do Serviço *</label>
+                <button type="button" onclick="createNewCategoryPrompt()" style="background: none; border: none; color: var(--primary); font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 4px; outline: none;">
+                  + Nova Categoria
+                </button>
+              </div>
+              <div id="formCategoryCheckboxesContainer" style="border: 1.5px solid var(--border); border-radius: 4px; padding: 12px; max-height: 180px; overflow-y: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: white;">
+              </div>
+            </div>
+
+            <div class="form-group full">
+              <label for="formStatus">Visibilidade e Publicação do Serviço *</label>
+              <select id="formStatus" required>
+                <option value="published">🟢 Publicado (Visível no catálogo público e exportado)</option>
+                <option value="hidden">🟡 Oculto (Salvo no banco, mas ocultado do catálogo e de exportações)</option>
+                <option value="draft">⚪ Rascunho (Em elaboração - Oculto)</option>
+                <option value="archived">📦 Arquivado (Inativo - Oculto)</option>
+              </select>
+            </div>
+            
+            <div class="form-group full">
+              <label for="formDescricao">Descrição (O que é o serviço) *</label>
+              <textarea id="formDescricao" required placeholder="Descreva claramente o serviço e seu propósito..."></textarea>
+            </div>
+
+            <div class="form-divider"></div>
+            <div class="form-section-title">Acesso e Requisitos</div>
+
+            <div class="form-group full">
+              <label for="formComoAcessar">Como Acessar</label>
+              <textarea id="formComoAcessar" placeholder="Ex: Pelo portal Colab ou presencialmente na sede do órgão..."></textarea>
+            </div>
+
+            <div class="form-group full">
+              <label for="formQuemSolicita">Quem Pode Solicitar</label>
+              <textarea id="formQuemSolicita" placeholder="Ex: Cidadãos residentes em Duque de Caxias..."></textarea>
+            </div>
+
+            <div class="form-group full">
+              <label for="formEndereco">Endereço Principal do Local</label>
+              <input type="text" id="formEndereco" placeholder="Rua, número, bairro, CEP">
+            </div>
+
+            <div class="form-divider"></div>
+            <div class="form-section-title">Informações de Contato</div>
+
+            <div class="form-group">
+              <label>Telefones para Contato</label>
+              <div class="multi-entry-container" id="formTelefonesContainer"></div>
+              <button type="button" class="btn-add-row" onclick="addMultiRow('formTelefonesContainer', 'tel', '(21) 00000-0000')">+ Adicionar Telefone</button>
+            </div>
+
+            <div class="form-group">
+              <label>E-mails de Contato</label>
+              <div class="multi-entry-container" id="formEmailsContainer"></div>
+              <button type="button" class="btn-add-row" onclick="addMultiRow('formEmailsContainer', 'email', 'email@caxias.rj.gov.br')">+ Adicionar E-mail</button>
+            </div>
+
+            <div class="form-group full">
+              <label>Links/Sites Relacionados</label>
+              <div class="multi-entry-container" id="formLinksContainer"></div>
+              <button type="button" class="btn-add-row" onclick="addMultiRow('formLinksContainer', 'url', 'https://www.duquedecaxias.rj.gov.br')">+ Adicionar Link</button>
+            </div>
+
+            <div class="form-divider"></div>
+            <div class="form-section-title">Passo a Passo do Atendimento</div>
+
+            <div class="form-group full">
+              <label>Passos para a Conclusão</label>
+              <div class="multi-entry-container" id="formPassosContainer"></div>
+              <button type="button" class="btn-add-row" onclick="addMultiRow('formPassosContainer', 'text', 'Ex: Entregar documentos no balcão')">+ Adicionar Passo</button>
+            </div>
+
+            <div class="form-divider"></div>
+            <div class="form-section-title">Documentação Exigida</div>
+
+            <div class="form-group full">
+              <label>Documentação Necessária</label>
+              <div class="multi-entry-container" id="formDocsContainer"></div>
+              <button type="button" class="btn-add-row" onclick="addMultiRow('formDocsContainer', 'text', 'Ex: Cópia do RG e CPF')">+ Adicionar Documento</button>
+            </div>
+
+            <div class="form-divider"></div>
+            <div class="form-section-title">Prazos, Custos e Regulamentação</div>
+
+            <div class="form-group">
+              <label for="formTempoEspera">Tempo de Espera no Atendimento</label>
+              <input type="text" id="formTempoEspera" placeholder="Ex: De 20 a 40 minutos">
+            </div>
+
+            <div class="form-group">
+              <label for="formPrazoMaximo">Prazo Máximo para Conclusão</label>
+              <input type="text" id="formPrazoMaximo" placeholder="Ex: Até 15 dias úteis">
+            </div>
+
+            <div class="form-group">
+              <label for="formCusto">Custo/Taxas</label>
+              <input type="text" id="formCusto" placeholder="Ex: Gratuito">
+            </div>
+
+            <div class="form-group">
+              <label for="formNorma">Norma Regulamentadora / Base Legal</label>
+              <input type="text" id="formNorma" placeholder="Ex: Lei Federal nº 13.460/2017">
+            </div>
+
+            <div class="form-divider"></div>
+            <div class="form-section-title">Prioridades de Atendimento</div>
+
+            <div class="form-group full">
+              <div class="priorities-grid" id="formPrioridadesGrid">
+                <!-- Checkboxes populados dinamicamente -->
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-action" onclick="closeModal()">Cancelar</button>
+        <button class="btn-add-service" onclick="saveService()">Salvar Alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Nova Secretaria -->
+  <div class="modal-overlay" id="adminSecretariaModal">
+    <div class="modal-box" style="max-width: 500px; height: auto; max-height: 400px;">
+      <div class="modal-header">
+        <h2>Cadastrar Nova Secretaria</h2>
+        <button class="btn-close-modal" onclick="closeAdminSecretariaModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="adminSecretariaForm" onsubmit="handleCreateSecretaria(event)">
+          <div class="form-grid" style="grid-template-columns: 1fr;">
+            <div class="form-group">
+              <label for="newSecName">Nome da Secretaria *</label>
+              <input type="text" id="newSecName" required placeholder="Ex: Secretaria Municipal de Habitação">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-action" onclick="closeAdminSecretariaModal()">Cancelar</button>
+        <button type="submit" form="adminSecretariaForm" class="btn-add-service">Salvar Secretaria</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Novo/Editar Usuário -->
+  <div class="modal-overlay" id="adminUserModal">
+    <div class="modal-box" style="max-width: 500px; height: auto; max-height: 600px;">
+      <div class="modal-header">
+        <h2 id="adminUserModalTitle">Cadastrar Novo Usuário</h2>
+        <button class="btn-close-modal" onclick="closeAdminUserModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="adminUserForm" onsubmit="handleSaveAdminUser(event)">
+          <input type="hidden" id="adminUserId">
+          <div class="form-grid" style="grid-template-columns: 1fr;">
+            
+            <div class="form-group">
+              <label for="adminUserSecretaria">Secretaria Associada *</label>
+              <select id="adminUserSecretaria" required>
+                <option value="">Selecione uma secretaria...</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="adminUserUsername">Nome de Usuário (Login) *</label>
+              <input type="text" id="adminUserUsername" required placeholder="Ex: semusa_caxias">
+            </div>
+
+            <div class="form-group">
+              <label for="adminUserPassword" id="adminUserPasswordLabel">Senha *</label>
+              <input type="password" id="adminUserPassword" required placeholder="Digite a senha" autocomplete="new-password">
+              <p id="adminUserPasswordHelp" style="font-size: 11px; color: var(--text-muted); margin-top: 4px; display: none;">Deixe em branco para manter a senha atual.</p>
+            </div>
+
+            <div class="form-group">
+              <label for="adminUserRole">Perfil de Acesso *</label>
+              <select id="adminUserRole" required>
+                <option value="editor">Editor (Apenas sua própria secretaria)</option>
+                <option value="admin">Administrador (Todas as secretarias)</option>
+              </select>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-action" onclick="closeAdminUserModal()">Cancelar</button>
+        <button type="submit" form="adminUserForm" class="btn-add-service">Salvar Usuário</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Criação de Chave de API -->
+  <div class="modal-overlay" id="apiKeyModal">
+    <div class="modal-box" style="max-width: 550px; height: auto; max-height: 650px;">
+      <div class="modal-header">
+        <h2 id="apiKeyModalTitle">Emitir Nova Chave de API</h2>
+        <button class="btn-close-modal" onclick="closeApiKeyModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="apiKeySuccessBox" style="display: none; background: #ecfdf5; border: 1.5px solid #10b981; border-radius: 8px; padding: 16px; margin-bottom: 18px;">
+          <div style="font-weight: 800; color: #065f46; font-size: 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <i class="ri-checkbox-circle-fill" style="color: #10b981; font-size: 18px;"></i> Chave gerada com sucesso!
+          </div>
+          <p style="font-size: 12px; color: #047857; margin-bottom: 10px;">Copie a chave agora. Por segurança, guarde-a em local protegido:</p>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="generatedKeyDisplay" readonly style="font-family: monospace; font-size: 13px; font-weight: 700; background: #ffffff; border: 1px solid #6ee7b7; padding: 8px 10px; border-radius: 4px; flex: 1; color: #0f172a;">
+            <button type="button" class="btn-action" onclick="copyGeneratedKey()" style="background: #10b981; color: white; border: none; padding: 8px 14px; font-weight: 700;">Copiar</button>
+          </div>
+        </div>
+
+        <form id="apiKeyForm" onsubmit="handleSaveApiKey(event)">
+          <div class="form-grid" style="grid-template-columns: 1fr;">
+            
+            <div class="form-group">
+              <label for="apiKeyCliente">Nome do Responsável / Solicitante *</label>
+              <input type="text" id="apiKeyCliente" required placeholder="Ex: João da Silva">
+            </div>
+
+            <div class="form-group">
+              <label for="apiKeyEmail">E-mail de Contato *</label>
+              <input type="email" id="apiKeyEmail" required placeholder="Ex: joao@empresa.com.br">
+            </div>
+
+            <div class="form-group">
+              <label for="apiKeyOrgao">Órgão / Secretaria / Empresa</label>
+              <input type="text" id="apiKeyOrgao" placeholder="Ex: SMED - Secretaria Municipal de Educação">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-group">
+                <label for="apiKeyLimitMin">Limite Req / Minuto</label>
+                <input type="number" id="apiKeyLimitMin" value="60" min="5" max="1000">
+              </div>
+              <div class="form-group">
+                <label for="apiKeyLimitDia">Limite Req / Dia</label>
+                <input type="number" id="apiKeyLimitDia" value="10000" min="100" max="500000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="apiKeyNotas">Notas / Finalidade</label>
+              <textarea id="apiKeyNotas" rows="2" placeholder="Ex: Integração do aplicativo mobile de serviços urbanos" style="resize: vertical; font-size: 13px; padding: 8px; border: 1.5px solid var(--border); border-radius: 4px;"></textarea>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-action" onclick="closeApiKeyModal()">Fechar</button>
+        <button type="submit" form="apiKeyForm" class="btn-add-service" id="btnSubmitApiKey">Gerar Chave</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Overlay para Visualização Completa do Serviço -->
+  <div class="modal-overlay" id="viewServiceModal">
+    <div class="modal-box" style="max-width: 820px; max-height: 90vh; padding: 0; display: flex; flex-direction: column; overflow: hidden;">
+      
+      <div class="view-modal-hero">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+          <div>
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 6px;">
+              Ficha do Serviço Público • PMDC
+            </div>
+            <h2 id="viewServiceName" style="margin-bottom: 8px;">Nome do Serviço</h2>
+          </div>
+          <button class="btn-close-modal" onclick="closeViewModal()" style="color: #ffffff; opacity: 0.8; font-size: 26px; line-height: 1;">&times;</button>
+        </div>
+        <div class="view-badges-row" id="viewBadgesRow">
+          <!-- Badges de Categoria, Secretaria e Status -->
+        </div>
+      </div>
+
+      <div class="modal-body" style="padding: 24px; overflow-y: auto; flex: 1;" id="viewModalBody">
+        <!-- Populado dinamicamente via JS -->
+      </div>
+
+      <div class="modal-footer" style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <button type="button" class="btn-action" onclick="printServiceSheet()" title="Imprimir ficha formatada">
+          <svg style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Imprimir Ficha
+        </button>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-action" id="btnViewToggleStatus" onclick="handleToggleStatusFromViewModal()" title="Ocultar ou publicar este serviço">
+            <!-- Texto dinâmico -->
+          </button>
+          <button type="button" class="btn-action" id="btnViewEdit" onclick="editFromViewModal()" title="Editar serviço">
+            <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Editar
+          </button>
+          <button type="button" class="btn-add-service" onclick="closeViewModal()">Fechar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal Overlay para Exclusão com Validação Dupla -->
+  <div class="modal-overlay" id="doubleDeleteModal">
+    <div class="modal-box" style="max-width: 520px; height: auto; max-height: 90vh;">
+      
+      <div class="modal-header" style="border-bottom: 2px solid #fee2e2;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; border-radius: 50%; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          </div>
+          <div>
+            <h2 id="deleteModalTitle" style="color: #991b1b; font-size: 18px;">Excluir Serviço</h2>
+            <div id="deleteModalSubtitle" style="font-size: 11px; color: #b91c1c; font-weight: 700; text-transform: uppercase;">Etapa 1 de 2 • Verificação de Segurança</div>
+          </div>
+        </div>
+        <button class="btn-close-modal" onclick="closeDoubleDeleteModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 20px;">
+        
+        <!-- ETAPA 1: Alerta e Identificação -->
+        <div id="deleteStep1">
+          <p style="font-size: 13.5px; color: #334155;">Você solicitou a exclusão permanente do serviço abaixo:</p>
+          
+          <div class="delete-service-box">
+            <div class="delete-service-name" id="deleteStep1ServiceName">Nome do Serviço</div>
+            <div class="delete-service-sub" id="deleteStep1ServiceMeta">Categoria • Secretaria</div>
+          </div>
+
+          <div class="delete-warning-callout">
+            <strong>⚠️ Atenção:</strong> Esta ação é definitiva e removerá permanentemente o serviço, suas etapas de atendimento, documentos necessários, contatos e histórico associados.
+          </div>
+
+          <p style="font-size: 13px; color: #64748b; margin-top: 14px;">
+            Dica: Se você deseja apenas que este serviço não apareça para o cidadão e não seja exportado, utilize a opção <strong>"Ocultar"</strong> ao invés de excluí-lo.
+          </p>
+        </div>
+
+        <!-- ETAPA 2: Validação Obrigatória de Segurança -->
+        <div id="deleteStep2" style="display: none;">
+          <div style="background: #fef2f2; border: 1.5px solid #f87171; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
+            <div style="font-weight: 800; color: #991b1b; font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+              <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              CONFIRMAÇÃO DEFINITIVA (ETAPA 2/2)
+            </div>
+            <p style="font-size: 13px; color: #7f1d1d; line-height: 1.5;">
+              Para prosseguir e confirmar que você realmente deseja apagar <strong id="deleteStep2ServiceName"></strong>, digite a palavra <strong style="color: #dc2626; letter-spacing: 1px;">EXCLUIR</strong> abaixo:
+            </p>
+          </div>
+
+          <label for="deleteConfirmWord" style="font-size: 12px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">
+            Digite a palavra de segurança:
+          </label>
+          <input type="text" id="deleteConfirmWord" class="delete-confirm-input" placeholder="Digite EXCLUIR para habilitar o botão" autocomplete="off" oninput="checkDeleteInputs()">
+
+          <label class="delete-checkbox-label">
+            <input type="checkbox" id="deleteConfirmCheck" onchange="checkDeleteInputs()" style="width: 16px; height: 16px; accent-color: #dc2626;">
+            <span>Estou ciente de que esta exclusão é irreversível e autorizo a exclusão permanente.</span>
+          </label>
+        </div>
+
+      </div>
+
+      <div class="modal-footer" style="background: #f8fafc; border-top: 1px solid #e2e8f0;">
+        <!-- Footer Etapa 1 -->
+        <div id="deleteFooterStep1" style="display: flex; justify-content: flex-end; gap: 10px; width: 100%;">
+          <button type="button" class="btn-action" onclick="closeDoubleDeleteModal()">Cancelar</button>
+          <button type="button" class="btn-danger-confirm" onclick="goToDeleteStep2()">
+            Prosseguir para Exclusão (1/2) ➔
+          </button>
+        </div>
+
+        <!-- Footer Etapa 2 -->
+        <div id="deleteFooterStep2" style="display: none; justify-content: space-between; align-items: center; width: 100%;">
+          <button type="button" class="btn-action" onclick="goToDeleteStep1()">⬅ Voltar</button>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-action" onclick="closeDoubleDeleteModal()">Cancelar</button>
+            <button type="button" class="btn-danger-confirm" id="btnConfirmDeletePermanent" disabled onclick="executeDoubleDelete()">
+              <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Confirmar Exclusão Definitiva
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="dashboard.js"></script>
+      </main>
+    </div><!-- END APP MAIN -->
+  </div><!-- END APP LAYOUT -->
+</body>
+</html>

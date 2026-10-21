@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DE PARQUE PAULISTA",
+        "complexo": "COMPLEXO DE IMBARIÊ",
+        "comunidade_pasta": "COMUNIDADE DE PARQUE PAULISTA",
+        "styleUrl": "#com_vermelho_escuro3",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade de Parque Paulista",
+        "Complexo": "Complexo de Imbariê",
+        "Distrito": "3° Distrito",
+        "IDS_comunidade": "0.552",
+        "Classe_comunidade": "Prioridade alta",
+        "kml_fill_color": "99ff00aa",
+        "fill": "#aa00ff",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ffff00aa",
+        "stroke": "#aa00ff",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.25116998630674,
+              -22.65958174001127
+            ],
+            [
+              -43.24274398412648,
+              -22.65408351889015
+            ],
+            [
+              -43.24563122375275,
+              -22.65084078359747
+            ],
+            [
+              -43.2520064,
+              -22.6535141
+            ],
+            [
+              -43.257155,
+              -22.641131
+            ],
+            [
+              -43.2581476,
+              -22.6409609
+            ],
+            [
+              -43.26010074462187,
+              -22.64072390160021
+            ],
+            [
+              -43.26243153487106,
+              -22.63425845413403
+            ],
+            [
+              -43.26953524515332,
+              -22.63762425385571
+            ],
+            [
+              -43.26738343249705,
+              -22.64321588180837
+            ],
+            [
+              -43.26650958516083,
+              -22.64286569265143
+            ],
+            [
+              -43.26228707252028,
+              -22.65334534756325
+            ],
+            [
+              -43.26160542747972,
+              -22.6530721587601
+            ],
+            [
+              -43.26103608495793,
+              -22.65451327814019
+            ],
+            [
+              -43.25116998630674,
+              -22.65958174001127
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

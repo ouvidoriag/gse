@@ -1,0 +1,79 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DA JAQUEIRA",
+        "complexo": "COMPLEXO DO BARRO VERMELHO",
+        "comunidade_pasta": "COMUNIDADE DA JAQUEIRA",
+        "styleUrl": "#com_laranja_escuro16",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade da Jaqueira",
+        "Complexo": "Complexo do Barro Vermellho",
+        "Distrito": "2º Distrito",
+        "IDS_comunidade": "0.585",
+        "Classe_comunidade": "Prioridade média",
+        "kml_fill_color": "99ff0000",
+        "fill": "#0000ff",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ffff5500",
+        "stroke": "#0055ff",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.32731674939836,
+              -22.74650725950056
+            ],
+            [
+              -43.32891246118754,
+              -22.74502000983466
+            ],
+            [
+              -43.32942866337221,
+              -22.75555688088962
+            ],
+            [
+              -43.31995058999996,
+              -22.753251699
+            ],
+            [
+              -43.32081732999995,
+              -22.75190827499999
+            ],
+            [
+              -43.32164693999992,
+              -22.75042950699999
+            ],
+            [
+              -43.32355313029592,
+              -22.75102511752647
+            ],
+            [
+              -43.32434988491934,
+              -22.75069519863826
+            ],
+            [
+              -43.32594848228883,
+              -22.74924999359627
+            ],
+            [
+              -43.32684391870778,
+              -22.74875066743902
+            ],
+            [
+              -43.32731674939836,
+              -22.74650725950056
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

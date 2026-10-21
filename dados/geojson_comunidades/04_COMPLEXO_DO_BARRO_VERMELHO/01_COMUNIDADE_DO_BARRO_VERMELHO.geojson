@@ -1,0 +1,103 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Comunidade do Barro Vermelho",
+        "complexo": "COMPLEXO DO BARRO VERMELHO",
+        "comunidade_pasta": "COMUNIDADE DO BARRO VERMELHO",
+        "styleUrl": "#com_laranja_escuro16",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade do Barro Vermelho",
+        "Complexo": "Complexo do Barro Vermellho",
+        "Distrito": "2º Distrito",
+        "IDS_comunidade": "0.543",
+        "Classe_comunidade": "Prioridade alta",
+        "kml_fill_color": "99ff0000",
+        "fill": "#0000ff",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ffff5500",
+        "stroke": "#0055ff",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.31979084380724,
+              -22.75356490406023
+            ],
+            [
+              -43.3097343,
+              -22.75097739932643
+            ],
+            [
+              -43.30890029999999,
+              -22.75068269932643
+            ],
+            [
+              -43.30740610000001,
+              -22.74972319932645
+            ],
+            [
+              -43.3071319,
+              -22.74950379932645
+            ],
+            [
+              -43.3067574,
+              -22.74920439932647
+            ],
+            [
+              -43.307361,
+              -22.74822609932649
+            ],
+            [
+              -43.3075183,
+              -22.74788639932649
+            ],
+            [
+              -43.30769660000001,
+              -22.74730069932651
+            ],
+            [
+              -43.30784119999999,
+              -22.74724429932651
+            ],
+            [
+              -43.30795169999999,
+              -22.74714229932651
+            ],
+            [
+              -43.30812084382195,
+              -22.74660140327249
+            ],
+            [
+              -43.31356286506888,
+              -22.74256457454489
+            ],
+            [
+              -43.3145609786169,
+              -22.74275866263594
+            ],
+            [
+              -43.31639124975622,
+              -22.7446745049536
+            ],
+            [
+              -43.32175665784698,
+              -22.75040285470602
+            ],
+            [
+              -43.31979084380724,
+              -22.75356490406023
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

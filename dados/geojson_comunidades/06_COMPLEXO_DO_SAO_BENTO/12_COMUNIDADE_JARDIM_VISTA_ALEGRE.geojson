@@ -1,0 +1,103 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE JARDIM VISTA ALEGRE",
+        "complexo": "COMPLEXO DO SÃO BENTO",
+        "comunidade_pasta": "COMUNIDADE JARDIM VISTA ALEGRE",
+        "styleUrl": "#com_vermelho_escuro5",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade Jardim Vista Alegre",
+        "Complexo": "Complexo do São Bento",
+        "Distrito": "2º Distrito",
+        "IDS_comunidade": "0.635",
+        "Classe_comunidade": "Prioridade baixa",
+        "kml_fill_color": "997f0000",
+        "fill": "#00007f",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff7f0000",
+        "stroke": "#00007f",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.31834874091037,
+              -22.71131531787496
+            ],
+            [
+              -43.31787167441214,
+              -22.71217441791341
+            ],
+            [
+              -43.316976690476,
+              -22.7142080723605
+            ],
+            [
+              -43.3153233295193,
+              -22.71510887434854
+            ],
+            [
+              -43.31473306250064,
+              -22.71507900956705
+            ],
+            [
+              -43.31045488651306,
+              -22.7167151994037
+            ],
+            [
+              -43.30753151056192,
+              -22.71800966903788
+            ],
+            [
+              -43.30708610525825,
+              -22.71715807048105
+            ],
+            [
+              -43.30561491759024,
+              -22.7169660371233
+            ],
+            [
+              -43.30488476617063,
+              -22.71674699169743
+            ],
+            [
+              -43.30368001632831,
+              -22.71632715463118
+            ],
+            [
+              -43.30269431191186,
+              -22.71608985541979
+            ],
+            [
+              -43.30161733856794,
+              -22.71614461677625
+            ],
+            [
+              -43.30048560386756,
+              -22.71614461677625
+            ],
+            [
+              -43.2992991078107,
+              -22.71601684027783
+            ],
+            [
+              -43.29871498667504,
+              -22.71119784090847
+            ],
+            [
+              -43.31834874091037,
+              -22.71131531787496
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

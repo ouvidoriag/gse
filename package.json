@@ -1,0 +1,68 @@
+{
+  "name": "pmdc-portal-unificado",
+  "version": "1.0.0",
+  "description": "Sistema Integrado de Gestão de Endereços, Equipamentos e Carta de Serviços — Prefeitura de Duque de Caxias",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "clean": "node -e \"const fs = require('fs'); fs.rmSync('dist', { recursive: true, force: true });\"",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "prestart": "tsc",
+    "start": "node dist/index.js",
+    "test": "node scripts/test_cds_and_hub.js",
+    "test:all": "node scripts/test_all.js",
+    "test:cds": "node scripts/test_cds_and_hub.js",
+    "test:sigem": "node scripts/test_crud_and_auth.js",
+    "test:external": "node scripts/test_external_api.js",
+    "test:perm": "node scripts/test_secretaria_perm.js",
+    "test:geo": "node scripts/test_geocoding_service.js",
+    "audit:sigem": "node scripts/test_independent_audit.js",
+    "check:db": "node scripts/check_full_integrity.js",
+    "export:sigem": "node scripts/exportador_central.js",
+    "pm2:start": "tsc && pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop pmdc-unificados",
+    "pm2:restart": "pm2 restart pmdc-unificados",
+    "pm2:status": "pm2 status",
+    "pm2:logs": "pm2 logs pmdc-unificados",
+    "pm2:delete": "pm2 delete pmdc-unificados"
+  },
+  "keywords": [
+    "pmdc",
+    "duque-de-caxias",
+    "sigem",
+    "carta-de-servicos",
+    "ouvidoria",
+    "geoprocessamento"
+  ],
+  "author": "Prefeitura Municipal de Duque de Caxias",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.22.4",
+    "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/compression": "^1.7.5",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/express-rate-limit": "^5.1.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^22.13.10",
+    "@types/nodemailer": "^6.4.17",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}

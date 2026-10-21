@@ -1,0 +1,103 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "CASINHAS (CONJUNTO 22 DE ABRIL)",
+        "complexo": "COMPLEXO DE IMBARIÊ",
+        "comunidade_pasta": "CASINHAS (CONJUNTO 22 DE ABRIL)",
+        "styleUrl": "#com_vermelho_escuro3",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade das Casinhas (Conjunto 22 de Abril)",
+        "Complexo": "Complexo de Imbariê",
+        "Distrito": "3° Distrito",
+        "IDS_comunidade": "0.481",
+        "Classe_comunidade": "Situação crítica / prioridade máxima",
+        "kml_fill_color": "99ff00aa",
+        "fill": "#aa00ff",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ffff00aa",
+        "stroke": "#aa00ff",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2163633630194,
+              -22.6227639054557
+            ],
+            [
+              -43.22224542344498,
+              -22.62526824565622
+            ],
+            [
+              -43.22523991140392,
+              -22.62668215437671
+            ],
+            [
+              -43.22422469129216,
+              -22.62783085799212
+            ],
+            [
+              -43.22574820496649,
+              -22.62829379117954
+            ],
+            [
+              -43.22381848407308,
+              -22.63005777707119
+            ],
+            [
+              -43.22385503834839,
+              -22.63066922784181
+            ],
+            [
+              -43.22066676777522,
+              -22.633373514822
+            ],
+            [
+              -43.22177939043485,
+              -22.63474963106493
+            ],
+            [
+              -43.21652868864926,
+              -22.63824033896144
+            ],
+            [
+              -43.21460047025741,
+              -22.63562516637788
+            ],
+            [
+              -43.2139361651498,
+              -22.63471004447211
+            ],
+            [
+              -43.21674270259011,
+              -22.63076141301302
+            ],
+            [
+              -43.21761523601962,
+              -22.62898556907084
+            ],
+            [
+              -43.21498662765477,
+              -22.6262760163089
+            ],
+            [
+              -43.2151874377903,
+              -22.62497242824899
+            ],
+            [
+              -43.2163633630194,
+              -22.6227639054557
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

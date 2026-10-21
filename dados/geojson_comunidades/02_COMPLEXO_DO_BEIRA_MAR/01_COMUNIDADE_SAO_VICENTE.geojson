@@ -1,0 +1,83 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Comunidade da Av. São Vicente",
+        "complexo": "COMPLEXO DO BEIRA MAR",
+        "comunidade_pasta": "COMUNIDADE SÃO VICENTE",
+        "styleUrl": "#com_laranja_escuro18",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade da Av. São Vicente",
+        "Complexo": "Complexo do Beira Mar",
+        "Distrito": "1° Distrito",
+        "IDS_comunidade": "0.562",
+        "Classe_comunidade": "Prioridade alta",
+        "kml_fill_color": "99008cff",
+        "fill": "#ff8c00",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff008cff",
+        "stroke": "#ff8c00",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2856054,
+              -22.7825087993257
+            ],
+            [
+              -43.28568309999999,
+              -22.78129809932573
+            ],
+            [
+              -43.2871888,
+              -22.78280639932569
+            ],
+            [
+              -43.2867356,
+              -22.78358219932567
+            ],
+            [
+              -43.2871351,
+              -22.78399849932566
+            ],
+            [
+              -43.2875543,
+              -22.78439799932565
+            ],
+            [
+              -43.28698719999999,
+              -22.78481219932564
+            ],
+            [
+              -43.28633620000001,
+              -22.78534479932565
+            ],
+            [
+              -43.2859516,
+              -22.78573939932562
+            ],
+            [
+              -43.2853557,
+              -22.78640129932562
+            ],
+            [
+              -43.2853702,
+              -22.78617559932562
+            ],
+            [
+              -43.2856054,
+              -22.7825087993257
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

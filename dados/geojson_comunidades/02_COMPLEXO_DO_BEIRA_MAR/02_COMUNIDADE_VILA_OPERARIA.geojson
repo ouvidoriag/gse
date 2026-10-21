@@ -1,0 +1,83 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "6. Vila Operária",
+        "complexo": "COMPLEXO DO BEIRA MAR",
+        "comunidade_pasta": "COMUNIDADE VILA OPERÁRIA",
+        "styleUrl": "#com_laranja_escuro18",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade da Vila Operária",
+        "Complexo": "Complexo do Beira Mar",
+        "Distrito": "1º Distrito",
+        "IDS_comunidade": "0.607",
+        "Classe_comunidade": "Prioridade baixa",
+        "kml_fill_color": "99008cff",
+        "fill": "#ff8c00",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff008cff",
+        "stroke": "#ff8c00",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.29242988632118,
+              -22.78724713617144
+            ],
+            [
+              -43.29278512472565,
+              -22.78716202981225
+            ],
+            [
+              -43.29475727084343,
+              -22.78544805100747
+            ],
+            [
+              -43.29671405721884,
+              -22.78635191366402
+            ],
+            [
+              -43.29693633078621,
+              -22.7862734604848
+            ],
+            [
+              -43.29763147098949,
+              -22.78663966009454
+            ],
+            [
+              -43.29927603246323,
+              -22.78645792240589
+            ],
+            [
+              -43.29788289271407,
+              -22.78931236315195
+            ],
+            [
+              -43.29805466041205,
+              -22.7894678409021
+            ],
+            [
+              -43.29796793437293,
+              -22.78981618763703
+            ],
+            [
+              -43.29703837724298,
+              -22.78964230964308
+            ],
+            [
+              -43.29242988632118,
+              -22.78724713617144
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

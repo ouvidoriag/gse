@@ -1,0 +1,34 @@
+name: CI - Homologação Portal Unificado PMDC
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: Build, Typecheck e Bateria de Testes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js v22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Instalar Dependências
+        run: npm ci
+
+      - name: Verificação Estrita de Tipagem (Typecheck)
+        run: npm run typecheck
+
+      - name: Compilação TypeScript (Build)
+        run: npm run build
+
+      - name: Execução do Test Runner (Homologação Geral)
+        run: npm run test:all

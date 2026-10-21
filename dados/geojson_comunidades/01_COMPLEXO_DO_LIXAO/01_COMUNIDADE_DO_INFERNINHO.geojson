@@ -1,0 +1,63 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Comunidade do Inferninho",
+        "complexo": "COMPLEXO DO LIXÃO",
+        "comunidade_pasta": "COMUNIDADE DO INFERNINHO",
+        "styleUrl": "#com_laranja_escuro0",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade do Inferninho",
+        "Complexo": "Complexo da Vila Nova (Lixão)",
+        "Distrito": "1º Distrito",
+        "IDS_comunidade": "0.56",
+        "Classe_comunidade": "Prioridade alta",
+        "kml_fill_color": "b00000ff",
+        "fill": "#ff0000",
+        "fill-opacity": 0.6902,
+        "kml_stroke_color": "ff0000ff",
+        "stroke": "#ff0000",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.30314837418991,
+              -22.79478310406133
+            ],
+            [
+              -43.30343658503388,
+              -22.79539916600497
+            ],
+            [
+              -43.30399704967952,
+              -22.79655935711915
+            ],
+            [
+              -43.30346948390897,
+              -22.79652811917335
+            ],
+            [
+              -43.30266869706898,
+              -22.79649684638954
+            ],
+            [
+              -43.30199440329778,
+              -22.79527272142079
+            ],
+            [
+              -43.30314837418991,
+              -22.79478310406133
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

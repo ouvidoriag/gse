@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro de Serviços — Prefeitura de Duque de Caxias</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="carta-de-servico.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<link rel="stylesheet" href="/shared/nav.css">
+<script src="/shared/nav.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <img src="Logo-FUNDO-ESCURO_Prefeitura-de-Duque-de-Caxias_2025_Horizontal.png"
+       alt="Prefeitura de Duque de Caxias"
+       onerror="this.style.display='none'; const div = this.nextElementSibling; if(div && div.classList.contains('header-divider')) div.style.display='none';">
+  <div class="header-divider"></div>
+  <div class="header-title">
+    <h1>Cadastro de Serviços Municipais</h1>
+    <p>Sistema de Carta de Serviço Municipal</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="progress-bar">
+    <span class="progress-label">Preenchimento</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-count" id="progressCount">0 de 0 campos</span>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 10v11M16 10v11M12 10v11"/></svg>
+      </div>
+      <div>
+        <h2>Identificação do Órgão</h2>
+        <p>Nome da secretaria ou órgão responsável pelos serviços</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Órgão <span class="required">*</span></label>
+          <input type="text" id="sec-nome"
+            placeholder="Ex: Secretaria Municipal de Saúde"
+            oninput="updateProgress()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>
+      </div>
+      <div>
+        <h2>Serviços Oferecidos</h2>
+        <p>Cada serviço tem seus próprios dados de contato e acesso</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="servicos-wrapper" id="servicosWrapper"></div>
+      <button class="btn-add-servico" onclick="addServico()">
+        <span class="btn-add-plus">+</span> Adicionar Serviço
+      </button>
+    </div>
+  </div>
+
+  <div class="export-section">
+    <div class="export-info">
+      <h3>Enviar Base de Dados</h3>
+      <p>Revise os dados preenchidos e clique abaixo para enviar o cadastro completo para a Ouvidoria.</p>
+    </div>
+    <div class="export-btns">
+      <button class="btn-export btn-export-email" onclick="exportEmail()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Enviar Cadastro por E-mail
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<div class="config-modal-overlay" id="configModal">
+  <div class="config-modal-box">
+    <h2>Enviar por E-mail</h2>
+    <p class="config-subtitle">
+      Os dados completos serão enviados para <strong>ouvgeral.gestao@gmail.com</strong>
+      junto com a planilha XLSX em anexo.<br>
+      Informe seu e-mail para que possamos responder caso necessário.
+    </p>
+
+    <div class="config-field">
+      <label>Seu e-mail (resposta)</label>
+      <input type="email" id="configReplyTo"
+        placeholder="seu.email@secretaria.gov.br"
+        onkeydown="if(event.key==='Enter') sendEmail()">
+    </div>
+
+    <div class="config-modal-actions">
+      <button class="config-btn-cancel" onclick="closeConfigModal()">Cancelar</button>
+      <button class="config-btn-send" id="configSendBtn" onclick="sendEmail()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        Enviar agora
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>E-mail enviado!</h2>
+    <p>Seu cadastro foi enviado com sucesso para:</p>
+    <div class="modal-dest" id="successModalDest"></div>
+    <p>A planilha XLSX foi anexada automaticamente ao e-mail.<br>
+       Em breve a equipe da Ouvidoria entrará em contato.<br>
+       Você já pode fechar esta janela.</p>
+    <br>
+    <button class="modal-btn-close" onclick="closeSuccessModal()">Fechar</button>
+  </div>
+</div>
+
+<script src="carta-de-servico.js"></script>
+</body>
+</html>

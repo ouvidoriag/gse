@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DE SANTA CRUZ DA SERRA",
+        "complexo": "COMPLEXO DE IMBARIÊ",
+        "comunidade_pasta": "COMUNIDADE DE SANTA CRUZ DA SERRA",
+        "styleUrl": "#com_vermelho_escuro3",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade de Santa Cruz da Serra",
+        "Complexo": "Complexo de Imbariê",
+        "Distrito": "3° Distrito",
+        "IDS_comunidade": "0.492",
+        "Classe_comunidade": "Prioridade muito alta",
+        "kml_fill_color": "99ff00aa",
+        "fill": "#aa00ff",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ffff00aa",
+        "stroke": "#aa00ff",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.26973923767306,
+              -22.65044868992107
+            ],
+            [
+              -43.26854509782294,
+              -22.6483591921318
+            ],
+            [
+              -43.27258484851177,
+              -22.64631080538223
+            ],
+            [
+              -43.27350704279443,
+              -22.64778462014177
+            ],
+            [
+              -43.278269049714,
+              -22.64545205840485
+            ],
+            [
+              -43.27944203438788,
+              -22.6448413061393
+            ],
+            [
+              -43.28110412742373,
+              -22.64439448728528
+            ],
+            [
+              -43.28145940516568,
+              -22.64412249969984
+            ],
+            [
+              -43.28147344930327,
+              -22.64334402622385
+            ],
+            [
+              -43.28331527295491,
+              -22.64289404232677
+            ],
+            [
+              -43.28343042475691,
+              -22.64413036615635
+            ],
+            [
+              -43.28352218290297,
+              -22.64547186809964
+            ],
+            [
+              -43.27902555903614,
+              -22.64550226562577
+            ],
+            [
+              -43.27847583769714,
+              -22.64585213563414
+            ],
+            [
+              -43.26973923767306,
+              -22.65044868992107
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Unificado — Prefeitura Municipal de Duque de Caxias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="/shared/nav.css">
+  <link rel="stylesheet" href="/hub/hub.css">
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR PADRONIZADA (MENU LATERAL) -->
+    <aside class="sidebar-nav" id="sidebarNav">
+
+      <!-- CABEÇALHO DA SIDEBAR -->
+      <div class="sidebar-header">
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Recolher / Expandir Menu" aria-label="Alternar menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="sidebar-brand-box" title="Portal Integrado PMDC">
+          <div class="sidebar-logo-badge"><i class="ri-government-line"></i></div>
+          <div class="sidebar-brand-text">
+            <span class="sidebar-app-title">PORTAL INTEGRADO</span>
+            <span class="sidebar-app-sub">Prefeitura de Duque de Caxias</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ITENS DE MENU DA SIDEBAR -->
+      <div class="sidebar-menu-scroll">
+
+        <div class="sidebar-section-header">RECURSOS DO HUB</div>
+        <a href="#kpiServicos" class="sidebar-nav-item" title="Painel de Indicadores Gerais">
+          <div class="nav-icon-box"><i class="ri-bar-chart-2-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Indicadores Gerais</span>
+            <span class="nav-sub-title">Métricas Consolidadas</span>
+          </div>
+        </a>
+        <a href="#globalSearchInput" class="sidebar-nav-item" onclick="setTimeout(()=>document.getElementById('globalSearchInput').focus(),100);" title="Busca Transversal">
+          <div class="nav-icon-box"><i class="ri-search-2-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Busca Transversal</span>
+            <span class="nav-sub-title">Serviços e Equipamentos</span>
+          </div>
+        </a>
+        <a href="#modulosPlataforma" class="sidebar-nav-item" title="Módulos Integrados">
+          <div class="nav-icon-box"><i class="ri-dashboard-3-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Módulos do Sistema</span>
+            <span class="nav-sub-title">Acesso Setorial</span>
+          </div>
+        </a>
+        <a href="/api" class="sidebar-nav-item" title="Portal do Desenvolvedor &amp; API Oficial">
+          <div class="nav-icon-box"><i class="ri-code-s-slash-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">API &amp; Desenvolvedores</span>
+            <span class="nav-sub-title">Documentação &amp; Chaves</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- RODAPÉ DA SIDEBAR: USUÁRIO E LOGOUT -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card">
+          <div class="sidebar-avatar" id="sidebarAvatar">AM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name" id="sidebarUserName">Administrador Master</span>
+            <span class="sidebar-user-role" id="sidebarUserRole">MASTER</span>
+          </div>
+        </div>
+        <button class="sidebar-logout-btn" onclick="pmdcLogout()" title="Encerrar sessão no sistema">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sair</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ÁREA PRINCIPAL DO DASHBOARD -->
+    <div class="app-main">
+
+      <!-- BARRA SUPERIOR PADRONIZADA (ESTILO SCREENSHOT) -->
+      <header class="top-dashboard-bar">
+        <nav class="top-bar-center" aria-label="Navegação rápida de módulos">
+          <div class="top-nav-tabs">
+            <a href="/" class="top-nav-tab active" id="topTabHub" title="Ir para o Início / Hub Geral">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>Início (Hub)</span>
+            </a>
+            <a href="/cds/dashboard.html" class="top-nav-tab" id="topTabCds" title="Ir para a Carta de Serviços">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+              <span>Carta de Serviços</span>
+            </a>
+            <a href="/sigem" class="top-nav-tab" id="topTabSigem" title="Ir para o SIGEM — Endereços e Cartografia">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+              <span>Endereços &amp; GIS</span>
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <!-- CORPO PRINCIPAL DO HUB -->
+      <main class="main-body" style="flex:1;">
+        <!-- Hero Section -->
+        <header class="hub-hero">
+          <div class="hub-hero-container">
+            <div class="hub-badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:6px;"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+              GOVERNO MUNICIPAL DE DUQUE DE CAXIAS — RJ
+            </div>
+            <h1 class="hub-title">Portal Integrado de Serviços &amp; Equipamentos</h1>
+            <p class="hub-subtitle">
+              Plataforma unificada de governança, geoprocessamento e atendimento ao cidadão. 
+              Consulte os <strong>372 serviços oficiais</strong> e localize todos os <strong>449 equipamentos públicos</strong> em um só lugar.
+            </p>
+
+            <!-- Global Search -->
+            <div class="hub-search-box">
+              <div class="hub-search-input-wrap">
+                <span class="hub-search-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </span>
+                <input type="text" id="globalSearchInput" placeholder="Busque por serviço, posto de saúde, escola, bairro, certidão, vacina..." autocomplete="off">
+                <button id="clearSearchBtn" class="hub-search-clear" style="display:none;" title="Limpar busca">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+              <div id="searchResultsDropdown" class="hub-search-dropdown" style="display:none;"></div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Container -->
+        <div class="hub-main">
+          
+          <!-- KPI Section -->
+          <section class="hub-kpi-grid">
+            <div class="kpi-card" id="kpiServicos">
+              <div class="kpi-icon-wrap bg-blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-number" id="numServicos">372</span>
+                <span class="kpi-label">Serviços ao Cidadão</span>
+                <span class="kpi-hint">18 Secretarias Ativas</span>
+              </div>
+            </div>
+
+            <div class="kpi-card" id="kpiEquipamentos">
+              <div class="kpi-icon-wrap bg-gold">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-number" id="numEquipamentos">449</span>
+                <span class="kpi-label">Equipamentos Públicos</span>
+                <span class="kpi-hint">100% Georreferenciados</span>
+              </div>
+            </div>
+
+            <div class="kpi-card" id="kpiDistritos">
+              <div class="kpi-icon-wrap bg-green">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-number" id="numDistritos">4</span>
+                <span class="kpi-label">Distritos Municipais</span>
+                <span class="kpi-hint">117 Bairros Oficiais</span>
+              </div>
+            </div>
+
+            <div class="kpi-card" id="kpiHubs">
+              <div class="kpi-icon-wrap bg-purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-number" id="numHubs">12</span>
+                <span class="kpi-label">Polos Prediais (Hubs)</span>
+                <span class="kpi-hint">Complexos Compartilhados</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Main Modules Section -->
+          <section class="hub-modules-section" id="modulosPlataforma">
+            <h2 class="section-heading">Módulos Integrados da Plataforma</h2>
+            <p class="section-subheading">Acesse diretamente os portais de atendimento e as ferramentas de gestão técnica</p>
+
+            <div class="modules-grid">
+              
+              <!-- Modulo 1: Carta de Serviços -->
+              <div class="module-card">
+                <div class="module-header">
+                  <span class="module-tag tag-blue">Módulo Cidadão</span>
+                  <div class="module-icon" style="color: #0284c7;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                  </div>
+                </div>
+                <h3 class="module-title">Carta de Serviços ao Cidadão</h3>
+                <p class="module-desc">
+                  Guia completo de todos os serviços públicos municipais. Consulte documentação necessária, prazos, taxas, locais de atendimento e passo a passo detalhado.
+                </p>
+                <ul class="module-features">
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> 372 serviços organizados por categorias</li>
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Busca rápida por público-alvo e secretaria</li>
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Consulta aberta ao cidadão sem necessidade de login</li>
+                </ul>
+                <div class="module-actions">
+                  <a href="/cds" class="btn-primary">Acessar Carta de Serviços →</a>
+                </div>
+              </div>
+
+              <!-- Modulo 2: SIGEM -->
+              <div class="module-card">
+                <div class="module-header">
+                  <span class="module-tag tag-gold">Módulo Geoprocessamento</span>
+                  <div class="module-icon" style="color: #d97706;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+                  </div>
+                </div>
+                <h3 class="module-title">SIGEM — Endereços &amp; Equipamentos</h3>
+                <p class="module-desc">
+                  Sistema Integrado de Gestão de Endereços Municipais. Visualização geoespacial com mapa interativo, coordenadas precisas, filtros por distritos e polos prediais.
+                </p>
+                <ul class="module-features">
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> 449 prédios e órgãos públicos no mapa</li>
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Filtros por 4 Distritos e 117 Bairros</li>
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Fichas cadastrais com CNES, INEP e contatos</li>
+                </ul>
+                <div class="module-actions">
+                  <a href="/sigem" class="btn-primary btn-gold">Explorar Mapa e Equipamentos →</a>
+                </div>
+              </div>
+
+              <!-- Modulo 3: Painel Administrativo -->
+              <div class="module-card">
+                <div class="module-header">
+                  <span class="module-tag tag-purple">Módulo Gestão</span>
+                  <div class="module-icon" style="color: #9333ea;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                </div>
+                <h3 class="module-title">Painel de Gestão e Governança</h3>
+                <p class="module-desc">
+                  Área restrita para gestores municipais e secretarias cadastrarem, editarem e atualizarem serviços, novos equipamentos e gerenciarem operadores setoriais.
+                </p>
+                <ul class="module-features">
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Edição e cadastro transacional de serviços</li>
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Gestão de secretarias e operadores setoriais</li>
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Exportação de planilhas oficiais e relatórios</li>
+                </ul>
+                <div class="module-actions">
+                  <a href="/cds/dashboard.html" class="btn-secondary">Painel Administrativo →</a>
+                </div>
+              </div>
+
+              <!-- Modulo 4: API & Desenvolvedores -->
+              <div class="module-card">
+                <div class="module-header">
+                  <span class="module-tag tag-green">Módulo Integração</span>
+                  <div class="module-icon" style="color: #059669;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                  </div>
+                </div>
+                <h3 class="module-title">Portal do Desenvolvedor &amp; API</h3>
+                <p class="module-desc">
+                  Conexão RESTful oficial para sistemas externos, órgãos parceiros e aplicativos municipais consumirem a base oficial com autenticação por chave.
+                </p>
+                <ul class="module-features">
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Endpoints JSON de Serviços e Equipamentos com GPS</li>
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Emissão e gestão de Chaves de API permanentes</li>
+                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Testador interativo ao vivo (Playground)</li>
+                </ul>
+                <div class="module-actions">
+                  <a href="/api" class="btn-primary" style="background: #008744;">Acessar Portal da API →</a>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="hub-footer">
+          <div class="hub-footer-content">
+            <div class="footer-left">
+              <img src="/shared/logo.png" alt="Prefeitura de Duque de Caxias" class="footer-logo">
+              <div>
+                <h4>Prefeitura Municipal de Duque de Caxias</h4>
+                <p>Ouvidoria Geral do Município — Gestão &amp; Governança Integrada</p>
+              </div>
+            </div>
+            <div class="footer-right">
+              <p>© 2026 PMDC — Duque de Caxias / RJ. Todos os direitos reservados.</p>
+              <p class="footer-links">
+                <a href="/cds">Carta de Serviços</a> • 
+                <a href="/sigem">SIGEM</a> • 
+                <a href="/cds/dashboard.html">Área do Servidor</a>
+              </p>
+            </div>
+          </div>
+        </footer>
+      </main>
+
+    </div>
+
+  </div>
+
+  <script src="/shared/nav.js"></script>
+  <script src="/hub/hub.js"></script>
+</body>
+</html>

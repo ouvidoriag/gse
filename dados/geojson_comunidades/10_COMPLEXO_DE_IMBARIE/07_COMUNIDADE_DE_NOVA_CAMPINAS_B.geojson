@@ -1,0 +1,75 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DE NOVA CAMPINAS B",
+        "complexo": "COMPLEXO DE IMBARIÊ",
+        "comunidade_pasta": "COMUNIDADE DE NOVA CAMPINAS B",
+        "styleUrl": "#com_vermelho_escuro3",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade Nova Campinas B",
+        "Complexo": "Complexo de Imbariê",
+        "Distrito": "3° Distrito",
+        "IDS_comunidade": "0.57",
+        "Classe_comunidade": "Prioridade média",
+        "kml_fill_color": "99ff00aa",
+        "fill": "#aa00ff",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ffff00aa",
+        "stroke": "#aa00ff",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.24847148555829,
+              -22.6524834247511
+            ],
+            [
+              -43.24566095926419,
+              -22.6507855438444
+            ],
+            [
+              -43.25111285759886,
+              -22.64316794195784
+            ],
+            [
+              -43.25531921865213,
+              -22.64120879233253
+            ],
+            [
+              -43.25632084513376,
+              -22.64113945454269
+            ],
+            [
+              -43.25488812474458,
+              -22.64480005894515
+            ],
+            [
+              -43.25548639215338,
+              -22.64506403108679
+            ],
+            [
+              -43.2528855,
+              -22.65136679932873
+            ],
+            [
+              -43.252019448155,
+              -22.65349216545955
+            ],
+            [
+              -43.24847148555829,
+              -22.6524834247511
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

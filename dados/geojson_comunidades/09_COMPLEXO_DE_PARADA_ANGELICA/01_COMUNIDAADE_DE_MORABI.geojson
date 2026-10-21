@@ -1,0 +1,103 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DE MORABI",
+        "complexo": "COMPLEXO DE PARADA ANGÉLICA",
+        "comunidade_pasta": "COMUNIDAADE DE MORABI",
+        "styleUrl": "#com_vermelho_escuro0",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade de Morabi",
+        "Complexo": "Complexo de Parada Angélica",
+        "Distrito": "3° Distrito",
+        "IDS_comunidade": "0.451",
+        "Classe_comunidade": "Situação crítica / prioridade máxima",
+        "kml_fill_color": "b07f00aa",
+        "fill": "#aa007f",
+        "fill-opacity": 0.6902,
+        "kml_stroke_color": "ff7f00aa",
+        "stroke": "#aa007f",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.25092582811518,
+              -22.659943440077
+            ],
+            [
+              -43.2458165341169,
+              -22.66224047323155
+            ],
+            [
+              -43.24165131531217,
+              -22.66460935931329
+            ],
+            [
+              -43.23822688478033,
+              -22.66639295803987
+            ],
+            [
+              -43.23429310624643,
+              -22.66846014975223
+            ],
+            [
+              -43.23139142373529,
+              -22.67032945868127
+            ],
+            [
+              -43.224172480758,
+              -22.67433147608695
+            ],
+            [
+              -43.22155028505198,
+              -22.67101829798936
+            ],
+            [
+              -43.2192428498064,
+              -22.66779895513529
+            ],
+            [
+              -43.21776459658204,
+              -22.65503634161599
+            ],
+            [
+              -43.21751264452705,
+              -22.65315976503332
+            ],
+            [
+              -43.21332869222651,
+              -22.64670642613738
+            ],
+            [
+              -43.21657159035514,
+              -22.64698231553064
+            ],
+            [
+              -43.2287368,
+              -22.6482327
+            ],
+            [
+              -43.233715,
+              -22.6502922
+            ],
+            [
+              -43.237749,
+              -22.6517972
+            ],
+            [
+              -43.25092582811518,
+              -22.659943440077
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

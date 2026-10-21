@@ -1,0 +1,103 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DO PARQUE ANGOLA A",
+        "complexo": "COMPLEXO DO SÃO BENTO",
+        "comunidade_pasta": "COMUNIDADE DO PARQUE ANGOLA A",
+        "styleUrl": "#com_vermelho_escuro5",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade do Parque Angola A",
+        "Complexo": "Complexo do São Bento",
+        "Distrito": "2º Distrito",
+        "IDS_comunidade": "0.592",
+        "Classe_comunidade": "Prioridade média",
+        "kml_fill_color": "997f0000",
+        "fill": "#00007f",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff7f0000",
+        "stroke": "#00007f",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.3035108,
+              -22.71996429932714
+            ],
+            [
+              -43.3048942,
+              -22.71922649932716
+            ],
+            [
+              -43.3062623,
+              -22.71856209932717
+            ],
+            [
+              -43.3068926,
+              -22.71947589932715
+            ],
+            [
+              -43.3075019,
+              -22.72032749932713
+            ],
+            [
+              -43.3082634,
+              -22.7215321993271
+            ],
+            [
+              -43.3088311,
+              -22.72239629932708
+            ],
+            [
+              -43.3065867,
+              -22.72352659932705
+            ],
+            [
+              -43.3057524,
+              -22.72393159932706
+            ],
+            [
+              -43.3039938,
+              -22.72483229932702
+            ],
+            [
+              -43.30047659840404,
+              -22.72656693740071
+            ],
+            [
+              -43.29860650846424,
+              -22.72646485988247
+            ],
+            [
+              -43.29715850627696,
+              -22.7257289795396
+            ],
+            [
+              -43.29556648197079,
+              -22.72338319468079
+            ],
+            [
+              -43.29898351459022,
+              -22.72206073436264
+            ],
+            [
+              -43.3017438,
+              -22.72084059932711
+            ],
+            [
+              -43.3035108,
+              -22.71996429932714
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

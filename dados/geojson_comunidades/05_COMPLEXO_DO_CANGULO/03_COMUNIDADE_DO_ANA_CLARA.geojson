@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DO ANA CLARA",
+        "complexo": "COMPLEXO DO CANGULO",
+        "comunidade_pasta": "COMUNIDADE DO ANA CLARA",
+        "styleUrl": "#com_laranja0",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade do Ana Clara",
+        "Complexo": "Complexo do Cangulo",
+        "Distrito": "2º Distrito",
+        "IDS_comunidade": "0.565",
+        "Classe_comunidade": "Prioridade alta",
+        "kml_fill_color": "990000aa",
+        "fill": "#aa0000",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff0000aa",
+        "stroke": "#aa0000",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.24178775788172,
+              -22.69256807807395
+            ],
+            [
+              -43.2419112066486,
+              -22.69343233989711
+            ],
+            [
+              -43.24387414449514,
+              -22.69679687467002
+            ],
+            [
+              -43.2445158686995,
+              -22.69726663250343
+            ],
+            [
+              -43.24018047101831,
+              -22.70162607528809
+            ],
+            [
+              -43.23321244704721,
+              -22.70370435415985
+            ],
+            [
+              -43.2338069718672,
+              -22.70613844807751
+            ],
+            [
+              -43.217713338588,
+              -22.70973598508522
+            ],
+            [
+              -43.21821795836781,
+              -22.70782920836512
+            ],
+            [
+              -43.2305450101427,
+              -22.70430171450382
+            ],
+            [
+              -43.22953664028182,
+              -22.69882681729586
+            ],
+            [
+              -43.2361485164381,
+              -22.69708534180606
+            ],
+            [
+              -43.2358466216247,
+              -22.69572766462947
+            ],
+            [
+              -43.23652700264908,
+              -22.69526131287227
+            ],
+            [
+              -43.24178775788172,
+              -22.69256807807395
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

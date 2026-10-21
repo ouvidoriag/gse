@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DO VAI QUEM QUER",
+        "complexo": "COMPLEXO DO VAI QUEM QUER",
+        "comunidade_pasta": "COMUNIDADE DO VAI QUEM QUER",
+        "styleUrl": "#com_amarelo2120",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade do Vai Quem Quer",
+        "Complexo": "Complexo do Vai Quem Quer",
+        "Distrito": "2° Distrito",
+        "IDS_comunidade": "0.513",
+        "Classe_comunidade": "Prioridade muito alta",
+        "kml_fill_color": "b300aa00",
+        "fill": "#00aa00",
+        "fill-opacity": 0.702,
+        "kml_stroke_color": "ff00aa00",
+        "stroke": "#00aa00",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.29243409272028,
+              -22.66859074412281
+            ],
+            [
+              -43.28573227946249,
+              -22.6692957207879
+            ],
+            [
+              -43.28457633139872,
+              -22.66191956577611
+            ],
+            [
+              -43.28376315126636,
+              -22.65539377955517
+            ],
+            [
+              -43.28378315366533,
+              -22.64833798784557
+            ],
+            [
+              -43.28725312276397,
+              -22.64827330120073
+            ],
+            [
+              -43.28820507153184,
+              -22.64912441289762
+            ],
+            [
+              -43.29099553929138,
+              -22.64928026724657
+            ],
+            [
+              -43.2923056780114,
+              -22.65083794884122
+            ],
+            [
+              -43.29340897258429,
+              -22.65233805542262
+            ],
+            [
+              -43.29438919636414,
+              -22.65400492919363
+            ],
+            [
+              -43.29659227559467,
+              -22.65775569192462
+            ],
+            [
+              -43.30235620632416,
+              -22.6668822189351
+            ],
+            [
+              -43.30229296118385,
+              -22.66744626518361
+            ],
+            [
+              -43.29243409272028,
+              -22.66859074412281
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

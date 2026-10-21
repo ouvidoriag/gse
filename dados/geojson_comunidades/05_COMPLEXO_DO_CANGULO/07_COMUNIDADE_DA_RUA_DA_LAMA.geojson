@@ -1,0 +1,67 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DA RUA DA LAMA",
+        "complexo": "COMPLEXO DO CANGULO",
+        "comunidade_pasta": "COMUNIDADE DA RUA DA LAMA",
+        "styleUrl": "#com_laranja0",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade da Rua da Lama",
+        "Complexo": "Complexo do Cangulo",
+        "Distrito": "2º Distrito",
+        "IDS_comunidade": "0.512",
+        "Classe_comunidade": "Prioridade muito alta",
+        "kml_fill_color": "990000aa",
+        "fill": "#aa0000",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff0000aa",
+        "stroke": "#aa0000",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.24243690205355,
+              -22.67421691037057
+            ],
+            [
+              -43.24328789999999,
+              -22.67389239932821
+            ],
+            [
+              -43.24478689999999,
+              -22.67343899932821
+            ],
+            [
+              -43.24605189999999,
+              -22.67309309932822
+            ],
+            [
+              -43.24765388537411,
+              -22.67462617265289
+            ],
+            [
+              -43.24591110144355,
+              -22.67671140028056
+            ],
+            [
+              -43.24200127248819,
+              -22.67481572912845
+            ],
+            [
+              -43.24243690205355,
+              -22.67421691037057
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

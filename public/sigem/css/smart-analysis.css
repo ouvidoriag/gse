@@ -1,0 +1,411 @@
+/* ==========================================================================
+   SIGEM — Módulo Inteligente de Análise Territorial & Cobertura
+   Prefeitura Municipal de Duque de Caxias — RJ
+   ========================================================================== */
+
+/* BOTÃO DE ATIVAÇÃO NA BARRA DO MAPA */
+.btn-analysis-toggle {
+  background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #6366f1 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(67, 56, 202, 0.35) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-analysis-toggle:hover {
+  background: linear-gradient(135deg, #2e1065 0%, #3730a3 100%) !important;
+  box-shadow: 0 4px 12px rgba(67, 56, 202, 0.45) !important;
+  transform: translateY(-1px);
+}
+
+.btn-analysis-toggle.active {
+  background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%) !important;
+  border-color: #a5b4fc !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35) !important;
+}
+
+/* PAINEL INTEGRADO NA PÁGINA (LOGO ACIMA DO MAPA) */
+.smart-analysis-page-panel {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  animation: panelSlideDown 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes panelSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* BARRA DE CABEÇALHO DO PAINEL */
+.analysis-panel-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.analysis-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.analysis-radar-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #ede9fe;
+  color: #6366f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 1px solid #ddd6fe;
+}
+
+.analysis-tag-district {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+}
+
+/* ATALHOS RÁPIDOS DE CATEGORIAS */
+.analysis-cat-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.analysis-quick-cat-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.analysis-quick-cat-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.analysis-quick-cat-btn.active {
+  background: #4338ca;
+  color: #ffffff;
+  border-color: #3730a3;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(67, 56, 202, 0.25);
+}
+
+/* GRID PRINCIPAL DE 3 CARDS */
+.analysis-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr 1.15fr;
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .analysis-panel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.analysis-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.analysis-card-header {
+  font-size: 12px;
+  font-weight: 800;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* PILL BUTTONS PARA RAIO */
+.analysis-pill-group {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.analysis-pill-btn {
+  padding: 5px 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.analysis-pill-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.analysis-pill-btn.active {
+  background: #4338ca;
+  color: #ffffff;
+  font-weight: 700;
+  border-color: #3730a3;
+  box-shadow: 0 2px 4px rgba(67, 56, 202, 0.25);
+}
+
+.analysis-range-slider {
+  width: 100%;
+  height: 5px;
+  border-radius: 4px;
+  background: #cbd5e1;
+  outline: none;
+  cursor: pointer;
+}
+
+/* CHECKBOXES DE CAMADAS */
+.analysis-checks-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.analysis-check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #334155;
+  cursor: pointer;
+  user-select: none;
+}
+
+.analysis-check-item input[type="checkbox"] {
+  accent-color: #4338ca;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* KPIS DE DIAGNÓSTICO */
+.analysis-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+@media (max-width: 640px) {
+  .analysis-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.analysis-kpi-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.analysis-kpi-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.analysis-kpi-tit {
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.analysis-kpi-desc {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+/* DETALHAMENTO POR DISTRITOS DE DUQUE DE CAXIAS */
+.analysis-districts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.analysis-district-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.analysis-district-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.analysis-district-val {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* SIMULADOR DE NOVA UNIDADE */
+.analysis-sim-box {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.analysis-btn-sim-action {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.18s ease;
+  background: #d97706;
+  color: #ffffff;
+  border: 1px solid #b45309;
+}
+
+.analysis-btn-sim-action:hover {
+  background: #b45309;
+}
+
+.analysis-btn-sim-action.listening {
+  background: #dc2626;
+  border-color: #b91c1c;
+  animation: pulseSim 1.5s infinite;
+}
+
+@keyframes pulseSim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.88; transform: scale(0.98); }
+}
+
+.analysis-btn-sim-clear {
+  background: #ffffff;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.analysis-btn-sim-clear:hover {
+  background: #fee2e2;
+}
+
+/* LISTA COMPACTA DE COMUNIDADES DESASSISTIDAS */
+.analysis-unserved-scroll {
+  max-height: 95px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.analysis-unserved-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.analysis-unserved-row:hover {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* MARCADOR PULSANTE DE SIMULAÇÃO */
+.simulated-school-icon {
+  animation: pulseMarker 1.8s infinite;
+}
+
+@keyframes pulseMarker {
+  0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(234, 179, 8, 0.6)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.95)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(234, 179, 8, 0.6)); }
+}

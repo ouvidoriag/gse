@@ -1,0 +1,91 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Comunidade da Paraopeba",
+        "complexo": "COMPLEXO DO JARDIM GRAMACHO",
+        "comunidade_pasta": "COMUNIDADE DA PARAOPEBA",
+        "styleUrl": "#com_laranja_escuro110",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade da Paraopeba",
+        "Complexo": "Complexo do Gramacho",
+        "Distrito": "1º Distrito",
+        "IDS_comunidade": "0.685",
+        "Classe_comunidade": "Menor prioridade relativa",
+        "kml_fill_color": "9900ffff",
+        "fill": "#ffff00",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff00ffff",
+        "stroke": "#ffff00",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.28715105599483,
+              -22.75939370025479
+            ],
+            [
+              -43.287701,
+              -22.74911039932646
+            ],
+            [
+              -43.2879211,
+              -22.74624849932653
+            ],
+            [
+              -43.2881379,
+              -22.74625809932652
+            ],
+            [
+              -43.2905333,
+              -22.74636449932654
+            ],
+            [
+              -43.2906412,
+              -22.74699829932652
+            ],
+            [
+              -43.2906565,
+              -22.74718169932651
+            ],
+            [
+              -43.2909928,
+              -22.74891919932647
+            ],
+            [
+              -43.29130429999999,
+              -22.74957339932645
+            ],
+            [
+              -43.29172290000001,
+              -22.75018029932643
+            ],
+            [
+              -43.2948923913791,
+              -22.75236593686085
+            ],
+            [
+              -43.29437419495539,
+              -22.75379239864034
+            ],
+            [
+              -43.29168710867647,
+              -22.75593381477507
+            ],
+            [
+              -43.28715105599483,
+              -22.75939370025479
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

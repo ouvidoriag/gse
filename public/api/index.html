@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal do Desenvolvedor & API — Prefeitura de Duque de Caxias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #004b87;
+      --primary-hover: #0266b3;
+      --primary-light: #e0f2fe;
+      --accent: #008744;
+      --accent-light: #dcfce7;
+      --warning: #d97706;
+      --warning-light: #fef3c7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      
+      --bg-page: #f8fafc;
+      --surface: #ffffff;
+      --surface-alt: #f1f5f9;
+      --border: #e2e8f0;
+      --border-dark: #cbd5e1;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-sub: #64748b;
+      
+      --code-bg: #0f172a;
+      --code-text: #38bdf8;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOPBAR INSTITUCIONAL */
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    .topbar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+    .brand img {
+      height: 38px;
+      width: auto;
+    }
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+      color: var(--primary);
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .brand-title span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .nav-btn:hover {
+      background: var(--surface-alt);
+      color: var(--primary);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--accent-light);
+      color: #15803d;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: 1px solid rgba(0, 135, 68, 0.2);
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #16a34a;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    }
+
+    /* HERO HEADER */
+    .hero {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .hero-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--primary-light);
+      border: 1px solid #bae6fd;
+      border-radius: 999px;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #0f172a;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .hero p.lead {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 28px;
+    }
+    .stats-strip {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .stat-item strong {
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* CARDS EM DESTAQUE */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    /* CARD DE GUIA DE ACESSO E SEGURANÇA */
+    .access-guide {
+      background: #ffffff;
+      border: 2px solid #bae6fd;
+      border-left: 6px solid var(--primary);
+    }
+    .access-guide h3 {
+      font-size: 1.3rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .access-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .step-box {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+    .step-title {
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+    .step-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* BANNER DE SOLICITAÇÃO DE CHAVE */
+    .request-banner {
+      margin-top: 20px;
+      padding: 18px 20px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .btn-request {
+      background: var(--accent);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn-request:hover {
+      background: #007038;
+    }
+
+    /* MODAL DO GERADOR */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 500px;
+      padding: 26px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .btn-delete {
+      background: #fee2e2;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .btn-delete:hover {
+      background: #dc2626;
+      color: #ffffff;
+    }
+
+    /* TESTADOR INTERATIVO / PLAYGROUND */
+    .tester-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--accent);
+    }
+    .tester-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tester-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .tester-form { grid-template-columns: 1fr; }
+    }
+    .input-field {
+      padding: 10px 14px;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      width: 100%;
+      background: #ffffff;
+      color: var(--text-main);
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 75, 135, 0.15);
+    }
+    .btn-exec {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn-exec:hover {
+      background: var(--primary-hover);
+    }
+    .tester-response {
+      background: var(--code-bg);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #f1f5f9;
+      max-height: 350px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    /* ABAS DE CÓDIGO */
+    .tabs-nav {
+      display: flex;
+      gap: 6px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .tab-item {
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s;
+    }
+    .tab-item.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+
+    /* BLOCOS DE CÓDIGO */
+    .code-block {
+      background: var(--code-bg);
+      border-radius: 8px;
+      padding: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      position: relative;
+      line-height: 1.5;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ENDPOINTS CARDS */
+    .section-header {
+      margin: 48px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-header h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+    .section-tag {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .endpoint-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .endpoint-item:hover {
+      border-color: #94a3b8;
+    }
+    .endpoint-summary {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      user-select: none;
+      background: #ffffff;
+    }
+    .badge-get {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .endpoint-route {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .endpoint-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-left: auto;
+    }
+    .endpoint-body {
+      padding: 20px;
+      background: #fafafa;
+      border-top: 1px solid var(--border);
+    }
+
+    /* TABELAS */
+    .params-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+    .params-table th, .params-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .params-table th {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .param-code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .param-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    /* TABELA DE ERROS */
+    .status-code-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+    .code-200 { background: #dcfce7; color: #15803d; }
+    .code-400 { background: #fef3c7; color: #b45309; }
+    .code-401 { background: #fee2e2; color: #b91c1c; }
+    .code-403 { background: #fee2e2; color: #b91c1c; }
+    .code-429 { background: #ede9fe; color: #6d28d9; }
+
+    /* FAQ */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .faq-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .faq-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .faq-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+  <link rel="stylesheet" href="/shared/nav.css">
+</head>
+<body>
+
+  
+  <div class="app-layout">
+
+    <!-- SIDEBAR PADRONIZADA (MENU LATERAL) -->
+    <aside class="sidebar-nav" id="sidebarNav">
+
+      <!-- CABEÇALHO DA SIDEBAR -->
+      <div class="sidebar-header">
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Recolher / Expandir Menu" aria-label="Alternar menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="sidebar-brand-box" title="Portal Integrado PMDC">
+          <div class="sidebar-logo-badge"><i class="ri-government-line"></i></div>
+          <div class="sidebar-brand-text">
+            <span class="sidebar-app-title">PORTAL INTEGRADO</span>
+            <span class="sidebar-app-sub">Prefeitura de Duque de Caxias</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ITENS DE MENU DA SIDEBAR -->
+      <div class="sidebar-menu-scroll">
+        <div class="sidebar-section-header">RECURSOS DO HUB</div>
+        <a href="/" class="sidebar-nav-item" title="Painel Inicial / Hub">
+          <div class="nav-icon-box"><i class="ri-home-4-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Início (Hub)</span>
+            <span class="nav-sub-title">Visão Geral</span>
+          </div>
+        </a>
+        <a href="/cds" class="sidebar-nav-item" title="Carta de Serviços ao Cidadão">
+          <div class="nav-icon-box"><i class="ri-file-list-3-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Carta de Serviços</span>
+            <span class="nav-sub-title">Catálogo Municipal</span>
+          </div>
+        </a>
+        <a href="/sigem" class="sidebar-nav-item" title="SIGEM — Mapa & Endereços">
+          <div class="nav-icon-box"><i class="ri-map-pin-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Endereços &amp; GIS</span>
+            <span class="nav-sub-title">Cartografia Oficial</span>
+          </div>
+        </a>
+        <a href="/api" class="sidebar-nav-item active" title="Portal do Desenvolvedor &amp; API Oficial">
+          <div class="nav-icon-box"><i class="ri-code-s-slash-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">API &amp; Desenvolvedores</span>
+            <span class="nav-sub-title">Documentação &amp; Chaves</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- RODAPÉ DA SIDEBAR: USUÁRIO E LOGOUT -->
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card">
+          <div class="sidebar-avatar" id="sidebarAvatar">AM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name" id="sidebarUserName">Administrador Master</span>
+            <span class="sidebar-user-role" id="sidebarUserRole">MASTER</span>
+          </div>
+        </div>
+        <button class="sidebar-logout-btn" onclick="pmdcLogout()" title="Encerrar sessão no sistema">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="app-main" style="display:flex; flex-direction:column; min-width:0; height:100vh; overflow:hidden;">
+      <header class="top-dashboard-bar">
+        <nav class="top-bar-center" aria-label="Navegação rápida de módulos">
+          <div class="top-nav-tabs">
+            <a href="/" class="top-nav-tab" id="topTabHub" title="Ir para o Início / Hub Geral">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>Início (Hub)</span>
+            </a>
+            <a href="/cds/dashboard.html" class="top-nav-tab" id="topTabCds" title="Ir para a Carta de Serviços">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+              <span>Carta de Serviços</span>
+            </a>
+            <a href="/sigem" class="top-nav-tab" id="topTabSigem" title="Ir para o SIGEM — Endereços e Cartografia">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+              <span>Endereços &amp; GIS</span>
+            </a>
+            <a href="/api" class="top-nav-tab active" id="topTabApi" title="Portal do Desenvolvedor &amp; API Oficial">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>API &amp; Docs</span>
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-body" style="flex:1; overflow-y:auto; background: var(--bg-page); padding-bottom: 60px;">
+
+
+  <!-- HERO HEADER CLARO -->
+  <header class="hero">
+    <div class="hero-container">
+      <div class="hero-badge">
+        <i class="ri-government-line"></i> Governo Digital &bull; Lei Federal nº 13.460/2017 &amp; LAI
+      </div>
+      <h1>Portal do Desenvolvedor &amp; API Aberta</h1>
+      <p class="lead">
+        Conecte seus aplicativos, sistemas municipais, estaduais ou acadêmicos diretamente à base oficial da <strong>Carta de Serviços ao Cidadão</strong> e ao cadastro cartográfico de <strong>Equipamentos Públicos (SIGEM)</strong>.
+      </p>
+
+      <div style="margin: 20px 0 10px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+        <button type="button" class="btn-request" style="font-size: 1rem; padding: 12px 24px; box-shadow: var(--shadow-md); border: none; cursor: pointer;" onclick="gerarChaveRapida()">
+          <i class="ri-key-2-fill"></i> Solicitar / Gerar Chave de API (Instantâneo)
+        </button>
+        <button type="button" class="nav-btn" style="border: 1px solid var(--border-dark); background: #ffffff; padding: 12px 20px; font-weight: 700; cursor: pointer;" onclick="abrirModalGerador()">
+          <i class="ri-settings-4-line"></i> Gerar com Dados Personalizados
+        </button>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-item"><i class="ri-service-line"></i> <strong>368</strong> Serviços Catalogados</div>
+        <div class="stat-item"><i class="ri-building-line"></i> <strong>466</strong> Equipamentos com GPS</div>
+        <div class="stat-item"><i class="ri-bus-line" style="color: #2563eb;"></i> <strong>20</strong> Linhas Tarifa Zero</div>
+        <div class="stat-item"><i class="ri-map-pin-range-line" style="color: #16a34a;"></i> <strong>1.795</strong> Paradas de Ônibus</div>
+        <div class="stat-item"><i class="ri-map-2-line"></i> <strong>4</strong> Distritos Oficiais</div>
+        <div class="stat-item"><i class="ri-time-line"></i> Resposta <strong>&lt; 50ms</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- GUIA DE ACESSO: COMO CONSEGUIR A CHAVE DE API -->
+    <div class="card access-guide">
+      <h3><i class="ri-key-2-line"></i> Como Conseguir o Acesso &bull; Obtenção da Chave de API</h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        O acesso à API da Prefeitura Municipal de Duque de Caxias é disponibilizado para órgãos públicos, instituições conveniadas, concessionárias e desenvolvedores credenciados. Siga o passo a passo abaixo para começar:
+      </p>
+
+      <div class="access-steps">
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <div class="step-title">1. Emissão Instantânea</div>
+          <div class="step-desc">
+            Clique no botão <strong>"Solicitar / Gerar Chave de API"</strong> nesta página para gerar sua credencial oficial permanente de administrador/desenvolvedor em 1 clique.
+          </div>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <div class="step-title">2. Chave Permanente (Não Expira)</div>
+          <div class="step-desc">
+            Sua chave exclusiva no formato <code style="font-size: 0.8rem; background: #ffffff; padding: 2px 6px; border-radius: 4px; border: 1px solid #cbd5e1;">pmdc_live_...</code> nunca expira. Ela só é desativada se você excluí-la nesta página.
+          </div>
+        </div>
+
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <div class="step-title">3. Conexão Imediata</div>
+          <div class="step-desc">
+            Basta enviar a chave no cabeçalho HTTP <strong>X-API-Key</strong> em todas as consultas da sua aplicação para receber os dados em formato JSON.
+          </div>
+        </div>
+      </div>
+
+      <div class="request-banner">
+        <div>
+          <strong style="color: var(--text-main); font-size: 1.05rem;"><i class="ri-key-fill" style="color: var(--accent);"></i> Solicitar / Gerar Chave de API Permanente</strong>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 2px;">
+            Gere uma chave permanente com permissão de administrador/desenvolvedor para integração externa (nunca expira, apenas se você excluir na tabela abaixo):
+          </p>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn-request" style="background: var(--accent); border: none; cursor: pointer;" onclick="gerarChaveRapida()">
+            <i class="ri-flashlight-line"></i> Solicitar Chave Rápida (1 Clique)
+          </button>
+          <button type="button" class="btn-request" style="background: var(--primary); border: none; cursor: pointer;" onclick="abrirModalGerador()">
+            <i class="ri-add-circle-line"></i> Personalizar Nome / Setor
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GERENCIADOR DE CHAVES ATIVAS (NÃO EXPIRAM) -->
+    <div class="card" id="keysManagerCard" style="border-top: 4px solid var(--primary);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h3 style="font-size: 1.25rem; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <i class="ri-shield-keyhole-line" style="color: var(--primary);"></i> Chaves de API Ativas no Sistema (Permanentes)
+            <span id="countChavesBadge" class="status-pill" style="font-size: 0.78rem; font-weight: 700;">Carregando...</span>
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">
+            Essas chaves <strong>não expiram</strong> e têm acesso total de leitura. Para revogar o acesso de um desenvolvedor, basta clicar em <strong>Excluir</strong>.
+          </p>
+        </div>
+        <div>
+          <button type="button" class="btn-exec" style="padding: 8px 14px; font-size: 0.85rem;" onclick="carregarChaves()">
+            <i class="ri-refresh-line"></i> Atualizar Lista
+          </button>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="params-table" style="margin-top: 0;">
+          <thead>
+            <tr>
+              <th>Cliente / Desenvolvedor</th>
+              <th>Chave de Acesso (X-API-Key)</th>
+              <th>Limite Diário</th>
+              <th>Total Requisições</th>
+              <th>Data de Criação</th>
+              <th style="text-align: center;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="keysTableBody">
+            <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 20px;">Carregando chaves cadastradas...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PLAYGROUND INTERATIVO / TESTADOR AO VIVO -->
+    <div class="card tester-card">
+      <div class="tester-header">
+        <div>
+          <h3 style="font-size: 1.25rem; color: var(--text-main);"><i class="ri-terminal-box-line" style="color: var(--accent);"></i> Testador Interativo ao Vivo (Playground)</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Teste uma chamada real agora mesmo informando sua chave de API:</p>
+        </div>
+      </div>
+
+      <div class="tester-form">
+        <div>
+          <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">SUA CHAVE DE API (X-API-Key):</label>
+          <input type="text" id="playKey" class="input-field" placeholder="Ex: pmdc_live_..." value="pmdc_live_f38628f41d085f49b777f958afb5ca753698ddfb">
+        </div>
+        <div>
+          <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">ENDPOINT PARA TESTAR:</label>
+          <select id="playEndpoint" class="input-field">
+            <option value="/api/v1/me">GET /api/v1/me (Saldo da Chave e Perfil)</option>
+            <option value="/api/v1/servicos?limit=3">GET /api/v1/servicos (Primeiros 3 serviços)</option>
+            <option value="/api/v1/equipamentos?distrito=1&limit=3">GET /api/v1/equipamentos (1º Distrito)</option>
+            <option value="/api/v1/distritos">GET /api/v1/distritos (4 Distritos)</option>
+            <option value="/api/v1/secretarias">GET /api/v1/secretarias (18 Pastas)</option>
+            <option value="/api/v1/estatisticas">GET /api/v1/estatisticas (Métricas)</option>
+          </select>
+        </div>
+        <div style="display: flex; align-items: flex-end;">
+          <button id="btnPlay" class="btn-exec" onclick="executarPlayground()"><i class="ri-play-fill"></i> Executar Consulta</button>
+        </div>
+      </div>
+
+      <div id="playResponse" class="tester-response">
+        <!-- Resposta renderizada aqui via JS -->
+      </div>
+    </div>
+
+    <!-- EXEMPLOS DE CÓDIGO POR LINGUAGEM -->
+    <div class="card">
+      <h3 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--text-main);">
+        <i class="ri-code-s-slash-line" style="color: var(--primary);"></i> Exemplos Práticos de Integração
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+        Selecione sua linguagem de programação favorita para ver o código pronto para usar:
+      </p>
+
+      <div class="tabs-nav">
+        <div class="tab-item active" onclick="switchTab(this, 'tab-curl')">cURL (Terminal)</div>
+        <div class="tab-item" onclick="switchTab(this, 'tab-js')">JavaScript (Node / Fetch)</div>
+        <div class="tab-item" onclick="switchTab(this, 'tab-python')">Python (Requests)</div>
+        <div class="tab-item" onclick="switchTab(this, 'tab-php')">PHP (cURL)</div>
+      </div>
+
+      <!-- cURL -->
+      <div id="tab-curl" class="tab-pane active">
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)"><i class="ri-file-copy-line"></i> Copiar</button>
+# Consultar os 10 primeiros serviços com busca por 'saude'
+curl -X GET "https://SEU_DOMINIO/api/v1/servicos?q=saude&limit=10" \
+     -H "X-API-Key: pmdc_live_SUA_CHAVE_AQUI" \
+     -H "Accept: application/json"
+
+# Consultar equipamentos públicos do 1º Distrito (Centro)
+curl -X GET "https://SEU_DOMINIO/api/v1/equipamentos?distrito=1" \
+     -H "X-API-Key: pmdc_live_SUA_CHAVE_AQUI"
+        </div>
+      </div>
+
+      <!-- JavaScript -->
+      <div id="tab-js" class="tab-pane">
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)"><i class="ri-file-copy-line"></i> Copiar</button>
+const API_URL = 'https://SEU_DOMINIO/api/v1'; // Ou window.location.origin + '/api/v1'
+const API_KEY = 'pmdc_live_SUA_CHAVE_AQUI';
+
+async function buscarServicos(termo = 'IPTU') {
+  try {
+    const res = await fetch(`${API_URL}/servicos?q=${encodeURIComponent(termo)}`, {
+      method: 'GET',
+      headers: {
+        'X-API-Key': API_KEY,
+        'Accept': 'application/json'
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error(`Erro HTTP ${res.status}: ${res.statusText}`);
+    }
+
+    const json = await res.json();
+    console.log(`Encontrados ${json.total} serviços:`, json.data);
+    return json.data;
+  } catch (err) {
+    console.error('Falha ao conectar na API da Prefeitura:', err.message);
+  }
+}
+
+buscarServicos('vacinacao');
+        </div>
+      </div>
+
+      <!-- Python -->
+      <div id="tab-python" class="tab-pane">
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)"><i class="ri-file-copy-line"></i> Copiar</button>
+import requests
+
+API_URL = "https://SEU_DOMINIO/api/v1"
+HEADERS = {
+    "X-API-Key": "pmdc_live_SUA_CHAVE_AQUI",
+    "Accept": "application/json"
+}
+
+# 1. Buscar Equipamentos de Saúde no 2º Distrito (Campos Elíseos)
+response = requests.get(
+    f"{API_URL}/equipamentos",
+    params={"categoria": "Saúde", "distrito": 2, "limit": 20},
+    headers=HEADERS
+)
+
+if response.status_code == 200:
+    dados = response.json()
+    print(f"Total encontrado: {dados['total']}")
+    for eq in dados['data']:
+        print(f"• [{eq['sigla']}] {eq['nome']} - Lat/Lon: {eq['latitude']}, {eq['longitude']}")
+else:
+    print(f"Erro {response.status_code}: {response.text}")
+        </div>
+      </div>
+
+      <!-- PHP -->
+      <div id="tab-php" class="tab-pane">
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)"><i class="ri-file-copy-line"></i> Copiar</button>
+&lt;?php
+$apiKey = 'pmdc_live_SUA_CHAVE_AQUI';
+$url = 'https://SEU_DOMINIO/api/v1/servicos?limit=10';
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'X-API-Key: ' . $apiKey,
+    'Accept: application/json'
+]);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+if ($httpCode === 200) {
+    $data = json_decode($response, true);
+    print_r($data['data']);
+} else {
+    echo "Erro na requisição. Código HTTP: " . $httpCode;
+}
+?&gt;
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCUMENTAÇÃO DOS ENDPOINTS -->
+    <div class="section-header">
+      <h2>📋 Endpoints da Carta de Serviços ao Cidadão</h2>
+      <span class="section-tag">MySQL &bull; 368 Serviços</span>
+    </div>
+
+    <!-- GET /api/v1/servicos -->
+    <div class="endpoint-item">
+      <div class="endpoint-summary" onclick="toggleEndpoint(this)">
+        <span class="badge-get">GET</span>
+        <span class="endpoint-route">/api/v1/servicos</span>
+        <span class="endpoint-desc">Consulta paginada do catálogo de serviços municipais</span>
+        <i class="ri-arrow-down-s-line" style="font-size: 1.2rem; color: var(--text-sub);"></i>
+      </div>
+      <div class="endpoint-body">
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          Retorna os serviços públicos regulamentados pela Prefeitura de Duque de Caxias com suporte a filtros combinados e paginação.
+        </p>
+
+        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Parâmetros de Consulta (Query Params):</h4>
+        <table class="params-table">
+          <thead>
+            <tr><th>Parâmetro</th><th>Tipo</th><th>Exemplo</th><th>Descrição</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="param-code">q</td><td class="param-type">string</td><td><code>vacinacao</code></td><td>Filtro de texto livre no título, descrição e público-alvo.</td></tr>
+            <tr><td class="param-code">secretaria</td><td class="param-type">string</td><td><code>SMS</code></td><td>Filtro por sigla ou código da pasta (ex: SMS, SMEDC, Fazenda).</td></tr>
+            <tr><td class="param-code">secretaria_id</td><td class="param-type">integer</td><td><code>15</code></td><td>ID numérico da secretaria gestora.</td></tr>
+            <tr><td class="param-code">publico</td><td class="param-type">string</td><td><code>Cidadão</code></td><td>Público-alvo (Cidadão, Empresa, Servidor).</td></tr>
+            <tr><td class="param-code">canal</td><td class="param-type">string</td><td><code>Digital</code></td><td>Forma de atendimento (Presencial, Digital, Telefone).</td></tr>
+            <tr><td class="param-code">page</td><td class="param-type">integer</td><td><code>1</code></td><td>Número da página para navegação (início em 1).</td></tr>
+            <tr><td class="param-code">limit</td><td class="param-type">integer</td><td><code>20</code></td><td>Total de registros por página (máximo: 100).</td></tr>
+          </tbody>
+        </table>
+
+        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Exemplo de Resposta (200 OK):</h4>
+        <div class="code-block" style="max-height: 250px;">
+{
+  "success": true,
+  "total": 368,
+  "page": 1,
+  "limit": 2,
+  "totalPages": 184,
+  "data": [
+    {
+      "id": 36,
+      "titulo": "Abertura de Viabilidade de Projeto",
+      "descricao": "Abertura e instrução de processo para análise de viabilidade...",
+      "publico_alvo": "Proprietário ou representante legal",
+      "formato_atendimento": "Presencial ou Protocolo Digital",
+      "tempo_espera": "Até 1 dia corrido",
+      "prazo_maximo": "Até 40 dias corridos",
+      "custos_taxas": "Taxa de Expediente e Certidão",
+      "fundamentacao_legal": "Decreto nº 8.680/2024",
+      "endereco_atendimento": "Alameda Bartolomeu Gusmão, 85 - Jd. Primavera",
+      "secretaria_id": 5,
+      "secretaria_nome": "Secretaria Municipal de Urbanismo e Habitação",
+      "secretaria_sigla": "SMUH"
+    }
+  ]
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /api/v1/servicos/:id -->
+    <div class="endpoint-item">
+      <div class="endpoint-summary" onclick="toggleEndpoint(this)">
+        <span class="badge-get">GET</span>
+        <span class="endpoint-route">/api/v1/servicos/:id</span>
+        <span class="endpoint-desc">Ficha completa do serviço com etapas e documentos</span>
+        <i class="ri-arrow-down-s-line" style="font-size: 1.2rem; color: var(--text-sub);"></i>
+      </div>
+      <div class="endpoint-body">
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          Retorna a íntegra da carta com o passo a passo (etapas), documentação exigida, canais de telefone, e-mails de atendimento e links web.
+        </p>
+        <div class="code-block" style="max-height: 250px;">
+{
+  "success": true,
+  "data": {
+    "id": 36,
+    "titulo": "Abertura de Viabilidade de Projeto",
+    "etapas": [
+      "1. Protocolar formulário junto à Secretaria",
+      "2. Pagamento do Documento de Arrecadação Municipal (DAM)",
+      "3. Análise da equipe técnica de arquitetura e urbanismo"
+    ],
+    "documentos_exigidos": [
+      "Documento de Identidade e CPF do requerente",
+      "RGI ou Escritura do imóvel atualizada",
+      "Croqui ou planta preliminar do projeto"
+    ],
+    "canais_atendimento": {
+      "telefones": ["(21) 2773-5500"],
+      "emails": ["smuh@duquedecaxias.rj.gov.br"],
+      "links": ["https://duquedecaxias.rj.gov.br"]
+    }
+  }
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION SIGEM -->
+    <div class="section-header">
+      <h2>🗺️ Endpoints do SIGEM (Equipamentos Públicos &amp; GPS)</h2>
+      <span class="section-tag">SQLite V2 &bull; 466 Unidades</span>
+    </div>
+
+    <!-- GET /api/v1/equipamentos -->
+    <div class="endpoint-item">
+      <div class="endpoint-summary" onclick="toggleEndpoint(this)">
+        <span class="badge-get">GET</span>
+        <span class="endpoint-route">/api/v1/equipamentos</span>
+        <span class="endpoint-desc">Lista dos 466 prédios e postos com coordenadas</span>
+        <i class="ri-arrow-down-s-line" style="font-size: 1.2rem; color: var(--text-sub);"></i>
+      </div>
+      <div class="endpoint-body">
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          Retorna o inventário de unidades públicas municipais (escolas, postos de saúde, CRAS, subprefeituras, praças) com coordenadas georreferenciadas e endereço oficial.
+        </p>
+
+        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Parâmetros de Consulta:</h4>
+        <table class="params-table">
+          <thead>
+            <tr><th>Parâmetro</th><th>Tipo</th><th>Exemplo</th><th>Descrição</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="param-code">q</td><td class="param-type">string</td><td><code>Moacyr do Carmo</code></td><td>Busca por nome da unidade, sigla, logradouro ou bairro.</td></tr>
+            <tr><td class="param-code">distrito</td><td class="param-type">integer</td><td><code>1</code></td><td>Distrito Municipal (1=Centro, 2=C. Elíseos, 3=Imbariê, 4=Xerém).</td></tr>
+            <tr><td class="param-code">bairro</td><td class="param-type">string</td><td><code>Xerém</code></td><td>Filtro pelo nome do bairro.</td></tr>
+            <tr><td class="param-code">categoria</td><td class="param-type">string</td><td><code>Saúde</code></td><td>Filtro de categoria (Saúde, Educação, Assistência Social, etc.).</td></tr>
+            <tr><td class="param-code">hub_id</td><td class="param-type">string</td><td><code>hub_1</code></td><td>Polo predial concentrador.</td></tr>
+            <tr><td class="param-code">precisao_geo</td><td class="param-type">string</td><td><code>NUMERO_EXATO</code></td><td>Precisão cartográfica (NUMERO_EXATO ou APROXIMADO_LOGRADOURO).</td></tr>
+          </tbody>
+        </table>
+
+        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Exemplo de Resposta (200 OK):</h4>
+        <div class="code-block" style="max-height: 250px;">
+{
+  "success": true,
+  "total": 466,
+  "page": 1,
+  "limit": 1,
+  "totalPages": 466,
+  "data": [
+    {
+      "id": "rec_422",
+      "nome": "Abrigo Primeiro Olhar",
+      "sigla": "Abrigo",
+      "categoria": "Assistência Social (SEASDIH)",
+      "distrito": 2,
+      "distrito_oficial": "Campos Elyseos",
+      "bairro": "Jardim Primavera",
+      "logradouro": "Av. Perimetral Tarce Menezes Freitas Lima",
+      "numero": "19",
+      "cep": "25215-000",
+      "endereco_completo": "Av. Perimetral Tarce Menezes Freitas Lima, 19 • Jardim Primavera • Duque de Caxias • RJ",
+      "telefone": "(21) 2773-5500",
+      "email": "gabinete.seasdih@duquedecaxias.rj.gov.br",
+      "horario_funcionamento": "Atendimento 24h",
+      "latitude": -22.6865,
+      "longitude": -43.2835,
+      "precisao_geo": "NUMERO_EXATO",
+      "secretaria_sigla": "SEASDIH",
+      "secretaria_nome": "Secretaria Municipal de Assistência Social e Direitos Humanos"
+    }
+  ]
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /api/v1/equipamentos/:id -->
+    <div class="endpoint-item">
+      <div class="endpoint-summary" onclick="toggleEndpoint(this)">
+        <span class="badge-get">GET</span>
+        <span class="endpoint-route">/api/v1/equipamentos/:id</span>
+        <span class="endpoint-desc">Detalhes completos de um equipamento por código</span>
+        <i class="ri-arrow-down-s-line" style="font-size: 1.2rem; color: var(--text-sub);"></i>
+      </div>
+      <div class="endpoint-body">
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          Retorna todos os dados da unidade cadastral incluindo telefones e e-mails múltiplos cadastrados no SQLite.
+        </p>
+      </div>
+    </div>
+
+    <!-- TABELAS AUXILIARES -->
+    <div class="section-header">
+      <h2>🏛️ Endpoints Territoriais e Estruturais</h2>
+      <span class="section-tag">Cadastros Mestre</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+      <div class="card" style="padding: 20px;">
+        <span class="badge-get">GET</span> <strong style="font-family: monospace;">/api/v1/distritos</strong>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+          Retorna a lista dos <strong>4 Distritos Administrativos</strong> do município com seus nomes oficiais.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 20px;">
+        <span class="badge-get">GET</span> <strong style="font-family: monospace;">/api/v1/bairros</strong>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+          Retorna os <strong>118 Bairros Oficiais</strong> de Duque de Caxias vinculados aos seus respectivos distritos.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 20px;">
+        <span class="badge-get">GET</span> <strong style="font-family: monospace;">/api/v1/secretarias</strong>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+          Retorna as <strong>18 Secretarias Municipais</strong> com nomes, siglas e contatos institucionais.
+        </p>
+      </div>
+
+      <div class="card" style="padding: 20px;">
+        <span class="badge-get">GET</span> <strong style="font-family: monospace;">/api/v1/estatisticas</strong>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+          Métricas consolidadas de serviços publicados, equipamentos georreferenciados e polos prediais.
+        </p>
+      </div>
+    </div>
+
+    <!-- SECTION MOBILIDADE URBANA & TARIFA ZERO -->
+    <div class="section-header">
+      <h2>🚌 Endpoints de Mobilidade Urbana (Ônibus Tarifa Zero)</h2>
+      <span class="section-tag" style="background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; font-weight: 700;">GeoJSON &bull; 20 Linhas &bull; 1.795 Paradas</span>
+    </div>
+
+    <!-- GET /api/v1/onibus/linhas -->
+    <div class="endpoint-item">
+      <div class="endpoint-summary" onclick="toggleEndpoint(this)">
+        <span class="badge-get">GET</span>
+        <span class="endpoint-route">/api/v1/onibus/linhas</span>
+        <span class="endpoint-desc">Lista das 20 linhas de ônibus municipais gratuitas</span>
+        <i class="ri-arrow-down-s-line" style="font-size: 1.2rem; color: var(--text-sub);"></i>
+      </div>
+      <div class="endpoint-body">
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          Retorna a listagem oficial das linhas do programa Tarifa Zero com código de itinerário, cor de identificação, extensão em km e total de paradas cadastradas.
+        </p>
+        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Parâmetros de Consulta:</h4>
+        <table class="params-table">
+          <thead>
+            <tr><th>Parâmetro</th><th>Tipo</th><th>Exemplo</th><th>Descrição</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="param-code">q</td><td class="param-type">string</td><td><code>Capivari</code></td><td>Busca textual por código da linha ou nome do trajeto.</td></tr>
+          </tbody>
+        </table>
+        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Exemplo de Resposta (200 OK):</h4>
+        <div class="code-block" style="max-height: 250px;">
+{
+  "success": true,
+  "total": 20,
+  "data": [
+    {
+      "linha_id": "DC-TZ01",
+      "nome": "Capivari x Figueira",
+      "cor": "#0284c7",
+      "extensao_km": 24.97,
+      "total_pontos_geograficos": 293,
+      "total_paradas": 147,
+      "primeira_parada": "Praça do Capivarí",
+      "ultima_parada": "Praça do Capivari"
+    }
+  ]
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- GET /api/v1/onibus/linhas/:id -->
+    <div class="endpoint-item">
+      <div class="endpoint-summary" onclick="toggleEndpoint(this)">
+        <span class="badge-get">GET</span>
+        <span class="endpoint-route">/api/v1/onibus/linhas/:id</span>
+        <span class="endpoint-desc">Traçado completo e lista de paradas de uma linha</span>
+        <i class="ri-arrow-down-s-line" style="font-size: 1.2rem; color: var(--text-sub);"></i>
+      </div>
+      <div class="endpoint-body">
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          Retorna os detalhes completos de uma linha de ônibus (ex: <code>/api/v1/onibus/linhas/DC-TZ01</code>), incluindo o vetor LineString com todas as coordenadas do percurso e os pontos de parada em ordem sequencial.
+        </p>
+      </div>
+    </div>
+
+    <!-- GET /api/v1/onibus/paradas -->
+    <div class="endpoint-item">
+      <div class="endpoint-summary" onclick="toggleEndpoint(this)">
+        <span class="badge-get">GET</span>
+        <span class="endpoint-route">/api/v1/onibus/paradas</span>
+        <span class="endpoint-desc">Lista filtrável e paginada das 1.795 paradas</span>
+        <i class="ri-arrow-down-s-line" style="font-size: 1.2rem; color: var(--text-sub);"></i>
+      </div>
+      <div class="endpoint-body">
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          Consulta as paradas físicas de embarque/desembarque com filtros por linha, sentido da viagem e busca por nome da via.
+        </p>
+        <table class="params-table">
+          <thead>
+            <tr><th>Parâmetro</th><th>Tipo</th><th>Exemplo</th><th>Descrição</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="param-code">linha_id</td><td class="param-type">string</td><td><code>DC-TZ01</code></td><td>Filtra paradas pertencentes a uma linha específica.</td></tr>
+            <tr><td class="param-code">direcao</td><td class="param-type">string</td><td><code>ida</code></td><td>Filtra pelo sentido da viagem (ida ou volta).</td></tr>
+            <tr><td class="param-code">q</td><td class="param-type">string</td><td><code>Hospital</code></td><td>Busca por nome ou ponto de referência da parada.</td></tr>
+            <tr><td class="param-code">page / limit</td><td class="param-type">integer</td><td><code>1 / 50</code></td><td>Paginação (máximo 200 paradas por requisição).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- GET /api/onibus/geojson/rotas e paradas -->
+    <div class="endpoint-item">
+      <div class="endpoint-summary" onclick="toggleEndpoint(this)">
+        <span class="badge-get">GET</span>
+        <span class="endpoint-route">/api/onibus/geojson/rotas &bull; /api/onibus/geojson/paradas</span>
+        <span class="endpoint-desc">Downloads diretos em formato padrão GeoJSON (SIG / QGIS / ArcGIS)</span>
+        <i class="ri-arrow-down-s-line" style="font-size: 1.2rem; color: var(--text-sub);"></i>
+      </div>
+      <div class="endpoint-body">
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          Retorna diretamente arquivos <code>FeatureCollection</code> GeoJSON (MIME <code>application/geo+json</code>) prontos para consumo por bibliotecas cartográficas (Leaflet, Mapbox GL, OpenLayers) ou softwares SIG desktop (QGIS, ArcGIS).
+        </p>
+      </div>
+    </div>
+
+    <!-- CONTROLE DE TAXA E CÓDIGOS DE RESPOSTA -->
+    <div class="card" style="margin-top: 36px;">
+      <h3 style="font-size: 1.2rem; color: var(--text-main); margin-bottom: 12px;">
+        <i class="ri-speed-up-line" style="color: var(--primary);"></i> Controle de Taxa (Rate Limit) &amp; Cabeçalhos
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+        Todas as respostas da API incluem cabeçalhos informando a sua cota disponível:
+      </p>
+
+      <table class="params-table">
+        <thead>
+          <tr><th>Cabeçalho HTTP</th><th>Descrição</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="param-code">X-RateLimit-Limit</td><td>Cota máxima diária autorizada para esta chave (ex: <code>10000</code>).</td></tr>
+          <tr><td class="param-code">X-RateLimit-Remaining</td><td>Total de requisições ainda disponíveis para o dia corrente.</td></tr>
+          <tr><td class="param-code">X-RateLimit-Reset-Day</td><td>Data do reset da cota diária (em UTC, à meia-noite).</td></tr>
+        </tbody>
+      </table>
+
+      <h4 style="font-size: 1rem; color: var(--text-main); margin: 24px 0 12px;">Códigos de Retorno HTTP Padrão:</h4>
+      <table class="params-table">
+        <thead>
+          <tr><th>Status</th><th>Significado</th><th>Ação Recomendada</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="status-code-pill code-200">200 OK</span></td><td>Sucesso total na consulta.</td><td>Processar o JSON retornado.</td></tr>
+          <tr><td><span class="status-code-pill code-400">400 Bad Request</span></td><td>Parâmetro ou filtro inválido.</td><td>Verificar a documentação dos parâmetros.</td></tr>
+          <tr><td><span class="status-code-pill code-401">401 Unauthorized</span></td><td>Cabeçalho <code>X-API-Key</code> não informado.</td><td>Enviar a chave correta no cabeçalho HTTP.</td></tr>
+          <tr><td><span class="status-code-pill code-403">403 Forbidden</span></td><td>Chave inexistente, suspensa ou revogada.</td><td>Solicitar ativação da chave junto à administração.</td></tr>
+          <tr><td><span class="status-code-pill code-429">429 Too Many Requests</span></td><td>Limite de requisições por minuto ou diário atingido.</td><td>Aguardar o reset ou solicitar ampliação de cota.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-header">
+      <h2>❓ Perguntas Frequentes (FAQ)</h2>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq-card">
+        <h4><i class="ri-key-2-line"></i> Como consigo minha Chave de API?</h4>
+        <p>Você pode gerar sua chave diretamente nesta página através do botão <strong>"Solicitar / Gerar Chave de API"</strong> acima. Ela é permanente, não expira e já fica liberada para conectar como desenvolvedor/administrador instantaneamente.</p>
+      </div>
+
+      <div class="faq-card">
+        <h4><i class="ri-refresh-line"></i> Com que frequência os dados são atualizados?</h4>
+        <p>Os dados são atualizados em tempo real. Assim que um serviço da Carta de Serviços ou um equipamento do SIGEM é modificado no painel da Prefeitura, a alteração reflete na API instantaneamente.</p>
+      </div>
+
+      <div class="faq-card">
+        <h4><i class="ri-shield-keyhole-line"></i> As chaves expiram? Como revogar?</h4>
+        <p>As chaves geradas <strong>nunca expiram</strong>. Para revogar o acesso de qualquer desenvolvedor ou sistema, basta localizá-la na tabela <strong>"Chaves de API Ativas"</strong> acima e clicar no botão vermelho <strong>Excluir</strong>.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL: GERAR CHAVE PERSONALIZADA -->
+  <div id="modalGeradorKey" class="modal-overlay" style="display: none;">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.2rem; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+          <i class="ri-key-fill" style="color: var(--accent);"></i> Gerar Nova Chave Permanente
+        </h3>
+        <button type="button" onclick="fecharModalGerador()" style="background: none; border: none; font-size: 1.4rem; color: var(--text-sub); cursor: pointer;">&times;</button>
+      </div>
+
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 18px;">
+        Esta credencial dá acesso <strong>exclusivo de leitura às APIs oficiais</strong> da Prefeitura. Ela é <strong>permanente</strong> (não expira) e só deixará de funcionar se você apagá-la no painel desta página.
+      </p>
+
+      <form id="formGerarChave" onsubmit="submeterGeracaoChave(event)">
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">NOME DO DESENVOLVEDOR / SISTEMA *</label>
+          <input type="text" id="keyDevName" class="input-field" placeholder="Ex: Dev João Silva (Sistemas TI)" required value="Desenvolvedor PMDC">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">E-MAIL DE CONTATO *</label>
+          <input type="email" id="keyDevEmail" class="input-field" placeholder="Ex: joao.silva@duquedecaxias.rj.gov.br" required value="desenvolvedor@duquedecaxias.rj.gov.br">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">ÓRGÃO / SECRETARIA / EMPRESA</label>
+          <input type="text" id="keyDevOrgao" class="input-field" placeholder="Ex: Secretaria de Saúde / TI" value="Prefeitura de Duque de Caxias">
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">FINALIDADE OU NOTAS</label>
+          <input type="text" id="keyDevNotas" class="input-field" placeholder="Ex: Integração interna ou aplicativo móvel" value="Integração de serviços e equipamentos">
+        </div>
+
+        <div style="background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 20px; font-size: 0.82rem; color: var(--text-muted);">
+          <i class="ri-shield-check-line" style="color: var(--accent); font-weight: bold;"></i>
+          <strong>Cota autorizada:</strong> 120 requisições/minuto &bull; 50.000 requisições/dia. <strong>Sem expiração</strong>.
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="nav-btn" onclick="fecharModalGerador()" style="border: 1px solid var(--border-dark);">Cancelar</button>
+          <button type="submit" id="btnSalvarKey" class="btn-request" style="border: none; cursor: pointer;">
+            <i class="ri-check-line"></i> Criar Chave Agora
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: SUCESSO / EXIBIÇÃO DA CHAVE RECÉM GERADA -->
+  <div id="modalSucessoKey" class="modal-overlay" style="display: none;">
+    <div class="modal-box" style="max-width: 560px;">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <div style="width: 52px; height: 52px; background: var(--accent-light); color: var(--accent); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 10px;">
+          <i class="ri-checkbox-circle-fill"></i>
+        </div>
+        <h3 style="font-size: 1.3rem; color: var(--text-main);">Chave de API Gerada com Sucesso!</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">
+          Esta chave já está <strong>ativa</strong> e vinculada a <strong><span id="sucessoDevNome"></span></strong>.
+        </p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">SUA CHAVE DE ACESSO (X-API-Key):</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="sucessoChaveInput" class="input-field" readonly style="font-family: 'JetBrains Mono', monospace; font-weight: 700; background: #f8fafc; color: var(--primary);">
+          <button type="button" class="btn-request" style="white-space: nowrap; border: none; cursor: pointer;" onclick="copiarChaveSucesso(this)">
+            <i class="ri-file-copy-line"></i> Copiar
+          </button>
+        </div>
+      </div>
+
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px; margin-bottom: 20px; font-size: 0.85rem; color: #166534;">
+        <p style="margin-bottom: 6px;"><strong>✨ Características desta Chave:</strong></p>
+        <ul style="padding-left: 18px; line-height: 1.5;">
+          <li><strong>Não expira:</strong> Válida por tempo indeterminado (permanente).</li>
+          <li><strong>Revogação:</strong> Para desativar ou apagar, basta usar o botão vermelho <em>Excluir</em> na tabela desta página.</li>
+          <li><strong>Autenticação:</strong> Envie no cabeçalho HTTP <code>X-API-Key</code>.</li>
+        </ul>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <button type="button" class="btn-exec" onclick="irParaPlaygroundComChave()" style="padding: 10px 18px; font-size: 0.88rem;">
+          <i class="ri-terminal-box-line"></i> Testar no Playground Agora
+        </button>
+        <button type="button" class="nav-btn" onclick="fecharModalSucesso()" style="border: 1px solid var(--border-dark); font-weight: 700;">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST FLUTUANTE DE FEEDBACK -->
+  <div id="toastFeedback" style="position: fixed; bottom: 24px; right: 24px; background: #0f172a; color: #ffffff; padding: 12px 20px; border-radius: 8px; font-size: 0.88rem; font-weight: 600; box-shadow: var(--shadow-lg); z-index: 2000; display: none; align-items: center; gap: 8px;">
+    <i class="ri-checkbox-circle-line" style="color: #4ade80; font-size: 1.1rem;"></i>
+    <span id="toastMessage">Chave copiada com sucesso!</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <strong>Prefeitura Municipal de Duque de Caxias — Estado do Rio de Janeiro</strong><br>
+      Secretaria de Governo &bull; Ouvidoria Geral &bull; Diretoria de Tecnologia da Informação (DTI)<br>
+      Portal Integrado de Serviços &bull; Sistema SIGEM &bull; 2026
+    </p>
+  </footer>
+
+  
+  <script>
+    // 🔒 TRAVA DE SEGURANÇA: EXCLUSIVO CONTA MASTER
+    function verificarAcessoMaster() {
+      let user = null;
+      try {
+        const u = localStorage.getItem('user');
+        if (u) user = JSON.parse(u);
+      } catch (_) {}
+
+      if (!user) {
+        try {
+          const s = localStorage.getItem('simac_auth_session');
+          if (s) {
+            const parsed = JSON.parse(s);
+            if (parsed.user || parsed.name) {
+              user = {
+                username: parsed.user,
+                name: parsed.name || parsed.user,
+                role: parsed.role || 'editor'
+              };
+            }
+          }
+        } catch (_) {}
+      }
+
+      const isMaster = user && (user.role === 'admin' || user.username === 'admin');
+      if (!isMaster) {
+        document.body.innerHTML = `
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#f8fafc;font-family:'Plus Jakarta Sans',sans-serif;padding:24px;text-align:center;">
+            <div style="width:72px;height:72px;background:#fee2e2;color:#dc2626;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin-bottom:18px;">
+              <i class="ri-shield-keyhole-line"></i>
+            </div>
+            <h1 style="font-size:1.6rem;color:#0f172a;margin-bottom:10px;font-weight:800;">Acesso Restrito — Administrador Master</h1>
+            <p style="color:#64748b;max-width:520px;font-size:1rem;line-height:1.6;margin-bottom:28px;">
+              O Portal do Desenvolvedor &amp; Gestão de Chaves de API é reservado exclusivamente para a conta <strong>Master</strong> da Prefeitura de Duque de Caxias.
+            </p>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+              <a href="/login?redirect=/api" style="display:inline-flex;align-items:center;gap:8px;background:#004b87;color:#ffffff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95rem;">
+                <i class="ri-login-box-line"></i> Entrar como Administrador Master
+              </a>
+              <a href="/" style="display:inline-flex;align-items:center;gap:8px;background:#e2e8f0;color:#334155;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95rem;">
+                <i class="ri-home-4-line"></i> Voltar ao Início (Hub)
+              </a>
+            </div>
+          </div>
+        `;
+        return false;
+      }
+      return true;
+    }
+
+    let ultimaChaveGerada = '';
+
+    function toggleEndpoint(header) {
+      const body = header.nextElementSibling;
+      const icon = header.querySelector('i');
+      if (body.style.display === 'block') {
+        body.style.display = 'none';
+        icon.className = 'ri-arrow-down-s-line';
+      } else {
+        body.style.display = 'block';
+        icon.className = 'ri-arrow-up-s-line';
+      }
+    }
+
+    function switchTab(el, targetId) {
+      document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById(targetId).classList.add('active');
+    }
+
+    function copyCode(btn) {
+      const code = btn.parentElement.innerText.replace('Copiar', '').trim();
+      navigator.clipboard.writeText(code).then(() => {
+        btn.innerHTML = '<i class="ri-check-line"></i> Copiado!';
+        setTimeout(() => {
+          btn.innerHTML = '<i class="ri-file-copy-line"></i> Copiar';
+        }, 2000);
+      });
+    }
+
+    function abrirModalGerador() {
+      document.getElementById('modalGeradorKey').style.display = 'flex';
+    }
+
+    function fecharModalGerador() {
+      document.getElementById('modalGeradorKey').style.display = 'none';
+    }
+
+    function fecharModalSucesso() {
+      document.getElementById('modalSucessoKey').style.display = 'none';
+    }
+
+    function exibirToast(msg) {
+      const toast = document.getElementById('toastFeedback');
+      const txt = document.getElementById('toastMessage');
+      txt.textContent = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3500);
+    }
+
+    async function carregarChaves() {
+      const tbody = document.getElementById('keysTableBody');
+      const countBadge = document.getElementById('countChavesBadge');
+      
+      try {
+        const res = await fetch('/api/v1/chaves');
+        const json = await res.json();
+        
+        if (!json.success || !json.data || json.data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-sub); padding: 24px;">
+            <i class="ri-information-line" style="font-size: 1.2rem; display: block; margin-bottom: 6px;"></i>
+            Nenhuma chave cadastrada no momento. Clique no botão acima para gerar a primeira chave permanente!
+          </td></tr>`;
+          if (countBadge) countBadge.textContent = '0 ativas';
+          return;
+        }
+
+        if (countBadge) {
+          countBadge.textContent = `${json.data.length} ativa${json.data.length > 1 ? 's' : ''}`;
+        }
+
+        let html = '';
+        json.data.forEach(k => {
+          const criadoEm = k.criado_em ? k.criado_em.replace('T', ' ').slice(0, 19) : 'Recente';
+          const limiteFormatado = Number(k.limite_req_dia || 50000).toLocaleString('pt-BR');
+          
+          html += `
+            <tr>
+              <td>
+                <strong style="color: var(--text-main); font-size: 0.92rem;">${escapeHtml(k.nome_cliente || 'Dev')}</strong>
+                <div style="font-size: 0.78rem; color: var(--text-sub);">${escapeHtml(k.orgao_empresa || '')}</div>
+                <div style="font-size: 0.75rem; color: var(--text-sub);">${escapeHtml(k.email_cliente || '')}</div>
+              </td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <code style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; background: var(--surface-alt); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); color: var(--primary); font-weight: 600;">
+                    ${escapeHtml(k.chave)}
+                  </code>
+                  <button type="button" class="nav-btn" style="padding: 4px 8px; font-size: 0.78rem; border: 1px solid var(--border);" onclick="copiarTexto('${k.chave}', this)" title="Copiar Chave Completa">
+                    <i class="ri-file-copy-line"></i> Copiar
+                  </button>
+                </div>
+              </td>
+              <td>
+                <span style="font-weight: 600; color: var(--text-main); font-size: 0.85rem;">${limiteFormatado} / dia</span>
+                <div style="font-size: 0.75rem; color: #16a34a; font-weight: 700;"><i class="ri-checkbox-circle-fill"></i> Permanente</div>
+              </td>
+              <td style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">
+                ${k.total_requisicoes || 0} reqs
+              </td>
+              <td style="font-size: 0.8rem; color: var(--text-sub); white-space: nowrap;">
+                ${criadoEm}
+              </td>
+              <td style="text-align: center;">
+                <button type="button" class="btn-delete" data-id="${k.id}" data-nome="${escapeHtml(k.nome_cliente || 'esta chave')}" onclick="confirmarExclusaoChave(this)" title="Excluir permanentemente">
+                  <i class="ri-delete-bin-line"></i> Excluir
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        tbody.innerHTML = html;
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--danger); padding: 20px;">
+          Falha ao carregar lista de chaves: ${err.message}
+        </td></tr>`;
+      }
+    }
+
+    async function gerarChaveRapida() {
+      const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const payload = {
+        nome_cliente: `Dev Admin PMDC (${timestamp})`,
+        email_cliente: 'desenvolvedores@duquedecaxias.rj.gov.br',
+        orgao_empresa: 'Administração & Desenvolvimento DTI',
+        notas: 'Chave permanente gerada via 1-Clique na página Docs'
+      };
+
+      await emitirChaveBackend(payload);
+    }
+
+    async function submeterGeracaoChave(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSalvarKey');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Gerando...';
+
+      const payload = {
+        nome_cliente: document.getElementById('keyDevName').value.trim(),
+        email_cliente: document.getElementById('keyDevEmail').value.trim(),
+        orgao_empresa: document.getElementById('keyDevOrgao').value.trim(),
+        notas: document.getElementById('keyDevNotas').value.trim()
+      };
+
+      try {
+        await emitirChaveBackend(payload);
+        fecharModalGerador();
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ri-check-line"></i> Criar Chave Agora';
+      }
+    }
+
+    async function emitirChaveBackend(payload) {
+      try {
+        const res = await fetch('/api/v1/chaves', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const json = await res.json();
+        if (!json.success) {
+          alert('Erro ao emitir chave: ' + (json.error || 'Erro desconhecido'));
+          return;
+        }
+
+        ultimaChaveGerada = json.data.chave;
+
+        // Atualiza input no playground automaticamente
+        const playKey = document.getElementById('playKey');
+        if (playKey) playKey.value = json.data.chave;
+
+        // Preenche e exibe modal de sucesso
+        document.getElementById('sucessoDevNome').textContent = json.data.nome_cliente;
+        document.getElementById('sucessoChaveInput').value = json.data.chave;
+        document.getElementById('modalSucessoKey').style.display = 'flex';
+
+        // Atualiza a tabela imediatamente
+        await carregarChaves();
+        exibirToast('Chave permanente gerada e ativada com sucesso!');
+      } catch (err) {
+        alert('Erro de comunicação com o servidor: ' + err.message);
+      }
+    }
+
+    function confirmarExclusaoChave(btn) {
+      const id = btn.getAttribute('data-id');
+      const nome = btn.getAttribute('data-nome') || 'esta chave';
+      excluirChave(id, nome);
+    }
+
+    async function excluirChave(id, nome) {
+      const confirmou = confirm(`⚠️ ATENÇÃO: Deseja realmente EXCLUIR permanentemente a chave de API de "${nome}"?\n\nEsta chave deixará de funcionar imediatamente em todos os sistemas conectados.`);
+      if (!confirmou) return;
+
+      try {
+        const res = await fetch(`/api/v1/chaves/${id}`, { method: 'DELETE' });
+        const json = await res.json();
+        if (!json.success) {
+          alert('Erro ao excluir: ' + (json.error || 'Erro desconhecido'));
+          return;
+        }
+
+        exibirToast('Chave excluída com sucesso!');
+        await carregarChaves();
+      } catch (err) {
+        alert('Erro ao excluir chave: ' + err.message);
+      }
+    }
+
+    function copiarTexto(texto, btn) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(texto).then(() => {
+          exibirToast('Chave copiada para a área de transferência!');
+          if (btn) {
+            const original = btn.innerHTML;
+            btn.innerHTML = '<i class="ri-check-line" style="color: #16a34a;"></i> Copiado!';
+            setTimeout(() => { btn.innerHTML = original; }, 2000);
+          }
+        }).catch(() => fallbackCopiar(texto, btn));
+      } else {
+        fallbackCopiar(texto, btn);
+      }
+    }
+
+    function fallbackCopiar(texto, btn) {
+      const input = document.createElement('textarea');
+      input.value = texto;
+      document.body.appendChild(input);
+      input.select();
+      try {
+        document.execCommand('copy');
+        exibirToast('Chave copiada para a área de transferência!');
+        if (btn) {
+          const original = btn.innerHTML;
+          btn.innerHTML = '<i class="ri-check-line" style="color: #16a34a;"></i> Copiado!';
+          setTimeout(() => { btn.innerHTML = original; }, 2000);
+        }
+      } catch (e) {
+        prompt('Copie sua chave de API abaixo:', texto);
+      }
+      document.body.removeChild(input);
+    }
+
+    function copiarChaveSucesso(btn) {
+      const chave = document.getElementById('sucessoChaveInput').value;
+      copiarTexto(chave, btn);
+    }
+
+    function irParaPlaygroundComChave() {
+      fecharModalSucesso();
+      const target = document.getElementById('keysManagerCard');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    async function executarPlayground() {
+      const key = document.getElementById('playKey').value.trim();
+      const endpoint = document.getElementById('playEndpoint').value;
+      const respBox = document.getElementById('playResponse');
+      const btn = document.getElementById('btnPlay');
+
+      respBox.style.display = 'block';
+      respBox.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Conectando à API da Prefeitura...';
+      btn.disabled = true;
+
+      const startTime = performance.now();
+      try {
+        const res = await fetch(endpoint, {
+          headers: {
+            'X-API-Key': key,
+            'Accept': 'application/json'
+          }
+        });
+
+        const timeMs = Math.round(performance.now() - startTime);
+        const data = await res.json();
+        
+        const statusColor = res.ok ? '#4ade80' : '#f87171';
+        const formatted = JSON.stringify(data, null, 2);
+
+        respBox.innerHTML = `// Status: <span style="color: ${statusColor}; font-weight: 700;">HTTP ${res.status} ${res.statusText}</span> (em ${timeMs}ms)\n// Endpoint: ${endpoint}\n\n${escapeHtml(formatted)}`;
+      } catch (err) {
+        respBox.innerHTML = `// Erro de Conexão com o servidor: ${err.message}`;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function escapeHtml(string) {
+      return String(string)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Inicialização automática ao carregar o portal
+    document.addEventListener('DOMContentLoaded', () => {
+      if (verificarAcessoMaster()) {
+        carregarChaves();
+      }
+    });
+  </script>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/shared/nav.js"></script>
+</body>
+</html>

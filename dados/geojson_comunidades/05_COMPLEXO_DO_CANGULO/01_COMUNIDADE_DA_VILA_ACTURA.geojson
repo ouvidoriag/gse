@@ -1,0 +1,75 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DA VILA ACTURA",
+        "complexo": "COMPLEXO DO CANGULO",
+        "comunidade_pasta": "COMUNIDADE DA VILA ACTURA",
+        "styleUrl": "#com_laranja0",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade da Vila Actura",
+        "Complexo": "Complexo do Cangulo",
+        "Distrito": "2º Distrito",
+        "IDS_comunidade": "0.577",
+        "Classe_comunidade": "Prioridade média",
+        "kml_fill_color": "990000aa",
+        "fill": "#aa0000",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff0000aa",
+        "stroke": "#aa0000",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.28418090700111,
+              -22.70637992561456
+            ],
+            [
+              -43.28765369478644,
+              -22.70929696139795
+            ],
+            [
+              -43.27248054878458,
+              -22.71347725653566
+            ],
+            [
+              -43.27307824199691,
+              -22.70884663145585
+            ],
+            [
+              -43.26888578976843,
+              -22.7077375895033
+            ],
+            [
+              -43.27117552331445,
+              -22.70625382361014
+            ],
+            [
+              -43.2700818230977,
+              -22.70431411443471
+            ],
+            [
+              -43.27490239087368,
+              -22.69898444167177
+            ],
+            [
+              -43.28233843658423,
+              -22.70497866686893
+            ],
+            [
+              -43.28418090700111,
+              -22.70637992561456
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DA CANDELÁRIA",
+        "complexo": "COMPLEXO DE IMBARIÊ",
+        "comunidade_pasta": "COMUNIDADE DA CANDELÁRIA",
+        "styleUrl": "#com_vermelho_escuro3",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade da Candelária",
+        "Complexo": "Complexo de Imbariê",
+        "Distrito": "3° Distrito",
+        "IDS_comunidade": "0.527",
+        "Classe_comunidade": "Prioridade muito alta",
+        "kml_fill_color": "99ff00aa",
+        "fill": "#aa00ff",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ffff00aa",
+        "stroke": "#aa00ff",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.23535823032165,
+              -22.63687283707867
+            ],
+            [
+              -43.2343488,
+              -22.637665
+            ],
+            [
+              -43.23058861775726,
+              -22.63782307935158
+            ],
+            [
+              -43.2271917,
+              -22.6405806
+            ],
+            [
+              -43.22584974050946,
+              -22.63956108840396
+            ],
+            [
+              -43.22464087224799,
+              -22.63841013799351
+            ],
+            [
+              -43.22642057650573,
+              -22.63606537534883
+            ],
+            [
+              -43.2293804,
+              -22.6343719
+            ],
+            [
+              -43.23155199834402,
+              -22.63212082537559
+            ],
+            [
+              -43.23237547197791,
+              -22.63288290537932
+            ],
+            [
+              -43.2319388400857,
+              -22.63333998562682
+            ],
+            [
+              -43.23535823032165,
+              -22.63687283707867
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

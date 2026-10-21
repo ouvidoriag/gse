@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "COMUNIDADE DO MORRO DO COQUEIRINHO",
+        "complexo": "COMPLEXO DA MANGUEIRINHA",
+        "comunidade_pasta": "COMUNIDADE DO MORRO DO COQUEIRINHO",
+        "styleUrl": "#com_amarelo_claro05",
+        "tipo_extraido": "poligono_geral_comunidade",
+        "Tipo": "Comunidade",
+        "Comunidade": "Comunidade do Morro do Coqueirinho",
+        "Complexo": "Complexo da Mangueirinha",
+        "Distrito": "1° Distrito",
+        "IDS_comunidade": "0.682",
+        "Classe_comunidade": "Menor prioridade relativa",
+        "kml_fill_color": "990055ff",
+        "fill": "#ff5500",
+        "fill-opacity": 0.6,
+        "kml_stroke_color": "ff0055ff",
+        "stroke": "#ff5500",
+        "stroke-opacity": 1.0,
+        "stroke-width": 2.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.32921546309152,
+              -22.77498303366075
+            ],
+            [
+              -43.32965546913181,
+              -22.77474871697081
+            ],
+            [
+              -43.32979955043531,
+              -22.77550632625675
+            ],
+            [
+              -43.32946289177455,
+              -22.77735737751004
+            ],
+            [
+              -43.32962510445602,
+              -22.77793215740672
+            ],
+            [
+              -43.32933024756298,
+              -22.78221508998605
+            ],
+            [
+              -43.3293127777491,
+              -22.78243160226524
+            ],
+            [
+              -43.32930649411149,
+              -22.78268228366651
+            ],
+            [
+              -43.32928855761775,
+              -22.78290287344347
+            ],
+            [
+              -43.32890046299997,
+              -22.78258968099995
+            ],
+            [
+              -43.32637442020896,
+              -22.78199160844687
+            ],
+            [
+              -43.32424080646545,
+              -22.78164788507112
+            ],
+            [
+              -43.32703227306561,
+              -22.77689638670028
+            ],
+            [
+              -43.32780553382314,
+              -22.77749492949826
+            ],
+            [
+              -43.32921546309152,
+              -22.77498303366075
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
