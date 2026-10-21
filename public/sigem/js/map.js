@@ -639,7 +639,8 @@ let mainMapLabelsLayer = null;
                 const p = feature.properties || {};
                 const linhaId = p.linha_id || 'Linha';
                 const nome = p.nome || 'Rota Tarifa Zero';
-                const ext = p.extensao_km ? `${p.extensao_km.toFixed(1)} km` : '';
+                const extNum = Number(p.extensao_km);
+                const ext = (p.extensao_km != null && p.extensao_km !== '' && !isNaN(extNum)) ? `${extNum.toFixed(1)} km` : '';
                 const pontos = p.pontos || 0;
                 const cor = p.cor || '#2563eb';
 

@@ -103,8 +103,10 @@ function openNewHubModal() {
       document.getElementById('editEquipHorario').value = item.horario_funcionamento || '';
       document.getElementById('editEquipDesc').value = item.descricao || '';
 
-      const lat = item.lat || -22.785000;
-      const lon = item.lon || -43.305000;
+      const rawLat = Number(item.lat);
+      const rawLon = Number(item.lon);
+      const lat = (!isNaN(rawLat) && rawLat !== 0) ? rawLat : -22.785000;
+      const lon = (!isNaN(rawLon) && rawLon !== 0) ? rawLon : -43.305000;
       document.getElementById('editEquipLat').value = lat.toFixed(6);
       document.getElementById('editEquipLon').value = lon.toFixed(6);
 
@@ -320,8 +322,13 @@ function openNewHubModal() {
       const container = document.getElementById('modalMiniMap');
       if (!container) return;
 
+      const numLat = Number(lat);
+      const numLon = Number(lon);
+      const safeLat = (!isNaN(numLat) && numLat !== 0) ? numLat : -22.785000;
+      const safeLon = (!isNaN(numLon) && numLon !== 0) ? numLon : -43.305000;
+
       if (!modalMap) {
-        modalMap = L.map('modalMiniMap', { maxZoom: 19 }).setView([lat, lon], targetZoom);
+        modalMap = L.map('modalMiniMap', { maxZoom: 19 }).setView([safeLat, safeLon], targetZoom);
 
         modalMapStreetLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
           attribution: 'Esri &copy; Prefeitura de Duque de Caxias',
@@ -335,12 +342,14 @@ function openNewHubModal() {
           iconAnchor: [14, 28]
         });
 
-        modalMarker = L.marker([lat, lon], { draggable: true, icon: customMarkerIcon }).addTo(modalMap);
+        modalMarker = L.marker([safeLat, safeLon], { draggable: true, icon: customMarkerIcon }).addTo(modalMap);
 
         modalMarker.on('dragend', function (e) {
           const pos = modalMarker.getLatLng();
-          document.getElementById('editEquipLat').value = pos.lat.toFixed(6);
-          document.getElementById('editEquipLon').value = pos.lng.toFixed(6);
+          const pLat = Number(pos.lat);
+          const pLng = Number(pos.lng);
+          document.getElementById('editEquipLat').value = pLat.toFixed(6);
+          document.getElementById('editEquipLon').value = pLng.toFixed(6);
           currentModalPrecisaoGeo = 'NUMERO_EXATO';
 
           const badge = document.getElementById('geocodeStatusBadge');
@@ -348,13 +357,15 @@ function openNewHubModal() {
           badge.style.background = '#dcfce7';
           badge.style.color = '#15803d';
           badge.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Posição calibrada manualmente na portaria/fachada (ROOFTOP Exato)!';
-          showToast(`Coordenada exata cravada: ${pos.lat.toFixed(6)}, ${pos.lng.toFixed(6)}`);
+          showToast(`Coordenada exata cravada: ${pLat.toFixed(6)}, ${pLng.toFixed(6)}`);
         });
 
         modalMap.on('click', function (e) {
           modalMarker.setLatLng(e.latlng);
-          document.getElementById('editEquipLat').value = e.latlng.lat.toFixed(6);
-          document.getElementById('editEquipLon').value = e.latlng.lng.toFixed(6);
+          const pLat = Number(e.latlng.lat);
+          const pLng = Number(e.latlng.lng);
+          document.getElementById('editEquipLat').value = pLat.toFixed(6);
+          document.getElementById('editEquipLon').value = pLng.toFixed(6);
           currentModalPrecisaoGeo = 'NUMERO_EXATO';
 
           const badge = document.getElementById('geocodeStatusBadge');
@@ -362,12 +373,12 @@ function openNewHubModal() {
           badge.style.background = '#dcfce7';
           badge.style.color = '#15803d';
           badge.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Pino posicionado no ponto clicado (ROOFTOP Exato)!';
-          showToast(`Pino posicionado: ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}`);
+          showToast(`Pino posicionado: ${pLat.toFixed(6)}, ${pLng.toFixed(6)}`);
         });
       } else {
         modalMap.invalidateSize();
-        modalMap.setView([lat, lon], targetZoom);
-        modalMarker.setLatLng([lat, lon]);
+        modalMap.setView([safeLat, safeLon], targetZoom);
+        modalMarker.setLatLng([safeLat, safeLon]);
       }
     }
 
@@ -435,7 +446,7 @@ function openNewHubModal() {
         <div style="background: #f8fafc; padding: 10px 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px;">
           <div style="font-size: 11px; color: var(--text-muted); font-weight: 700;">COORDENADAS GEOGRÁFICAS (SIG)</div>
           <div style="font-family: monospace; font-size: 12px; color: var(--navy-900); margin-top: 2px;">
-            Latitude: <strong>${item.lat ? item.lat.toFixed(6) : '-'}</strong> | Longitude: <strong>${item.lon ? item.lon.toFixed(6) : '-'}</strong>
+            Latitude: <strong>${(item.lat != null && item.lat !== '' && !isNaN(Number(item.lat))) ? Number(item.lat).toFixed(6) : (item.lat || '-')}</strong> | Longitude: <strong>${(item.lon != null && item.lon !== '' && !isNaN(Number(item.lon))) ? Number(item.lon).toFixed(6) : (item.lon || '-')}</strong>
           </div>
         </div>
 

@@ -546,8 +546,10 @@
         const res = await apiRequest('./api/geocode?' + params.toString());
         if (res.ok && res.data && res.data.success) {
           const d = res.data;
-          const lat = d.lat;
-          const lon = d.lon;
+          const rawLat = Number(d.lat);
+          const rawLon = Number(d.lon);
+          const lat = (!isNaN(rawLat) && rawLat !== 0) ? rawLat : -22.785000;
+          const lon = (!isNaN(rawLon) && rawLon !== 0) ? rawLon : -43.305000;
           const locType = d.location_type || 'APROXIMADO_LOGRADOURO';
           const precisao = d.precisao_geo || (locType === 'ROOFTOP' ? 'NUMERO_EXATO' : 'APROXIMADO_LOGRADOURO');
 
@@ -619,13 +621,17 @@
         const res = await apiRequest('./api/geocode?' + params.toString());
         if (res.ok && res.data && res.data.success && res.data.source === 'google') {
           const d = res.data;
-          document.getElementById('editEquipLat').value = d.lat.toFixed(6);
-          document.getElementById('editEquipLon').value = d.lon.toFixed(6);
+          const dLat = Number(d.lat);
+          const dLon = Number(d.lon);
+          const safeLat = (!isNaN(dLat) && dLat !== 0) ? dLat : -22.785000;
+          const safeLon = (!isNaN(dLon) && dLon !== 0) ? dLon : -43.305000;
+          document.getElementById('editEquipLat').value = safeLat.toFixed(6);
+          document.getElementById('editEquipLon').value = safeLon.toFixed(6);
           if (typeof window.setModalPrecisaoGeo === 'function') {
             window.setModalPrecisaoGeo(d.precisao_geo || 'NUMERO_EXATO');
           }
 
-          initOrUpdateModalMiniMap(d.lat, d.lon, 18);
+          initOrUpdateModalMiniMap(safeLat, safeLon, 18);
 
           badge.style.background = '#dcfce7';
           badge.style.color = '#15803d';
@@ -665,8 +671,8 @@
         else coord = [-22.7850, -43.3050];
       }
 
-      const lat = coord[0];
-      const lon = coord[1];
+      const lat = Number(coord[0]) || -22.785000;
+      const lon = Number(coord[1]) || -43.305000;
       document.getElementById('editEquipLat').value = lat.toFixed(6);
       document.getElementById('editEquipLon').value = lon.toFixed(6);
       if (typeof window.setModalPrecisaoGeo === 'function') {

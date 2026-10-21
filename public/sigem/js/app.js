@@ -591,9 +591,13 @@
         document.getElementById('editEquipDist').value = hub.distrito || '1';
         if (hub.cep) document.getElementById('editEquipCep').value = hub.cep;
         if (hub.lat && hub.lon) {
-          document.getElementById('editEquipLat').value = hub.lat.toFixed(6);
-          document.getElementById('editEquipLon').value = hub.lon.toFixed(6);
-          setTimeout(() => initOrUpdateModalMiniMap(hub.lat, hub.lon), 300);
+          const hLat = Number(hub.lat);
+          const hLon = Number(hub.lon);
+          const safeLat = (!isNaN(hLat) && hLat !== 0) ? hLat : -22.785000;
+          const safeLon = (!isNaN(hLon) && hLon !== 0) ? safeLon : -43.305000;
+          document.getElementById('editEquipLat').value = safeLat.toFixed(6);
+          document.getElementById('editEquipLon').value = safeLon.toFixed(6);
+          setTimeout(() => initOrUpdateModalMiniMap(safeLat, safeLon), 300);
         }
       }
     }

@@ -296,6 +296,10 @@ app.use((req, res) => {
   if (req.path.startsWith('/api') || req.path.includes('/api/')) {
     return res.status(404).json({ error: 'Endpoint da API não encontrado', path: req.path });
   }
+  // Se for requisição para um arquivo estático (.css, .js, .png, etc.), retorna 404 real evitando erro de MIME type no browser
+  if (/\.[a-zA-Z0-9]{2,5}$/.test(req.path)) {
+    return res.status(404).type('text/plain').send('Arquivo não encontrado');
+  }
   if (isDedicatedSigem) {
     return res.sendFile(path.join(publicDir, 'sigem', 'index.html'));
   }
