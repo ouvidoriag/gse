@@ -99,11 +99,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       headers: { 'Authorization': `Bearer ${token}` }
     });
 
-    if (!response.ok) {
+    let data;
+    if (response.ok) {
+      data = await response.json();
+    } else if (response.status === 404 && API_AUTH_ME.includes('/gse/')) {
+      const fallbackRes = await fetch('/cds/api/auth/me', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (fallbackRes.ok) {
+        data = await fallbackRes.json();
+      } else {
+        throw new Error('Sessão expirada. Faça login novamente.');
+      }
+    } else {
       throw new Error('Sessão expirada. Faça login novamente.');
     }
-
-    const data = await response.json();
     currentUser = data.user;
 
     // Preenche cabeçalho e formulário de perfil inicial

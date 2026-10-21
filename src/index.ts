@@ -32,6 +32,7 @@ app.use(
   helmet({
     crossOriginOpenerPolicy: false,
     originAgentCluster: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],

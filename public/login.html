@@ -743,10 +743,13 @@
         const userStr = localStorage.getItem(SESSION_KEYS.user);
         const urlParams = new URLSearchParams(window.location.search);
 
-        if (urlParams.has('logout')) {
+        if (urlParams.has('logout') || urlParams.has('expired')) {
           localStorage.removeItem(SESSION_KEYS.token);
           localStorage.removeItem(SESSION_KEYS.user);
           localStorage.removeItem(SESSION_KEYS.simac);
+          if (urlParams.has('expired')) {
+            showAlert('warning', 'Sua sessão expirou ou precisa ser renovada. Por favor entre com suas credenciais.');
+          }
           return;
         }
 
