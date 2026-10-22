@@ -716,22 +716,24 @@
       if (p.startsWith('/gse')) return '/gse';
       if (p.startsWith('/cds')) return '/cds';
       if (p.startsWith('/sigem')) return '/sigem';
+      if (p.startsWith('/enderecos')) return '/enderecos';
       return '';
     }
 
     // Sanitizador de destino para evitar loops de redirecionamento
     function resolveSafeDestination(target, userRole, base) {
-      const defaultDest = (userRole === 'admin' ? `${base}/` : `${base}/cds/dashboard.html`);
+      const effectiveBase = base || (window.location.pathname.startsWith('/gse') ? '/gse' : '');
+      const defaultDest = (userRole === 'admin' ? `${effectiveBase}/` : `${effectiveBase}/cds/dashboard.html`);
       if (!target) return defaultDest;
       const t = target.trim();
-      if (t.startsWith('/login') || t.startsWith(`${base}/login`)) {
+      if (t.startsWith('/login') || t.startsWith(`${effectiveBase}/login`)) {
         return defaultDest;
       }
-      if (t === '/api' || t === '/docs' || t === `${base}/api`) {
-        return `${base}/docs`;
+      if (t === '/api' || t === '/docs' || t === `${effectiveBase}/api`) {
+        return `${effectiveBase}/docs`;
       }
-      if (base && !t.startsWith(base) && t.startsWith('/')) {
-        return `${base}${t}`;
+      if (effectiveBase && !t.startsWith(effectiveBase) && t.startsWith('/')) {
+        return `${effectiveBase}${t}`;
       }
       return t;
     }
@@ -820,17 +822,54 @@
 
       try {
         const base = getAuthBasePrefix();
-        const loginUrl = (base && base !== '/sigem' ? `${base}/api/auth/login` : '/api/auth/login');
+        // Constrói lista inteligente de endpoints candidatos para login resiliente
+        const candidates = [];
+        if (base) {
+          candidates.push(`${base}/api/auth/login`);
+        }
+        // Em ambientes de proxy reverso / VM municipal, /gse/api e /cds/api são as rotas ativas do portal
+        if (!candidates.includes('/gse/api/auth/login')) candidates.push('/gse/api/auth/login');
+        if (!candidates.includes('/sigem/api/auth/login')) candidates.push('/sigem/api/auth/login');
+        if (!candidates.includes('/cds/api/auth/login')) candidates.push('/cds/api/auth/login');
+        if (!candidates.includes('/api/auth/login')) candidates.push('/api/auth/login');
 
-        const res = await fetch(loginUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: user, password: pass })
-        });
+        let res = null;
+        let data = null;
+        let lastErrorMsg = null;
 
-        const data = await res.json();
+        for (const loginUrl of candidates) {
+          try {
+            const resp = await fetch(loginUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: user, password: pass })
+            });
 
-        if (res.ok && data.success) {
+            // Lê resposta com segurança (evita quebra por respostas de texto simples ou HTML de proxies legados)
+            const rawText = await resp.text();
+            let parsed = null;
+            try {
+              parsed = JSON.parse(rawText);
+            } catch (_) {
+              console.warn(`[Login] Resposta não-JSON recebida de ${loginUrl}:`, rawText.slice(0, 50));
+              continue; // Ignora rota legada conflitante e testa próximo candidato oficial
+            }
+
+            if (parsed && typeof parsed === 'object') {
+              res = resp;
+              data = parsed;
+              break;
+            }
+          } catch (fetchErr) {
+            lastErrorMsg = fetchErr.message;
+          }
+        }
+
+        if (!data) {
+          throw new Error(lastErrorMsg || 'Não foi possível conectar ao servidor de autenticação.');
+        }
+
+        if (res && res.ok && data.success) {
           showAlert('success', 'Acesso autorizado com sucesso! Carregando sistema...', '<i class="ri-lock-unlock-line"></i>');
 
           // 1. Grava Token JWT principal

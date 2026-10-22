@@ -178,6 +178,8 @@ apiPrefixes.forEach((prefix) => {
 
 // Endpoints retrocompatíveis diretos com /sigem/api/* e /enderecos/api/*
 ['/sigem/api', '/gse/sigem/api', '/enderecos/api', '/gse/enderecos/api'].forEach((sigPrefix) => {
+  app.use(`${sigPrefix}/auth/login`, loginLimiter);
+  app.use(`${sigPrefix}/auth`, authRouter);
   app.use(sigPrefix, sigemRouter);
   app.use(`${sigPrefix}/comunidades`, comunidadesRouter);
 });
