@@ -715,6 +715,10 @@
     function getAuthBasePrefix() {
       const p = window.location.pathname.toLowerCase();
       if (p.startsWith('/gse')) return '/gse';
+      const h = window.location.hostname.toLowerCase();
+      if (h.includes('duquedecaxias.rj.gov.br') || window.location.port === '8059') {
+        return '/gse';
+      }
       if (p.startsWith('/cds')) return '/cds';
       if (p.startsWith('/sigem')) return '/sigem';
       if (p.startsWith('/enderecos')) return '/enderecos';
@@ -726,15 +730,19 @@
       const effectiveBase = base || (window.location.pathname.startsWith('/gse') ? '/gse' : '');
       const defaultDest = (userRole === 'admin' ? `${effectiveBase}/` : `${effectiveBase}/cds/dashboard.html`);
       if (!target) return defaultDest;
-      const t = target.trim();
-      if (t.startsWith('/login') || t.startsWith(`${effectiveBase}/login`)) {
+      let t = target.trim();
+      if (t.startsWith('/login') || (effectiveBase && t.startsWith(`${effectiveBase}/login`))) {
         return defaultDest;
       }
-      if (t === '/api' || t === '/docs' || t === `${effectiveBase}/api`) {
+      if (t === '/api' || t === '/docs' || (effectiveBase && t === `${effectiveBase}/api`)) {
         return `${effectiveBase}/docs`;
       }
       if (effectiveBase && !t.startsWith(effectiveBase) && t.startsWith('/')) {
-        return `${effectiveBase}${t}`;
+        t = `${effectiveBase}${t}`;
+      }
+      // Garante trailing slash em /sigem para evitar timeout no redirect do Nginx
+      if (t === '/sigem' || (effectiveBase && t === `${effectiveBase}/sigem`)) {
+        t = (effectiveBase ? `${effectiveBase}/sigem/` : '/sigem/');
       }
       return t;
     }

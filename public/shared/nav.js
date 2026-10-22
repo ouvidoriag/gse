@@ -38,6 +38,11 @@
   function getAppBasePath() {
     const p = window.location.pathname.toLowerCase();
     if (p.startsWith('/gse')) return '/gse';
+    const h = window.location.hostname.toLowerCase();
+    // Em produção na VM (ogm.duquedecaxias.rj.gov.br ou porta 8059), toda a suíte é servida sob /gse
+    if (h.includes('duquedecaxias.rj.gov.br') || window.location.port === '8059') {
+      return '/gse';
+    }
     return '';
   }
 
@@ -72,7 +77,7 @@
 
     const base = getAppBasePath();
     const currentPath = window.location.pathname.toLowerCase();
-    const isHub = currentPath === (base + '/') || currentPath === (base || '/') || currentPath.endsWith('/hub/index.html') || currentPath === (base + '/hub');
+    const isHub = currentPath === (base + '/') || currentPath === (base || '/') || currentPath.endsWith('/hub/index.html') || currentPath === (base + '/hub') || currentPath === '/' || currentPath === '/gse' || currentPath === '/gse/';
     const isCds = currentPath.includes('/cds');
     const isSigem = currentPath.includes('/sigem') || currentPath.includes('/enderecos');
     const isApi = currentPath.includes('/api') || currentPath.includes('/docs');
@@ -95,7 +100,7 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
           <span>Carta de Serviços</span>
         </a>
-        <a href="${base}/sigem" class="top-nav-tab ${isSigem ? 'active' : ''}" id="topTabSigem" title="Ir para o SIGEM — Endereços e Cartografia">
+        <a href="${base}/sigem/" class="top-nav-tab ${isSigem ? 'active' : ''}" id="topTabSigem" title="Ir para o SIGEM — Endereços e Cartografia">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
           <span>Endereços &amp; GIS</span>
         </a>
@@ -109,12 +114,11 @@
 
   function prefixInternalLinks() {
     const base = getAppBasePath();
-    if (!base) return;
 
     // Atualiza marca da Sidebar
     const brandBox = document.querySelector('.sidebar-brand-box');
     if (brandBox) {
-      brandBox.setAttribute('href', base + '/');
+      brandBox.setAttribute('href', (base || '') + '/');
       const brandTitle = brandBox.querySelector('.sidebar-app-title');
       if (brandTitle && !brandTitle.textContent.includes('GSE')) {
         brandTitle.textContent = 'PORTAL GSE';
@@ -123,11 +127,22 @@
 
     // Prefixa links da Sidebar e do Conteúdo se começarem com '/' mas sem prefixo base
     document.querySelectorAll('a[href]').forEach(a => {
-      const href = a.getAttribute('href');
+      let href = a.getAttribute('href');
       if (!href) return;
       if (href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
-      if (href.startsWith('/') && !href.startsWith(base)) {
-        a.setAttribute('href', base + href);
+
+      // Normaliza /sigem e ${base}/sigem para sempre conter barra final / evitando 301 do Nginx
+      if (href === '/sigem' || (base && href === base + '/sigem')) {
+        a.setAttribute('href', (base ? base + '/sigem/' : '/sigem/'));
+        return;
+      }
+
+      if (base && href.startsWith('/') && !href.startsWith(base)) {
+        let newHref = base + href;
+        if (newHref === base + '/sigem' || newHref === base + '/sigem/') {
+          newHref = base + '/sigem/';
+        }
+        a.setAttribute('href', newHref);
       }
     });
   }
