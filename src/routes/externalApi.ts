@@ -142,7 +142,7 @@ externalApiRouter.get('/me', (req: RequestWithApiKey, res: Response) => {
 externalApiRouter.get('/servicos', async (req: RequestWithApiKey, res: Response) => {
   try {
     const page = Math.max(1, parseInt(String(req.query.page || '1'), 10));
-    const limit = Math.min(100, Math.max(1, parseInt(String(req.query.limit || '20'), 10)));
+    const limit = Math.min(1000, Math.max(1, parseInt(String(req.query.limit || '20'), 10)));
     const offset = (page - 1) * limit;
 
     const { q, secretaria_id, secretaria, categoria_id, publico, canal } = req.query;
@@ -328,10 +328,10 @@ externalApiRouter.get('/servicos/:id', async (req: RequestWithApiKey, res: Respo
 externalApiRouter.get('/equipamentos', async (req: RequestWithApiKey, res: Response) => {
   try {
     const page = Math.max(1, parseInt(String(req.query.page || '1'), 10));
-    const limit = Math.min(100, Math.max(1, parseInt(String(req.query.limit || '20'), 10)));
+    const limit = Math.min(1000, Math.max(1, parseInt(String(req.query.limit || '20'), 10)));
     const offset = (page - 1) * limit;
 
-    const { q, distrito, bairro, categoria, hub_id, secretaria_id, precisao_geo, status } = req.query;
+    const { q, distrito, bairro, categoria, hub_id, secretaria_id, precisao_geo, status, fields } = req.query;
 
     let whereSql = 'WHERE 1=1';
     const params: any[] = [];
@@ -415,13 +415,18 @@ externalApiRouter.get('/equipamentos', async (req: RequestWithApiKey, res: Respo
     `, [...params, limit, offset]);
 
     res.setHeader('Cache-Control', 'public, max-age=60');
+
+    const isNomeOnly = fields === 'nome' || fields === 'nomes';
     res.json({
       success: true,
       total,
       page,
       limit,
       totalPages: Math.ceil(total / limit),
-      data: rows,
+      ...(isNomeOnly ? { nomes: rows.map((r: any) => r.nome) } : {}),
+      data: isNomeOnly
+        ? rows.map((r: any) => ({ id: r.id, nome: r.nome, sigla: r.sigla, categoria: r.categoria, bairro: r.bairro, distrito: r.distrito }))
+        : rows,
     });
   } catch (err: any) {
     console.error('[ExternalAPI /equipamentos] Erro:', err);
