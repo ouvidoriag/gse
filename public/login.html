@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão Integrada — Prefeitura de Duque de Caxias | Acesso Restrito</title>
   <meta name="description" content="Acesso restrito ao Painel Oficial Integrado de Duque de Caxias - RJ: Carta de Serviços, Endereços e SIGEM.">
+  <link rel="icon" type="image/png" href="/shared/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -823,14 +824,13 @@
       try {
         const base = getAuthBasePrefix();
         // Constrói lista inteligente de endpoints candidatos para login resiliente
-        const candidates = [];
-        if (base) {
+        // A rota unificada /gse/api/auth/login é a rota mestre ativa em produção
+        const candidates = ['/gse/api/auth/login'];
+        if (base && `${base}/api/auth/login` !== '/gse/api/auth/login') {
           candidates.push(`${base}/api/auth/login`);
         }
-        // Em ambientes de proxy reverso / VM municipal, /gse/api e /cds/api são as rotas ativas do portal
-        if (!candidates.includes('/gse/api/auth/login')) candidates.push('/gse/api/auth/login');
-        if (!candidates.includes('/sigem/api/auth/login')) candidates.push('/sigem/api/auth/login');
         if (!candidates.includes('/cds/api/auth/login')) candidates.push('/cds/api/auth/login');
+        if (!candidates.includes('/sigem/api/auth/login')) candidates.push('/sigem/api/auth/login');
         if (!candidates.includes('/api/auth/login')) candidates.push('/api/auth/login');
 
         let res = null;
@@ -853,6 +853,12 @@
             } catch (_) {
               console.warn(`[Login] Resposta não-JSON recebida de ${loginUrl}:`, rawText.slice(0, 50));
               continue; // Ignora rota legada conflitante e testa próximo candidato oficial
+            }
+
+            // Se o endpoint retornou 404, 405 ou erro de rota não encontrada, continua para o próximo fallback
+            if (resp.status === 404 || resp.status === 405 || (parsed && parsed.error && String(parsed.error).toLowerCase().includes('não encontrado'))) {
+              console.warn(`[Login] Rota ${loginUrl} não encontrada (404). Tentando próximo candidato...`);
+              continue;
             }
 
             if (parsed && typeof parsed === 'object') {
