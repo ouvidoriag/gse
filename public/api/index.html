@@ -871,17 +871,19 @@
       <div class="tester-form">
         <div>
           <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">SUA CHAVE DE API (X-API-Key):</label>
-          <input type="text" id="playKey" class="input-field" placeholder="Ex: pmdc_live_..." value="pmdc_live_f38628f41d085f49b777f958afb5ca753698ddfb">
+          <input type="text" id="playKey" class="input-field" placeholder="Ex: pmdc_live_..." value="pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f">
         </div>
         <div>
           <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">ENDPOINT PARA TESTAR:</label>
           <select id="playEndpoint" class="input-field">
+            <option value="/api/v1/servicos?q=vacinacao&secretaria=SMS&limit=3">GET /api/v1/servicos?q=vacinacao (Serviços de Saúde na SMS)</option>
+            <option value="/api/v1/servicos?q=iptu&limit=3">GET /api/v1/servicos?q=iptu (Serviços de IPTU/Tributos)</option>
+            <option value="/api/v1/equipamentos?categoria=Saúde&distrito=1&limit=3">GET /api/v1/equipamentos?categoria=Saúde&distrito=1 (Postos/UPAs no 1º Distrito)</option>
+            <option value="/api/v1/equipamentos?categoria=Educação&bairro=Xerém&limit=3">GET /api/v1/equipamentos?categoria=Educação&bairro=Xerém (Escolas em Xerém)</option>
+            <option value="/api/v1/comunidades?distrito=2&limit=5">GET /api/v1/comunidades?distrito=2 (Comunidades 2º Distrito)</option>
+            <option value="/api/v1/estatisticas">GET /api/v1/estatisticas (Métricas e Totais do Município)</option>
+            <option value="/api/v1/distritos">GET /api/v1/distritos (4 Distritos Oficiais)</option>
             <option value="/api/v1/me">GET /api/v1/me (Saldo da Chave e Perfil)</option>
-            <option value="/api/v1/servicos?limit=3">GET /api/v1/servicos (Primeiros 3 serviços)</option>
-            <option value="/api/v1/equipamentos?distrito=1&limit=3">GET /api/v1/equipamentos (1º Distrito)</option>
-            <option value="/api/v1/distritos">GET /api/v1/distritos (4 Distritos)</option>
-            <option value="/api/v1/secretarias">GET /api/v1/secretarias (18 Pastas)</option>
-            <option value="/api/v1/estatisticas">GET /api/v1/estatisticas (Métricas)</option>
           </select>
         </div>
         <div style="display: flex; align-items: flex-end;">
@@ -894,18 +896,100 @@
       </div>
     </div>
 
-    <!-- EXEMPLOS DE CÓDIGO POR LINGUAGEM -->
+    <!-- GUIA DE COMO PESQUISAR E PARÂMETROS DE CONSULTA -->
+    <div class="card" style="border-left: 4px solid var(--accent); margin-top: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+        <div>
+          <h3 style="font-size: 1.25rem; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+            <i class="ri-search-eye-line" style="color: var(--accent);"></i> Como Realizar Consultas &amp; Parâmetros de Pesquisa
+          </h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); margin-top: 4px;">
+            A API é padronizada em REST/JSON. Para filtrar dados, passe os parâmetros diretamente na URL (Query String) combinando com <code>&amp;</code>.
+          </p>
+        </div>
+        <div style="background: rgba(30, 58, 138, 0.08); padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(30, 58, 138, 0.2); font-size: 0.85rem;">
+          <span style="color: var(--text-muted); font-size: 0.78rem;">URL Base Ativa:</span><br>
+          <strong id="displayApiBaseUrl" style="color: var(--primary); font-family: 'JetBrains Mono', monospace;">http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1</strong>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="params-table" style="margin-top: 0;">
+          <thead>
+            <tr>
+              <th style="width: 140px;">Parâmetro</th>
+              <th style="width: 110px;">Tipo</th>
+              <th style="width: 240px;">Exemplo Real</th>
+              <th>Como Funciona &amp; Aplicação Prática</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code class="param-code">q</code></td>
+              <td><span class="param-type">string</span></td>
+              <td><code>?q=vacinacao</code> ou <code>?q=iptu</code></td>
+              <td>
+                <strong>Busca Textual Livre:</strong> pesquisa por aproximação no nome do equipamento público, título do serviço, descrição, logradouro e público-alvo.
+              </td>
+            </tr>
+            <tr>
+              <td><code class="param-code">distrito</code></td>
+              <td><span class="param-type">integer (1-4)</span></td>
+              <td><code>?distrito=1</code> (Centro)</td>
+              <td>
+                <strong>Filtro Territorial de Duque de Caxias:</strong>
+                <code>1</code> = Duque de Caxias (Centro), <code>2</code> = Campos Elíseos, <code>3</code> = Imbariê, <code>4</code> = Xerém.
+              </td>
+            </tr>
+            <tr>
+              <td><code class="param-code">categoria</code></td>
+              <td><span class="param-type">string</span></td>
+              <td><code>?categoria=Saúde</code> ou <code>Educação</code></td>
+              <td>
+                <strong>Segmento de Atuação:</strong> filtra equipamentos por área (ex: <code>Saúde</code>, <code>Educação</code>, <code>Assistência Social</code>, <code>Segurança</code>, <code>Cultura e Lazer</code>).
+              </td>
+            </tr>
+            <tr>
+              <td><code class="param-code">bairro</code></td>
+              <td><span class="param-type">string</span></td>
+              <td><code>?bairro=Jardim Primavera</code></td>
+              <td>
+                <strong>Bairro Oficial:</strong> filtra por qualquer um dos 118 bairros mapeados no município (ex: <em>Xerém</em>, <em>Centro</em>, <em>Gramacho</em>, <em>Jardim Primavera</em>).
+              </td>
+            </tr>
+            <tr>
+              <td><code class="param-code">secretaria</code></td>
+              <td><span class="param-type">string</span></td>
+              <td><code>?secretaria=SMS</code> ou <code>SMEDC</code></td>
+              <td>
+                <strong>Órgão Gestor:</strong> filtra serviços pela sigla da Secretaria Municipal responsável (ex: <code>SMS</code> = Saúde, <code>SMEDC</code> = Educação, <code>SMUH</code> = Urbanismo).
+              </td>
+            </tr>
+            <tr>
+              <td><code class="param-code">limit</code> &amp; <code class="param-code">page</code></td>
+              <td><span class="param-type">integer</span></td>
+              <td><code>?limit=10&amp;page=1</code></td>
+              <td>
+                <strong>Paginação Inteligente:</strong> <code>limit</code> define quantos registros retornar por requisição (padrão 20, máx 100). <code>page</code> avança entre as páginas de resultado.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EXEMPLOS DE CÓDIGO POR LINGUAGEM COM DADOS REAIS -->
     <div class="card">
-      <h3 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--text-main);">
-        <i class="ri-code-s-slash-line" style="color: var(--primary);"></i> Exemplos Práticos de Integração
+      <h3 style="font-size: 1.2rem; margin-bottom: 8px; color: var(--text-main);">
+        <i class="ri-code-s-slash-line" style="color: var(--primary);"></i> Exemplos Práticos de Integração (Consultas Reais)
       </h3>
       <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
-        Selecione sua linguagem de programação favorita para ver o código pronto para usar:
+        Copie e execute diretamente no seu terminal ou inclua no código do seu sistema. Os exemplos abaixo utilizam rotas e parâmetros reais da base de Duque de Caxias:
       </p>
 
       <div class="tabs-nav">
         <div class="tab-item active" onclick="switchTab(this, 'tab-curl')">cURL (Terminal)</div>
-        <div class="tab-item" onclick="switchTab(this, 'tab-js')">JavaScript (Node / Fetch)</div>
+        <div class="tab-item" onclick="switchTab(this, 'tab-js')">JavaScript (Node.js / Browser)</div>
         <div class="tab-item" onclick="switchTab(this, 'tab-python')">Python (Requests)</div>
         <div class="tab-item" onclick="switchTab(this, 'tab-php')">PHP (cURL)</div>
       </div>
@@ -914,14 +998,42 @@
       <div id="tab-curl" class="tab-pane active">
         <div class="code-block">
           <button class="copy-btn" onclick="copyCode(this)"><i class="ri-file-copy-line"></i> Copiar</button>
-# Consultar os 10 primeiros serviços com busca por 'saude'
-curl -X GET "https://SEU_DOMINIO/api/v1/servicos?q=saude&limit=10" \
-     -H "X-API-Key: pmdc_live_SUA_CHAVE_AQUI" \
+# ==============================================================================
+# 1. CONSULTAR SERVIÇOS PÚBLICOS POR PALAVRA-CHAVE E SECRETARIA
+# Retorna serviços de saúde (vacinas, consultas, exames) cadastrados na SMS
+# ==============================================================================
+curl -X GET "http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1/servicos?q=vacinacao&secretaria=SMS&limit=5" \
+     -H "X-API-Key: pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f" \
      -H "Accept: application/json"
 
-# Consultar equipamentos públicos do 1º Distrito (Centro)
-curl -X GET "https://SEU_DOMINIO/api/v1/equipamentos?distrito=1" \
-     -H "X-API-Key: pmdc_live_SUA_CHAVE_AQUI"
+# ==============================================================================
+# 2. CONSULTAR EQUIPAMENTOS DE SAÚDE NO 1º DISTRITO (CENTRO / JARDIM 25 DE AGOSTO)
+# Retorna postos de saúde, UPAs e hospitais com coordenadas GPS e endereço oficial
+# ==============================================================================
+curl -X GET "http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1/equipamentos?distrito=1&categoria=Saúde&limit=10" \
+     -H "X-API-Key: pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f" \
+     -H "Accept: application/json"
+
+# ==============================================================================
+# 3. BUSCAR ESCOLAS E CRECHES MUNICIPAIS NO BAIRRO DE XERÉM (4º DISTRITO)
+# ==============================================================================
+curl -X GET "http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1/equipamentos?categoria=Educação&bairro=Xerém&limit=10" \
+     -H "X-API-Key: pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f" \
+     -H "Accept: application/json"
+
+# ==============================================================================
+# 4. CONSULTAR COMUNIDADES, FAVELAS E COMPLEXOS NO 2º DISTRITO (CAMPOS ELÍSEOS)
+# ==============================================================================
+curl -X GET "http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1/comunidades?distrito=2&limit=10" \
+     -H "X-API-Key: pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f" \
+     -H "Accept: application/json"
+
+# ==============================================================================
+# 5. OBTER INDICADORES E ESTATÍSTICAS GERAIS CONSOLIDADAS DO MUNICÍPIO
+# ==============================================================================
+curl -X GET "http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1/estatisticas" \
+     -H "X-API-Key: pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f" \
+     -H "Accept: application/json"
         </div>
       </div>
 
@@ -929,32 +1041,50 @@ curl -X GET "https://SEU_DOMINIO/api/v1/equipamentos?distrito=1" \
       <div id="tab-js" class="tab-pane">
         <div class="code-block">
           <button class="copy-btn" onclick="copyCode(this)"><i class="ri-file-copy-line"></i> Copiar</button>
-const API_URL = 'https://SEU_DOMINIO/api/v1'; // Ou window.location.origin + '/api/v1'
-const API_KEY = 'pmdc_live_SUA_CHAVE_AQUI';
+// Configuração da URL Base e Chave de Acesso
+const API_BASE = 'http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1';
+const API_KEY = 'pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f';
 
-async function buscarServicos(termo = 'IPTU') {
-  try {
-    const res = await fetch(`${API_URL}/servicos?q=${encodeURIComponent(termo)}`, {
-      method: 'GET',
-      headers: {
-        'X-API-Key': API_KEY,
-        'Accept': 'application/json'
-      }
-    });
+/**
+ * 1. Pesquisa Serviços Públicos por termo (ex: "iptu", "alvara", "vacinacao")
+ */
+async function buscarServicos(termo = 'iptu', limite = 5) {
+  const url = new URL(`${API_BASE}/servicos`);
+  url.searchParams.append('q', termo);
+  url.searchParams.append('limit', limite);
 
-    if (!res.ok) {
-      throw new Error(`Erro HTTP ${res.status}: ${res.statusText}`);
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'X-API-Key': API_KEY,
+      'Accept': 'application/json'
     }
+  });
 
-    const json = await res.json();
-    console.log(`Encontrados ${json.total} serviços:`, json.data);
-    return json.data;
-  } catch (err) {
-    console.error('Falha ao conectar na API da Prefeitura:', err.message);
-  }
+  const json = await res.json();
+  console.log(`Encontrados ${json.total} serviços para "${termo}":`, json.data);
+  return json.data;
 }
 
+/**
+ * 2. Pesquisa Equipamentos Georreferenciados por Distrito e Categoria
+ * @param {number} distrito - 1: Centro, 2: Campos Elíseos, 3: Imbariê, 4: Xerém
+ * @param {string} categoria - "Saúde", "Educação", "Assistência Social", etc.
+ */
+async function buscarEquipamentos(distrito = 1, categoria = 'Saúde') {
+  const url = `${API_BASE}/equipamentos?distrito=${distrito}&categoria=${encodeURIComponent(categoria)}&limit=10`;
+  const res = await fetch(url, {
+    headers: { 'X-API-Key': API_KEY, 'Accept': 'application/json' }
+  });
+
+  const json = await res.json();
+  console.log(`Equipamentos de ${categoria} no Distrito ${distrito}:`, json.data);
+  return json.data;
+}
+
+// Exemplos de chamada:
 buscarServicos('vacinacao');
+buscarEquipamentos(1, 'Saúde');
         </div>
       </div>
 
@@ -964,26 +1094,38 @@ buscarServicos('vacinacao');
           <button class="copy-btn" onclick="copyCode(this)"><i class="ri-file-copy-line"></i> Copiar</button>
 import requests
 
-API_URL = "https://SEU_DOMINIO/api/v1"
+API_BASE = "http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1"
 HEADERS = {
-    "X-API-Key": "pmdc_live_SUA_CHAVE_AQUI",
+    "X-API-Key": "pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f",
     "Accept": "application/json"
 }
 
-# 1. Buscar Equipamentos de Saúde no 2º Distrito (Campos Elíseos)
-response = requests.get(
-    f"{API_URL}/equipamentos",
-    params={"categoria": "Saúde", "distrito": 2, "limit": 20},
+# 1. Buscar Equipamentos de Saúde no 1º Distrito (Centro)
+params_equip = {
+    "distrito": 1,
+    "categoria": "Saúde",
+    "limit": 10
+}
+resp = requests.get(f"{API_BASE}/equipamentos", params=params_equip, headers=HEADERS)
+
+if resp.status_code == 200:
+    dados = resp.json()
+    print(f"Total encontrado: {dados['total']} unidades")
+    for eq in dados['data']:
+        print(f"• [{eq['sigla']}] {eq['nome']}")
+        print(f"  Endereço: {eq['endereco_completo']}")
+        print(f"  GPS: Lat {eq['latitude']}, Lon {eq['longitude']}\n")
+else:
+    print(f"Erro {resp.status_code}: {resp.text}")
+
+# 2. Consultar Serviços da Secretaria Municipal de Urbanismo (SMUH)
+resp_serv = requests.get(
+    f"{API_BASE}/servicos",
+    params={"secretaria": "SMUH", "limit": 5},
     headers=HEADERS
 )
-
-if response.status_code == 200:
-    dados = response.json()
-    print(f"Total encontrado: {dados['total']}")
-    for eq in dados['data']:
-        print(f"• [{eq['sigla']}] {eq['nome']} - Lat/Lon: {eq['latitude']}, {eq['longitude']}")
-else:
-    print(f"Erro {response.status_code}: {response.text}")
+if resp_serv.status_code == 200:
+    print("Serviços de Urbanismo:", resp_serv.json().get('total', 0), "serviços cadastrados.")
         </div>
       </div>
 
@@ -992,8 +1134,16 @@ else:
         <div class="code-block">
           <button class="copy-btn" onclick="copyCode(this)"><i class="ri-file-copy-line"></i> Copiar</button>
 &lt;?php
-$apiKey = 'pmdc_live_SUA_CHAVE_AQUI';
-$url = 'https://SEU_DOMINIO/api/v1/servicos?limit=10';
+$apiKey = 'pmdc_live_da270269b897da4c7e8182f8cd2df44c7e61142f';
+$apiBase = 'http://ogm.duquedecaxias.rj.gov.br:8059/gse/api/v1';
+
+// 1. Monta consulta com filtros de distrito e categoria
+$params = http_build_query([
+    'distrito'  => 1,
+    'categoria' => 'Saúde',
+    'limit'     => 5
+]);
+$url = $apiBase . '/equipamentos?' . $params;
 
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -1007,10 +1157,13 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($httpCode === 200) {
-    $data = json_decode($response, true);
-    print_r($data['data']);
+    $resultado = json_decode($response, true);
+    echo "Sucesso! Total retornado: " . $resultado['total'] . " unidades.\n";
+    foreach ($resultado['data'] as $unidade) {
+        echo "- " . $unidade['nome'] . " (" . $unidade['bairro'] . ")\n";
+    }
 } else {
-    echo "Erro na requisição. Código HTTP: " . $httpCode;
+    echo "Erro na requisição. Código HTTP: " . $httpCode . " | Resposta: " . $response;
 }
 ?&gt;
         </div>
@@ -1883,6 +2036,13 @@ if ($httpCode === 200) {
 
     // Inicialização automática ao carregar o portal
     document.addEventListener('DOMContentLoaded', () => {
+      // Atualiza URL base exibida dinamicamente conforme o ambiente (VM ou Local)
+      const displayUrlEl = document.getElementById('displayApiBaseUrl');
+      if (displayUrlEl) {
+        const base = getApiPortalBasePrefix();
+        displayUrlEl.textContent = `${window.location.origin}${base}/api/v1`;
+      }
+
       if (verificarAcessoMaster()) {
         carregarChaves();
       }
