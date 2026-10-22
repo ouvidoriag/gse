@@ -77,7 +77,6 @@
     const isSigem = currentPath.includes('/sigem') || currentPath.includes('/enderecos');
     const isApi = currentPath.includes('/api') || currentPath.includes('/docs');
 
-    const logoUrl = (base || '') + '/shared/logo.png';
     let center = topBar.querySelector('.top-bar-center');
     if (!center) {
       center = document.createElement('nav');
@@ -88,9 +87,6 @@
 
     center.innerHTML = `
       <div class="top-nav-tabs">
-        <a href="${base}/" class="top-brand-mini" title="Portal GSE — Início">
-          <img src="${logoUrl}" alt="GSE">
-        </a>
         <a href="${base}/" class="top-nav-tab ${isHub ? 'active' : ''}" id="topTabHub" title="Ir para o Início / Hub Geral">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           <span>Início (GSE Hub)</span>
@@ -153,15 +149,7 @@
     // Injeta / Garante as abas no topo em todas as páginas
     ensureTopNavTabs();
 
-    // Atualiza a marca da sidebar com o logo oficial GSE
-    const logoUrl = (base || '') + '/shared/logo.png';
-    document.querySelectorAll('.sidebar-logo-badge').forEach(badge => {
-      badge.style.background = 'transparent';
-      badge.style.boxShadow = 'none';
-      if (!badge.querySelector('img')) {
-        badge.innerHTML = `<img src="${logoUrl}" alt="GSE" class="sidebar-logo-img">`;
-      }
-    });
+
 
     // Prefixa links se sob /gse
     prefixInternalLinks();
