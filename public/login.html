@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão Integrada — Prefeitura de Duque de Caxias | Acesso Restrito</title>
-  <meta name="description" content="Acesso restrito ao Painel Oficial Integrado de Duque de Caxias - RJ: Carta de Serviços, Endereços e SIGEM.">
+  <meta name="description"
+    content="Acesso restrito ao Painel Oficial Integrado de Duque de Caxias - RJ: Carta de Serviços, Endereços e SIGEM.">
   <link rel="icon" type="image/png" href="/shared/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
 
   <style>
@@ -62,7 +66,7 @@
     .showcase-side {
       flex: 1;
       background-color: #f8fafc;
-      background-image: 
+      background-image:
         linear-gradient(to right, rgba(203, 213, 225, 0.45) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(203, 213, 225, 0.45) 1px, transparent 1px);
       background-size: 32px 32px;
@@ -104,7 +108,7 @@
       background: #ffffff;
       border-radius: 6px;
       padding: 44px 56px;
-      box-shadow: 
+      box-shadow:
         0 24px 50px -15px rgba(15, 23, 42, 0.09),
         0 1px 3px 0 rgba(15, 23, 42, 0.04),
         0 0 0 1px rgba(226, 232, 240, 0.85);
@@ -119,7 +123,7 @@
 
     .logo-card-container:hover {
       transform: translateY(-3px);
-      box-shadow: 
+      box-shadow:
         0 30px 60px -18px rgba(15, 23, 42, 0.14),
         0 0 0 1px rgba(59, 130, 246, 0.3);
     }
@@ -130,7 +134,7 @@
       max-height: 280px;
       object-fit: contain;
       display: block;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.06));
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.06));
     }
 
     /* SUBTÍTULOS ABAIXO DO LOGO */
@@ -214,7 +218,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
 
     .footer-subtext {
@@ -505,25 +509,62 @@
     }
 
     @keyframes shakeAnim {
-      10%, 90% { transform: translate3d(-1px, 0, 0); }
-      20%, 80% { transform: translate3d(2px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-      40%, 60% { transform: translate3d(4px, 0, 0); }
+
+      10%,
+      90% {
+        transform: translate3d(-1px, 0, 0);
+      }
+
+      20%,
+      80% {
+        transform: translate3d(2px, 0, 0);
+      }
+
+      30%,
+      50%,
+      70% {
+        transform: translate3d(-4px, 0, 0);
+      }
+
+      40%,
+      60% {
+        transform: translate3d(4px, 0, 0);
+      }
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes pulseGreen {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+      }
+
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-4px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* RESPONSIVIDADE */
@@ -531,23 +572,27 @@
       .login-wrapper {
         flex-direction: column;
       }
+
       .showcase-side {
         padding: 32px 20px;
         order: 2;
       }
+
       .auth-side {
         width: 100%;
         min-width: 100%;
         padding: 40px 24px;
         order: 1;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       }
+
       .logo-card-container {
         padding: 24px;
       }
     }
   </style>
 </head>
+
 <body>
 
   <div class="login-wrapper">
@@ -623,20 +668,13 @@
           <div class="form-group">
             <label class="form-label" for="username">Usuário</label>
             <div class="input-wrapper">
-              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
-              <input 
-                type="text" 
-                id="username" 
-                name="username" 
-                class="auth-input" 
-                placeholder="Digite seu usuário institucional" 
-                required 
-                autofocus
-                autocomplete="username"
-              >
+              <input type="text" id="username" name="username" class="auth-input"
+                placeholder="Digite seu usuário institucional" required autofocus autocomplete="username">
             </div>
           </div>
 
@@ -644,21 +682,17 @@
           <div class="form-group">
             <label class="form-label" for="password">Senha</label>
             <div class="input-wrapper">
-              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
-              <input 
-                type="password" 
-                id="password" 
-                name="password" 
-                class="auth-input" 
-                placeholder="••••••••" 
-                required
-                autocomplete="current-password"
-              >
-              <button type="button" class="password-toggle-btn" id="btnTogglePassword" title="Mostrar/ocultar senha" aria-label="Mostrar ou ocultar senha">
-                <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <input type="password" id="password" name="password" class="auth-input" placeholder="••••••••" required
+                autocomplete="current-password">
+              <button type="button" class="password-toggle-btn" id="btnTogglePassword" title="Mostrar/ocultar senha"
+                aria-label="Mostrar ou ocultar senha">
+                <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
@@ -748,12 +782,13 @@
     }
 
     // VERIFICA SE JÁ ESTÁ AUTENTICADO
-    (function checkExistingSession() {
+    async function checkExistingSession() {
       try {
         const token = localStorage.getItem(SESSION_KEYS.token);
         const userStr = localStorage.getItem(SESSION_KEYS.user);
         const urlParams = new URLSearchParams(window.location.search);
 
+        // Se o usuário solicitou logout explícito ou foi redirecionado com sessão expirada, limpa tudo e para
         if (urlParams.has('logout') || urlParams.has('expired')) {
           localStorage.removeItem(SESSION_KEYS.token);
           localStorage.removeItem(SESSION_KEYS.user);
@@ -768,28 +803,55 @@
 
         if (token && userStr) {
           const user = JSON.parse(userStr);
-          document.cookie = `pmdc_token=${encodeURIComponent(token)}; path=/; max-age=86400; SameSite=Lax`;
-          document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=86400; SameSite=Lax`;
-          showAlert('success', 'Sessão ativa detectada. Carregando portal...', '<i class="ri-loader-4-line ri-spin"></i>');
-          
           const base = getAuthBasePrefix();
-          const redirectParam = urlParams.get('redirect');
-          const destination = resolveSafeDestination(redirectParam, user.role, base);
-          
-          setTimeout(() => {
-            window.location.href = destination;
-          }, 400);
+
+          // Valida no backend antes de redirecionar para evitar looping de sessão expirada
+          try {
+            const checkUrl = `${base || ''}/api/auth/me`;
+            const verifyRes = await fetch(checkUrl, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (verifyRes.ok) {
+              const verifyData = await verifyRes.json();
+              if (verifyData && verifyData.authenticated) {
+                document.cookie = `pmdc_token=${encodeURIComponent(token)}; path=/; max-age=86400; SameSite=Lax`;
+                document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=86400; SameSite=Lax`;
+                showAlert('success', 'Sessão ativa detectada. Carregando portal...', '<i class="ri-loader-4-line ri-spin"></i>');
+
+                const redirectParam = urlParams.get('redirect');
+                const destination = resolveSafeDestination(redirectParam, user.role, base);
+
+                setTimeout(() => {
+                  window.location.href = destination;
+                }, 300);
+                return;
+              }
+            }
+          } catch (_) {
+            // Em caso de falha de conexão, não faz redirect cego
+          }
+
+          // Se a validação falhou ou retornou 401/403, o token é inválido/antigo: limpa o cache imediatamente
+          console.warn('⚠️ Token salvo no navegador é inválido ou expirou. Limpando cache de login...');
+          localStorage.removeItem(SESSION_KEYS.token);
+          localStorage.removeItem(SESSION_KEYS.user);
+          localStorage.removeItem(SESSION_KEYS.simac);
+          document.cookie = "pmdc_token=; path=/; max-age=0";
+          document.cookie = "token=; path=/; max-age=0";
         }
       } catch (e) {
         console.warn('Erro ao checar sessão ativa:', e);
       }
-    })();
+    }
+
+    checkExistingSession();
 
     // MOSTRAR/OCULTAR SENHA
     btnTogglePassword.addEventListener('click', () => {
       const isPassword = passwordInput.getAttribute('type') === 'password';
       passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-      
+
       if (isPassword) {
         eyeIcon.innerHTML = `
           <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
@@ -941,4 +1003,5 @@
     });
   </script>
 </body>
+
 </html>

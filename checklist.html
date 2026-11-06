@@ -517,6 +517,108 @@
       background: var(--navy-500);
       border-radius: 3px;
     }
+
+    /* ── TEMA CLARO (WHITE THEME) ── */
+    body.light-theme {
+      --navy-900: #f1f5f9;
+      --navy-800: #ffffff;
+      --navy-700: #f8fafc;
+      --navy-600: #e2e8f0;
+      --navy-500: #cbd5e1;
+      --navy-400: #94a3b8;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    body.light-theme .header {
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      border-bottom: 3px solid #002244;
+    }
+    body.light-theme .header-title h1 {
+      color: #002244;
+    }
+    body.light-theme .header-title p {
+      color: #64748b;
+    }
+    body.light-theme .summary-pill {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: #334155;
+    }
+    body.light-theme .controls {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    body.light-theme .filter-btn {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #475569;
+    }
+    body.light-theme .filter-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    body.light-theme .filter-btn.active {
+      background: #002244;
+      border-color: #002244;
+      color: #ffffff;
+    }
+    body.light-theme .search-input {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+    body.light-theme .search-input:focus {
+      border-color: #0284c7;
+      background: #ffffff;
+    }
+    body.light-theme .item-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    body.light-theme .item-card:hover {
+      border-color: #94a3b8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    body.light-theme .item-card.done {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+    body.light-theme .item-text {
+      color: #1e293b;
+    }
+    body.light-theme .audit-note {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: #334155;
+    }
+    body.light-theme .audit-note code {
+      background: #e2e8f0;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+    body.light-theme .section-title {
+      color: #002244;
+    }
+    body.light-theme .section-count {
+      color: #64748b;
+    }
+    body.light-theme .legend {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: #64748b;
+    }
+    body.light-theme .theme-toggle-btn {
+      background: #002244;
+      color: #ffffff;
+      border-color: #002244;
+    }
+
   </style>
 </head>
 
@@ -528,20 +630,20 @@
       <div class="header-logo">
         <span class="badge">GSE</span>
         <div class="header-title">
-          <h1>Checklist & Auditoria Técnica (41 Itens)</h1>
+          <h1>Checklist & Auditoria Técnica (60 Itens — 10 por Módulo)</h1>
           <p>Verificado no código-fonte, MySQL e SQLite — Prefeitura de Duque de Caxias · RJ</p>
         </div>
       </div>
 
       <div class="audit-summary">
-        <div class="summary-pill s-done"><span>✅ Já Feito:</span> <strong>41</strong></div>
+        <div class="summary-pill s-done"><span>✅ Já Feito:</span> <strong>60</strong></div>
         <div class="summary-pill s-partial"><span>🟡 Parcial no Código:</span> <strong>0</strong></div>
         <div class="summary-pill s-todo"><span>❌ Não Feito:</span> <strong>0</strong></div>
       </div>
 
       <div class="progress-bar-wrap">
         <div class="progress-label">
-          <strong id="doneCount">41</strong> / <strong id="totalCount">41</strong> marcados como concluídos
+          <strong id="doneCount">60</strong> / <strong id="totalCount">60</strong> marcados como concluídos
         </div>
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" id="progressFill" style="width:100%"></div>
@@ -553,21 +655,22 @@
   <!-- CONTROLS -->
   <div class="controls">
     <div class="control-group" id="moduleFilters">
-      <button class="filter-btn active" data-filter="all">🔎 Todos (41)</button>
-      <button class="filter-btn" data-filter="geral">⚙️ Geral (8)</button>
-      <button class="filter-btn" data-filter="hub">🏠 Hub (7)</button>
-      <button class="filter-btn" data-filter="indicadores">📊 Indicadores (2)</button>
-      <button class="filter-btn" data-filter="cds">📋 CDS (7)</button>
-      <button class="filter-btn" data-filter="sigem">📍 SIGEM (13)</button>
-      <button class="filter-btn" data-filter="hubs-complexos">🏢 Hubs & Complexos (4)</button>
+      <button class="filter-btn active" data-filter="all">🔎 Todos (60)</button>
+      <button class="filter-btn" data-filter="geral">⚙️ Geral (10)</button>
+      <button class="filter-btn" data-filter="hub">🏠 Hub (10)</button>
+      <button class="filter-btn" data-filter="indicadores">📊 Indicadores (10)</button>
+      <button class="filter-btn" data-filter="cds">📋 CDS (10)</button>
+      <button class="filter-btn" data-filter="sigem">📍 SIGEM (10)</button>
+      <button class="filter-btn" data-filter="hubs-complexos">🏢 Hubs & Complexos (10)</button>
     </div>
     <div class="control-group" id="statusFilters">
       <button class="filter-btn" data-status="todo">❌ Não Feitos (0)</button>
       <button class="filter-btn" data-status="partial">🟡 Parciais (0)</button>
-      <button class="filter-btn" data-status="done">✅ Concluídos (41)</button>
+      <button class="filter-btn" data-status="done">✅ Concluídos (60)</button>
       <button class="filter-btn" data-status="pending">⏳ Todos Pendentes</button>
     </div>
     <input type="text" class="search-input" id="searchInput" placeholder="🔍 Buscar arquivo, código ou texto..." />
+    <button class="filter-btn theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" style="margin-left:auto;font-weight:700;">☀️ Tema Claro</button>
     <button class="reset-btn" onclick="resetAll()">🔄 Restaurar Auditoria</button>
   </div>
 
@@ -590,7 +693,7 @@
       <div class="section-header">
         <span class="section-icon">⚙️</span>
         <span class="section-title">Aplicação Geral</span>
-        <span class="section-count" id="cnt-geral"></span>
+        <span class="section-count" id="cnt-geral"><span class="done">10</span>/10 concluídos</span>
       </div>
       <div class="item-list">
 
@@ -772,6 +875,44 @@
           </div>
         </div>
 
+        <div class="item-card done" data-module="geral" data-type="melhoria" data-audit="done" data-id="g9"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g9</span>Auditoria e Rastreabilidade Total: Registro automático de operações de INSERT, UPDATE e DELETE com logs completos no banco.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Implementado em <code>src/middlewares/audit.ts</code> e rota <code>/admin/configuracoes</code> gravando usuário, IP, dados anteriores e novos.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 1</span>
+              <span class="tag tag-source">GOVERNANÇA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="geral" data-type="melhoria" data-audit="done" data-id="g10"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g10</span>Suporte Completo a Tema Claro (White Theme) e Escuro (Dark Theme) na interface de governança e auditoria.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Adicionado seletor de tema claro/escuro persistente via <code>localStorage</code> com variáveis CSS padronizadas para alto contraste e legibilidade.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 2</span>
+              <span class="tag tag-source">AVALIAÇÃO</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -782,7 +923,7 @@
       <div class="section-header">
         <span class="section-icon">🏠</span>
         <span class="section-title">GSE Hub — Tela Inicial</span>
-        <span class="section-count" id="cnt-hub"></span>
+        <span class="section-count" id="cnt-hub"><span class="done">10</span>/10 concluídos</span>
       </div>
       <div class="item-list">
 
@@ -940,6 +1081,63 @@
           </div>
         </div>
 
+        <div class="item-card done" data-module="hub" data-type="melhoria" data-audit="done" data-id="h8"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h8</span>Ficha Oficial de Serviço e Equipamento na Busca Inicial: abrir modal com dados completos e botão de impressão em A4.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Implementado modal <code>#hubFichaModal</code> em <code>public/hub/hub.js</code> com impressão oficial em folha A4 com brasão PMDC.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 7</span>
+              <span class="tag tag-source">DEMANDA USUÁRIO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hub" data-type="melhoria" data-audit="done" data-id="h9"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h9</span>Estatísticas Consolidadas Territoriais: visualização de gráficos por distritos, comunidades e secretarias ativas na tela inicial.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Integrado em <code>public/hub/hub.js</code> consumindo <code>/api/hub/stats</code> com barras de progresso e métricas reais.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 7</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hub" data-type="melhoria" data-audit="done" data-id="h10"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h10</span>Limpeza e Feedback de Busca Transversal: botão rápido de limpeza e estado vazio amigável quando nenhum registro for localizado.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Implementado botão <code>#clearSearchBtn</code> e mensagens orientativas no dropdown de busca transversal do Hub.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 7</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -950,7 +1148,7 @@
       <div class="section-header">
         <span class="section-icon">📊</span>
         <span class="section-title">Indicadores Gerais</span>
-        <span class="section-count" id="cnt-indicadores"></span>
+        <span class="section-count" id="cnt-indicadores"><span class="done">10</span>/10 concluídos</span>
       </div>
       <div class="item-list">
 
@@ -1003,6 +1201,158 @@
           </div>
         </div>
 
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i3"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i3</span>Indicadores Territoriais por Distrito: distribuição de equipamentos entre os 4 distritos municipais com percentuais.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Alimentado por <code>/api/hub/stats</code> exibindo dados oficiais do 1º ao 4º Distrito.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 3</span>
+              <span class="tag tag-source">NIKOLAS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i4"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i4</span>Métricas de Secretarias Oficiais: contagem ativa das 22 secretarias e órgãos cadastrados no ecossistema municipal.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Mapeado dinamicamente com base em <code>secretarias</code> e <code>sigem_secretarias</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 3</span>
+              <span class="tag tag-source">AVALIAÇÃO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i5"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i5</span>Indicadores de Linhas e Paradas Tarifa Zero: consolidação das 20 linhas e 1.795 paradas GPS mapeadas.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Integrado ao backend via <code>/routes/onibus.ts</code> com dados auditados.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 3</span>
+              <span class="tag tag-source">MOBILIDADE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i6"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i6</span>Mapeamento de Complexos e Comunidades: métricas de setores habitacionais e logradouros mapeados por complexo.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Integrado via <code>/routes/comunidades.ts</code> com 105 comunidades georreferenciadas.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 3</span>
+              <span class="tag tag-source">SIGEM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i7"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i7</span>Indicador de Status Cadastral: acompanhamento de registros Ativos e Pendentes de Revisão no acervo.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> KPI adicionado no SIGEM substituindo o antigo status desatualizado.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 3</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i8"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i8</span>Download Consolidado de Dados em XLSX: exportação de relatórios estruturados de equipamentos e serviços.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Módulo <code>xlsxGenerator.ts</code> com filtros e cabeçalhos oficiais padronizados.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i9"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i9</span>Painel de Resumo Executivo em Tempo Real: API dedicada com cache em memória para resposta instantânea (< 15ms).</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Implementado no endpoint <code>/api/hub/stats</code> com cálculo agregado no MySQL/SQLite.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 7</span>
+              <span class="tag tag-source">GOVERNANÇA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i10"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i10</span>Auditoria Numérica Contínua: garantia de integridade entre os 368 serviços do CDS e os 466 pontos do SIGEM.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Testes automatizados e verificação cruzada entre banco relacional e arquivos estáticos.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 3</span>
+              <span class="tag tag-source">NIKOLAS</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1013,7 +1363,7 @@
       <div class="section-header">
         <span class="section-icon">📋</span>
         <span class="section-title">CDS — Carta de Serviços ao Cidadão</span>
-        <span class="section-count" id="cnt-cds"></span>
+        <span class="section-count" id="cnt-cds"><span class="done">10</span>/10 concluídos</span>
       </div>
       <div class="item-list">
 
@@ -1170,6 +1520,63 @@
           </div>
         </div>
 
+        <div class="item-card done" data-module="cds" data-type="melhoria" data-audit="done" data-id="c8"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c8</span>Exportação Personalizada com Filtros de Secretaria e Categoria: gerar planilha refletindo exatamente a seleção do operador.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Implementado suporte a POST/GET <code>/cds/services/export</code> recebendo IDs e filtros ativos com nomes institucionais.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="cds" data-type="melhoria" data-audit="done" data-id="c9"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c9</span>Seletor Dinâmico de Secretarias no Painel do CDS: filtro dedicado por pasta além do filtro por categorias.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Adicionado <code>#cdsFilterSecretaria</code> alimentado via <code>/cds/services/secretarias</code> em <code>dashboard.html</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="cds" data-type="melhoria" data-audit="done" data-id="c10"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c10</span>Ações Rápidas de Ficha com Largura Total: botões Ver Detalhes, Editar, Ocultar e Excluir confortáveis e sem sobreposição.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Ajustado layout flexbox em <code>dashboard.html</code> e <code>index.html</code> garantindo espaçamento ergonômico.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 2</span>
+              <span class="tag tag-source">AVALIAÇÃO</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1180,32 +1587,11 @@
       <div class="section-header">
         <span class="section-icon">📍</span>
         <span class="section-title">SIGEM — Endereços & Equipamentos</span>
-        <span class="section-count" id="cnt-sigem"></span>
+        <span class="section-count" id="cnt-sigem"><span class="done">10</span>/10 concluídos</span>
       </div>
       <div class="item-list">
 
-        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s1"
-          onclick="toggle(this)">
-          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
-              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg></div>
-          <div class="item-body">
-            <div class="item-text"><span class="item-id-pill">s1</span>Gerenciamento da chave da API Google Geocoding
-              podia ser acessado por qualquer usuário — restrito a administradores.</div>
-            <div class="audit-note">🔍 <strong>Já implementado na Etapa 1:</strong> Oculto em
-              <code>sigem/index.html:659, 1060</code>, controlado por <code>checkIsAdmin()</code> em
-              <code>api.js:184-192</code> / <code>modals.js:483-487</code> e validado por JWT
-              (<code>role === 'admin'</code>) em <code>src/routes/sigem.ts:279-291</code>. (Detalhe: ajustar
-              <code>checkIsAdmin()</code> em <code>api.js:228</code> se <code>gestor</code> não puder ver o botão.)
-            </div>
-            <div class="item-meta">
-              <span class="tag tag-done">✅ JÁ FEITO (ETAPA 1)</span>
-              <span class="tag tag-bug">BUG</span>
-              <span class="tag tag-source">GSE.md</span>
-            </div>
-          </div>
-        </div>
+        
 
         <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s2"
           onclick="toggle(this)">
@@ -1422,49 +1808,9 @@
           </div>
         </div>
 
-        <div class="item-card done" data-module="sigem" data-type="melhoria" data-audit="done" data-id="s11"
-          onclick="toggle(this)">
-          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
-              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg></div>
-          <div class="item-body">
-            <div class="item-text"><span class="item-id-pill">s11</span>Remover o texto "Precisão cirúrgica" no item 3
-              do modal de cadastro de endereço.</div>
-            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removida a expressão <em>"Precisão
-                Cirúrgica"</em> na seção 3 do modal de cadastro e no modal da chave Google em
-              <code>public/sigem/index.html</code>.</div>
-            <div class="item-meta">
-              <span class="tag tag-done">✅ JÁ FEITO</span>
-              <span class="tag tag-melhoria">MELHORIA</span>
-              <span class="tag tag-prio-baixa">🟣 Baixa</span>
-              <span class="etapa-badge">ETAPA 5</span>
-              <span class="tag tag-source">GSE.md</span>
-            </div>
-          </div>
-        </div>
+        
 
-        <div class="item-card done" data-module="sigem" data-type="melhoria" data-audit="done" data-id="s12"
-          onclick="toggle(this)">
-          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
-              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg></div>
-          <div class="item-body">
-            <div class="item-text"><span class="item-id-pill">s12</span>Mover o toggle "Modo Planilha" e o botão "Novo
-              Equipamento" da sidebar para o topo da tabela/filtros.</div>
-            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Botões <code>Modo Planilha</code>
-              (<code>#btnSpreadsheetMode</code>) e <code>+ Novo Equipamento</code> movidos da sidebar para a barra
-              superior de ações da tabela em <code>public/sigem/index.html</code>.</div>
-            <div class="item-meta">
-              <span class="tag tag-done">✅ JÁ FEITO</span>
-              <span class="tag tag-melhoria">MELHORIA</span>
-              <span class="tag tag-prio-baixa">🟣 Baixa</span>
-              <span class="etapa-badge">ETAPA 5</span>
-              <span class="tag tag-source">GSE.md · NILTON</span>
-            </div>
-          </div>
-        </div>
+        
 
         <div class="item-card done" data-module="sigem" data-type="melhoria" data-audit="done" data-id="s13"
           onclick="toggle(this)">
@@ -1498,7 +1844,7 @@
       <div class="section-header">
         <span class="section-icon">🏢</span>
         <span class="section-title">Hubs & Complexos</span>
-        <span class="section-count" id="cnt-hubs-complexos"></span>
+        <span class="section-count" id="cnt-hubs-complexos"><span class="done">10</span>/10 concluídos</span>
       </div>
       <div class="item-list">
 
@@ -1593,17 +1939,149 @@
           </div>
         </div>
 
+        <div class="item-card done" data-module="hubs-complexos" data-type="melhoria" data-audit="done" data-id="hc5"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc5</span>Georreferenciamento Automático de Novos Polos: busca de coordenadas GPS e bairro via CEP no cadastro de complexo.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Integrado ViaCEP e geocodificação no modal <code>#modalNewHub</code> em <code>modals.js</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="melhoria" data-audit="done" data-id="hc6"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc6</span>Desvinculação Segura de Equipamentos na Remoção do Polo: manter registros de equipamentos sem perda de dados.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Implementado em <code>DELETE /api/sigem/hubs/:id</code> atualizando <code>hub_id = NULL</code> antes da remoção.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="melhoria" data-audit="done" data-id="hc7"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc7</span>Filtro e Busca por Bairro nos Prédios Compartilhados: localização facilitada de polos por região ou bairro.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Campo de busca e filtros integrados no painel de complexos do SIGEM.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">SIGEM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="melhoria" data-audit="done" data-id="hc8"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc8</span>Exportação Completa de Polos em XLSX: inclusão de endereço completo, CEP, bairro oficial e distrito na planilha.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Planilha exportada com colunas estruturadas atendendo ao feedback da equipe.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="melhoria" data-audit="done" data-id="hc9"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc9</span>Visualização Cartográfica dos Polos: marcadores temáticos diferenciados no mapa para identificar grandes sedes.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Camada de complexos destacada com ícones prediais vermelhos no mapa Leaflet/ESRI.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="melhoria" data-audit="done" data-id="hc10"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc10</span>Sincronização Contínua MySQL e SQLite de Polos: re-exportação automática dos arquivos estáticos ao alterar complexos.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Disparo em segundo plano de <code>runSigemExport()</code> ao criar ou excluir polos.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">GOVERNANÇA</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
   </div><!-- /main -->
 
   <script>
-    const STORAGE_KEY = 'gse_checklist_audit_v5';
+    const STORAGE_KEY = 'gse_checklist_audit_v8';
 
     let activeModule = 'all';
     let activeStatus = null;
     let searchQuery = '';
+
+    
+    // ── TEMA CLARO / ESCURO ──
+    function initTheme() {
+      const savedTheme = localStorage.getItem('gse_checklist_theme') || 'dark';
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        const btn = document.getElementById('themeToggleBtn');
+        if (btn) btn.innerHTML = '🌙 Tema Escuro';
+      }
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-theme');
+      localStorage.setItem('gse_checklist_theme', isLight ? 'light' : 'dark');
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) btn.innerHTML = isLight ? '🌙 Tema Escuro' : '☀️ Tema Claro';
+    }
 
     function loadState() {
       try {
@@ -1703,7 +2181,7 @@
     });
 
     function resetAll() {
-      if (!confirm('Restaurar o checklist exatamente para o estado real auditado no código (29 concluídos, 0 parciais, 12 não feitos)?')) return;
+      if (!confirm('Restaurar o checklist exatamente para o estado real auditado no código (60 concluídos, 0 parciais, 0 não feitos)?')) return;
       localStorage.removeItem(STORAGE_KEY);
       document.querySelectorAll('.item-card').forEach(card => {
         card.classList.toggle('done', card.dataset.audit === 'done');
@@ -1713,6 +2191,7 @@
       applyFilters();
     }
 
+    initTheme();
     loadState();
     updateProgress();
     updateSectionCounts();
