@@ -8,7 +8,7 @@
 
 ## 1. Visão Geral da Arquitetura
 
-O sistema opera sob uma arquitetura monolítica modular de alta performance construída em **Node.js com TypeScript** sobre o framework **Express**, adotando o modelo **Dual-Engine Relacional** (MySQL + SQLite) somado a uma camada geoespacial otimizada em GeoJSON.
+O sistema opera sob uma arquitetura monolítica modular de alta performance construída em **Node.js com TypeScript** sobre o framework **Express**, adotando o modelo **100% MySQL Relacional Unificado** somado a uma camada geoespacial em GeoJSON e espelhamento local seguro em SQLite.
 
 ```mermaid
 flowchart TD
@@ -38,9 +38,9 @@ flowchart TD
     end
 
     subgraph STORAGE["💾 Persistência & Camada Geoespacial"]
-        MySQL_DB[("🐬 MySQL 8 (carta_de_servico)<br>Porta 3306 • 372 Serviços • 18 Secretarias")]
-        SQLite_DB[("📦 SQLite V2 (enderecos_duque_de_caxias_v2.db)<br>node:sqlite • 466 Equipamentos • 118 Bairros • API Keys")]
-        GeoJSON_Data[("🗺️ Bases Vetoriais GeoJSON<br>20 Linhas • 1.795 Paradas Tarifa Zero")]
+        MySQL_DB[("🐬 MySQL 8 (carta_de_servico)<br>Porta 3306 • Banco Primário 100% Unificado<br>380 Serviços • 466 Equipamentos • 118 Bairros<br>105 Comunidades • 2.199 Ruas • Chaves API • Auditoria")]
+        SQLite_DB[("📦 SQLite V2 (enderecos_duque_de_caxias_v2.db)<br>node:sqlite • Backup Local e Espelhamento Offline")]
+        GeoJSON_Data[("🗺️ Bases Vetoriais GeoJSON<br>16 Linhas • 1.795 Paradas Tarifa Zero")]
     end
 
     CLIENT --> MW_Sec --> MW_Auth
@@ -54,13 +54,12 @@ flowchart TD
     MW_Auth --> R_Keys
 
     R_Hub --> MySQL_DB
-    R_Hub --> SQLite_DB
     R_CDS --> MySQL_DB
-    R_SIGEM --> SQLite_DB
+    R_SIGEM --> MySQL_DB
     R_Onibus --> GeoJSON_Data
     R_ExtAPI --> MySQL_DB
-    R_ExtAPI --> SQLite_DB
-    R_Keys --> SQLite_DB
+    R_Keys --> MySQL_DB
+    MySQL_DB -.->|Espelhamento CLI/Backup| SQLite_DB
 ```
 
 ---

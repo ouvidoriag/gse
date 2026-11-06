@@ -49,7 +49,8 @@ let mainMapLabelsLayer = null;
       equipsMapLayer.clearLayers();
 
       const matchedMarkers = [];
-      let totalVisible = 0;
+      let hubsVisible = 0;
+      let equipsVisible = 0;
 
       // Camada 1: Hubs (Ícones Vermelhos Institucionais)
       if (showHubs) {
@@ -69,7 +70,7 @@ let mainMapLabelsLayer = null;
               }
             }
 
-            totalVisible++;
+            hubsVisible++;
 
             const hubIcon = L.divIcon({
               className: 'custom-hub-icon',
@@ -118,7 +119,7 @@ let mainMapLabelsLayer = null;
               }
             }
 
-            totalVisible++;
+            equipsVisible++;
 
             let color = '#0284c7';
             if (item.categoria.includes('Saúde')) color = '#10b981';
@@ -165,10 +166,14 @@ let mainMapLabelsLayer = null;
         });
       }
 
-      // Atualiza contador dinâmico de equipamentos
+      // Atualiza contadores dinâmicos separados (Polos vs Equipamentos)
+      const countHubsEl = document.getElementById('mapHubsCount');
+      if (countHubsEl) {
+        countHubsEl.textContent = `${hubsVisible} Polo${hubsVisible === 1 ? '' : 's'}`;
+      }
       const countEl = document.getElementById('mapEquipCount');
       if (countEl) {
-        countEl.textContent = `${totalVisible} ponto${totalVisible === 1 ? '' : 's'}`;
+        countEl.textContent = `${equipsVisible} ponto${equipsVisible === 1 ? '' : 's'}`;
       }
 
       // Auto-enquadramento e abertura de popup se houver pesquisa ativa

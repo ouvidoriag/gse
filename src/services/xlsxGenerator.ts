@@ -1,7 +1,8 @@
 import ExcelJS from 'exceljs';
 
-interface ServicoData {
+export interface ServicoData {
   servico: string;
+  orgao?: string;
   categoria: string;
   o_que_e: string;
   como_acessar: string;
@@ -96,24 +97,43 @@ export async function generateXlsx(
 
   // Linhas de dados
   for (const s of servicos) {
+    const orgaoFinal = s.orgao && s.orgao.trim() ? s.orgao.trim() : (orgaoNome && orgaoNome !== 'Consolidado' ? orgaoNome : 'Prefeitura Municipal de Duque de Caxias');
+    const categoriaFinal = s.categoria && s.categoria.trim() ? s.categoria.trim() : 'Geral';
+    const descFinal = s.o_que_e && s.o_que_e.trim() ? s.o_que_e.trim() : 'Serviço público oficial prestado pelo Município de Duque de Caxias.';
+    const acessoFinal = s.como_acessar && s.como_acessar.trim() ? s.como_acessar.trim() : 'Atendimento presencial na sede do órgão ou canais oficiais.';
+    const enderecoFinal = s.endereco && s.endereco.trim() ? s.endereco.trim() : 'Sede da Secretaria / Conforme unidade de atendimento informada';
+    const telefonesFinal = s.telefones && s.telefones.length > 0 ? s.telefones.join(' | ') : 'Central de Atendimento PMDC: (21) 2773-6200';
+    const emailsFinal = s.emails && s.emails.length > 0 ? s.emails.join(' | ') : 'ouvidoria@duquedecaxias.rj.gov.br';
+    const linksFinal = s.links && s.links.length > 0 ? s.links.join(' | ') : 'https://www.duquedecaxias.rj.gov.br';
+    const passosFinal = s.passos && s.passos.length > 0 
+      ? s.passos.map((p, i) => `${i + 1}. ${p}`).join('\n')
+      : '1. Comparecer ao posto ou canal oficial indicado portando documento de identificação com foto.\n2. Solicitar abertura de atendimento ou protocolo do serviço.';
+    const quemFinal = s.quem_pode_solicitar && s.quem_pode_solicitar.trim() ? s.quem_pode_solicitar.trim() : 'Cidadãos residentes, domiciliados ou atuantes no Município de Duque de Caxias.';
+    const docsFinal = s.documentos && s.documentos.length > 0 ? s.documentos.join('; ') : 'Documento de identificação oficial com foto (RG ou CNH) e CPF.';
+    const esperaFinal = s.tempo_de_espera && s.tempo_de_espera.trim() ? s.tempo_de_espera.trim() : 'Conforme ordem de chegada e prioridades legais';
+    const prazoFinal = s.prazo_maximo && s.prazo_maximo.trim() ? s.prazo_maximo.trim() : 'Conforme procedimento e análise processual do órgão';
+    const prioridadesFinal = s.prioridade_atendimento && s.prioridade_atendimento.length > 0 ? s.prioridade_atendimento.join('; ') : 'Prioridades legais (Lei Federal nº 10.048/2000)';
+    const custoFinal = s.quanto_custa && s.quanto_custa.trim() ? s.quanto_custa.trim() : 'Gratuito';
+    const normaFinal = s.norma_que_regulamenta && s.norma_que_regulamenta.trim() ? s.norma_que_regulamenta.trim() : 'Lei Federal nº 13.460/2017 e legislação municipal vigente';
+
     const row = sheet.addRow([
       s.servico,
-      orgaoNome,
-      s.categoria,
-      s.o_que_e,
-      s.como_acessar,
-      s.endereco,
-      s.telefones.join(' | '),
-      s.emails.join(' | '),
-      s.links.join(' | '),
-      s.passos.map((p, i) => `${i + 1}. ${p}`).join('\n'),
-      s.quem_pode_solicitar,
-      s.documentos.join('; '),
-      s.tempo_de_espera,
-      s.prazo_maximo,
-      s.prioridade_atendimento.join('; '),
-      s.quanto_custa,
-      s.norma_que_regulamenta,
+      orgaoFinal,
+      categoriaFinal,
+      descFinal,
+      acessoFinal,
+      enderecoFinal,
+      telefonesFinal,
+      emailsFinal,
+      linksFinal,
+      passosFinal,
+      quemFinal,
+      docsFinal,
+      esperaFinal,
+      prazoFinal,
+      prioridadesFinal,
+      custoFinal,
+      normaFinal,
     ]);
     row.height = 55;
     row.eachCell((cell) => {

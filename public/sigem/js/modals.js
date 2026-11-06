@@ -13,18 +13,206 @@ let modalMapCurrentMode = 'street';
 let auditLogsCache = [];
 let currentAuditFilter = '';
 let categoriasCache = [];
+let secretariasSigemCache = [];
 let currentModalPrecisaoGeo = 'APROXIMADO_LOGRADOURO';
+
+function mapCategoriaToDefaultSecretariaSigla(catStr) {
+  const c = String(catStr || '').toLowerCase();
+  if (c.includes('saúde') || c.includes('saude') || c.includes('aps') || c.includes('hospital')) return 'SMS';
+  if (c.includes('educação') || c.includes('educacao') || c.includes('smedc')) return 'SMEDC';
+  if (c.includes('fundec')) return 'FUNDEC';
+  if (c.includes('assistência') || c.includes('assistencia') || c.includes('seasdih')) return 'SEASDIH';
+  if (c.includes('segurança') || c.includes('seguranca')) return 'SMSEG';
+  if (c.includes('cemit') || c.includes('mobilidade') || c.includes('transporte')) return 'SMTSP';
+  if (c.includes('obras')) return 'SMO';
+  if (c.includes('defesa civil')) return 'SMDC';
+  if (c.includes('meio ambiente')) return 'SMMA';
+  if (c.includes('cultura')) return 'SMCT';
+  if (c.includes('esporte')) return 'SMEL';
+  return 'SMG';
+}
+
+function onModalCategoriaChange() {
+  const catEl = document.getElementById('editEquipCat');
+  const secEl = document.getElementById('editEquipSecResp');
+  if (!catEl || !secEl) return;
+  const targetSigla = mapCategoriaToDefaultSecretariaSigla(catEl.value);
+  if (targetSigla && Array.from(secEl.options).some(o => o.value === targetSigla)) {
+    secEl.value = targetSigla;
+  }
+}
+window.onModalCategoriaChange = onModalCategoriaChange;
+
+async function carregarSecretariasSigem() {
+  try {
+    const res = await apiRequest('./api/secretarias');
+    if (res.ok && res.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
+      secretariasSigemCache = res.data.data;
+
+      // 1. Popula o select de vínculo no modal (#editEquipSecResp)
+      const secModal = document.getElementById('editEquipSecResp');
+      if (secModal) {
+        const prevVal = secModal.value;
+        secModal.innerHTML = secretariasSigemCache.map(s =>
+          `<option value="${escapeHtml(s.sigla)}" data-id="${s.id}" data-nome="${escapeHtml(s.nome)}">${escapeHtml(s.sigla)} — ${escapeHtml(s.nome)}</option>`
+        ).join('');
+        if (prevVal && Array.from(secModal.options).some(o => o.value === prevVal)) {
+          secModal.value = prevVal;
+        }
+      }
+
+      // 2. Popula o filtro principal (#filterSecretaria) preservando Órgãos Externos e Concessionárias
+      const filterSec = document.getElementById('filterSecretaria');
+      if (filterSec) {
+        const curFilter = filterSec.value;
+        const pmdcOpts = secretariasSigemCache.map(s => {
+          const cnt = Number(s.total_equipamentos || 0);
+          const countLabel = cnt > 0 ? ` (${cnt})` : '';
+          return `<option value="${escapeHtml(s.sigla)}">${escapeHtml(s.sigla)} — ${escapeHtml(s.nome)}${countLabel}</option>`;
+        }).join('');
+        filterSec.innerHTML = `
+          <option value="">Todas as Secretarias e Órgãos</option>
+          <optgroup label="Secretarias e Autarquias PMDC">${pmdcOpts}</optgroup>
+          <optgroup label="Concessionárias e Órgãos Externos">
+            <option value="EXT:CONCESSIONARIA">Concessionárias (SuperVia / Águas do Rio / Enel)</option>
+            <option value="EXT:ORGAO_EXTERNO">Órgãos Estaduais / Federais / Judiciário</option>
+          </optgroup>
+        `;
+        if (curFilter) filterSec.value = curFilter;
+      }
+    }
+  } catch (e) {
+    console.warn('[SIGEM] Erro ao carregar secretarias oficiais:', e);
+  }
+}
+window.carregarSecretariasSigem = carregarSecretariasSigem;
 
 window.setModalPrecisaoGeo = function(val) {
   if (val) currentModalPrecisaoGeo = val;
 };
 
-// --- STUB DE SEGURANÇA PARA BOTÕES DO HTML ---
+// --- CADASTRO E GERENCIAMENTO DE POLOS/HUBS ---
 function openNewHubModal() {
-  if (typeof showToast === 'function') {
-    showToast('Módulo de cadastro de novos polos compartilhados em homologação.');
+  const modal = document.getElementById('modalNewHub');
+  if (!modal) return;
+  document.getElementById('newHubNome').value = '';
+  document.getElementById('newHubTipo').value = 'Complexo Administrativo Municipal';
+  document.getElementById('newHubCep').value = '';
+  document.getElementById('newHubDistrito').value = '1';
+  document.getElementById('newHubBairro').value = '';
+  document.getElementById('newHubLogradouro').value = '';
+  document.getElementById('newHubNumero').value = '';
+  document.getElementById('newHubComplemento').value = '';
+  document.getElementById('newHubLat').value = '-22.785000';
+  document.getElementById('newHubLon').value = '-43.305000';
+  document.getElementById('newHubDesc').value = '';
+
+  modal.classList.add('active');
+}
+window.openNewHubModal = openNewHubModal;
+
+function closeNewHubModal() {
+  const modal = document.getElementById('modalNewHub');
+  if (modal) modal.classList.remove('active');
+}
+window.closeNewHubModal = closeNewHubModal;
+
+async function buscarCepNovoHub() {
+  const rawCep = (document.getElementById('newHubCep')?.value || '').replace(/\D/g, '');
+  if (rawCep.length !== 8) {
+    showToast('Informe um CEP válido com 8 dígitos.');
+    return;
+  }
+  try {
+    showToast('Consultando CEP nos Correios...');
+    const res = await fetch(`https://viacep.com.br/ws/${rawCep}/json/`);
+    if (!res.ok) throw new Error('Falha na consulta ao ViaCEP.');
+    const d = await res.json();
+    if (d.erro) {
+      showToast('CEP não encontrado.');
+      return;
+    }
+    if (d.logradouro) document.getElementById('newHubLogradouro').value = d.logradouro;
+    if (d.bairro) document.getElementById('newHubBairro').value = d.bairro;
+
+    const bNorm = (d.bairro || '').toLowerCase().trim();
+    if (window.BAIRROS_COORDENADAS && window.BAIRROS_COORDENADAS[bNorm]) {
+      const info = window.BAIRROS_COORDENADAS[bNorm];
+      document.getElementById('newHubDistrito').value = info[2] || '1';
+      document.getElementById('newHubLat').value = info[0].toFixed(6);
+      document.getElementById('newHubLon').value = info[1].toFixed(6);
+    }
+    showToast('Endereço e bairro preenchidos com sucesso!');
+  } catch (e) {
+    console.error(e);
+    showToast('Erro ao consultar ViaCEP.');
   }
 }
+window.buscarCepNovoHub = buscarCepNovoHub;
+
+async function salvarNovoHub() {
+  const nome = document.getElementById('newHubNome').value.trim();
+  const tipo_imovel = document.getElementById('newHubTipo').value.trim();
+  const cep = document.getElementById('newHubCep').value.trim();
+  const distrito = document.getElementById('newHubDistrito').value;
+  const bairro = document.getElementById('newHubBairro').value.trim();
+  const logradouro = document.getElementById('newHubLogradouro').value.trim();
+  const numero = document.getElementById('newHubNumero').value.trim();
+  const complemento = document.getElementById('newHubComplemento').value.trim();
+  const latitude = document.getElementById('newHubLat').value.trim();
+  const longitude = document.getElementById('newHubLon').value.trim();
+  const descricao = document.getElementById('newHubDesc').value.trim();
+
+  if (!nome || !logradouro || !bairro) {
+    alert('Por favor preencha os campos obrigatórios: Nome do Polo/Complexo, Logradouro e Bairro.');
+    return;
+  }
+
+  const payload = {
+    nome,
+    tipo_imovel,
+    cep,
+    distrito,
+    bairro,
+    logradouro,
+    numero,
+    complemento,
+    latitude,
+    longitude,
+    descricao
+  };
+
+  try {
+    const token = getAuthToken();
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch('./api/hubs', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Erro ao cadastrar polo.');
+
+    if (data.hub) {
+      hubsData.push(data.hub);
+      saveToStorage();
+    }
+
+    closeNewHubModal();
+    renderHubsCards();
+    if (map) updateMapLayers();
+    populateHubSelect(data.hub?.id || '');
+
+    showToast(data.message || 'Prédio Compartilhado / Polo criado com sucesso!');
+  } catch (err) {
+    console.error(err);
+    alert(err.message || 'Erro ao cadastrar polo compartilhado.');
+  }
+}
+window.salvarNovoHub = salvarNovoHub;
 
 // --- FUNÇÕES DE MODAIS & AUDITORIA ---
     function openNewEquipModal() {
@@ -36,13 +224,18 @@ function openNewHubModal() {
       currentModalPrecisaoGeo = 'APROXIMADO_LOGRADOURO';
       document.getElementById('editEquipNome').value = '';
       document.getElementById('editEquipSigla').value = '';
-      document.getElementById('editEquipCat').value = 'Educação (SMEDC)';
-      document.getElementById('editEquipSecResp').value = '';
+      const catEl = document.getElementById('editEquipCat');
+      if (catEl && catEl.options.length > 0) {
+        catEl.value = Array.from(catEl.options).some(o => o.value === 'Educação (SMEDC)') ? 'Educação (SMEDC)' : catEl.options[0].value;
+      }
+      onModalCategoriaChange();
       document.getElementById('editEquipStatus').value = 'Ativo';
 
       document.getElementById('editEquipCep').value = '';
       document.getElementById('editEquipDist').value = '1';
       document.getElementById('editEquipBairro').value = '';
+      const boEl = document.getElementById('editEquipBairroOficial');
+      if (boEl) boEl.value = '';
       document.getElementById('editEquipLogradouro').value = '';
       document.getElementById('editEquipNumero').value = '';
       document.getElementById('editEquipPredioSala').value = '';
@@ -84,14 +277,38 @@ function openNewHubModal() {
       currentModalPrecisaoGeo = item.precisao_geo || 'APROXIMADO_LOGRADOURO';
       document.getElementById('editEquipNome').value = item.nome || '';
       document.getElementById('editEquipSigla').value = item.sigla || '';
-      document.getElementById('editEquipCat').value = item.categoria || 'Educação (SMEDC)';
-      document.getElementById('editEquipSecResp').value = item.secretaria_responsavel || '';
-      document.getElementById('editEquipStatus').value = item.status || 'Ativo';
+
+      const catSelect = document.getElementById('editEquipCat');
+      const itemCat = item.categoria || 'Educação (SMEDC)';
+      if (catSelect) {
+        if (!Array.from(catSelect.options).some(o => o.value === itemCat)) {
+          const dynOpt = document.createElement('option');
+          dynOpt.value = itemCat;
+          dynOpt.textContent = itemCat;
+          catSelect.appendChild(dynOpt);
+        }
+        catSelect.value = itemCat;
+      }
+
+      const secSelect = document.getElementById('editEquipSecResp');
+      if (secSelect) {
+        const targetSigla = item.secretaria_sigla || mapCategoriaToDefaultSecretariaSigla(itemCat);
+        if (targetSigla && Array.from(secSelect.options).some(o => o.value === targetSigla)) {
+          secSelect.value = targetSigla;
+        } else {
+          onModalCategoriaChange();
+        }
+      }
+
+      const rawSt = String(item.status || 'Ativo').trim();
+      document.getElementById('editEquipStatus').value = rawSt.toLowerCase() === 'ativo' ? 'Ativo' : rawSt;
 
       document.getElementById('editEquipCep').value = item.cep || '';
       document.getElementById('editEquipDist').value = item.distrito || '1';
       document.getElementById('editEquipBairro').value = item.bairro || '';
-      document.getElementById('editEquipLogradouro').value = item.endereco || '';
+      const boEl = document.getElementById('editEquipBairroOficial');
+      if (boEl) boEl.value = item.bairro_oficial || item.bairro || '';
+      document.getElementById('editEquipLogradouro').value = item.logradouro || item.endereco || '';
       document.getElementById('editEquipNumero').value = item.numero || '';
       document.getElementById('editEquipPredioSala').value = item.predio_sala || '';
       document.getElementById('editEquipRef').value = item.ponto_referencia || '';
@@ -150,15 +367,26 @@ function openNewHubModal() {
       const lat = parseFloat(document.getElementById('editEquipLat').value) || -22.785000;
       const lon = parseFloat(document.getElementById('editEquipLon').value) || -43.305000;
 
+      const secSelect = document.getElementById('editEquipSecResp');
+      const secOpt = secSelect && secSelect.selectedIndex >= 0 ? secSelect.options[secSelect.selectedIndex] : null;
+      const secSigla = secSelect ? secSelect.value.trim() : 'SMG';
+      const secId = secOpt && secOpt.dataset && secOpt.dataset.id ? Number(secOpt.dataset.id) : undefined;
+      const secNome = (secOpt && secOpt.dataset && secOpt.dataset.nome) ? secOpt.dataset.nome : secSigla;
+      const bairroOficialVal = document.getElementById('editEquipBairroOficial')?.value?.trim() || undefined;
+
       const payload = {
         nome: nome,
         sigla: document.getElementById('editEquipSigla').value.trim(),
         categoria: document.getElementById('editEquipCat').value,
-        secretaria_responsavel: document.getElementById('editEquipSecResp').value.trim(),
+        secretaria_id: secId,
+        secretaria_sigla: secSigla,
+        secretaria_nome: secNome,
+        secretaria_responsavel: secNome,
         status: document.getElementById('editEquipStatus').value,
         cep: document.getElementById('editEquipCep').value.trim(),
         distrito: document.getElementById('editEquipDist').value,
         bairro: bairro,
+        bairro_oficial: bairroOficialVal,
         endereco: endereco,
         logradouro: endereco,
         numero: document.getElementById('editEquipNumero').value.trim(),
@@ -409,10 +637,13 @@ function openNewHubModal() {
       else if (itemStatus === 'Desatualizado') statusColor = '#ef4444';
 
       let html = `
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px 14px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 14px;">
-          <div>
-            <strong style="color: var(--navy-900);">Status Cadastral:</strong>
-            <span style="color: ${statusColor}; font-weight: 700; margin-left: 6px;">${itemStatus}</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; background: #f8fafc; padding: 10px 14px; border-radius: 4px; border: 1px solid var(--border); margin-bottom: 14px;">
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <div>
+              <strong style="color: var(--navy-900);">Status Cadastral:</strong>
+              <span style="color: ${statusColor}; font-weight: 700; margin-left: 4px;">${itemStatus.toLowerCase() === 'ativo' ? 'Ativo' : itemStatus}</span>
+            </div>
+            ${typeof window.renderEquipEntityBadges === 'function' ? window.renderEquipEntityBadges(item) : ''}
           </div>
           <div>
             <strong style="color: var(--navy-900);">Distrito:</strong>
@@ -481,6 +712,10 @@ function openNewHubModal() {
     }
 
     function openGoogleKeyModal() {
+      if (!checkIsAdmin()) {
+        showToast('Acesso restrito ao Administrador Geral (perfil admin).');
+        return;
+      }
       const input = document.getElementById('inputGoogleApiKey');
       if (input) input.value = getGoogleApiKey();
       const statusEl = document.getElementById('googleKeyStatusMessage');
@@ -1036,3 +1271,29 @@ function openNewHubModal() {
         btn.innerHTML = '<i class="ri-check-line"></i> Salvar no SQLite';
       }
     }
+
+    // Prevenção de fechamento acidental ao selecionar texto (s3):
+    // Só fecha o modal se tanto o mousedown quanto o mouseup/click tiverem ocorrido diretamente no backdrop.
+    (function() {
+      let isMouseDownOnBackdrop = false;
+
+      document.addEventListener('mousedown', (e) => {
+        isMouseDownOnBackdrop = !!(e.target && e.target.classList && e.target.classList.contains('modal-backdrop'));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!isMouseDownOnBackdrop) return;
+        if (e.target && e.target.classList && e.target.classList.contains('modal-backdrop')) {
+          const mId = e.target.id;
+          if (mId === 'modalViewEquip') closeViewModal();
+          else if (mId === 'modalEquip') closeEquipModal();
+          else if (mId === 'modalGoogleKey') closeGoogleKeyModal();
+          else if (mId === 'modalAuditoria') closeAuditoriaModal();
+          else if (mId === 'modalDiffAuditoria') closeDiffModal();
+          else if (mId === 'modalNovaCategoria') closeNovaCategoriaModal();
+          else if (mId === 'modalComunidade') closeComunidadeModal();
+          else if (mId === 'modalNewHub') closeNewHubModal();
+        }
+        isMouseDownOnBackdrop = false;
+      });
+    })();

@@ -1,0 +1,34 @@
+\*\*\*\*BUGS E CORREÇÕES NECESSÁRIAS\*\*\*\*
+
+
+\INDICADORES GERAIS#
+
+* O cabeçalho informa 372 serviços oficiais e 449 equipamentos públicos, enquanto os 
+indicadores mostram 368 serviços e 466 equipamentos. Os cartões inferiores também citam 372 serviços e 449 prédios e órgãos.
+
+* Quando clico na aba Painel de Gestão e Governança abre a aba carta de serviço e não um painel administrativo
+
+
+
+
+
+
+
+\*\*\*\*SUGESTÕES DE MELHORIA\*\*\*\*
+
+\INDICADORES GERAIS#
+
+8
+
+* poderia ter uma aba de Configurações e preferências e parâmetros do sistema
+
+*  Simplificar a interface, priorizando as funcionalidades mais relevantes, agrupando elementos relacionados e reduzindo a quantidade de informações exibidas simultaneamente. 
+Recomenda-se também padronizar a hierarquia visual e utilizar menus, seções expansíveis ou páginas específicas para funcionalidades secundárias, tornando a navegação mais clara, objetiva e eficiente.
+
+
+
+
+
+
+
+

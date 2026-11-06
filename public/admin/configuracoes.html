@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações e Parâmetros do Sistema — Portal GSE PMDC</title>
+  <link rel="icon" type="image/png" href="/shared/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="/shared/nav.css">
+
+  <script>
+    (function () {
+      const token = localStorage.getItem('token');
+      const userStr = localStorage.getItem('user');
+      if (!token || !userStr) {
+        const base = window.location.pathname.startsWith('/gse') ? '/gse' : '';
+        window.location.replace((base || '') + '/login?redirect=' + encodeURIComponent(window.location.pathname));
+        return;
+      }
+      try {
+        const u = JSON.parse(userStr);
+        if (u.role !== 'admin') {
+          alert('Acesso restrito ao Administrador Geral (role: admin).');
+          const base = window.location.pathname.startsWith('/gse') ? '/gse' : '';
+          window.location.replace((base || '') + '/');
+        }
+      } catch (_) {}
+    })();
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .cfg-container {
+      padding: 28px 36px 48px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .cfg-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .cfg-title-box h1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 27px;
+      font-weight: 800;
+      color: #002244;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cfg-title-box p {
+      color: #64748b;
+      font-size: 14px;
+      margin: 4px 0 0;
+    }
+
+    /* Status Overview Grid */
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .status-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .status-card.ok { border-left-color: #10b981; }
+    .status-card.warn { border-left-color: #f59e0b; }
+
+    .status-card-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .status-card-value {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-card-sub {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Tabs */
+    .cfg-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .cfg-tab-btn {
+      padding: 11px 18px;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.18s ease;
+    }
+
+    .cfg-tab-btn:hover {
+      color: #002244;
+    }
+
+    .cfg-tab-btn.active {
+      color: #002244;
+      border-bottom-color: #ffcc00;
+      background: rgba(255, 204, 0, 0.08);
+      border-radius: 6px 6px 0 0;
+    }
+
+    .cfg-panel {
+      display: none;
+    }
+
+    .cfg-panel.active {
+      display: block;
+    }
+
+    .card-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .card-box h2 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: #002244;
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-box .card-desc {
+      font-size: 13px;
+      color: #64748b;
+      margin: 0 0 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13.5px;
+      box-sizing: border-box;
+      outline: none;
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    .form-control:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+
+    .form-hint {
+      font-size: 11.5px;
+      color: #64748b;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-pmdc {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #002244;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #003366;
+    }
+
+    .btn-gold {
+      background: #ffcc00;
+      color: #002244;
+    }
+
+    .btn-gold:hover {
+      background: #e6b800;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+
+    .btn-secondary:hover {
+      background: #f1f5f9;
+    }
+
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .audit-table th {
+      background: #f8fafc;
+      padding: 11px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #475569;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .audit-table td {
+      padding: 11px 12px;
+      font-size: 12.5px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+      vertical-align: middle;
+    }
+
+    .op-badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .op-INSERT { background: #dcfce7; color: #166534; }
+    .op-UPDATE { background: #e0f2fe; color: #075985; }
+    .op-DELETE { background: #fee2e2; color: #991b1b; }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #002244;
+      color: #ffffff;
+      border-left: 4px solid #ffcc00;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 10005;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR PADRONIZADA -->
+    <aside class="sidebar-nav" id="sidebarNav">
+      <div class="sidebar-header">
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Recolher / Expandir Menu" aria-label="Alternar menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="sidebar-brand-box" title="Portal Integrado PMDC">
+          <div class="sidebar-logo-badge"><img src="/shared/logo.png" alt="PMDC" class="sidebar-logo-img"></div>
+          <div class="sidebar-brand-text">
+            <span class="sidebar-app-title">PORTAL GSE</span>
+            <span class="sidebar-app-sub">Duque de Caxias · RJ</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-menu-scroll">
+        <div class="sidebar-section-header">Módulos do Sistema</div>
+
+        <a href="/" class="sidebar-nav-item">
+          <div class="nav-icon-box"><i class="ri-dashboard-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Início (GSE Hub)</span>
+            <span class="nav-sub-title">Visão Geral &amp; Indicadores</span>
+          </div>
+        </a>
+
+        <a href="/cds/dashboard.html" class="sidebar-nav-item">
+          <div class="nav-icon-box"><i class="ri-file-list-3-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Carta de Serviços</span>
+            <span class="nav-sub-title">Gestão de Serviços</span>
+          </div>
+        </a>
+
+        <a href="/sigem/" class="sidebar-nav-item">
+          <div class="nav-icon-box"><i class="ri-map-pin-2-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Endereços &amp; Mapa</span>
+            <span class="nav-sub-title">SIGEM &amp; Mobilidade</span>
+          </div>
+        </a>
+
+        <a href="/docs" class="sidebar-nav-item">
+          <div class="nav-icon-box"><i class="ri-code-s-slash-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">API &amp; Docs</span>
+            <span class="nav-sub-title">Integrações &amp; Chaves</span>
+          </div>
+        </a>
+
+        <div class="sidebar-section-header">Administração</div>
+
+        <a href="/admin/usuarios" class="sidebar-nav-item" id="sidebarNavItemUsuarios">
+          <div class="nav-icon-box"><i class="ri-user-settings-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Gestão de Usuários</span>
+            <span class="nav-sub-title">Operadores &amp; Secretarias</span>
+          </div>
+        </a>
+
+        <a href="/admin/configuracoes" class="sidebar-nav-item active" id="sidebarNavItemConfig">
+          <div class="nav-icon-box"><i class="ri-settings-4-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Configurações</span>
+            <span class="nav-sub-title">Parâmetros, SMTP &amp; Auditoria</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card" onclick="openGlobalProfileModal()" style="cursor: pointer;" title="Clique para editar seu perfil">
+          <div class="sidebar-avatar" id="sidebarAvatar">AM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name" id="sidebarUserName">Administrador Master</span>
+            <span class="sidebar-user-role" id="sidebarUserRole">MASTER</span>
+          </div>
+        </div>
+        <button class="sidebar-logout-btn" onclick="pmdcLogout()" title="Encerrar sessão no sistema">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="app-main">
+      <header class="top-dashboard-bar"></header>
+
+      <main class="cfg-container">
+        <div class="cfg-header">
+          <div class="cfg-title-box">
+            <h1><i class="ri-settings-4-fill" style="color: #0284c7;"></i> Configurações e Parâmetros Globais do Sistema</h1>
+            <p>Administração centralizada de preferências institucionais, servidor de e-mail (SMTP), chaves de API/Geocodificação e trilha de auditoria do Portal GSE.</p>
+          </div>
+          <div>
+            <button type="button" class="btn-pmdc btn-secondary" onclick="loadAllSettings()">
+              <i class="ri-refresh-line"></i> Recarregar Dados
+            </button>
+          </div>
+        </div>
+
+        <!-- STATUS DO AMBIENTE -->
+        <div class="status-grid">
+          <div class="status-card ok" id="stCardMysql">
+            <div class="status-card-label">Banco de Dados Unificado</div>
+            <div class="status-card-value" id="stValMysql">Verificando...</div>
+            <div class="status-card-sub" id="stSubMysql">MySQL · Carta &amp; SIGEM</div>
+          </div>
+          <div class="status-card" id="stCardSmtp">
+            <div class="status-card-label">Servidor de E-mail (SMTP)</div>
+            <div class="status-card-value" id="stValSmtp">Verificando...</div>
+            <div class="status-card-sub" id="stSubSmtp">Envio de planilhas e alertas</div>
+          </div>
+          <div class="status-card" id="stCardGoogle">
+            <div class="status-card-label">Google Geocoding API</div>
+            <div class="status-card-value" id="stValGoogle">Verificando...</div>
+            <div class="status-card-sub" id="stSubGoogle">Geocodificação reversa/direta</div>
+          </div>
+          <div class="status-card ok" id="stCardApiKeys">
+            <div class="status-card-label">Chaves de API Externas</div>
+            <div class="status-card-value" id="stValApiKeys">--</div>
+            <div class="status-card-sub" id="stSubApiKeys">Integrações de terceiros (/api/v1)</div>
+          </div>
+        </div>
+
+        <!-- NAVEGAÇÃO POR ABAS -->
+        <div class="cfg-tabs">
+          <button type="button" class="cfg-tab-btn active" onclick="switchCfgTab('geral', this)">
+            <i class="ri-sliders-line"></i> Parâmetros Gerais
+          </button>
+          <button type="button" class="cfg-tab-btn" onclick="switchCfgTab('smtp', this)">
+            <i class="ri-mail-settings-line"></i> Servidor SMTP (E-mail)
+          </button>
+          <button type="button" class="cfg-tab-btn" onclick="switchCfgTab('apikeys', this)">
+            <i class="ri-key-2-line"></i> Chaves de API &amp; Geocoding
+          </button>
+          <button type="button" class="cfg-tab-btn" onclick="switchCfgTab('auditoria', this)">
+            <i class="ri-shield-check-line"></i> Logs de Auditoria Global
+          </button>
+        </div>
+
+        <!-- ABA 1: PARÂMETROS GERAIS -->
+        <section class="cfg-panel active" id="panel-geral">
+          <form class="card-box" onsubmit="saveSettingsSection(event, ['portal_name','orgao_gestor','support_email','default_items_per_page','session_expiration_hours','maintenance_banner'])">
+            <h2><i class="ri-building-4-line"></i> Identidade Institucional e Preferências Operacionais</h2>
+            <p class="card-desc">Defina os parâmetros gerais exibidos nos módulos integrados (Hub, Carta de Serviços e SIGEM).</p>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="cfg_portal_name">Nome Oficial da Plataforma</label>
+                <input type="text" class="form-control" id="cfg_portal_name" required>
+              </div>
+              <div class="form-group">
+                <label for="cfg_orgao_gestor">Órgão Gestor Responsável</label>
+                <input type="text" class="form-control" id="cfg_orgao_gestor" required>
+              </div>
+              <div class="form-group">
+                <label for="cfg_support_email">E-mail Institucional de Suporte</label>
+                <input type="email" class="form-control" id="cfg_support_email" required>
+              </div>
+              <div class="form-group">
+                <label for="cfg_default_items_per_page">Itens por Página Padrão (Tabelas)</label>
+                <select class="form-control" id="cfg_default_items_per_page">
+                  <option value="25">25 registros por página</option>
+                  <option value="50">50 registros por página</option>
+                  <option value="100">100 registros por página</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="cfg_session_expiration_hours">Tempo de Sessão JWT (Horas)</label>
+                <input type="number" min="1" max="72" class="form-control" id="cfg_session_expiration_hours">
+                <span class="form-hint">Duração padrão dos tokens emitidos no login unificado.</span>
+              </div>
+              <div class="form-group full">
+                <label for="cfg_maintenance_banner">Aviso Global / Comunicado aos Operadores (Opcional)</label>
+                <input type="text" class="form-control" id="cfg_maintenance_banner" placeholder="Deixe em branco caso não haja comunicados ativos">
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn-pmdc btn-primary">
+                <i class="ri-save-3-line"></i> Salvar Parâmetros Gerais
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- ABA 2: SERVIDOR SMTP -->
+        <section class="cfg-panel" id="panel-smtp">
+          <form class="card-box" onsubmit="saveSettingsSection(event, ['smtp_host','smtp_port','smtp_user','smtp_pass','smtp_destinatario'])">
+            <h2><i class="ri-mail-send-line"></i> Configuração do Servidor de E-mail (SMTP)</h2>
+            <p class="card-desc">Utilizado pela Carta de Serviços e notificações administrativas para envio automático de planilhas oficiais (.xlsx).</p>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="cfg_smtp_host">Servidor SMTP (Host)</label>
+                <input type="text" class="form-control" id="cfg_smtp_host" placeholder="smtp.gmail.com">
+              </div>
+              <div class="form-group">
+                <label for="cfg_smtp_port">Porta SMTP</label>
+                <input type="number" class="form-control" id="cfg_smtp_port" placeholder="587">
+              </div>
+              <div class="form-group">
+                <label for="cfg_smtp_user">Conta / Usuário Autenticado</label>
+                <input type="text" class="form-control" id="cfg_smtp_user" placeholder="ouvgeral.gestao@gmail.com">
+              </div>
+              <div class="form-group">
+                <label for="cfg_smtp_pass">Senha / Senha de Aplicativo (App Password)</label>
+                <input type="password" class="form-control" id="cfg_smtp_pass" placeholder="Deixe ******** para manter a atual">
+                <span class="form-hint">Armazenada de forma protegida no banco e mascarada na leitura.</span>
+              </div>
+              <div class="form-group full">
+                <label for="cfg_smtp_destinatario">E-mail Destinatário Oficial dos Cadastros</label>
+                <input type="email" class="form-control" id="cfg_smtp_destinatario" placeholder="ouvgeral.gestao@gmail.com">
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="button" class="btn-pmdc btn-secondary" onclick="testSmtpConnection()">
+                <i class="ri-plug-line"></i> Testar Conexão SMTP
+              </button>
+              <button type="submit" class="btn-pmdc btn-primary">
+                <i class="ri-save-3-line"></i> Salvar Configurações SMTP
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- ABA 3: CHAVES DE API & GEOCODING -->
+        <section class="cfg-panel" id="panel-apikeys">
+          <form class="card-box" onsubmit="saveSettingsSection(event, ['google_maps_api_key'])">
+            <h2><i class="ri-earth-line"></i> Chave Global Google Maps / Geocoding API (Servidor)</h2>
+            <p class="card-desc">Restrita a administradores. Quando preenchida, o backend realiza geocodificação de alta precisão sem expor a chave ao navegador dos operadores.</p>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="cfg_google_maps_api_key">Google Geocoding API Key</label>
+                <input type="password" class="form-control" id="cfg_google_maps_api_key" placeholder="AIzaSy...">
+                <span class="form-hint" id="hintGoogleMasked">Status atual: verificando...</span>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn-pmdc btn-primary">
+                <i class="ri-shield-keyhole-line"></i> Salvar Chave Google no Servidor
+              </button>
+            </div>
+          </form>
+
+          <div class="card-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+              <div>
+                <h2><i class="ri-key-2-line"></i> Credenciais de Integração Externa (/api/v1)</h2>
+                <p class="card-desc" style="margin-bottom:0;">Chaves ativas emitidas para secretarias, painéis de BI e sistemas externos.</p>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button type="button" class="btn-pmdc btn-gold" onclick="quickCreateApiKey()">
+                  <i class="ri-add-line"></i> Emitir Nova Chave de API
+                </button>
+                <a href="/docs" class="btn-pmdc btn-secondary">
+                  <i class="ri-book-open-line"></i> Ver Documentação da API
+                </a>
+              </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+              <table class="audit-table">
+                <thead>
+                  <tr>
+                    <th>Cliente / Sistema</th>
+                    <th>Órgão</th>
+                    <th>Token (Prefixo)</th>
+                    <th>Limites (Min/Dia)</th>
+                    <th>Requisições Hoje</th>
+                    <th>Status</th>
+                    <th style="text-align:right;">Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="cfgApiKeysTableBody">
+                  <tr><td colspan="7" style="text-align:center; color:#64748b;">Carregando chaves...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ABA 4: AUDITORIA GLOBAL -->
+        <section class="cfg-panel" id="panel-auditoria">
+          <div class="card-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+              <div>
+                <h2><i class="ri-file-shield-2-line"></i> Trilha de Auditoria Unificada (Últimos 100 Eventos)</h2>
+                <p class="card-desc" style="margin-bottom:0;">Histórico consolidado de inclusões, edições e exclusões realizadas por operadores e administradores.</p>
+              </div>
+              <div style="min-width:260px;">
+                <input type="text" class="form-control" id="auditSearchInput" placeholder="Filtrar por usuário, tabela ou IP..." oninput="renderAuditLogs()">
+              </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+              <table class="audit-table">
+                <thead>
+                  <tr>
+                    <th>Data / Hora</th>
+                    <th>Operador</th>
+                    <th>Módulo / Tabela</th>
+                    <th>Registro</th>
+                    <th>Operação</th>
+                    <th>IP / Estação</th>
+                  </tr>
+                </thead>
+                <tbody id="cfgAuditTableBody">
+                  <tr><td colspan="6" style="text-align:center; color:#64748b;">Carregando trilha de auditoria...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-msg" id="cfgToast"></div>
+
+  <script src="/shared/nav.js"></script>
+  <script>
+    const APP_BASE = (window.getAppBasePath ? window.getAppBasePath() : (window.location.pathname.startsWith('/gse') ? '/gse' : ''));
+    let cachedAuditLogs = [];
+
+    function showCfgToast(msg, isError) {
+      const el = document.getElementById('cfgToast');
+      el.textContent = msg;
+      el.style.borderLeftColor = isError ? '#ef4444' : '#ffcc00';
+      el.style.display = 'block';
+      clearTimeout(window._cfgToastTimer);
+      window._cfgToastTimer = setTimeout(() => { el.style.display = 'none'; }, 4000);
+    }
+
+    function switchCfgTab(tab, btn) {
+      document.querySelectorAll('.cfg-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.cfg-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const panel = document.getElementById('panel-' + tab);
+      if (panel) panel.classList.add('active');
+    }
+
+    async function loadAllSettings() {
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`${APP_BASE}/api/admin/settings`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.error || 'Erro ao carregar configurações.');
+
+        const s = data.settings || {};
+        const st = data.status || {};
+
+        // Preenche campos
+        const fields = [
+          'portal_name', 'orgao_gestor', 'support_email', 'default_items_per_page',
+          'session_expiration_hours', 'maintenance_banner',
+          'smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass', 'smtp_destinatario',
+          'google_maps_api_key'
+        ];
+        fields.forEach(k => {
+          const el = document.getElementById('cfg_' + k);
+          if (el && s[k] !== undefined) el.value = s[k];
+        });
+
+        const hintGoogle = document.getElementById('hintGoogleMasked');
+        if (hintGoogle) {
+          hintGoogle.textContent = s.google_maps_configured
+            ? `Chave ativa no servidor (${s.google_maps_api_key_masked || 'protegida'}). Digite nova chave apenas se desejar substituir.`
+            : 'Nenhuma chave Google configurada no servidor (usando fallback Nominatim / ViaCEP).';
+        }
+
+        // Atualiza cards de status
+        document.getElementById('stValMysql').innerHTML = st.mysqlConnected
+          ? '<span style="color:#059669;">● Conectado</span>'
+          : '<span style="color:#dc2626;">● Indisponível</span>';
+        document.getElementById('stSubMysql').textContent = `${st.totalServicos || 0} serviços · ${st.totalEquipamentos || 0} equipamentos`;
+
+        const cardSmtp = document.getElementById('stCardSmtp');
+        cardSmtp.className = 'status-card ' + (st.smtpConfigured ? 'ok' : 'warn');
+        document.getElementById('stValSmtp').innerHTML = st.smtpConfigured
+          ? '<span style="color:#059669;">● Configurado</span>'
+          : '<span style="color:#d97706;">● Pendente</span>';
+        document.getElementById('stSubSmtp').textContent = s.smtp_destinatario || 'Sem destinatário';
+
+        const cardGoogle = document.getElementById('stCardGoogle');
+        cardGoogle.className = 'status-card ' + (st.googleGeocodingConfigured ? 'ok' : 'warn');
+        document.getElementById('stValGoogle').innerHTML = st.googleGeocodingConfigured
+          ? '<span style="color:#059669;">● Chave Ativa</span>'
+          : '<span style="color:#d97706;">● Modo Gratuito (OSM)</span>';
+
+        document.getElementById('stValApiKeys').textContent = `${st.activeApiKeys || 0} ativas / ${st.totalApiKeys || 0} total`;
+        document.getElementById('stSubApiKeys').textContent = `${st.totalUsers || 0} contas administrativas/setoriais`;
+
+        cachedAuditLogs = data.auditLogs || [];
+        renderAuditLogs();
+        loadApiKeysTable();
+      } catch (err) {
+        showCfgToast(err.message, true);
+      }
+    }
+
+    async function saveSettingsSection(e, keys) {
+      e.preventDefault();
+      const token = localStorage.getItem('token');
+      const payload = {};
+      keys.forEach(k => {
+        const el = document.getElementById('cfg_' + k);
+        if (el) payload[k] = el.value;
+      });
+
+      try {
+        const res = await fetch(`${APP_BASE}/api/admin/settings`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.error || 'Falha ao salvar.');
+        showCfgToast(data.message || 'Configurações atualizadas!');
+        loadAllSettings();
+      } catch (err) {
+        showCfgToast(err.message, true);
+      }
+    }
+
+    async function testSmtpConnection() {
+      const token = localStorage.getItem('token');
+      showCfgToast('Verificando conexão com o servidor SMTP...');
+      try {
+        const res = await fetch(`${APP_BASE}/api/admin/settings/test-smtp`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            smtp_host: document.getElementById('cfg_smtp_host').value,
+            smtp_port: document.getElementById('cfg_smtp_port').value,
+            smtp_user: document.getElementById('cfg_smtp_user').value,
+            smtp_pass: document.getElementById('cfg_smtp_pass').value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.error || 'Falha na conexão SMTP.');
+        showCfgToast(data.message);
+      } catch (err) {
+        showCfgToast(err.message, true);
+      }
+    }
+
+    async function loadApiKeysTable() {
+      const token = localStorage.getItem('token');
+      const tbody = document.getElementById('cfgApiKeysTableBody');
+      try {
+        const res = await fetch(`${APP_BASE}/api/admin/api-keys`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const rows = data.data || [];
+        if (!rows.length) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#64748b;">Nenhuma chave externa cadastrada.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = rows.map(r => {
+          const masked = r.chave ? (r.chave.slice(0, 14) + '••••••••') : '-';
+          const isAct = r.status === 'active';
+          return `
+            <tr>
+              <td><strong>${escapeHtml(r.nome_cliente || '-')}</strong><div style="font-size:11px;color:#64748b;">${escapeHtml(r.email_cliente || '')}</div></td>
+              <td>${escapeHtml(r.orgao_empresa || '-')}</td>
+              <td><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">${escapeHtml(masked)}</code></td>
+              <td>${r.limite_req_minuto || 60}/min · ${r.limite_req_dia || 10000}/dia</td>
+              <td>${r.requisicoes_hoje || 0} (Total: ${r.total_requisicoes || 0})</td>
+              <td><span class="op-badge ${isAct ? 'op-INSERT' : 'op-DELETE'}">${isAct ? 'Ativa' : 'Revogada'}</span></td>
+              <td style="text-align:right;">
+                <button type="button" class="btn-pmdc btn-secondary" style="padding:5px 10px;font-size:11.5px;" onclick="toggleApiKeyStatus(${r.id}, '${isAct ? 'revoked' : 'active'}')">
+                  ${isAct ? 'Revogar' : 'Reativar'}
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" style="color:#dc2626;">Erro ao listar chaves: ${escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+
+    async function quickCreateApiKey() {
+      const nome_cliente = prompt('Nome do Sistema / Cliente Integrador:');
+      if (!nome_cliente) return;
+      const email_cliente = prompt('E-mail do Responsável Técnico:', 'ti@duquedecaxias.rj.gov.br');
+      if (!email_cliente) return;
+      const orgao_empresa = prompt('Secretaria / Órgão Solicitante:', 'PMDC');
+
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`${APP_BASE}/api/admin/api-keys`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ nome_cliente, email_cliente, orgao_empresa })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.error || 'Erro ao emitir chave.');
+        prompt('Chave emitida com sucesso! Copie e guarde o token abaixo:', data.data?.chave || '');
+        loadAllSettings();
+      } catch (err) {
+        showCfgToast(err.message, true);
+      }
+    }
+
+    async function toggleApiKeyStatus(id, status) {
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`${APP_BASE}/api/admin/api-keys/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ status })
+        });
+        if (!res.ok) throw new Error('Erro ao alterar status da chave.');
+        showCfgToast('Status da chave atualizado.');
+        loadAllSettings();
+      } catch (err) {
+        showCfgToast(err.message, true);
+      }
+    }
+
+    function renderAuditLogs() {
+      const tbody = document.getElementById('cfgAuditTableBody');
+      const q = (document.getElementById('auditSearchInput')?.value || '').trim().toLowerCase();
+      const filtered = !q ? cachedAuditLogs : cachedAuditLogs.filter(r =>
+        String(r.usuario || '').toLowerCase().includes(q) ||
+        String(r.tabela_afetada || '').toLowerCase().includes(q) ||
+        String(r.operacao || '').toLowerCase().includes(q) ||
+        String(r.ip || '').toLowerCase().includes(q) ||
+        String(r.registro_id || '').toLowerCase().includes(q)
+      );
+
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#64748b;">Nenhum evento encontrado para o filtro informado.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(r => {
+        const dt = r.criado_em ? new Date(r.criado_em).toLocaleString('pt-BR') : '-';
+        const op = String(r.operacao || 'UPDATE').toUpperCase();
+        return `
+          <tr>
+            <td style="white-space:nowrap;">${escapeHtml(dt)}</td>
+            <td><strong>${escapeHtml(r.usuario || 'SISTEMA')}</strong><div style="font-size:11px;color:#64748b;">${escapeHtml(r.localizacao || '')}</div></td>
+            <td><code>${escapeHtml(r.tabela_afetada || '-')}</code></td>
+            <td>#${escapeHtml(String(r.registro_id || '-'))}</td>
+            <td><span class="op-badge op-${escapeHtml(op)}">${escapeHtml(op)}</span></td>
+            <td><div>${escapeHtml(r.ip || '-')}</div><div style="font-size:11px;color:#64748b;">${escapeHtml(r.dispositivo || '')}</div></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAllSettings);
+  </script>
+</body>
+</html>
+

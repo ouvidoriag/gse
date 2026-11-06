@@ -4,6 +4,7 @@ import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import jwt from 'jsonwebtoken';
 
 import { config } from './config';
 import { testMysqlConnection, mysqlPool } from './database/mysql';
@@ -18,6 +19,7 @@ import { cdsEmailRouter } from './routes/cdsEmail';
 import { sigemRouter } from './routes/sigem';
 import { externalApiRouter } from './routes/externalApi';
 import { adminApiKeysRouter } from './routes/adminApiKeys';
+import { adminSettingsRouter } from './routes/adminSettings';
 import { onibusRouter } from './routes/onibus';
 import { comunidadesRouter } from './routes/comunidades';
 
@@ -128,9 +130,13 @@ const apiPrefixes = ['/api', '/gse/api'];
 apiPrefixes.forEach((prefix) => {
   app.use(prefix, apiLimiter);
 
-  // 1. Auth Unificado
+  // 1. Auth Unificado e Perfil
   app.use(`${prefix}/auth/login`, loginLimiter);
   app.use(`${prefix}/auth`, authRouter);
+  app.use(`${prefix}/auth`, cdsProfileRouter);
+
+  // Gestão Administrativa Centralizada de Usuários
+  app.use(`${prefix}/admin/users`, cdsAdminRouter);
 
   // 2. Hub Geral
   app.use(`${prefix}/hub`, hubRouter);
@@ -158,8 +164,9 @@ apiPrefixes.forEach((prefix) => {
   app.use(`${prefix}/v1`, externalApiRouter);
   app.use(`${prefix}/public`, externalApiRouter);
 
-  // 8. Gestão Administrativa de Chaves de API (Admin com JWT)
+  // 8. Gestão Administrativa de Chaves de API e Configurações Globais (Admin com JWT)
   app.use(`${prefix}/admin/api-keys`, adminApiKeysRouter);
+  app.use(`${prefix}/admin/settings`, adminSettingsRouter);
 
   // Compatibilidade com endpoints diretos do SIGEM no prefixo da API
   app.use(prefix, sigemRouter);
@@ -203,7 +210,11 @@ app.get([
 });
 
 // Logo institucional garantido (evita 404 independentemente da URL base)
-app.get(['/logo.png', '/gse/logo.png', '/shared/logo.png', '/gse/shared/logo.png'], (_req, res) => {
+app.get([
+  '/logo.png', '/gse/logo.png',
+  '/shared/logo.png', '/gse/shared/logo.png',
+  '/sigem/logo.png', '/gse/sigem/logo.png'
+], (_req, res) => {
   res.sendFile(path.join(publicDir, 'shared', 'logo.png'));
 });
 
@@ -214,8 +225,10 @@ app.use('/gse', express.static(publicDir, { index: false }));
 // 2. Recursos compartilhados (Barra de navegação PMDC, logos, tokens de design)
 app.use(['/shared', '/gse/shared'], express.static(path.join(publicDir, 'shared')));
 
-// 3. Módulo Hub Integrado
-app.use(['/hub', '/gse/hub'], express.static(path.join(publicDir, 'hub')));
+// 3. Módulo Hub Integrado (atende tanto em /hub/* e /gse/hub/* quanto na raiz /* e /gse/* para hub.css e hub.js)
+const hubStatic = express.static(path.join(publicDir, 'hub'), { index: false });
+app.use(['/gse/hub', '/hub', '/gse'], hubStatic);
+app.use('/', hubStatic);
 
 // 4. Módulo Carta de Serviços
 app.use(['/cds', '/gse/cds'], express.static(path.join(publicDir, 'cds')));
@@ -275,16 +288,55 @@ app.get([
   res.sendFile(path.join(publicDir, 'sigem', 'gerenciador_enderecos.html'));
 });
 
-// 10. Suporte a modo SIGEM dedicado (quando executado com APP_MODE=sigem ou porta 3015)
+// 10. Gestão Centralizada de Usuários e Configurações Globais (Admin)
+app.get([
+  '/admin/usuarios', '/admin/usuarios.html',
+  '/gse/admin/usuarios', '/gse/admin/usuarios.html',
+  '/usuarios', '/usuarios.html',
+  '/gse/usuarios', '/gse/usuarios.html'
+], (_req, res) => {
+  res.sendFile(path.join(publicDir, 'admin', 'usuarios.html'));
+});
+
+app.get([
+  '/admin/configuracoes', '/admin/configuracoes.html',
+  '/gse/admin/configuracoes', '/gse/admin/configuracoes.html',
+  '/configuracoes', '/configuracoes.html',
+  '/gse/configuracoes', '/gse/configuracoes.html'
+], (_req, res) => {
+  res.sendFile(path.join(publicDir, 'admin', 'configuracoes.html'));
+});
+
+// 11. Suporte a modo SIGEM dedicado (quando executado com APP_MODE=sigem ou porta 3015)
 const isDedicatedSigem = process.env.APP_MODE === 'sigem' || String(config.port) === '3015';
 
-// 11. Portal Geral / Início (Hub GSE)
+// 12. Portal Geral / Início (Hub GSE) — Portão de Entrada com Verificação de Autenticação
 app.get([
   '/', '/index.html',
   '/hub', '/hub/', '/hub/index.html',
   '/gse', '/gse/', '/gse/index.html',
   '/gse/hub', '/gse/hub/', '/gse/hub/index.html'
-], (_req, res) => {
+], (req, res) => {
+  // 🛡️ Portão de Entrada Seguro: Verifica se o usuário tem cookie de autenticação válido
+  const cookies = req.headers.cookie || '';
+  const tokenCookieMatch = cookies.match(/(?:^|;\s*)(?:token|pmdc_token)=([^;]+)/);
+  const token = tokenCookieMatch ? decodeURIComponent(tokenCookieMatch[1]) : null;
+
+  let hasValidToken = false;
+  if (token) {
+    try {
+      jwt.verify(token, config.jwtSecret);
+      hasValidToken = true;
+    } catch (_) {}
+  }
+
+  // Se não houver token válido no cookie, na query nem no header Authorization, redireciona ao login
+  if (!hasValidToken && !req.headers.authorization && !req.query.token) {
+    const base = req.path.startsWith('/gse') ? '/gse' : '';
+    const cleanPath = req.path === '/' || req.path === '/gse' || req.path === '/gse/' ? '' : req.path;
+    return res.redirect(`${base}/login${cleanPath ? `?redirect=${encodeURIComponent(cleanPath)}` : ''}`);
+  }
+
   if (isDedicatedSigem) {
     return res.sendFile(path.join(publicDir, 'sigem', 'index.html'));
   }
@@ -345,9 +397,24 @@ const server = app.listen(PORT, async () => {
   await testMysqlConnection();
 });
 
-// Graceful Shutdown
+server.on('error', (err: NodeJS.ErrnoException) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n❌ Porta ${PORT} já está em uso por outra instância do servidor GSE.`);
+    console.error(`💡 Para liberar no PowerShell: Stop-Process -Id (Get-NetTCPConnection -LocalPort ${PORT} -State Listen).OwningProcess -Force\n`);
+    process.exit(1);
+  }
+  console.error('🚨 [Server Error]:', err);
+  process.exit(1);
+});
+
+// Graceful Shutdown (compatível com hot-reload tsx watch sem bloquear sockets keep-alive)
 function shutdown() {
   console.log('\n🛑 Encerrando servidor graciosamente...');
+  const forceTimer = setTimeout(() => process.exit(0), 1200);
+  forceTimer.unref();
+  if (typeof (server as any).closeAllConnections === 'function') {
+    (server as any).closeAllConnections();
+  }
   server.close(async () => {
     try {
       await mysqlPool.end();

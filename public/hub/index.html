@@ -3,13 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Unificado — Prefeitura Municipal de Duque de Caxias</title>
+  <title>Portal Integrado GSE — Prefeitura Municipal de Duque de Caxias</title>
+  <link rel="icon" type="image/png" href="/shared/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
   <link rel="stylesheet" href="/shared/nav.css">
-  <link rel="stylesheet" href="/shared/hub.css">
+  <link rel="stylesheet" href="hub.css">
+  <script>
+    (function () {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+      if (!token || !user) {
+        const base = window.location.pathname.startsWith('/gse') ? '/gse' : '';
+        window.location.replace((base || '') + '/login?redirect=' + encodeURIComponent(window.location.pathname + window.location.search));
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -28,10 +39,10 @@
           </svg>
         </button>
         <a href="/" class="sidebar-brand-box" title="Portal Integrado PMDC">
-          <div class="sidebar-logo-badge"><i class="ri-government-line"></i></div>
+          <div class="sidebar-logo-badge"><img src="/shared/logo.png" alt="PMDC" class="sidebar-logo-img"></div>
           <div class="sidebar-brand-text">
-            <span class="sidebar-app-title">PORTAL INTEGRADO</span>
-            <span class="sidebar-app-sub">Prefeitura de Duque de Caxias</span>
+            <span class="sidebar-app-title">PORTAL GSE</span>
+            <span class="sidebar-app-sub">Duque de Caxias · RJ</span>
           </div>
         </a>
       </div>
@@ -39,32 +50,32 @@
       <!-- ITENS DE MENU DA SIDEBAR -->
       <div class="sidebar-menu-scroll">
 
-        <div class="sidebar-section-header">RECURSOS DO HUB</div>
-        <a href="#kpiServicos" class="sidebar-nav-item" title="Painel de Indicadores Gerais">
+        <div class="sidebar-section-header">MÓDULOS DO SISTEMA</div>
+        <a href="/" class="sidebar-nav-item active" title="Painel de Indicadores Gerais e Busca">
           <div class="nav-icon-box"><i class="ri-bar-chart-2-line"></i></div>
           <div class="nav-text-box">
-            <span class="nav-main-title">Indicadores Gerais</span>
-            <span class="nav-sub-title">Métricas Consolidadas</span>
+            <span class="nav-main-title">Início (GSE Hub)</span>
+            <span class="nav-sub-title">Indicadores &amp; Busca</span>
           </div>
         </a>
-        <a href="#globalSearchInput" class="sidebar-nav-item" onclick="setTimeout(()=>document.getElementById('globalSearchInput').focus(),100);" title="Busca Transversal">
-          <div class="nav-icon-box"><i class="ri-search-2-line"></i></div>
+        <a href="/cds/dashboard.html" class="sidebar-nav-item" title="Gestão e Catálogo da Carta de Serviços">
+          <div class="nav-icon-box"><i class="ri-file-list-3-line"></i></div>
           <div class="nav-text-box">
-            <span class="nav-main-title">Busca Transversal</span>
-            <span class="nav-sub-title">Serviços e Equipamentos</span>
+            <span class="nav-main-title">Carta de Serviços</span>
+            <span class="nav-sub-title">Catálogo Municipal</span>
           </div>
         </a>
-        <a href="#modulosPlataforma" class="sidebar-nav-item" title="Módulos Integrados">
-          <div class="nav-icon-box"><i class="ri-dashboard-3-line"></i></div>
+        <a href="/sigem/" class="sidebar-nav-item" title="SIGEM — Endereços, Equipamentos e Mapa">
+          <div class="nav-icon-box"><i class="ri-map-pin-2-line"></i></div>
           <div class="nav-text-box">
-            <span class="nav-main-title">Módulos do Sistema</span>
-            <span class="nav-sub-title">Acesso Setorial</span>
+            <span class="nav-main-title">Endereços &amp; Mapa</span>
+            <span class="nav-sub-title">SIGEM &amp; Mobilidade</span>
           </div>
         </a>
-        <a href="/api" class="sidebar-nav-item" title="Portal do Desenvolvedor &amp; API Oficial">
+        <a href="/docs" class="sidebar-nav-item" title="Portal do Desenvolvedor &amp; API Oficial">
           <div class="nav-icon-box"><i class="ri-code-s-slash-line"></i></div>
           <div class="nav-text-box">
-            <span class="nav-main-title">API &amp; Desenvolvedores</span>
+            <span class="nav-main-title">API &amp; Docs</span>
             <span class="nav-sub-title">Documentação &amp; Chaves</span>
           </div>
         </a>
@@ -107,9 +118,9 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
               <span>Carta de Serviços</span>
             </a>
-            <a href="/gse/sigem/" class="top-nav-tab" id="topTabSigem" title="Ir para o SIGEM — Endereços e Cartografia">
+            <a href="/gse/sigem/" class="top-nav-tab" id="topTabSigem" title="Ir para o SIGEM — Endereços e Mapa Oficial">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
-              <span>Endereços &amp; GIS</span>
+              <span>Endereços &amp; Mapa</span>
             </a>
             <a href="/gse/docs" class="top-nav-tab" id="topTabApi" title="Portal do Desenvolvedor &amp; API Oficial">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
@@ -131,7 +142,7 @@
             <h1 class="hub-title">Portal Integrado de Serviços &amp; Equipamentos</h1>
             <p class="hub-subtitle">
               Plataforma unificada de governança, geoprocessamento e atendimento ao cidadão. 
-              Consulte os <strong>372 serviços oficiais</strong> e localize todos os <strong>449 equipamentos públicos</strong> em um só lugar.
+              Consulte os <strong id="heroNumServicos">368 serviços oficiais</strong> e localize todos os <strong id="heroNumEquipamentos">466 equipamentos públicos</strong> em um só lugar.
             </p>
 
             <!-- Global Search -->
@@ -153,148 +164,169 @@
         <!-- Main Container -->
         <div class="hub-main">
           
-          <!-- KPI Section -->
+          <!-- KPI Section (Links diretos para as respectivas páginas) -->
           <section class="hub-kpi-grid">
-            <div class="kpi-card" id="kpiServicos">
+            <a href="/cds/dashboard.html" class="kpi-card" id="kpiServicos" title="Abrir Carta de Serviços ao Cidadão">
               <div class="kpi-icon-wrap bg-blue">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
               </div>
               <div class="kpi-content">
-                <span class="kpi-number" id="numServicos">372</span>
+                <span class="kpi-number" id="numServicos">368</span>
                 <span class="kpi-label">Serviços ao Cidadão</span>
-                <span class="kpi-hint">18 Secretarias Ativas</span>
+                <span class="kpi-hint" id="hintSecretarias">18 Secretarias Ativas</span>
               </div>
-            </div>
+              <i class="ri-arrow-right-s-line kpi-arrow"></i>
+            </a>
 
-            <div class="kpi-card" id="kpiEquipamentos">
+            <a href="/sigem/" class="kpi-card" id="kpiEquipamentos" title="Abrir Cadastro de Equipamentos Públicos (SIGEM)">
               <div class="kpi-icon-wrap bg-gold">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
               </div>
               <div class="kpi-content">
-                <span class="kpi-number" id="numEquipamentos">449</span>
+                <span class="kpi-number" id="numEquipamentos">466</span>
                 <span class="kpi-label">Equipamentos Públicos</span>
                 <span class="kpi-hint">100% Georreferenciados</span>
               </div>
-            </div>
+              <i class="ri-arrow-right-s-line kpi-arrow"></i>
+            </a>
 
-            <div class="kpi-card" id="kpiDistritos">
+            <a href="/sigem/#mapa" class="kpi-card" id="kpiDistritos" title="Explorar Mapa Oficial por Distritos e Bairros">
               <div class="kpi-icon-wrap bg-green">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               </div>
               <div class="kpi-content">
                 <span class="kpi-number" id="numDistritos">4</span>
                 <span class="kpi-label">Distritos Municipais</span>
-                <span class="kpi-hint">117 Bairros Oficiais</span>
+                <span class="kpi-hint" id="hintBairros">111 Bairros Mapeados</span>
               </div>
-            </div>
+              <i class="ri-arrow-right-s-line kpi-arrow"></i>
+            </a>
 
-            <div class="kpi-card" id="kpiHubs">
+            <a href="/sigem/#hubs" class="kpi-card" id="kpiHubs" title="Ver Prédios Compartilhados e Polos Municipais">
               <div class="kpi-icon-wrap bg-purple">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>
               </div>
               <div class="kpi-content">
                 <span class="kpi-number" id="numHubs">12</span>
-                <span class="kpi-label">Polos Prediais (Hubs)</span>
-                <span class="kpi-hint">Complexos Compartilhados</span>
+                <span class="kpi-label">Prédios Compartilhados</span>
+                <span class="kpi-hint">Polos &amp; Complexos</span>
               </div>
-            </div>
+              <i class="ri-arrow-right-s-line kpi-arrow"></i>
+            </a>
           </section>
 
-          <!-- Main Modules Section -->
-          <section class="hub-modules-section" id="modulosPlataforma">
-            <h2 class="section-heading">Módulos Integrados da Plataforma</h2>
-            <p class="section-subheading">Acesse diretamente os portais de atendimento e as ferramentas de gestão técnica</p>
-
-            <div class="modules-grid">
-              
-              <!-- Modulo 1: Carta de Serviços -->
-              <div class="module-card">
-                <div class="module-header">
-                  <span class="module-tag tag-blue">Módulo Cidadão</span>
-                  <div class="module-icon" style="color: #0284c7;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
-                  </div>
-                </div>
-                <h3 class="module-title">Carta de Serviços ao Cidadão</h3>
-                <p class="module-desc">
-                  Guia completo de todos os serviços públicos municipais. Consulte documentação necessária, prazos, taxas, locais de atendimento e passo a passo detalhado.
+          <!-- Painel Analítico & Institucional do Ecossistema GSE -->
+          <section class="hub-analytics-section" id="painelAnaliticoHub">
+            <div class="hub-about-banner">
+              <div class="hub-about-text">
+                <span class="hub-about-tag">Ecossistema Digital PMDC · Ouvidoria Geral</span>
+                <h2>Sobre o Portal Integrado GSE (Gestão de Serviços e Endereços)</h2>
+                <p>
+                  O GSE unifica em tempo real a <strong>Carta Oficial de Serviços ao Cidadão</strong> (Lei Federal nº 13.460/2017),
+                  o <strong>Cadastro Cartográfico de Equipamentos Públicos (SIGEM)</strong>, a malha de <strong>Mobilidade Tarifa Zero</strong>
+                  e a <strong>API Governamental</strong>, garantindo transparência pública e dados fidedignos para toda a Prefeitura de Duque de Caxias.
                 </p>
-                <ul class="module-features">
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> 372 serviços organizados por categorias</li>
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Busca rápida por público-alvo e secretaria</li>
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Consulta aberta ao cidadão sem necessidade de login</li>
-                </ul>
-                <div class="module-actions">
-                  <a href="/cds" class="btn-primary">Acessar Carta de Serviços →</a>
+              </div>
+              <div class="hub-about-metrics">
+                <div class="about-mini-stat">
+                  <strong id="instTotalCategorias">19</strong>
+                  <span>Categorias de Serviços</span>
+                </div>
+                <div class="about-mini-stat">
+                  <strong id="instTotalLinhas">20</strong>
+                  <span>Linhas Tarifa Zero</span>
+                </div>
+                <div class="about-mini-stat">
+                  <strong id="instTotalParadas">1.795</strong>
+                  <span>Pontos de Parada GPS</span>
+                </div>
+                <div class="about-mini-stat">
+                  <strong id="instTotalComunidades">105</strong>
+                  <span>Comunidades Mapeadas</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hub-charts-grid">
+              <!-- Card 1: Equipamentos por Distrito -->
+              <div class="geo-card">
+                <h3 class="geo-title">Equipamentos por Distrito</h3>
+                <p class="geo-subtitle">Distribuição territorial oficial entre os 4 distritos do município</p>
+                <div class="district-bars" id="districtBarsContainer">
+                  <div style="font-size:13px; color:#64748b;">Carregando indicadores territoriais...</div>
                 </div>
               </div>
 
-              <!-- Modulo 2: SIGEM -->
-              <div class="module-card">
-                <div class="module-header">
-                  <span class="module-tag tag-gold">Módulo Geoprocessamento</span>
-                  <div class="module-icon" style="color: #d97706;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
-                  </div>
-                </div>
-                <h3 class="module-title">SIGEM — Endereços &amp; Equipamentos</h3>
-                <p class="module-desc">
-                  Sistema Integrado de Gestão de Endereços Municipais. Visualização geoespacial com mapa interativo, coordenadas precisas, filtros por distritos e polos prediais.
-                </p>
-                <ul class="module-features">
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> 449 prédios e órgãos públicos no mapa</li>
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Filtros por 4 Distritos e 117 Bairros</li>
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Fichas cadastrais com CNES, INEP e contatos</li>
-                </ul>
-                <div class="module-actions">
-                  <a href="/sigem" class="btn-primary btn-gold">Explorar Mapa e Equipamentos →</a>
+              <!-- Card 2: Serviços por Secretaria -->
+              <div class="geo-card">
+                <h3 class="geo-title">Serviços por Secretaria (Top Pastas)</h3>
+                <p class="geo-subtitle">Órgãos municipais com maior oferta ativa na Carta de Serviços</p>
+                <div class="district-bars" id="secretariasBarsContainer">
+                  <div style="font-size:13px; color:#64748b;">Carregando serviços por secretaria...</div>
                 </div>
               </div>
 
-              <!-- Modulo 3: Painel Administrativo -->
-              <div class="module-card">
-                <div class="module-header">
-                  <span class="module-tag tag-purple">Módulo Gestão</span>
-                  <div class="module-icon" style="color: #9333ea;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                  </div>
-                </div>
-                <h3 class="module-title">Painel de Gestão e Governança</h3>
-                <p class="module-desc">
-                  Área restrita para gestores municipais e secretarias cadastrarem, editarem e atualizarem serviços, novos equipamentos e gerenciarem operadores setoriais.
-                </p>
-                <ul class="module-features">
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Edição e cadastro transacional de serviços</li>
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Gestão de secretarias e operadores setoriais</li>
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Exportação de planilhas oficiais e relatórios</li>
-                </ul>
-                <div class="module-actions">
-                  <a href="/cds/dashboard.html" class="btn-secondary">Painel Administrativo →</a>
+              <!-- Card 3: Equipamentos por Macrosetor -->
+              <div class="geo-card">
+                <h3 class="geo-title">Rede Física por Macrosetor</h3>
+                <p class="geo-subtitle">Participação percentual das unidades públicas por área de atuação</p>
+                <div class="macro-pill-list" id="macrosetorListContainer">
+                  <div style="font-size:13px; color:#64748b;">Carregando macrosetores...</div>
                 </div>
               </div>
 
-              <!-- Modulo 4: API & Desenvolvedores -->
-              <div class="module-card">
-                <div class="module-header">
-                  <span class="module-tag tag-green">Módulo Integração</span>
-                  <div class="module-icon" style="color: #059669;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                  </div>
-                </div>
-                <h3 class="module-title">Portal do Desenvolvedor &amp; API</h3>
-                <p class="module-desc">
-                  Conexão RESTful oficial para sistemas externos, órgãos parceiros e aplicativos municipais consumirem a base oficial com autenticação por chave.
-                </p>
-                <ul class="module-features">
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Endpoints JSON de Serviços e Equipamentos com GPS</li>
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Emissão e gestão de Chaves de API permanentes</li>
-                  <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> Testador interativo ao vivo (Playground)</li>
-                </ul>
-                <div class="module-actions">
-                  <a href="/api" class="btn-primary" style="background: #008744;">Acessar Portal da API →</a>
+              <!-- Card 4: Complexos e Comunidades Mapeadas -->
+              <div class="geo-card">
+                <h3 class="geo-title">Complexos &amp; Territórios Populares</h3>
+                <p class="geo-subtitle">Mapeamento cartográfico de comunidades e logradouros internos</p>
+                <div class="macro-pill-list" id="complexosListContainer">
+                  <div style="font-size:13px; color:#64748b;">Carregando territórios mapeados...</div>
                 </div>
               </div>
+            </div>
 
+            <!-- Barra Enxuta de Governança e Acesso Direto (sem cards gigantes redundantes) -->
+            <div class="hub-quick-strip" id="atalhosGovernanca">
+              <a href="/cds" class="quick-strip-link">
+                <div class="quick-strip-left">
+                  <i class="ri-book-open-line" style="color: #0284c7;"></i>
+                  <div>
+                    <strong>Catálogo Público ao Cidadão</strong>
+                    <span>Visualização aberta da Carta de Serviços</span>
+                  </div>
+                </div>
+                <i class="ri-arrow-right-line" style="color: #94a3b8;"></i>
+              </a>
+              <a href="/sigem/#mapa" class="quick-strip-link">
+                <div class="quick-strip-left">
+                  <i class="ri-road-map-line" style="color: #d97706;"></i>
+                  <div>
+                    <strong>Mapa Interativo Municipal</strong>
+                    <span>Camadas de distritos, bairros e transporte</span>
+                  </div>
+                </div>
+                <i class="ri-arrow-right-line" style="color: #94a3b8;"></i>
+              </a>
+              <a href="/docs" class="quick-strip-link">
+                <div class="quick-strip-left">
+                  <i class="ri-code-box-line" style="color: #059669;"></i>
+                  <div>
+                    <strong>API Governamental &amp; Docs</strong>
+                    <span>Endpoints RESTful e emissão de chaves</span>
+                  </div>
+                </div>
+                <i class="ri-arrow-right-line" style="color: #94a3b8;"></i>
+              </a>
+              <a href="/admin/usuarios" class="quick-strip-link" id="hubCardGovernancaAdmin">
+                <div class="quick-strip-left">
+                  <i class="ri-shield-user-line" style="color: #7c3aed;"></i>
+                  <div>
+                    <strong>Painel de Gestão e Governança</strong>
+                    <span>Usuários, secretarias, parâmetros e auditoria</span>
+                  </div>
+                </div>
+                <i class="ri-arrow-right-line" style="color: #94a3b8;"></i>
+              </a>
             </div>
           </section>
 
@@ -304,8 +336,8 @@
         <footer class="hub-footer">
           <div class="hub-footer-content">
             <div class="footer-left">
-              <div class="footer-badge-icon" style="width: 38px; height: 38px; background: rgba(30, 58, 138, 0.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #1e3a8a;">
-                <i class="ri-government-line"></i>
+              <div class="footer-badge-icon" style="width: 40px; height: 40px; background: #ffffff; border: 1.5px solid rgba(255, 204, 0, 0.55); border-radius: 8px; padding: 3px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                <img src="/shared/logo.png" alt="Brasão PMDC" style="width:100%; height:100%; object-fit:contain;">
               </div>
               <div>
                 <h4>Prefeitura Municipal de Duque de Caxias</h4>
@@ -328,7 +360,54 @@
 
   </div>
 
+  <!-- MODAL DE FICHA OFICIAL (SERVIÇO OU EQUIPAMENTO PÚBLICO) PARA VISUALIZAÇÃO E IMPRESSÃO -->
+  <div id="hubFichaModal" class="hub-ficha-backdrop" role="dialog" aria-modal="true" aria-labelledby="fichaModalTitle" style="display:none;">
+    <div class="hub-ficha-dialog">
+      <div class="hub-ficha-header">
+        <div class="hub-ficha-header-left">
+          <div class="hub-ficha-crest">
+            <img src="/shared/logo.png" alt="Brasão PMDC">
+          </div>
+          <div class="hub-ficha-heading">
+            <span class="hub-ficha-kicker" id="fichaModalKicker">PREFEITURA MUNICIPAL DE DUQUE DE CAXIAS · FICHA OFICIAL</span>
+            <h2 id="fichaModalTitle">Carregando informações...</h2>
+            <div class="hub-ficha-badges" id="fichaModalBadges"></div>
+          </div>
+        </div>
+        <button type="button" class="hub-ficha-close" onclick="closeHubFichaModal()" title="Fechar ficha (Esc)" aria-label="Fechar ficha">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+
+      <div class="hub-ficha-body" id="fichaModalBody">
+        <div class="ficha-loading">Consultando dados completos...</div>
+      </div>
+
+      <div class="hub-ficha-footer">
+        <div class="hub-ficha-footer-left">
+          <a href="#" id="fichaModalExternalLink" class="btn-ficha-link" title="Abrir registro no módulo completo">
+            <i class="ri-external-link-line"></i>
+            <span id="fichaModalExternalText">Abrir no módulo</span>
+          </a>
+        </div>
+        <div class="hub-ficha-footer-right">
+          <button type="button" class="btn-ficha-secondary" id="btnCopyFicha" onclick="copyCurrentHubFicha()" title="Copiar resumo formatado">
+            <i class="ri-file-copy-line"></i>
+            <span>Copiar Resumo</span>
+          </button>
+          <button type="button" class="btn-ficha-print" id="btnPrintFicha" onclick="printCurrentHubFicha()" title="Imprimir ficha informativa oficial em A4">
+            <i class="ri-printer-line"></i>
+            <span>Imprimir Ficha</span>
+          </button>
+          <button type="button" class="btn-ficha-close-btn" onclick="closeHubFichaModal()">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="/shared/nav.js"></script>
-  <script src="/shared/hub.js"></script>
+  <script src="hub.js"></script>
 </body>
 </html>

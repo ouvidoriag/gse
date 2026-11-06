@@ -3,6 +3,7 @@ import { generateXlsx } from '../services/xlsxGenerator';
 import { sendEmail } from '../services/mailer';
 import { buildEmailHtml } from '../templates/emailTemplate';
 import { config } from '../config';
+import { getSystemSetting } from './adminSettings';
 
 export const cdsEmailRouter = Router();
 
@@ -62,7 +63,7 @@ cdsEmailRouter.post('/enviar-cadastro', async (req: Request, res: Response) => {
     const dataIso = new Date().toISOString().slice(0, 10);
     const filename = `carta_servicos_${safeOrgao}_${dataIso}.xlsx`;
 
-    const destinatario = config.smtp.destinatario;
+    const destinatario = await getSystemSetting('smtp_destinatario', config.smtp.destinatario);
 
     await sendEmail({
       to: destinatario,

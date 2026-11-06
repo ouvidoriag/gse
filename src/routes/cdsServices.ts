@@ -111,6 +111,17 @@ cdsServicesRouter.get('/categories', async (_req: Request, res: Response) => {
   }
 });
 
+// GET /api/cds/services/secretarias - Retorna todas as 22 secretarias públicas para filtros
+cdsServicesRouter.get('/secretarias', async (_req: Request, res: Response) => {
+  try {
+    const [rows] = await pool.query('SELECT id, name, code FROM secretarias ORDER BY name ASC');
+    res.json(rows);
+  } catch (err) {
+    console.error('Erro ao listar secretarias públicas:', err);
+    res.status(500).json({ error: 'Erro ao carregar secretarias.' });
+  }
+});
+
 // A partir daqui, todos os endpoints administrativos exigem autenticação via Token JWT
 cdsServicesRouter.use(authenticateToken);
 
@@ -195,31 +206,68 @@ async function saveServiceChildTables(
   }
 }
 
-// GET /api/services/export - Exporta os serviços da secretaria em formato Excel (.xlsx)
-servicesRouter.get('/export', async (req: RequestWithUser, res: Response) => {
+// Helper para exportar serviços em formato Excel (.xlsx) respeitando filtros de tela
+async function handleServicesExport(req: RequestWithUser, res: Response) {
   try {
     const isAdmin = req.user?.role === 'admin';
-    const secId = req.user?.secretariaId;
-    const secName = isAdmin ? 'Consolidado' : (req.user?.secretariaNome || 'Secretaria');
+    const userSecId = req.user?.secretariaId;
+    let secName = isAdmin ? 'Consolidado' : (req.user?.secretariaNome || 'Secretaria');
 
-    // 1. Busca os serviços principais do banco (EXCLUINDO serviços ocultos, rascunhos ou arquivados)
-    let services;
-    if (isAdmin) {
-      [services] = await pool.query(
-        `SELECT * FROM services 
-         WHERE (status = 'published' OR status IS NULL)
-           AND status NOT IN ('hidden', 'draft', 'archived')
-         ORDER BY id DESC`
-      ) as any[];
-    } else {
-      [services] = await pool.query(
-        `SELECT * FROM services 
-         WHERE secretaria_id = ? 
-           AND (status = 'published' OR status IS NULL)
-           AND status NOT IN ('hidden', 'draft', 'archived')
-         ORDER BY id DESC`,
-        [secId]
-      ) as any[];
+    const filterSecId = req.body?.secretaria_id || req.query.secretaria_id;
+    const filterCat = req.body?.categoria || req.query.categoria;
+    const filterStatus = req.body?.status || req.query.status;
+    const filterSearch = req.body?.search || req.query.search;
+    const rawIds = req.body?.ids || req.query.ids;
+
+    let targetIds: number[] = [];
+    if (Array.isArray(rawIds)) {
+      targetIds = rawIds.map((id: any) => Number(id)).filter(n => !isNaN(n) && n > 0);
+    } else if (typeof rawIds === 'string' && rawIds.trim()) {
+      targetIds = rawIds.split(',').map((id: string) => Number(id.trim())).filter(n => !isNaN(n) && n > 0);
+    }
+
+    let sql = `
+      SELECT s.*, sec.name as secretaria_nome
+      FROM services s
+      LEFT JOIN secretarias sec ON s.secretaria_id = sec.id
+      WHERE 1=1
+    `;
+    const params: any[] = [];
+
+    if (!isAdmin) {
+      sql += ' AND s.secretaria_id = ?';
+      params.push(userSecId);
+    } else if (filterSecId) {
+      sql += ' AND s.secretaria_id = ?';
+      params.push(Number(filterSecId));
+    }
+
+    if (targetIds.length > 0) {
+      sql += ` AND s.id IN (${targetIds.map(() => '?').join(',')})`;
+      params.push(...targetIds);
+    }
+
+    if (filterStatus === 'published') {
+      sql += " AND (s.status = 'published' OR s.status IS NULL) AND s.status NOT IN ('hidden', 'draft', 'archived')";
+    } else if (filterStatus === 'hidden') {
+      sql += " AND s.status IN ('hidden', 'draft', 'archived')";
+    } else if (!targetIds.length) {
+      sql += " AND (s.status = 'published' OR s.status IS NULL) AND s.status NOT IN ('hidden', 'draft', 'archived')";
+    }
+
+    if (filterSearch) {
+      sql += ' AND (s.name LIKE ? OR s.description LIKE ?)';
+      params.push(`%${String(filterSearch).trim()}%`, `%${String(filterSearch).trim()}%`);
+    }
+
+    sql += ' ORDER BY sec.name ASC, s.name ASC';
+
+    const [services] = await pool.query(sql, params) as any[];
+
+    if (req.body?.filterLabel) {
+      secName = String(req.body.filterLabel).trim();
+    } else if (filterSecId && services.length > 0) {
+      secName = services[0].secretaria_nome || secName;
     }
 
     // 2. Busca e mapeia os relacionamentos 1:N de cada serviço
@@ -246,6 +294,7 @@ servicesRouter.get('/export', async (req: RequestWithUser, res: Response) => {
 
       mappedServices.push({
         servico: s.name || '',
+        orgao: s.secretaria_nome || 'Prefeitura Municipal de Duque de Caxias',
         categoria: categoryName,
         o_que_e: s.description || '',
         como_acessar: s.how_to_access || '',
@@ -268,7 +317,8 @@ servicesRouter.get('/export', async (req: RequestWithUser, res: Response) => {
     const xlsxBuffer = await generateXlsx(secName, mappedServices);
 
     // 4. Envia o arquivo para download
-    const filename = `Carta_Servicos_${secName.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_')}.xlsx`;
+    const cleanLabel = secName.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
+    const filename = `Carta_Servicos_${cleanLabel || 'PMDC'}.xlsx`;
     
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
@@ -278,7 +328,11 @@ servicesRouter.get('/export', async (req: RequestWithUser, res: Response) => {
     console.error('Erro ao exportar serviços para Excel:', err);
     res.status(500).json({ error: 'Erro interno ao exportar serviços para planilha.' });
   }
-});
+}
+
+// GET & POST /api/services/export - Exporta os serviços em formato Excel (.xlsx) com suporte a filtros ativos
+servicesRouter.get('/export', handleServicesExport);
+servicesRouter.post('/export', handleServicesExport);
 
 // GET /api/services - Lista todos os serviços da secretaria do usuário logado
 servicesRouter.get('/', async (req: RequestWithUser, res: Response) => {

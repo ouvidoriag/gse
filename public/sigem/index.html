@@ -73,10 +73,10 @@
           </svg>
         </button>
         <a href="/" class="sidebar-brand-box" title="Portal Integrado PMDC">
-          <div class="sidebar-logo-badge"><i class="ri-government-line"></i></div>
+          <div class="sidebar-logo-badge"><img src="/shared/logo.png" alt="Brasão PMDC" class="sidebar-logo-img"></div>
           <div class="sidebar-brand-text">
-            <span class="sidebar-app-title">SIGEM</span>
-            <span class="sidebar-app-sub">Gestão e Acompanhamento</span>
+            <span class="sidebar-app-title">PORTAL GSE</span>
+            <span class="sidebar-app-sub">SIGEM · Endereços</span>
           </div>
         </a>
       </div>
@@ -95,61 +95,41 @@
           </div>
         </div>
 
-        <!-- 2. COMPLEXOS & HUBS -->
-        <div class="sidebar-nav-item" onclick="navigateTab('hubs', this)" data-tab="hubs" title="Complexos e Polos Compartilhados">
+        <!-- 2. PRÉDIOS COMPARTILHADOS & POLOS -->
+        <div class="sidebar-nav-item" onclick="navigateTab('hubs', this)" data-tab="hubs" id="navItemHubs" title="Prédios Compartilhados e Polos Municipais">
           <div class="nav-icon-box"><i class="ri-community-line"></i></div>
           <div class="nav-text-box">
-            <span class="nav-main-title">Hubs &amp; Complexos</span>
-            <span class="nav-sub-title">12 prédios compartilhados</span>
+            <span class="nav-main-title">Prédios Compartilhados</span>
+            <span class="nav-sub-title" id="badgeTotalHubsSidebar">12 polos municipais</span>
           </div>
         </div>
 
-        <!-- 3. MAPA GEORREFERENCIADO -->
-        <div class="sidebar-nav-item" onclick="navigateTab('mapa', this)" data-tab="mapa" title="Mapa Georreferenciado SIG">
+        <!-- 3. MAPA INTERATIVO -->
+        <div class="sidebar-nav-item" onclick="navigateTab('mapa', this)" data-tab="mapa" id="navItemMapa" title="Mapa Interativo Oficial">
           <div class="nav-icon-box"><i class="ri-map-2-line"></i></div>
           <div class="nav-text-box">
-            <span class="nav-main-title">Mapa SIG</span>
-            <span class="nav-sub-title">Camada ESRI &amp; Satélite</span>
+            <span class="nav-main-title">Mapa Interativo</span>
+            <span class="nav-sub-title">Satélite &amp; Bairros</span>
           </div>
         </div>
 
         <!-- 4. RELATÓRIOS & DADOS -->
-        <div class="sidebar-nav-item" onclick="navigateTab('relatorios', this)" data-tab="relatorios" title="Indicadores e Relatórios">
+        <div class="sidebar-nav-item" onclick="navigateTab('relatorios', this)" data-tab="relatorios" id="navItemRelatorios" title="Indicadores e Relatórios">
           <div class="nav-icon-box"><i class="ri-bar-chart-box-line"></i></div>
           <div class="nav-text-box">
             <span class="nav-main-title">Indicadores &amp; Dados</span>
-            <span class="nav-sub-title">Exportação CSV e JSON</span>
+            <span class="nav-sub-title">Exportação XLSX, CSV e JSON</span>
           </div>
         </div>
 
-        <!-- 5. CONFIGURAÇÕES -->
-        <div class="sidebar-nav-item" onclick="navigateTab('config', this)" data-tab="config" title="Configurações do Sistema">
-          <div class="nav-icon-box"><i class="ri-settings-4-line"></i></div>
+        <!-- 5. DIAGNÓSTICO & BASE SIG -->
+        <div class="sidebar-nav-item" onclick="navigateTab('config', this)" data-tab="config" id="navItemConfigSigem" title="Diagnóstico da Base e Geocoding">
+          <div class="nav-icon-box"><i class="ri-database-2-line"></i></div>
           <div class="nav-text-box">
-            <span class="nav-main-title">Configurações</span>
-            <span class="nav-sub-title">Sistema e APIs</span>
+            <span class="nav-main-title">Diagnóstico &amp; Base</span>
+            <span class="nav-sub-title">Geocoding &amp; Sessão</span>
           </div>
         </div>
-
-        <div class="sidebar-section-header">AÇÕES DO SISTEMA</div>
-
-        <!-- 7. BOTÃO NOVO EQUIPAMENTO -->
-        <button class="sidebar-action-btn" onclick="openNewEquipModal()" title="Cadastrar novo equipamento público">
-          <span class="action-icon"><i class="ri-add-circle-line"></i></span>
-          <div class="nav-text-box">
-            <span class="nav-main-title">Novo Equipamento</span>
-            <span class="nav-sub-title">Cadastrar novo órgão</span>
-          </div>
-        </button>
-
-        <!-- 8. BOTÃO MODO PLANILHA -->
-        <button class="sidebar-action-btn" onclick="toggleSpreadsheetMode()" id="btnSpreadsheetMode" title="Ativar edição rápida em linha">
-          <span class="action-icon"><i class="ri-table-line"></i></span>
-          <div class="nav-text-box">
-            <span class="nav-main-title">Modo Planilha</span>
-            <span class="nav-sub-title">Edição inline em grade</span>
-          </div>
-        </button>
 
       </div>
 
@@ -189,9 +169,9 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
               <span>Carta de Serviços</span>
             </a>
-            <a href="/gse/sigem/" class="top-nav-tab active" id="topTabSigem" title="Ir para o SIGEM — Endereços e Cartografia">
+            <a href="/gse/sigem/" class="top-nav-tab active" id="topTabSigem" title="Ir para o SIGEM — Endereços e Mapa Oficial">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
-              <span>Endereços &amp; GIS</span>
+              <span>Endereços &amp; Mapa</span>
             </a>
             <a href="/gse/docs" class="top-nav-tab" id="topTabApi" title="Portal do Desenvolvedor &amp; API Oficial">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
@@ -237,10 +217,10 @@
           </div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-icon kpi-icon-red"><i class="ri-alert-line"></i></div>
+          <div class="kpi-icon kpi-icon-blue"><i class="ri-map-pin-2-line"></i></div>
           <div class="kpi-meta">
-            <span class="kpi-value" id="kpiDesatualizados">0</span>
-            <span class="kpi-label">Desatualizados / Incompletos</span>
+            <span class="kpi-value" id="kpiGeorreferenciados">466</span>
+            <span class="kpi-label">Georreferenciados (GPS)</span>
           </div>
         </div>
       </div>
@@ -261,42 +241,73 @@
             <option value="4">4º Distrito (Xerém)</option>
           </select>
 
-          <select id="filterSecretaria" class="filter-select" onchange="onFilterChange()" title="Filtrar por Secretaria Gestora">
-            <option value="">Todas as Secretarias</option>
-            <option value="SMS">Saúde (SMS - 95)</option>
-            <option value="SMEDC">Educação (SMEDC - 209)</option>
-            <option value="SEASDIH">Assistência Social (SEASDIH - 47)</option>
-            <option value="FUNDEC">FUNDEC (35)</option>
-            <option value="SMG">Governo (SMG - 33)</option>
-            <option value="SMO">Obras e Defesa Civil (SMO - 23)</option>
-            <option value="SMDC">Defesa Civil (SMDC - 4)</option>
-            <option value="SMDET">Desenv. Econômico (SMDET - 2)</option>
-            <option value="SMSEG">Segurança Pública (SMSEG - 1)</option>
+          <select id="filterSecretaria" class="filter-select" onchange="onFilterChange()" title="Filtrar por Secretaria Gestora ou Concessionária">
+            <option value="">Todas as Secretarias e Órgãos</option>
+            <optgroup label="Secretarias e Autarquias PMDC">
+              <option value="SMEDC">SMEDC — Educação</option>
+              <option value="SMS">SMS — Saúde</option>
+              <option value="SEASDIH">SEASDIH — Assistência Social e Direitos Humanos</option>
+              <option value="FUNDEC">FUNDEC — Ensino Técnico e Pesquisa</option>
+              <option value="SMG">SMG — Governo</option>
+              <option value="SMTSP">SMTSP — Transportes e Serviços Públicos</option>
+              <option value="SMO">SMO — Obras e Agricultura</option>
+              <option value="SMDC">SMDC — Defesa Civil</option>
+              <option value="SMSEG">SMSEG — Segurança Pública</option>
+              <option value="SMDET">SMDET — Desenvolvimento Econômico e Turismo</option>
+              <option value="SMA">SMA — Administração, Planejamento e Orçamento</option>
+              <option value="SMF">SMF — Fazenda</option>
+              <option value="PGM">PGM — Procuradoria Geral do Município</option>
+              <option value="OGMDC">OGMDC — Ouvidoria Geral do Município</option>
+              <option value="IPMDC">IPMDC — Previdência Municipal</option>
+              <option value="SMPA">SMPA — Proteção Animal</option>
+              <option value="SMMA">SMMA — Meio Ambiente</option>
+              <option value="SMUH">SMUH — Urbanismo e Habitação</option>
+              <option value="SMGIM">SMGIM — Gestão, Inclusão e Mulher</option>
+              <option value="SMCT">SMCT — Cultura e Turismo</option>
+              <option value="SEMAC">SEMAC — Articulação Comunitária</option>
+              <option value="SMEL">SMEL — Esporte e Lazer</option>
+            </optgroup>
+            <optgroup label="Concessionárias e Órgãos Externos">
+              <option value="EXT:CONCESSIONARIA">Concessionárias (SuperVia / Águas do Rio / Enel)</option>
+              <option value="EXT:ORGAO_EXTERNO">Órgãos Estaduais / Federais / Judiciário</option>
+            </optgroup>
           </select>
 
           <select id="filterCategoria" class="filter-select" onchange="onFilterChange()">
             <option value="">Todas as Categorias</option>
-            <option value="Educação">Educação (SMEDC)</option>
-            <option value="Saúde">Saúde (SMS)</option>
-            <option value="Assistência">Assistência Social (SEASDIH)</option>
-            <option value="Segurança">Segurança Pública (SMSP)</option>
-            <option value="Administração">Administração / Governo</option>
-            <option value="FUNDEC">FUNDEC / Cursos</option>
-            <option value="Cemit">Cemitérios e Serviços Funerários</option>
-            <option value="Transporte">Mobilidade e Transporte (Trem)</option>
+            <option value="Educação (SMEDC)">Educação (SMEDC)</option>
+            <option value="Saúde Básica (APS / USF / UBS)">Saúde Básica (APS / USF / UBS)</option>
+            <option value="Saúde Especializada / Hospitalar">Saúde Especializada / Hospitalar</option>
+            <option value="Assistência Social (SEASDIH)">Assistência Social (SEASDIH)</option>
+            <option value="FUNDEC">FUNDEC</option>
+            <option value="Secretarias e Órgãos">Secretarias e Órgãos</option>
+            <option value="Segurança, Subprefeituras e Cultura">Segurança, Subprefeituras e Cultura</option>
+            <option value="Mobilidade e Transporte">Mobilidade e Transporte</option>
+            <option value="Cemitérios e Serviços Funerários">Cemitérios e Serviços Funerários</option>
           </select>
 
           <select id="filterStatus" class="filter-select" onchange="onFilterChange()">
             <option value="">Todos os Status</option>
             <option value="Ativo">Ativo</option>
             <option value="Pendente de revisão">Pendente de revisão</option>
-            <option value="Desatualizado">Desatualizado</option>
           </select>
         </div>
 
-        <div style="display: flex; gap: 8px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
           <button id="btnMinhaSecretaria" class="btn btn-secondary btn-sm" style="display: none;" onclick="filtrarMinhaSecretaria()"><i class="ri-user-star-line"></i> Meus Equipamentos</button>
+          <button class="btn btn-secondary btn-sm" id="btnSpreadsheetMode" onclick="toggleSpreadsheetMode()" title="Ativar/desativar edição rápida inline direto na tabela">
+            <i class="ri-table-line"></i> Modo Planilha
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="exportData('equipamentos', 'xlsx')" title="Exportar planilha Excel (.xlsx) obedecendo aos filtros ativos" style="background: #059669; border-color: #059669;">
+            <i class="ri-file-excel-2-line"></i> Exportar Planilha (.xlsx)
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="exportData('equipamentos', 'csv')" title="Exportar CSV obedecendo aos filtros ativos">
+            <i class="ri-download-2-line"></i> CSV
+          </button>
           <button class="btn btn-secondary btn-sm" onclick="clearFilters()">Limpar Filtros</button>
+          <button class="btn btn-primary btn-sm" onclick="openNewEquipModal()" title="Cadastrar novo equipamento público">
+            <i class="ri-add-circle-line"></i> + Novo Equipamento
+          </button>
         </div>
       </div>
 
@@ -323,8 +334,18 @@
         </div>
 
         <!-- BARRA DE PAGINAÇÃO -->
-        <div class="pagination-bar">
-          <div id="paginationInfo">Mostrando 1–25 de 466 endereços cadastrados</div>
+        <div class="pagination-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div id="paginationInfo">Mostrando 1–25 de 466 endereços cadastrados</div>
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted);">
+              <span>Exibir:</span>
+              <select id="itemsPerPageSelect" onchange="changeItemsPerPage(this.value)" style="padding: 3px 6px; font-size: 12px; border: 1px solid var(--border); border-radius: 4px; background: white; font-weight: 600; outline: none;">
+                <option value="25">25 por página</option>
+                <option value="50">50 por página</option>
+                <option value="100">100 por página</option>
+              </select>
+            </div>
+          </div>
           <div class="pagination-pages" id="paginationButtons">
             <!-- Botões gerados via JS -->
           </div>
@@ -333,16 +354,16 @@
 
     </section>
 
-    <!-- ABA 2: HUBS / POLOS INTEGRADOS -->
+    <!-- ABA 2: PRÉDIOS COMPARTILHADOS & POLOS -->
     <section id="viewHubs" class="view-section">
       <div class="toolbar-box">
         <div>
-          <h2 style="font-size: 16px; font-weight: 800; color: var(--navy-900);">Complexos & Polos Governamentais Integrados</h2>
+          <h2 style="font-size: 16px; font-weight: 800; color: var(--navy-900);">Prédios Compartilhados &amp; Polos Municipais</h2>
           <p style="font-size: 12px; color: var(--text-muted);">Edifícios sede e polos municipais que abrigam múltiplos órgãos e secretarias no mesmo endereço.</p>
         </div>
         <button class="btn btn-primary btn-sm" onclick="openNewHubModal()">
           <span><i class="ri-add-line"></i></span>
-          <span>Novo Complexo</span>
+          <span>Novo Prédio / Polo</span>
         </button>
       </div>
 
@@ -360,7 +381,7 @@
           
           <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;">
             <input type="checkbox" id="layerToggleHubs" checked onchange="updateMapLayers()">
-            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-community-line"></i> Complexos / Polos (12 Hubs)</span>
+            <span style="display: inline-flex; align-items: center; gap: 4px;"><i class="ri-community-line"></i> Prédios Compartilhados (<span id="mapHubsCount">12 Polos</span>)</span>
           </label>
 
           <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; cursor: pointer; user-select: none;">
@@ -626,15 +647,21 @@
           </div>
 
           <div style="padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-subtle);">
-            <h3 style="font-size: 14px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 6px;"><i class="ri-file-excel-2-line" style="color: var(--emerald-600); font-size: 16px;"></i> Planilha Tabulada (CSV)</h3>
-            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">Compatível com Microsoft Excel, LibreOffice Calc e Google Sheets (delimitador ';').</p>
-            <button class="btn btn-navy btn-sm" onclick="exportData('equipamentos', 'csv')">Baixar Planilha CSV</button>
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 6px;"><i class="ri-file-excel-2-line" style="color: var(--emerald-600); font-size: 16px;"></i> Planilha de Endereços (XLSX / CSV)</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">Exporta os endereços oficiais obedecendo aos filtros ativos na aba de Equipamentos (ou a base completa quando sem filtro).</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-sm" style="background: #059669; border-color: #059669;" onclick="exportData('equipamentos', 'xlsx')"><i class="ri-file-excel-2-line"></i> Baixar Excel (.xlsx)</button>
+              <button class="btn btn-navy btn-sm" onclick="exportData('equipamentos', 'csv')">Baixar CSV</button>
+            </div>
           </div>
 
           <div style="padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-subtle);">
             <h3 style="font-size: 14px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 6px;"><i class="ri-building-2-line" style="color: var(--navy-700); font-size: 16px;"></i> Catálogo de Complexos (Hubs)</h3>
-            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">Mapeamento dos 12 edifícios governamentais compartilhados e seus órgãos instalados.</p>
-            <button class="btn btn-secondary btn-sm" onclick="exportHubsData('csv')">Exportar Hubs CSV</button>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">Mapeamento dos 12 edifícios governamentais compartilhados com endereço completo (Logradouro, Nº, Bairro, Distrito, CEP, Cidade e UF).</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-sm" onclick="exportHubsData('xlsx')"><i class="ri-file-excel-2-line"></i> Exportar Hubs (.xlsx)</button>
+              <button class="btn btn-secondary btn-sm" onclick="exportHubsData('csv')">Exportar Hubs CSV</button>
+            </div>
           </div>
         </div>
       </div>
@@ -647,7 +674,7 @@
         <!-- CABEÇALHO DA SEÇÃO -->
         <div class="hub-card" style="padding: 24px;">
           <h2 style="font-size: 18px; font-weight: 800; color: var(--navy-900); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
-            <i class="ri-settings-4-line" style="color: var(--primary);"></i> Configurações & Gestão do Sistema
+            <i class="ri-database-2-line" style="color: var(--primary);"></i> Diagnóstico da Base &amp; Geocodificação
           </h2>
           <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Controle de persistência local, integração de serviços de mapas, integridade da base oficial e sessão de acesso.</p>
         </div>
@@ -655,8 +682,8 @@
         <!-- GRID DE CARDS DE CONFIGURAÇÃO -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
 
-          <!-- CARD 1: GOOGLE GEOCODING API -->
-          <div class="hub-card" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+          <!-- CARD 1: GOOGLE GEOCODING API (Acesso restrito ao Admin) -->
+          <div class="hub-card" id="configGoogleKeyCard" style="display: none; padding: 20px; flex-direction: column; justify-content: space-between;">
             <div>
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                 <h3 style="font-size: 15px; font-weight: 700; color: var(--navy-900); display: flex; align-items: center; gap: 8px;">
@@ -668,8 +695,9 @@
                 Permite geocodificação com precisão métrica de telhado (ROOFTOP) no mapa de cadastro. Quando desconectada, o sistema utiliza a base cartográfica municipal e OpenStreetMap.
               </p>
             </div>
-            <div style="display: flex; gap: 8px; margin-top: 8px;">
-              <button class="btn btn-primary btn-sm" onclick="openGoogleKeyModal()"><i class="ri-key-2-line"></i> Gerenciar Chave de API</button>
+            <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-sm" onclick="openGoogleKeyModal()"><i class="ri-key-2-line"></i> Gerenciar Chave Local</button>
+              <a href="/admin/configuracoes" class="btn btn-secondary btn-sm" style="text-decoration: none;"><i class="ri-settings-3-line"></i> Painel Global de Configurações</a>
             </div>
           </div>
 
@@ -683,7 +711,7 @@
                 <span class="badge-status badge-status-ativo">2026 Calibrada</span>
               </div>
               <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 0;">
-                Total de <strong>449 equipamentos públicos</strong> e <strong>12 complexos governamentais</strong> cadastrados e georreferenciados nos 4 distritos municipais.
+                Total de <strong><span id="configTotalEquipCount">466</span> equipamentos públicos</strong> e <strong><span id="configTotalHubsCount">12</span> polos governamentais</strong> cadastrados e georreferenciados nos 4 distritos municipais.
               </p>
             </div>
           </div>
@@ -851,21 +879,45 @@
           <div class="form-row-3">
             <div class="form-ctrl">
               <label>Categoria Oficial <span class="req">*</span></label>
-              <select id="editEquipCat">
-                <option value="Saúde (SMS)">Saúde (SMS)</option>
+              <select id="editEquipCat" onchange="onModalCategoriaChange()">
                 <option value="Educação (SMEDC)">Educação (SMEDC)</option>
+                <option value="Saúde Básica (APS / USF / UBS)">Saúde Básica (APS / USF / UBS)</option>
+                <option value="Saúde Especializada / Hospitalar">Saúde Especializada / Hospitalar</option>
                 <option value="Assistência Social (SEASDIH)">Assistência Social (SEASDIH)</option>
-                <option value="Segurança Pública (SMSP)">Segurança Pública (SMSP)</option>
-                <option value="Administração / Fazenda">Administração / Fazenda</option>
-                <option value="FUNDEC">FUNDEC / Cursos Profissionalizantes</option>
-                <option value="Cultura e Turismo">Cultura e Turismo</option>
-                <option value="Serviços Públicos e Obras">Serviços Públicos e Obras</option>
+                <option value="FUNDEC">FUNDEC</option>
+                <option value="Secretarias e Órgãos">Secretarias e Órgãos</option>
+                <option value="Segurança, Subprefeituras e Cultura">Segurança, Subprefeituras e Cultura</option>
+                <option value="Mobilidade e Transporte">Mobilidade e Transporte</option>
+                <option value="Cemitérios e Serviços Funerários">Cemitérios e Serviços Funerários</option>
               </select>
             </div>
 
             <div class="form-ctrl">
-              <label>Secretaria Responsável</label>
-              <input type="text" id="editEquipSecResp" placeholder="Ex: Secretaria Municipal de Saúde">
+              <label>Secretaria / Órgão Vinculado <span class="req">*</span></label>
+              <select id="editEquipSecResp">
+                <option value="SMEDC" data-id="2" data-nome="Secretaria Municipal de Educação">SMEDC — Secretaria Municipal de Educação</option>
+                <option value="SMS" data-id="1" data-nome="Secretaria Municipal de Saúde">SMS — Secretaria Municipal de Saúde</option>
+                <option value="SEASDIH" data-id="3" data-nome="Secretaria Municipal de Assistência Social e Direitos Humanos">SEASDIH — Assistência Social e Direitos Humanos</option>
+                <option value="FUNDEC" data-id="4" data-nome="Fundação de Apoio à Escola Técnica, Ciência, Tecnologia, Esporte, Lazer, Cultura e Políticas Sociais">FUNDEC — Ensino Técnico e Políticas Sociais</option>
+                <option value="SMG" data-id="5" data-nome="Secretaria Municipal de Governo">SMG — Secretaria Municipal de Governo</option>
+                <option value="SMTSP" data-id="17" data-nome="Secretaria Municipal de Transportes e Serviços Públicos">SMTSP — Transportes e Serviços Públicos</option>
+                <option value="SMO" data-id="13" data-nome="Secretaria Municipal de Obras e Agricultura">SMO — Obras e Agricultura</option>
+                <option value="SMDC" data-id="12" data-nome="Secretaria Municipal de Defesa Civil">SMDC — Defesa Civil</option>
+                <option value="SMSEG" data-id="11" data-nome="Secretaria Municipal de Segurança Pública">SMSEG — Segurança Pública</option>
+                <option value="SMDET" data-id="15" data-nome="Secretaria Municipal de Desenvolvimento Econômico e Turismo">SMDET — Desenvolvimento Econômico</option>
+                <option value="SMA" data-id="6" data-nome="Secretaria Municipal de Administração, Planejamento e Orçamento">SMA — Administração e Planejamento</option>
+                <option value="SMF" data-id="10" data-nome="Secretaria Municipal de Fazenda">SMF — Fazenda</option>
+                <option value="PGM" data-id="7" data-nome="Procuradoria Geral do Município">PGM — Procuradoria Geral</option>
+                <option value="OGMDC" data-id="8" data-nome="Ouvidoria Geral do Município">OGMDC — Ouvidoria Geral</option>
+                <option value="IPMDC" data-id="9" data-nome="Instituto de Previdência dos Servidores Públicos do Município de Duque de Caxias">IPMDC — Previdência Municipal</option>
+                <option value="SMPA" data-id="14" data-nome="Secretaria Municipal de Proteção Animal">SMPA — Proteção Animal</option>
+                <option value="SMMA" data-id="16" data-nome="Secretaria Municipal de Meio Ambiente">SMMA — Meio Ambiente</option>
+                <option value="SMUH" data-id="18" data-nome="Secretaria Municipal de Urbanismo e Habitação">SMUH — Urbanismo e Habitação</option>
+                <option value="SMGIM" data-id="19" data-nome="Secretaria Municipal de Gestão, Inclusão e Mulher">SMGIM — Gestão, Inclusão e Mulher</option>
+                <option value="SMCT" data-id="20" data-nome="Secretaria Municipal de Cultura e Turismo">SMCT — Cultura e Turismo</option>
+                <option value="SEMAC" data-id="21" data-nome="Secretaria Municipal de Articulação Comunitária">SEMAC — Articulação Comunitária</option>
+                <option value="SMEL" data-id="22" data-nome="Secretaria Municipal de Esporte e Lazer">SMEL — Esporte e Lazer</option>
+              </select>
             </div>
 
             <div class="form-ctrl">
@@ -873,7 +925,6 @@
               <select id="editEquipStatus">
                 <option value="Ativo">Ativo</option>
                 <option value="Pendente de revisão">Pendente de revisão</option>
-                <option value="Desatualizado">Desatualizado</option>
               </select>
             </div>
           </div>
@@ -1042,11 +1093,18 @@
             </div>
           </div>
 
-          <div class="form-ctrl">
-            <label>Prédio Compartilhado (Hub / Complexo Vinculado)</label>
-            <select id="editEquipHubSelect">
-              <!-- Populado via JS -->
-            </select>
+          <div class="form-row">
+            <div class="form-ctrl">
+              <label>Bairro Oficial Cartográfico (Lei Municipal / Polígono SIG)</label>
+              <input type="text" id="editEquipBairroOficial" readonly style="background: #f8fafc; color: #334155; font-weight: 600;" placeholder="Calculado automaticamente pelas coordenadas no polígono oficial">
+            </div>
+
+            <div class="form-ctrl">
+              <label>Prédio Compartilhado (Hub / Complexo Vinculado)</label>
+              <select id="editEquipHubSelect">
+                <!-- Populado via JS -->
+              </select>
+            </div>
           </div>
         </div>
 
@@ -1055,9 +1113,9 @@
           <div class="form-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 6px;">
               <i class="ri-map-2-line" style="color: var(--primary); font-size: 18px;"></i>
-              <span>3. Localização no Mapa & Geocodificação (Precisão Cirúrgica)</span>
+              <span>3. Localização no Mapa &amp; Geocodificação</span>
             </div>
-            <button type="button" class="btn btn-secondary btn-xs" id="btnConfigGoogleKeyInModal" onclick="openGoogleKeyModal()" style="font-size: 11px;">
+            <button type="button" class="btn btn-secondary btn-xs" id="btnConfigGoogleKeyInModal" onclick="openGoogleKeyModal()" style="display: none; font-size: 11px;">
               <i class="ri-google-fill" style="color: #ea4335;"></i> Configurar Chave Google
             </button>
           </div>
@@ -1187,7 +1245,7 @@
   </div>
 
   <!-- MODAL DE VISUALIZAÇÃO (FICHA CADASTRAL COMPLETA) -->
-  <div class="modal-backdrop" id="modalViewEquip" onclick="if(event.target === this) closeViewModal()">
+  <div class="modal-backdrop" id="modalViewEquip">
     <div class="modal-box" style="max-width: 680px;">
       <div class="modal-head">
         <div>
@@ -1212,13 +1270,13 @@
   </div>
 
   <!-- MODAL DE CONFIGURAÇÃO DA CHAVE GOOGLE MAPS -->
-  <div class="modal-backdrop" id="modalGoogleKey" onclick="if(event.target === this) closeGoogleKeyModal()">
+  <div class="modal-backdrop" id="modalGoogleKey">
     <div class="modal-box" style="max-width: 540px;">
       <div class="modal-head">
         <div>
           <h3 style="display: flex; align-items: center; gap: 8px;">
             <i class="ri-google-fill" style="color: #ea4335; font-size: 20px;"></i>
-            <span>Google Geocoding API — Precisão Cirúrgica (ROOFTOP)</span>
+            <span>Google Geocoding API — Alta Precisão (ROOFTOP)</span>
           </h3>
           <p>Configuração da API oficial para cravar o pino exatamente no lote/fachada do imóvel.</p>
         </div>
@@ -1255,7 +1313,7 @@
   </div>
 
     <!-- MODAL DE AUDITORIA & LOGS DE GOVERNANÇA (EXCLUSIVO ADM) -->
-  <div class="modal-backdrop" id="modalAuditoria" onclick="if(event.target === this) closeAuditoriaModal()">
+  <div class="modal-backdrop" id="modalAuditoria">
     <div class="modal-box" style="max-width: 1260px; width: 96%; max-height: 94vh;">
       <div class="modal-head" style="background: #0f1b2d; color: #ffffff; border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
         <div>
@@ -1332,7 +1390,7 @@
   </div>
 
   <!-- MODAL DE DETALHES DO DIFF DE AUDITORIA -->
-  <div class="modal-backdrop" id="modalDiffAuditoria" onclick="if(event.target === this) closeDiffModal()" style="z-index: 1050;">
+  <div class="modal-backdrop" id="modalDiffAuditoria" style="z-index: 1050;">
     <div class="modal-box" style="max-width: 760px;">
       <div class="modal-head">
         <div>
@@ -1351,7 +1409,7 @@
   </div>
 
   <!-- MODAL DE CADASTRO DE NOVA CATEGORIA (EXCLUSIVO ADM) -->
-  <div class="modal-backdrop" id="modalNovaCategoria" onclick="if(event.target === this) closeNovaCategoriaModal()">
+  <div class="modal-backdrop" id="modalNovaCategoria">
     <div class="modal-box" style="max-width: 520px;">
       <div class="modal-head">
         <div>
@@ -1419,7 +1477,7 @@
   </div>
 
   <!-- MODAL DE DETALHES DA COMUNIDADE (SIMAC) -->
-  <div class="modal-backdrop" id="modalComunidade" onclick="if(event.target === this) closeComunidadeModal()">
+  <div class="modal-backdrop" id="modalComunidade">
     <div class="modal-box" style="max-width: 680px; max-height: 90vh; display: flex; flex-direction: column;">
       <div class="modal-head">
         <div>
@@ -1474,6 +1532,92 @@
 
       <div class="modal-foot">
         <button type="button" class="btn btn-secondary btn-sm" onclick="closeComunidadeModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CADASTRO DE NOVO PRÉDIO COMPARTILHADO / POLO (HUB) -->
+  <div class="modal-backdrop" id="modalNewHub">
+    <div class="modal-box" style="max-width: 720px;">
+      <div class="modal-head">
+        <div>
+          <h3><i class="ri-building-line" style="color: var(--primary);"></i> Novo Prédio Compartilhado / Polo Municipal</h3>
+          <p>Cadastre um complexo ou edifício sede que abriga múltiplos órgãos no mesmo endereço oficial.</p>
+        </div>
+        <button class="modal-close" onclick="closeNewHubModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-ctrl">
+            <label>Nome do Prédio / Polo / Complexo <span class="req">*</span></label>
+            <input type="text" id="newHubNome" placeholder="Ex: Centro Administrativo James Franco">
+          </div>
+          <div class="form-ctrl">
+            <label>Tipo de Imóvel</label>
+            <input type="text" id="newHubTipo" placeholder="Ex: Complexo Administrativo Municipal" value="Complexo Administrativo Municipal">
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-ctrl">
+            <label>CEP (8 dígitos)</label>
+            <div class="input-with-button">
+              <input type="text" id="newHubCep" placeholder="25000-000" maxlength="9">
+              <button type="button" class="btn btn-secondary btn-xs" onclick="buscarCepNovoHub()"><i class="ri-search-line"></i> Buscar</button>
+            </div>
+          </div>
+          <div class="form-ctrl">
+            <label>Distrito <span class="req">*</span></label>
+            <select id="newHubDistrito">
+              <option value="1">1º Distrito (Centro / Caxias)</option>
+              <option value="2">2º Distrito (Campos Elíseos)</option>
+              <option value="3">3º Distrito (Imbariê)</option>
+              <option value="4">4º Distrito (Xerém)</option>
+            </select>
+          </div>
+          <div class="form-ctrl">
+            <label>Bairro Oficial <span class="req">*</span></label>
+            <input type="text" id="newHubBairro" list="listBairrosModal" placeholder="Ex: Jardim Primavera">
+          </div>
+        </div>
+
+        <div class="form-row" style="grid-template-columns: 2fr 1fr;">
+          <div class="form-ctrl">
+            <label>Logradouro Oficial (Rua / Av / Alameda) <span class="req">*</span></label>
+            <input type="text" id="newHubLogradouro" placeholder="Ex: Alameda James Franco">
+          </div>
+          <div class="form-ctrl">
+            <label>Número do Imóvel</label>
+            <input type="text" id="newHubNumero" placeholder="Ex: 03 ou s/nº">
+          </div>
+        </div>
+
+        <div class="form-ctrl">
+          <label>Complemento / Bloco</label>
+          <input type="text" id="newHubComplemento" placeholder="Ex: Edifício Sede, Térreo ao 3º Andar">
+        </div>
+
+        <div class="form-row">
+          <div class="form-ctrl">
+            <label>Latitude (GPS)</label>
+            <input type="text" id="newHubLat" value="-22.785000">
+          </div>
+          <div class="form-ctrl">
+            <label>Longitude (GPS)</label>
+            <input type="text" id="newHubLon" value="-43.305000">
+          </div>
+        </div>
+
+        <div class="form-ctrl">
+          <label>Descrição e Finalidade do Polo</label>
+          <textarea id="newHubDesc" rows="3" placeholder="Descreva os serviços ou secretarias que operam no edifício..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeNewHubModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="salvarNovoHub()"><i class="ri-save-line"></i> Salvar Polo</button>
       </div>
     </div>
   </div>

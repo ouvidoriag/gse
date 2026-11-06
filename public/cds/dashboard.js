@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateUIForUser();
     await loadCategories();
     await loadServices();
+    loadCdsPublicSecretarias().catch(() => {});
     renderPrioritiesCheckboxGrid();
 
     // Captura parâmetro de busca da URL se vindo do Hub
@@ -130,6 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateUIForUser();
     await loadCategories();
     await loadServices();
+    loadCdsPublicSecretarias().catch(() => {});
     renderPrioritiesCheckboxGrid();
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -278,10 +280,37 @@ function filterByStatus(status, btn) {
   renderServices();
 }
 
-function updateStatusCounts() {
-  const total = currentServices.length;
-  const published = currentServices.filter(s => s.status === 'published' || !s.status).length;
-  const hidden = currentServices.filter(s => s.status === 'hidden' || s.status === 'draft' || s.status === 'archived').length;
+let selectedSecretariaFilter = '';
+
+function getServicesMatchingCategoryAndSearch() {
+  let list = currentServices;
+
+  if (selectedSecretariaFilter) {
+    list = list.filter(s => {
+      const sId = s.secretaria_id ? String(s.secretaria_id) : '';
+      const sNome = (s.secretaria_nome || '').toLowerCase().trim();
+      return sId === selectedSecretariaFilter || sNome === selectedSecretariaFilter.toLowerCase().trim();
+    });
+  }
+
+  if (selectedCategoriesFilter.length > 0) {
+    list = list.filter(s => {
+      if (!s.categoria_nome) return false;
+      const cats = String(s.categoria_nome).split(';').map(c => c.trim());
+      return cats.some(c => selectedCategoriesFilter.includes(c));
+    });
+  }
+  if (searchQuery) {
+    list = list.filter(s => (s.name || '').toLowerCase().includes(searchQuery));
+  }
+  return list;
+}
+
+function updateStatusCounts(baseList) {
+  const source = Array.isArray(baseList) ? baseList : getServicesMatchingCategoryAndSearch();
+  const total = source.length;
+  const published = source.filter(s => s.status === 'published' || !s.status).length;
+  const hidden = source.filter(s => s.status === 'hidden' || s.status === 'draft' || s.status === 'archived').length;
 
   const countAll = document.getElementById('countAll');
   const countPublished = document.getElementById('countPublished');
@@ -290,28 +319,37 @@ function updateStatusCounts() {
   if (countAll) countAll.textContent = total;
   if (countPublished) countPublished.textContent = published;
   if (countHidden) countHidden.textContent = hidden;
+
+  const statsEl = document.getElementById('statsTotalCount');
+  if (statsEl) statsEl.textContent = total;
+
+  const badgeSidebar = document.getElementById('badgeTotalServicos');
+  if (badgeSidebar) {
+    badgeSidebar.textContent = total === currentServices.length
+      ? `${currentServices.length} serviços`
+      : `${total} de ${currentServices.length} serviços`;
+  }
 }
 
 function renderServices() {
   const container = document.getElementById('servicesList');
   if (!container) return;
   
-  // Aplica os filtros de categorias selecionados (se houver)
-  let filtered = selectedCategoriesFilter.length > 0
-    ? currentServices.filter(s => selectedCategoriesFilter.includes(s.categoria_nome))
-    : currentServices;
+  // Aplica filtros de categoria + busca e atualiza contadores dinâmicos
+  const baseFiltered = getServicesMatchingCategoryAndSearch();
+  updateStatusCounts(baseFiltered);
 
   // Aplica o filtro de status (all / published / hidden)
+  let filtered = baseFiltered;
   if (selectedStatusFilter === 'published') {
     filtered = filtered.filter(s => s.status === 'published' || !s.status);
   } else if (selectedStatusFilter === 'hidden') {
     filtered = filtered.filter(s => s.status === 'hidden' || s.status === 'draft' || s.status === 'archived');
   }
 
-  // Aplica o filtro de busca por nome do serviço (case insensitive)
-  if (searchQuery) {
-    filtered = filtered.filter(s => s.name.toLowerCase().includes(searchQuery));
-  }
+  // Atualiza contador principal conforme a aba de status ativa se filtrada
+  const statsEl = document.getElementById('statsTotalCount');
+  if (statsEl) statsEl.textContent = filtered.length;
 
   if (filtered.length === 0) {
     container.innerHTML = `
@@ -1180,24 +1218,24 @@ function renderCategoryFilters() {
 }
 
 function toggleCategoryFilter(categoriaName, btnEl) {
-  const index = selectedCategoriesFilter.indexOf(categoriaName);
+  const isAlreadyOnlySelected =
+    selectedCategoriesFilter.length === 1 && selectedCategoriesFilter[0] === categoriaName;
 
-  if (index > -1) {
-    // Se já estava selecionado, remove
-    selectedCategoriesFilter.splice(index, 1);
-    btnEl.classList.remove('active');
-  } else {
-    // Se não estava selecionado, adiciona
-    selectedCategoriesFilter.push(categoriaName);
-    btnEl.classList.add('active');
-  }
+  // Limpa destaque de todos os botões de categoria
+  document.querySelectorAll('#sidebarFilterList .filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
 
-  // Atualiza destaque do botão "Todos"
   const btnTodos = document.getElementById('filterBtnTodos');
-  if (selectedCategoriesFilter.length === 0) {
-    btnTodos.classList.add('active');
+
+  if (isAlreadyOnlySelected) {
+    // Clicar novamente na mesma categoria limpa o filtro e volta para Todos
+    selectedCategoriesFilter = [];
+    if (btnTodos) btnTodos.classList.add('active');
   } else {
-    btnTodos.classList.remove('active');
+    // Seleção exclusiva: sobrepõe a categoria anterior sem acumular
+    selectedCategoriesFilter = [categoriaName];
+    if (btnEl) btnEl.classList.add('active');
   }
 
   renderServices();
@@ -1222,8 +1260,42 @@ async function exportToExcel() {
   try {
     showToast('Gerando planilha, por favor aguarde...', 'success');
 
-    const response = await fetch('/cds/api/services/export', {
-      headers: { 'Authorization': `Bearer ${token}` }
+    // Identifica os serviços atualmente visíveis/filtrados na tela
+    const baseFiltered = getServicesMatchingCategoryAndSearch();
+    let filtered = baseFiltered;
+    if (selectedStatusFilter === 'published') {
+      filtered = filtered.filter(s => s.status === 'published' || !s.status);
+    } else if (selectedStatusFilter === 'hidden') {
+      filtered = filtered.filter(s => s.status === 'hidden' || s.status === 'draft' || s.status === 'archived');
+    }
+
+    const ids = filtered.map(s => s.id);
+
+    let filterLabel = currentUser?.secretariaNome || 'Secretaria';
+    if (selectedSecretariaFilter) {
+      const secSelect = document.getElementById('cdsFilterSecretaria');
+      if (secSelect && secSelect.selectedOptions[0]) {
+        filterLabel = secSelect.selectedOptions[0].text;
+      }
+    } else if (selectedCategoriesFilter.length === 1) {
+      filterLabel = selectedCategoriesFilter[0];
+    } else if (currentUser?.role === 'admin') {
+      filterLabel = ids.length === currentServices.length ? 'Consolidado' : 'Filtrado';
+    }
+
+    const payload = {
+      ids,
+      status: selectedStatusFilter,
+      filterLabel
+    };
+
+    const response = await fetch(`${CDS_BASE}/cds/api/services/export`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
@@ -1233,23 +1305,80 @@ async function exportToExcel() {
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     
-    // Obtém o nome da secretaria ou usa um padrão
-    const secName = currentUser?.secretariaNome || 'Secretaria';
-    const cleanSecName = secName.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
+    const cleanSecName = filterLabel.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Carta_Servicos_${cleanSecName}.xlsx`;
+    a.download = `Carta_Servicos_${cleanSecName || 'PMDC'}.xlsx`;
     document.body.appendChild(a);
     a.click();
     a.remove();
     
     window.URL.revokeObjectURL(url);
-    showToast('Planilha baixada com sucesso!', 'success');
+    showToast(`Planilha (${filtered.length} serviços) baixada com sucesso!`, 'success');
 
   } catch (err) {
     console.error(err);
     showToast(err.message || 'Erro ao exportar planilha.', 'error');
+  }
+}
+
+function onCdsFilterSecretariaChange(secId) {
+  selectedSecretariaFilter = secId || '';
+  renderServices();
+}
+
+async function loadCdsPublicSecretarias() {
+  try {
+    const res = await fetch(`${CDS_BASE}/cds/api/services/secretarias`);
+    if (!res.ok) return;
+    const secs = await res.json();
+    const sel = document.getElementById('cdsFilterSecretaria');
+    if (sel && Array.isArray(secs)) {
+      const curVal = sel.value;
+      sel.innerHTML = '<option value="">Todas as 22 Secretarias</option>' + 
+        secs.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+      if (curVal) sel.value = curVal;
+    }
+  } catch (e) {
+    console.warn('Erro ao carregar lista de secretarias para filtro do CDS:', e);
+  }
+}
+
+async function buscarCepServicoCds() {
+  const cepInput = document.getElementById('formCep');
+  const numInput = document.getElementById('formNumero');
+  const endInput = document.getElementById('formEndereco');
+  if (!cepInput || !endInput) return;
+
+  const rawCep = (cepInput.value || '').replace(/\D/g, '');
+  if (rawCep.length !== 8) {
+    showToast('Informe um CEP válido com 8 dígitos.', 'error');
+    return;
+  }
+
+  try {
+    showToast('Consultando CEP nos Correios...', 'info');
+    const res = await fetch(`https://viacep.com.br/ws/${rawCep}/json/`);
+    if (!res.ok) throw new Error('Falha na consulta ao ViaCEP.');
+    const data = await res.json();
+    if (data.erro) {
+      showToast('CEP não encontrado.', 'error');
+      return;
+    }
+
+    const logradouro = data.logradouro || '';
+    const bairro = data.bairro || '';
+    const localidade = data.localidade || 'Duque de Caxias';
+    const uf = data.uf || 'RJ';
+    const cepFormatado = data.cep || rawCep;
+    const num = numInput && numInput.value.trim() ? `nº ${numInput.value.trim()}` : 's/nº';
+
+    endInput.value = `${logradouro}, ${num} - ${bairro}, ${localidade} - ${uf}, CEP ${cepFormatado}`;
+    showToast('Endereço preenchido com sucesso!', 'success');
+  } catch (err) {
+    console.error(err);
+    showToast('Erro ao consultar ViaCEP.', 'error');
   }
 }
 

@@ -1,9 +1,11 @@
 import { Router, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import ExcelJS from 'exceljs';
 import mysqlPool from '../database/mysql';
 import { authenticateToken, requireAdmin, RequestWithUser } from '../middlewares/auth';
 import { registrarAuditoria } from '../middlewares/audit';
 import { runSigemExport } from '../services/sigemExporter';
-import { geocodeLocation } from '../services/geocodingService';
+import { geocodeLocation, findOfficialBairroByPoint } from '../services/geocodingService';
 import { config } from '../config';
 
 export const sigemRouter = Router();
@@ -126,6 +128,51 @@ export async function getSigemSecretariaId(user: any): Promise<number | null> {
 
 // Alias de retrocompatibilidade
 export const getSqliteSecretariaId = getSigemSecretariaId;
+
+/**
+ * Resolve o ID da secretaria na tabela sigem_secretarias a partir de ID, sigla, nome ou categoria padrão
+ */
+export async function resolveSecretariaSigemId(
+  secInput: any,
+  catId: number,
+  fallbackUserSecId: number | null = null
+): Promise<number> {
+  if (secInput !== undefined && secInput !== null && String(secInput).trim() !== '') {
+    const clean = String(secInput).trim();
+    try {
+      if (!isNaN(Number(clean)) && Number(clean) > 0) {
+        const [rows]: any = await mysqlPool.query(
+          'SELECT id FROM sigem_secretarias WHERE id = ? OR mysql_id = ? LIMIT 1',
+          [Number(clean), Number(clean)]
+        );
+        if (rows && rows.length > 0) return Number(rows[0].id);
+      }
+      let [rows]: any = await mysqlPool.query(
+        'SELECT id FROM sigem_secretarias WHERE LOWER(sigla) = LOWER(?) OR LOWER(nome) = LOWER(?) LIMIT 1',
+        [clean, clean]
+      );
+      if (rows && rows.length > 0) return Number(rows[0].id);
+
+      [rows] = await mysqlPool.query(
+        'SELECT id FROM sigem_secretarias WHERE ? LIKE CONCAT("%", sigla, "%") OR LOWER(nome) LIKE CONCAT("%", LOWER(?), "%") LIMIT 1',
+        [clean, clean]
+      );
+      if (rows && rows.length > 0) return Number(rows[0].id);
+    } catch (err: any) {
+      console.warn('[SIGEM] Erro ao resolver secretaria solicitada:', err.message);
+    }
+  }
+
+  if (fallbackUserSecId && fallbackUserSecId > 0) return fallbackUserSecId;
+
+  if (catId === 2 || catId === 3) return 1; // SMS
+  if (catId === 4) return 2; // SMEDC
+  if (catId === 5) return 4; // FUNDEC
+  if (catId === 6) return 3; // SEASDIH
+  if (catId === 7) return 11; // SMSEG
+  if (catId === 8 || catId === 9) return 17; // SMTSP
+  return 5; // SMG
+}
 
 /**
  * 🔒 RBAC SETORIAL: Verifica se o usuário tem permissão para editar/excluir o equipamento
@@ -273,7 +320,21 @@ sigemRouter.get(['/geocode', '/sigem/geocode'], async (req: Request, res: Respon
     const bairro = req.query.bairro ? String(req.query.bairro) : undefined;
     const distrito = req.query.distrito ? Number(req.query.distrito) : undefined;
     const name = req.query.name ? String(req.query.name) : undefined;
-    const userKey = req.query.key ? String(req.query.key).trim() : undefined;
+
+    // 🛡️ Segurança: Chaves externas via parâmetro 'key' são ignoradas a menos que enviadas por administrador autenticado
+    let userKey: string | undefined = undefined;
+    if (req.query.key) {
+      const authHeader = req.headers.authorization;
+      if (authHeader) {
+        try {
+          const token = authHeader.replace(/^Bearer\s+/, '').trim();
+          const decoded: any = jwt.verify(token, config.jwtSecret);
+          if (decoded && decoded.role === 'admin') {
+            userKey = String(req.query.key).trim();
+          }
+        } catch (_) {}
+      }
+    }
 
     if (!address && !logradouro && !name) {
       return res.status(400).json({ error: 'Informe ao menos o endereço, logradouro ou nome para geocodificação.' });
@@ -382,6 +443,157 @@ sigemRouter.get('/secretarias', async (_req: Request, res: Response) => {
 });
 
 // ------------------------------------------
+// 3.2. EXPORTAÇÃO DE PLANILHA XLSX DE EQUIPAMENTOS (RESPEITANDO FILTROS)
+// ------------------------------------------
+async function handleEquipamentosExportXlsx(req: Request, res: Response) {
+  try {
+    const idsInput = Array.isArray(req.body?.ids) ? req.body.ids.map((x: any) => String(x).trim()).filter(Boolean) : null;
+    let rows: any[] = [];
+
+    if (idsInput && idsInput.length > 0) {
+      const placeholders = idsInput.map(() => '?').join(',');
+      const [dbRows]: any = await mysqlPool.query(
+        `SELECT * FROM vw_equipamentos_consolidada WHERE id IN (${placeholders}) ORDER BY distrito ASC, nome ASC`,
+        idsInput
+      );
+      rows = dbRows || [];
+    } else if (Array.isArray(req.body?.ids) && req.body.ids.length === 0) {
+      rows = [];
+    } else {
+      const { categoria, distrito, secretaria_sigla, status, q } = req.query;
+      let sql = 'SELECT * FROM vw_equipamentos_consolidada WHERE 1=1';
+      const params: any[] = [];
+      if (categoria) {
+        sql += ' AND categoria LIKE ?';
+        params.push(`%${String(categoria).trim()}%`);
+      }
+      if (distrito) {
+        sql += ' AND distrito = ?';
+        params.push(Number(distrito));
+      }
+      if (secretaria_sigla) {
+        sql += ' AND secretaria_sigla = ?';
+        params.push(String(secretaria_sigla).trim());
+      }
+      if (status) {
+        sql += ' AND LOWER(status) = LOWER(?)';
+        params.push(String(status).trim());
+      }
+      if (q) {
+        sql += ' AND (nome LIKE ? OR sigla LIKE ? OR endereco LIKE ? OR bairro LIKE ? OR bairro_oficial LIKE ? OR telefone LIKE ? OR secretaria_sigla LIKE ? OR secretaria_nome LIKE ?)';
+        const term = `%${String(q).trim()}%`;
+        params.push(term, term, term, term, term, term, term, term);
+      }
+      sql += ' ORDER BY distrito ASC, nome ASC';
+      const [dbRows]: any = await mysqlPool.query(sql, params);
+      rows = dbRows || [];
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'GSE — Prefeitura Municipal de Duque de Caxias';
+    workbook.created = new Date();
+
+    const sheet = workbook.addWorksheet('Equipamentos Públicos', {
+      views: [{ state: 'frozen', ySplit: 1 }],
+    });
+
+    sheet.columns = [
+      { header: 'ID', key: 'id', width: 12 },
+      { header: 'Nome Oficial do Equipamento', key: 'nome', width: 44 },
+      { header: 'Sigla', key: 'sigla', width: 14 },
+      { header: 'Categoria Oficial', key: 'categoria', width: 30 },
+      { header: 'Secretaria (TAG)', key: 'secretaria_sigla', width: 16 },
+      { header: 'Secretaria / Órgão Gestor', key: 'secretaria_nome', width: 38 },
+      { header: 'Status', key: 'status', width: 14 },
+      { header: 'Distrito', key: 'distrito', width: 12 },
+      { header: 'Bairro', key: 'bairro', width: 24 },
+      { header: 'Bairro Oficial Cartográfico', key: 'bairro_oficial', width: 26 },
+      { header: 'Logradouro', key: 'logradouro', width: 36 },
+      { header: 'Número', key: 'numero', width: 12 },
+      { header: 'Complemento / Sala', key: 'predio_sala', width: 24 },
+      { header: 'CEP', key: 'cep', width: 14 },
+      { header: 'Cidade', key: 'cidade', width: 20 },
+      { header: 'UF', key: 'uf', width: 6 },
+      { header: 'Telefone', key: 'telefone', width: 18 },
+      { header: 'E-mail', key: 'email', width: 28 },
+      { header: 'Horário de Funcionamento', key: 'horario_funcionamento', width: 26 },
+      { header: 'Complexo Compartilhado (Hub)', key: 'hub_nome', width: 34 },
+      { header: 'Latitude', key: 'lat', width: 14 },
+      { header: 'Longitude', key: 'lon', width: 14 },
+    ];
+
+    const headerRow = sheet.getRow(1);
+    headerRow.height = 26;
+    headerRow.eachCell((cell) => {
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF002244' } };
+      cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 11, name: 'Calibri' };
+      cell.alignment = { vertical: 'middle', horizontal: 'left' };
+      cell.border = {
+        bottom: { style: 'medium', color: { argb: 'FFFFCC00' } },
+      };
+    });
+
+    rows.forEach((r, idx) => {
+      const nomeUpper = String(r.nome || '').toUpperCase();
+      let secSigla = r.secretaria_sigla || 'PMDC';
+      let secNome = r.secretaria_nome || 'Prefeitura Municipal de Duque de Caxias';
+      if (nomeUpper.includes('ESTAÇÃO FERROVIÁRIA') || nomeUpper.includes('ESTACAO FERROVIARIA') || nomeUpper.includes('SUPERVIA')) {
+        secSigla = `${secSigla} / SUPERVIA`;
+        secNome = `${secNome} (Concessionária SuperVia)`;
+      }
+
+      const row = sheet.addRow({
+        id: r.id,
+        nome: r.nome || '',
+        sigla: r.sigla || '',
+        categoria: r.categoria || '',
+        secretaria_sigla: secSigla,
+        secretaria_nome: secNome,
+        status: r.status || 'Ativo',
+        distrito: r.distrito ? `${r.distrito}º Distrito` : '',
+        bairro: r.bairro || '',
+        bairro_oficial: r.bairro_oficial || r.bairro || '',
+        logradouro: r.logradouro || r.endereco || '',
+        numero: r.numero || 's/nº',
+        predio_sala: r.predio_sala || r.complemento || '',
+        cep: r.cep || '',
+        cidade: 'Duque de Caxias',
+        uf: 'RJ',
+        telefone: r.telefone || '',
+        email: r.email || '',
+        horario_funcionamento: r.horario_funcionamento || '',
+        hub_nome: r.hub_nome || '',
+        lat: r.lat ?? r.latitude ?? '',
+        lon: r.lon ?? r.longitude ?? '',
+      });
+
+      if (idx % 2 === 1) {
+        row.eachCell((cell) => {
+          cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF8FAFC' } };
+        });
+      }
+    });
+
+    sheet.autoFilter = {
+      from: { row: 1, column: 1 },
+      to: { row: 1, column: sheet.columns.length },
+    };
+
+    const fileDate = new Date().toISOString().slice(0, 10);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="enderecos_equipamentos_pmdc_${fileDate}.xlsx"`);
+
+    await workbook.xlsx.write(res);
+    res.end();
+  } catch (err: any) {
+    res.status(500).json({ error: 'Erro ao exportar planilha de endereços: ' + err.message });
+  }
+}
+
+sigemRouter.get('/equipamentos/export-xlsx', handleEquipamentosExportXlsx);
+sigemRouter.post('/equipamentos/export-xlsx', handleEquipamentosExportXlsx);
+
+// ------------------------------------------
 // 4. DETALHE DE UM EQUIPAMENTO
 // ------------------------------------------
 sigemRouter.get('/equipamentos/:id', async (req: Request, res: Response) => {
@@ -467,9 +679,21 @@ sigemRouter.post('/equipamentos', authenticateToken, async (req: RequestWithUser
 
     const validPrecisao = ['NUMERO_EXATO', 'APROXIMADO_LOGRADOURO', 'CENTROIDE_BAIRRO', 'ESTIMADO'];
     const precisaoFinal = validPrecisao.includes(body.precisao_geo) ? body.precisao_geo : 'APROXIMADO_LOGRADOURO';
-    const statusFinal = body.status ? body.status.trim() : 'Ativo';
-    const bairroOficial = body.bairro_oficial ? String(body.bairro_oficial).trim() : null;
-    const distritoOficial = body.distrito_oficial ? String(body.distrito_oficial).trim() : null;
+    const statusFinal = body.status && String(body.status).trim().toLowerCase() === 'ativo'
+      ? 'Ativo'
+      : (body.status ? String(body.status).trim() : 'Ativo');
+
+    let bairroOficial = body.bairro_oficial ? String(body.bairro_oficial).trim() : null;
+    let distritoOficial = body.distrito_oficial ? String(body.distrito_oficial).trim() : null;
+    if (latitude !== null && longitude !== null && !isNaN(latitude) && !isNaN(longitude)) {
+      const geoPoly = findOfficialBairroByPoint(latitude, longitude);
+      if (geoPoly.bairroOficial) {
+        if (!bairroOficial) bairroOficial = geoPoly.bairroOficial;
+        if (!distritoOficial) distritoOficial = geoPoly.distritoOficial;
+      } else if (!bairroOficial) {
+        bairroOficial = 'Fora do Limite Municipal';
+      }
+    }
 
     const [endResult]: any = await conn.query(`
       INSERT INTO enderecos (bairro_id, logradouro, numero, complemento, cep, latitude, longitude, precisao_geo, bairro_oficial, distrito_oficial, criado_em)
@@ -522,20 +746,15 @@ sigemRouter.post('/equipamentos', authenticateToken, async (req: RequestWithUser
       `, [novoId, String(body.email).trim()]);
     }
 
-    // 🏛️ Vincula automaticamente a Secretaria do Usuário / Solicitada
+    // 🏛️ Vincula automaticamente a Secretaria Solicitada ou do Usuário / Categoria
     const user = req.user;
     const userSecId = await getSigemSecretariaId(user);
-    let targetSecId = (user?.role === 'admin' && body.secretaria_id) 
-      ? Number(body.secretaria_id) 
-      : userSecId;
-
-    if (!targetSecId) {
-      if (catId === 2 || catId === 3) targetSecId = 1; // SMS
-      else if (catId === 4) targetSecId = 2; // SMEDC
-      else if (catId === 5) targetSecId = 4; // FUNDEC
-      else if (catId === 6) targetSecId = 3; // SEASDIH
-      else targetSecId = 5; // SMG
-    }
+    const requestedSecInput = body.secretaria_id || body.secretaria_sigla || body.secretaria_responsavel;
+    const targetSecId = await resolveSecretariaSigemId(
+      user?.role === 'admin' ? requestedSecInput : (userSecId ? null : requestedSecInput),
+      catId,
+      userSecId
+    );
 
     await conn.query(`
       INSERT INTO equipamento_secretarias (equipamento_id, secretaria_id, tipo_relacao, principal, inicio_vigencia)
@@ -607,7 +826,8 @@ sigemRouter.put('/equipamentos/:id', authenticateToken, async (req: RequestWithU
       }
 
       const predio_sala = body.predio_sala !== undefined ? body.predio_sala : anterior.predio_sala;
-      const status = body.status !== undefined ? body.status : anterior.status;
+      const rawStatus = body.status !== undefined ? String(body.status).trim() : anterior.status;
+      const status = rawStatus && rawStatus.toLowerCase() === 'ativo' ? 'Ativo' : rawStatus;
       const horario = body.horario_funcionamento !== undefined ? body.horario_funcionamento : anterior.horario_funcionamento;
       const descricao = body.descricao !== undefined ? body.descricao : anterior.descricao;
       const codigo_cnes = body.codigo_cnes !== undefined ? body.codigo_cnes : anterior.codigo_cnes;
@@ -636,8 +856,19 @@ sigemRouter.put('/equipamentos/:id', authenticateToken, async (req: RequestWithU
           const cep = body.cep !== undefined ? body.cep : endAtual.cep;
           const latitude = body.latitude !== undefined ? Number(body.latitude) : (body.lat !== undefined ? Number(body.lat) : endAtual.latitude);
           const longitude = body.longitude !== undefined ? Number(body.longitude) : (body.lon !== undefined ? Number(body.lon) : endAtual.longitude);
-          const bairroOficial = body.bairro_oficial !== undefined ? body.bairro_oficial : endAtual.bairro_oficial;
-          const distritoOficial = body.distrito_oficial !== undefined ? body.distrito_oficial : endAtual.distrito_oficial;
+          let bairroOficial = body.bairro_oficial !== undefined ? body.bairro_oficial : endAtual.bairro_oficial;
+          let distritoOficial = body.distrito_oficial !== undefined ? body.distrito_oficial : endAtual.distrito_oficial;
+
+          const coordsChanged = (latitude !== endAtual.latitude) || (longitude !== endAtual.longitude);
+          if (latitude !== null && longitude !== null && !isNaN(Number(latitude)) && !isNaN(Number(longitude)) && (coordsChanged || !bairroOficial)) {
+            const geoPoly = findOfficialBairroByPoint(Number(latitude), Number(longitude));
+            if (geoPoly.bairroOficial) {
+              bairroOficial = geoPoly.bairroOficial;
+              distritoOficial = geoPoly.distritoOficial;
+            } else if (!bairroOficial) {
+              bairroOficial = 'Fora do Limite Municipal';
+            }
+          }
 
           const validPrecisao = ['NUMERO_EXATO', 'APROXIMADO_LOGRADOURO', 'CENTROIDE_BAIRRO', 'ESTIMADO'];
           const precisaoGeo = (body.precisao_geo && validPrecisao.includes(body.precisao_geo)) ? body.precisao_geo : endAtual.precisao_geo;
@@ -668,9 +899,10 @@ sigemRouter.put('/equipamentos/:id', authenticateToken, async (req: RequestWithU
         }
       }
 
-      // Se admin forneceu nova secretaria responsável, atualiza relação
-      if (req.user?.role === 'admin' && body.secretaria_id !== undefined) {
-        const newSecId = Number(body.secretaria_id);
+      // Se admin (ou gestor autorizado) forneceu secretaria responsável, atualiza relação
+      const requestedSecUpdate = body.secretaria_id ?? body.secretaria_sigla ?? body.secretaria_responsavel;
+      if (req.user?.role === 'admin' && requestedSecUpdate !== undefined && String(requestedSecUpdate).trim() !== '') {
+        const newSecId = await resolveSecretariaSigemId(requestedSecUpdate, categoria_id, null);
         const [secExistRows]: any = await conn.query('SELECT id FROM equipamento_secretarias WHERE equipamento_id = ? AND principal = 1', [equipId]);
         if (secExistRows && secExistRows.length > 0) {
           await conn.query('UPDATE equipamento_secretarias SET secretaria_id = ? WHERE id = ?', [newSecId, secExistRows[0].id]);
@@ -772,7 +1004,7 @@ sigemRouter.get('/distritos', async (_req: Request, res: Response) => {
     const [distritos]: any = await mysqlPool.query(`
       SELECT d.*, count(e.id) as total_equipamentos
       FROM distritos d
-      LEFT JOIN bairros b ON b.distrito_id = d.numero
+      LEFT JOIN bairros b ON b.distrito_id = d.id
       LEFT JOIN enderecos ed ON ed.bairro_id = b.id
       LEFT JOIN equipamentos e ON e.endereco_id = ed.id
       GROUP BY d.id, d.numero, d.nome, d.sede
@@ -856,18 +1088,296 @@ sigemRouter.post('/categorias', authenticateToken, async (req: RequestWithUser, 
   }
 });
 
+const HUBS_COMPLETE_SQL = `
+  SELECT
+    h.id as hub_db_id,
+    COALESCE(h.codigo_hub, CONCAT('hub_', h.id)) as id,
+    h.codigo_hub,
+    h.nome,
+    h.tipo_imovel as tipo,
+    h.capacidade,
+    h.status,
+    h.descricao,
+    COALESCE(en.logradouro, '') as logradouro,
+    COALESCE(en.numero, 's/nº') as numero,
+    COALESCE(en.complemento, '') as complemento,
+    TRIM(CONCAT(
+      COALESCE(en.logradouro, ''),
+      CASE
+        WHEN en.numero IS NOT NULL AND en.numero != '' AND COALESCE(en.logradouro, '') NOT LIKE CONCAT('%', en.numero, '%')
+        THEN CONCAT(', ', en.numero)
+        ELSE ''
+      END
+    )) as endereco,
+    COALESCE(en.cep, '25000-000') as cep,
+    COALESCE(b.nome, en.bairro_oficial, '') as bairro,
+    en.bairro_oficial,
+    CAST(COALESCE(d.numero, 1) AS CHAR) as distrito,
+    'Duque de Caxias' as cidade,
+    'RJ' as uf,
+    en.latitude as lat,
+    en.longitude as lon,
+    COUNT(e.id) as total_ocupantes
+  FROM hubs_predios h
+  LEFT JOIN enderecos en ON en.id = h.endereco_id
+  LEFT JOIN bairros b ON b.id = en.bairro_id
+  LEFT JOIN distritos d ON d.id = b.distrito_id
+  LEFT JOIN equipamentos e ON e.hub_id = h.id
+  GROUP BY
+    h.id, h.codigo_hub, h.nome, h.tipo_imovel, h.capacidade, h.status, h.descricao,
+    en.logradouro, en.numero, en.complemento, en.cep, b.nome, en.bairro_oficial, d.numero, en.latitude, en.longitude
+  ORDER BY h.id ASC
+`;
+
 sigemRouter.get('/hubs', async (_req: Request, res: Response) => {
   try {
-    const [hubs]: any = await mysqlPool.query(`
-      SELECT h.*, count(e.id) as total_ocupantes
-      FROM hubs_predios h
-      LEFT JOIN equipamentos e ON e.hub_id = h.id
-      GROUP BY h.id, h.codigo_hub, h.nome, h.tipo, h.endereco_id, h.distrito_id, h.bairro_id, h.descricao, h.criado_em, h.atualizado_em
-      ORDER BY h.id ASC
-    `);
+    const [hubs]: any = await mysqlPool.query(HUBS_COMPLETE_SQL);
     res.json(hubs);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /hubs - Cria novo Prédio Compartilhado / Hub (Admin ou Operador Autenticado)
+sigemRouter.post('/hubs', authenticateToken, async (req: RequestWithUser, res: Response) => {
+  try {
+    const {
+      nome,
+      tipo_imovel,
+      logradouro,
+      numero,
+      complemento,
+      bairro,
+      distrito,
+      cep,
+      latitude,
+      longitude,
+      descricao
+    } = req.body;
+
+    if (!nome || !logradouro || !bairro) {
+      res.status(400).json({ error: 'Nome do Complexo/Polo, Logradouro e Bairro são obrigatórios.' });
+      return;
+    }
+
+    const bairroId = await resolveBairroId(bairro, distrito);
+    const latNum = parseFloat(latitude) || -22.785000;
+    const lonNum = parseFloat(longitude) || -43.305000;
+    const distNum = parseInt(distrito || '1', 10);
+    const cepStr = (cep || '25000-000').trim();
+
+    // 1. Insere endereço base
+    const [endResult]: any = await mysqlPool.query(
+      `INSERT INTO enderecos (logradouro, numero, complemento, bairro_id, bairro_oficial, distrito_oficial, cep, latitude, longitude)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        logradouro.trim(),
+        numero || 's/nº',
+        complemento || null,
+        bairroId,
+        bairro.trim(),
+        distNum,
+        cepStr,
+        latNum,
+        lonNum
+      ]
+    );
+
+    const enderecoId = endResult.insertId;
+
+    // 2. Insere Hub
+    const [hubResult]: any = await mysqlPool.query(
+      `INSERT INTO hubs_predios (codigo_hub, nome, endereco_id, tipo_imovel, capacidade, status, descricao)
+       VALUES (?, ?, ?, ?, ?, 'ATIVO', ?)`,
+      [
+        `hub_${enderecoId}`,
+        nome.trim(),
+        enderecoId,
+        tipo_imovel || 'Complexo Administrativo Municipal',
+        10,
+        descricao || 'Polo / Complexo Governamental de Duque de Caxias'
+      ]
+    );
+
+    const newHubId = hubResult.insertId;
+    // Normaliza codigo_hub com o id real
+    await mysqlPool.query('UPDATE hubs_predios SET codigo_hub = ? WHERE id = ?', [`hub_${newHubId}`, newHubId]);
+
+    await registrarAuditoria(
+      'hubs_predios',
+      newHubId,
+      'INSERT',
+      null,
+      { id: newHubId, nome, enderecoId, logradouro, bairro, distrito },
+      req.user?.username || 'admin',
+      1,
+      req
+    );
+
+    // Sincroniza arquivos JSON e espelho SQLite em segundo plano
+    runSigemExport().catch(e => console.warn('[SIGEM] Erro ao sincronizar pós inserção de Hub:', e));
+
+    const [hubs]: any = await mysqlPool.query(`${HUBS_COMPLETE_SQL.trim()} HAVING h.id = ?`, [newHubId]);
+    const createdHub = hubs && hubs.length > 0 ? hubs[0] : { id: newHubId, nome };
+
+    res.status(201).json({
+      success: true,
+      message: 'Prédio Compartilhado / Polo criado com sucesso!',
+      hub: createdHub
+    });
+  } catch (err: any) {
+    console.error('Erro ao cadastrar Hub:', err);
+    res.status(500).json({ error: 'Erro ao cadastrar polo compartilhado: ' + err.message });
+  }
+});
+
+// DELETE /hubs/:id - Exclui polo desvinculando unidades instaladas previamente (Admin)
+sigemRouter.delete('/hubs/:id', authenticateToken, async (req: RequestWithUser, res: Response) => {
+  try {
+    if (req.user?.role !== 'admin') {
+      res.status(403).json({ error: 'Apenas Administradores podem excluir polos e prédios compartilhados.' });
+      return;
+    }
+
+    const hubParam = req.params.id;
+    let [rows]: any = await mysqlPool.query(
+      'SELECT id, codigo_hub, nome, endereco_id FROM hubs_predios WHERE id = ? OR codigo_hub = ? LIMIT 1',
+      [hubParam, hubParam]
+    );
+
+    if (!rows || rows.length === 0) {
+      res.status(404).json({ error: 'Prédio Compartilhado / Polo não encontrado.' });
+      return;
+    }
+
+    const hub = rows[0];
+
+    // 1. Desvincula qualquer equipamento que aponte para este Hub
+    await mysqlPool.query(
+      'UPDATE equipamentos SET hub_id = NULL WHERE hub_id = ? OR hub_id = ?',
+      [hub.id, hub.codigo_hub]
+    );
+
+    // 2. Remove o registro do Hub
+    await mysqlPool.query('DELETE FROM hubs_predios WHERE id = ?', [hub.id]);
+
+    await registrarAuditoria(
+      'hubs_predios',
+      hub.id,
+      'DELETE',
+      hub,
+      null,
+      req.user?.username || 'admin',
+      1,
+      req
+    );
+
+    // Sincroniza em segundo plano
+    runSigemExport().catch(e => console.warn('[SIGEM] Erro ao sincronizar pós exclusão de Hub:', e));
+
+    res.json({
+      success: true,
+      message: `Polo "${hub.nome}" excluído com sucesso e unidades desvinculadas.`
+    });
+  } catch (err: any) {
+    console.error('Erro ao excluir Hub:', err);
+    res.status(500).json({ error: 'Erro ao excluir polo compartilhado: ' + err.message });
+  }
+});
+
+sigemRouter.get('/hubs/export-xlsx', async (_req: Request, res: Response) => {
+  try {
+    const [hubs]: any = await mysqlPool.query(HUBS_COMPLETE_SQL);
+    const [ocupantesRows]: any = await mysqlPool.query(`
+      SELECT hub_id, hub_codigo, GROUP_CONCAT(nome ORDER BY nome SEPARATOR ' | ') as lista_unidades
+      FROM vw_equipamentos_consolidada
+      WHERE hub_id IS NOT NULL
+      GROUP BY hub_id, hub_codigo
+    `);
+    const mapOcupantes = new Map<string, string>();
+    (ocupantesRows || []).forEach((r: any) => {
+      if (r.hub_id) mapOcupantes.set(String(r.hub_id), r.lista_unidades || '');
+      if (r.hub_codigo) mapOcupantes.set(String(r.hub_codigo), r.lista_unidades || '');
+    });
+
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'GSE — Prefeitura Municipal de Duque de Caxias';
+    workbook.created = new Date();
+
+    const sheet = workbook.addWorksheet('Complexos e Hubs PMDC', {
+      views: [{ state: 'frozen', ySplit: 1 }],
+    });
+
+    sheet.columns = [
+      { header: 'Código', key: 'id', width: 12 },
+      { header: 'Nome do Complexo / Hub', key: 'nome', width: 42 },
+      { header: 'Tipo de Imóvel', key: 'tipo', width: 22 },
+      { header: 'Logradouro e Número', key: 'endereco', width: 36 },
+      { header: 'Bairro', key: 'bairro', width: 22 },
+      { header: 'Distrito', key: 'distrito', width: 14 },
+      { header: 'Cidade', key: 'cidade', width: 18 },
+      { header: 'UF', key: 'uf', width: 6 },
+      { header: 'CEP', key: 'cep', width: 14 },
+      { header: 'Endereço Oficial Completo', key: 'endereco_completo', width: 64 },
+      { header: 'Total de Órgãos', key: 'total_ocupantes', width: 16 },
+      { header: 'Unidades Instaladas', key: 'unidades', width: 60 },
+      { header: 'Latitude', key: 'lat', width: 14 },
+      { header: 'Longitude', key: 'lon', width: 14 },
+    ];
+
+    const headerRow = sheet.getRow(1);
+    headerRow.height = 26;
+    headerRow.eachCell((cell) => {
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF002244' } };
+      cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 11, name: 'Calibri' };
+      cell.alignment = { vertical: 'middle', horizontal: 'left' };
+      cell.border = { bottom: { style: 'medium', color: { argb: 'FFFFCC00' } } };
+    });
+
+    (hubs || []).forEach((h: any, idx: number) => {
+      const endBase = h.endereco || h.logradouro || '';
+      const bairroStr = h.bairro || '';
+      const distStr = h.distrito ? `${h.distrito}º Distrito` : '';
+      const cepStr = h.cep || '';
+      const enderecoCompleto = `${endBase}${bairroStr ? ' - ' + bairroStr : ''} (${distStr}), Duque de Caxias - RJ${cepStr ? ', CEP ' + cepStr : ''}`;
+      const unidades = mapOcupantes.get(String(h.hub_db_id)) || mapOcupantes.get(String(h.id)) || '';
+
+      const row = sheet.addRow({
+        id: h.id,
+        nome: h.nome || '',
+        tipo: h.tipo || '',
+        endereco: endBase,
+        bairro: bairroStr,
+        distrito: distStr,
+        cidade: h.cidade || 'Duque de Caxias',
+        uf: h.uf || 'RJ',
+        cep: cepStr,
+        endereco_completo: enderecoCompleto,
+        total_ocupantes: Number(h.total_ocupantes || 0),
+        unidades,
+        lat: h.lat ?? '',
+        lon: h.lon ?? '',
+      });
+
+      if (idx % 2 === 1) {
+        row.eachCell((cell) => {
+          cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF8FAFC' } };
+        });
+      }
+    });
+
+    sheet.autoFilter = {
+      from: { row: 1, column: 1 },
+      to: { row: 1, column: sheet.columns.length },
+    };
+
+    const fileDate = new Date().toISOString().slice(0, 10);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="hubs_complexos_pmdc_${fileDate}.xlsx"`);
+    await workbook.xlsx.write(res);
+    res.end();
+  } catch (err: any) {
+    res.status(500).json({ error: 'Erro ao exportar planilha de Hubs: ' + err.message });
   }
 });
 

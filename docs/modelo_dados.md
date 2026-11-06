@@ -8,24 +8,22 @@
 
 ## 1. Visão Geral dos Motores de Persistência
 
-O Portal Unificado utiliza uma arquitetura híbrida de armazenamento com três frentes especializadas:
+O Portal Unificado opera com **MySQL 8 (`carta_de_servico`) como banco de dados primário 100% unificado**, abrigando todas as tabelas administrativas, cadastrais, territoriais e de segurança, com suporte a espelhamento local em SQLite e camadas vetoriais em GeoJSON:
 
-1. **🐬 MySQL (`carta_de_servico`):**
-   - **Propósito:** Catálogo administrativo, secretarias, operadores setoriais, requisitos, contatos e histórico de auditoria dos serviços públicos ao cidadão.
+1. **🐬 MySQL 8 (`carta_de_servico`) — Banco Primário Unificado:**
+   - **Propósito:** Persistência centralizada e transacional de todos os módulos: Carta de Serviços ao Cidadão, SIGEM (equipamentos, endereços, bairros e distritos), Módulo SIMAC (105 comunidades, 11 complexos, 2.199 ruas), Chaves de API e Trilha de Auditoria Geral.
    - **Charset / Collation:** `utf8mb4` / `utf8mb4_unicode_ci`.
    - **Engine:** InnoDB (suporte a transações ACID e Foreign Keys).
-   - **Volumetria Real:** 372 serviços públicos cadastrados, 18 secretarias municipais e 19 categorias.
-2. **📦 SQLite V2 (`dados/enderecos_duque_de_caxias_v2.db`):**
-   - **Propósito:** Cadastro técnico territorial, divisão distrital, logradouros, equipamentos públicos, gestão de chaves de API (`api_keys`), geolocalização com coordenadas GPS e **cadastro integral das 105 comunidades e complexos de favelas**.
-   - **Driver:** Nativo do Node 22 (`DatabaseSync` de `node:sqlite`).
-   - **Volumetria Real:** 466 equipamentos públicos, 4 distritos municipais, 118 bairros oficiais, 428 endereços, 4 chaves de API, 542 eventos de auditoria, **105 comunidades / favelas cadastradas** (66 oficiais dos 10 Grandes Complexos + 39 setores periféricos), **11 complexos territoriais**, **2.199 ruas internas mapeadas** e **225 CEPs vinculados**.
+   - **Volumetria Real Homologada:** 380 serviços públicos (368 ativos + 12 arquivados), 18 secretarias municipais, 466 equipamentos públicos, 118 bairros oficiais, 4 distritos, 449 endereços, 105 comunidades/favelas, 11 complexos, 2.199 ruas internas, 225 faixas de CEP, chaves de API ativas e 757 registros de auditoria.
+2. **📦 SQLite V2 (`dados/enderecos_duque_de_caxias_v2.db`) — Snapshot de Backup e Espelho Offline:**
+   - **Propósito:** Base local de contingência e histórico preservado para consultas offline via CLI, scripts de checagem e espelhamento seguro pelo driver nativo do Node 22 (`DatabaseSync` de `node:sqlite`).
 3. **🗺️ Camada Geoespacial em Arquivo (`public/sigem/dados/geojson/` e `dados/`):**
-   - **Propósito:** Geometrias vetoriais de alta precisão para plotagem no Leaflet, Point-in-Polygon e exportação cartográfica.
+   - **Propósito:** Geometrias vetoriais de alta precisão para renderização no Leaflet, Point-in-Polygon no navegador e exportação cartográfica.
    - **Volumetria Real:**
-     - 20 linhas de ônibus municipais (`rotas_onibus_tarifa_zero.geojson`).
+     - 16 linhas de ônibus municipais gratuitas (`rotas_onibus_tarifa_zero.geojson`).
      - 1.795 paradas de ônibus com coordenadas (`paradas_onibus_tarifa_zero.geojson`).
-     - **105 polígonos de comunidades com cores e cortes por complexo** (`comunidades.geojson` e `dados/comunidades_master.json`).
-     - Contorno oficial do município (`Duque_de_Caxias.geojson`).
+     - 105 polígonos de comunidades com cores e cortes por complexo (`comunidades.geojson` e `dados/comunidades_master.json`).
+     - Contorno oficial do município (`Duque_de_Caxias.geojson`) e 118 bairros (`bairros_oficiais.geojson`).
      - 10 pastas de arquivos GeoJSON individuais de grandes complexos em `dados/geojson_comunidades/`.
 
 ---

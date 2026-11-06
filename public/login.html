@@ -758,6 +758,8 @@
           localStorage.removeItem(SESSION_KEYS.token);
           localStorage.removeItem(SESSION_KEYS.user);
           localStorage.removeItem(SESSION_KEYS.simac);
+          document.cookie = "pmdc_token=; path=/; max-age=0";
+          document.cookie = "token=; path=/; max-age=0";
           if (urlParams.has('expired')) {
             showAlert('warning', 'Sua sessão expirou ou precisa ser renovada. Por favor entre com suas credenciais.');
           }
@@ -766,6 +768,8 @@
 
         if (token && userStr) {
           const user = JSON.parse(userStr);
+          document.cookie = `pmdc_token=${encodeURIComponent(token)}; path=/; max-age=86400; SameSite=Lax`;
+          document.cookie = `token=${encodeURIComponent(token)}; path=/; max-age=86400; SameSite=Lax`;
           showAlert('success', 'Sessão ativa detectada. Carregando portal...', '<i class="ri-loader-4-line ri-spin"></i>');
           
           const base = getAuthBasePrefix();
@@ -892,7 +896,11 @@
           // 2. Grava Objeto User para a barra compartilhada e perfil
           localStorage.setItem(SESSION_KEYS.user, JSON.stringify(data.user));
 
-          // 3. Grava Sessão SIGEM (simac_auth_session) para SSO bidirecional
+          // 3. Grava Cookies de sessão para proteção de rotas no servidor
+          document.cookie = `pmdc_token=${encodeURIComponent(data.token)}; path=/; max-age=86400; SameSite=Lax`;
+          document.cookie = `token=${encodeURIComponent(data.token)}; path=/; max-age=86400; SameSite=Lax`;
+
+          // 4. Grava Sessão SIGEM (simac_auth_session) para SSO bidirecional
           const sessionData = {
             user: data.user.username,
             name: data.user.name,

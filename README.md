@@ -41,10 +41,10 @@ flowchart TD
         RouterKeys["/api/admin/api-keys (Gestão de Chaves)"]
     end
 
-    subgraph Databases["💾 Armazenamento de Dados Resiliente"]
-        MySQL[("🐬 MySQL: carta_de_servico<br>368 Serviços & Operadores")]
-        SQLite[("📦 SQLite V2: enderecos_duque_de_caxias_v2.db<br>466 Equipamentos, 118 Bairros, 102 Comunidades & 2.225 Ruas")]
-        GeoJSON[("🗺️ Bases Vetoriais GeoJSON<br>Ônibus Tarifa Zero & Polígonos de Comunidades")]
+    subgraph Databases["💾 Armazenamento de Dados Unificado"]
+        MySQL[("🐬 MySQL 8: carta_de_servico (Banco Primário 100% Unificado)<br>380 Serviços · 466 Equipamentos · 118 Bairros<br>105 Comunidades · 2.199 Ruas · Chaves API · Auditoria")]
+        SQLite[("📦 SQLite V2: enderecos_duque_de_caxias_v2.db<br>Snapshot de Backup Local e Espelhamento Offline")]
+        GeoJSON[("🗺️ Bases Vetoriais GeoJSON<br>Ônibus Tarifa Zero, Polígonos de Comunidades & Limites")]
     end
 
     TopNav --> Hub
@@ -62,15 +62,14 @@ flowchart TD
 
     RouterAuth --> MySQL
     RouterCDS --> MySQL
-    RouterSIGEM --> SQLite
-    RouterComunidades --> SQLite
-    RouterComunidades --> GeoJSON
+    RouterSIGEM --> MySQL
+    RouterComunidades --> MySQL
+    RouterComunidades -.-> GeoJSON
     RouterOnibus --> GeoJSON
     RouterExtAPI --> MySQL
-    RouterExtAPI --> SQLite
-    RouterKeys --> SQLite
+    RouterKeys --> MySQL
     RouterHub --> MySQL
-    RouterHub --> SQLite
+    MySQL -.->|Espelhamento/Backup| SQLite
 ```
 
 ---

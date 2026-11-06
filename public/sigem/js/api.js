@@ -6,9 +6,9 @@
 // --- ESTADO GLOBAL & CONSTANTES DA BASE MUNICIPAL ---
 // Base embutida descontinuada em favor da API central do SQLite e contingência via arquivo JSON
     const DEFAULT_EQUIP = [];
-    const DEFAULT_HUBS = [{"id": "hub_1", "nome": "Centro Cívico / Paço Municipal (Prefeitura)", "tipo": "Complexo Administrativo Central", "endereco": "Alameda Esmeralda, 206 (ou Alameda Dona Esmeralda, nº 206)", "bairro": "Jardim Primavera", "distrito": "2", "cep": "25215-260", "lat": -22.68515, "lon": -43.28399, "descricao": "Sede principal do Poder Executivo Municipal, abrigando o Gabinete e os principais centros de gestão fiscal, orçamentária e administrativa.", "orgaos": [{"id": "org_1_1", "nome": "Gabinete do Prefeito", "andar_sala": "Prédio Principal - Gabinete", "ramal": "Gabinete / 2773-5500"}, {"id": "org_1_2", "nome": "Secretaria Municipal de Governo (SMG)", "andar_sala": "Prédio Principal - 2º Andar", "ramal": "2773-5500"}, {"id": "org_1_3", "nome": "Secretaria Municipal de Administração, Planejamento e Orçamento (SMAPO)", "andar_sala": "Prédio A - Térreo e 1º Andar", "ramal": "2773-5510"}, {"id": "org_1_4", "nome": "Secretaria Municipal de Fazenda (SMF)", "andar_sala": "Prédio Principal - Térreo (Arrecadação)", "ramal": "2773-5520"}, {"id": "org_1_5", "nome": "Secretaria Municipal de Comunicação Social e Relações Públicas (SMCSRP)", "andar_sala": "Prédio Principal - 2º Andar", "ramal": "2773-5530"}, {"id": "org_1_6", "nome": "Secretaria Municipal de Articulação Institucional (SMAI)", "andar_sala": "Prédio Principal - Sala 12", "ramal": "2773-5500"}, {"id": "org_1_7", "nome": "Ouvidoria Geral do Município", "andar_sala": "Prédio de Atendimento ao Cidadão", "ramal": "2773-5540"}, {"id": "org_1_8", "nome": "FUNDEC — Sede Administrativa Central", "andar_sala": "Prédio Anexo FUNDEC", "ramal": "2773-5500"}]}, {"id": "hub_2", "nome": "Edifício Barão de Mauá / Polo Parque Duque", "tipo": "Complexo do Trabalho, Assistência e Ensino Técnico", "endereco": "Av. Brigadeiro Lima e Silva, 131", "bairro": "Parque Duque", "distrito": "1", "cep": "25085-131", "lat": -22.7954, "lon": -43.2982, "descricao": "Hub integrado de capacitação profissional, geração de emprego, assistência social e inovação tecnológica.", "orgaos": [{"id": "org_2_1", "nome": "FUNDEC — Sede Operacional e Presidência", "andar_sala": "Prédio Principal", "ramal": "2672-5650"}, {"id": "org_2_2", "nome": "FUNDEC Polo Inclusão e Trabalho", "andar_sala": "Térreo - Acessibilidade", "ramal": "2672-5650"}, {"id": "org_2_3", "nome": "FUNDEC Cisco Networking Academy & Polo Marcenaria", "andar_sala": "Laboratórios Técnicos", "ramal": "2672-5650"}, {"id": "org_2_4", "nome": "Secretaria Municipal de Trabalho, Emprego e Renda (SMTER)", "andar_sala": "2º Andar / Balcão de Empregos", "ramal": "2672-5660"}, {"id": "org_2_5", "nome": "Secretaria Municipal de Assistência Social e Direitos Humanos (SMASDH)", "andar_sala": "3º Andar / Gestão do SUAS", "ramal": "2672-5670"}]}, {"id": "hub_3", "nome": "Complexo Hospitalar Beira Mar", "tipo": "Complexo de Alta Complexidade e Urgência", "endereco": "Rodovia Washington Luiz, 3200", "bairro": "Parque Beira Mar", "distrito": "1", "cep": "25085-009", "lat": -22.799, "lon": -43.295, "descricao": "O maior polo de urgência, emergência e cirurgias do município de Duque de Caxias.", "orgaos": [{"id": "org_3_1", "nome": "Hospital Municipal Dr. Moacyr Rodrigues do Carmo (HMMRC)", "andar_sala": "Bloco Hospitalar Principal, UTI e Maternidade", "ramal": "0800-025-1080"}, {"id": "org_3_2", "nome": "UPA 24h Parque Beira Mar", "andar_sala": "Prédio Anexo de Pronto Atendimento 24 Horas", "ramal": "2772-8800"}]}, {"id": "hub_4", "nome": "Complexo Pediátrico do Centro", "tipo": "Complexo de Urgência e Internação Infantil", "endereco": "Avenida Presidente Kennedy, s/nº", "bairro": "Centro", "distrito": "1", "cep": "25010-001", "lat": -22.787, "lon": -43.307, "descricao": "Polo exclusivo de saúde e emergência materno-infantil de Duque de Caxias.", "orgaos": [{"id": "org_4_1", "nome": "Hospital Infantil Ismália da Silveira", "andar_sala": "Bloco Cirúrgico e Enfermarias Pediátricas", "ramal": "2671-5500"}, {"id": "org_4_2", "nome": "UPA Infantil Walter Garcia", "andar_sala": "Pronto Socorro Pediátrico 24h", "ramal": "2671-5510"}]}, {"id": "hub_5", "nome": "Complexo Sarapuí de Saúde, Reabilitação e Educação", "tipo": "Polo Multidisciplinar Integrado", "endereco": "Av. República do Paraguai, s/nº", "bairro": "Vila Sarapuí", "distrito": "1", "cep": "25050-100", "lat": -22.775, "lon": -43.295, "descricao": "Área integrada que reúne pronto socorro de urgência, centro de reabilitação e equipamentos de ensino fundamental.", "orgaos": [{"id": "org_5_1", "nome": "UPA 24h Sarapuí", "andar_sala": "Prédio de Urgência e Emergência 24h", "ramal": "2771-8800"}, {"id": "org_5_2", "nome": "Centro Especializado em Reabilitação — CER IV", "andar_sala": "Pavilhão de Reabilitação Auditiva, Física, Intelectual e Visual", "ramal": "2771-8820"}, {"id": "org_5_3", "nome": "CIEP Brizolão Municipalizado 097 - Carlos Chagas", "andar_sala": "Módulo Escolar CIEP", "ramal": "SMEDC"}, {"id": "org_5_4", "nome": "Creche e E.M. Poetisa Cecília Meireles", "andar_sala": "Módulo de Educação Infantil", "ramal": "SMEDC"}]}, {"id": "hub_6", "nome": "Polo Integrado Jardim Primavera — Alameda James Franco", "tipo": "Sede Administrativa Setorial", "endereco": "Alameda James Franco, 03", "bairro": "Jardim Primavera", "distrito": "2", "cep": "25215-265", "lat": -22.6855, "lon": -43.284, "descricao": "Prédio administrativo que centraliza as decisões da Saúde Pública e Políticas Ambientais.", "orgaos": [{"id": "org_6_1", "nome": "Secretaria Municipal de Saúde (SMS)", "andar_sala": "1º e 2º Pavimentos", "ramal": "2773-5560"}, {"id": "org_6_2", "nome": "Secretaria Municipal de Meio Ambiente (SMMA)", "andar_sala": "Térreo", "ramal": "2773-5570"}, {"id": "org_6_3", "nome": "Conselho Tutelar do 2º Distrito", "andar_sala": "Anexo de Atendimento", "ramal": "2773-4455"}]}, {"id": "hub_7", "nome": "Polo Integrado Jardim Primavera — Bartolomeu Gusmão", "tipo": "Polo de Urbanismo e Proteção Animal", "endereco": "Alameda Bartolomeu Gusmão, 85", "bairro": "Jardim Primavera", "distrito": "2", "cep": "25215-320", "lat": -22.6865, "lon": -43.285, "descricao": "Complexo de licenciamento urbanístico, obras particulares, habitação e bem-estar animal.", "orgaos": [{"id": "org_7_1", "nome": "Secretaria Municipal de Urbanismo e Habitação (SMUH)", "andar_sala": "Prédio Principal", "ramal": "2773-5580"}, {"id": "org_7_2", "nome": "Secretaria Municipal de Proteção Animal (SMPA)", "andar_sala": "Prédio Anexo / Atendimento", "ramal": "2773-5590"}]}, {"id": "hub_8", "nome": "Complexo de Saúde e Especialidades Parque Bonfim", "tipo": "Polo de Especialidades Ambulatoriais", "endereco": "Rua Manoel Lucas, s/nº", "bairro": "Parque Senhor do Bonfim", "distrito": "1", "cep": "25025-140", "lat": -22.784, "lon": -43.312, "descricao": "Polo especializado de cirurgias ambulatoriais, especialidades médicas e atendimento à juventude.", "orgaos": [{"id": "org_8_1", "nome": "Policlínica Hospital Duque de Caxias", "andar_sala": "Pavilhão Ambulatorial", "ramal": "2671-8800"}, {"id": "org_8_2", "nome": "Centro de Atenção Total ao Adolescente — CEATA", "andar_sala": "Ala Especializada da Juventude", "ramal": "2671-8810"}]}, {"id": "hub_9", "nome": "Complexo de Atenção Psicossocial e Reabilitação do Centro", "tipo": "Polo de Saúde Mental e Reabilitação Especial", "endereco": "Rua Nilo Vieira, 353", "bairro": "Centro", "distrito": "1", "cep": "25010-140", "lat": -22.788, "lon": -43.3065, "descricao": "Centro integrado de acolhimento em dependência química e reabilitação auditiva/física.", "orgaos": [{"id": "org_9_1", "nome": "CAPS AD Renato Russo (Álcool e Outras Drogas)", "andar_sala": "Acolhimento Térreo e Leitos Dia", "ramal": "2673-6144"}, {"id": "org_9_2", "nome": "Centro de Atenção ao Portador de Deficiências — CEAPD (CER II)", "andar_sala": "Pavilhão de Fisioterapia e Fonoaudiologia", "ramal": "2673-6150"}]}, {"id": "hub_10", "nome": "Campus Integrado Educacional São Bento (Antiga FEUDUC)", "tipo": "Pólo Universitário e Escolar Municipal", "endereco": "Avenida Presidente Kennedy, s/nº - São Bento", "bairro": "São Bento / Chácaras Rio-Petrópolis", "distrito": "2", "cep": "25040-004", "lat": -22.715, "lon": -43.285, "descricao": "Campus educacional que reúne 3 escolas municipais e 1 creche comunitária no espaço integrado.", "orgaos": [{"id": "org_10_1", "nome": "E.M. José Camilo dos Santos", "andar_sala": "Bloco Escolar A", "ramal": "SMEDC"}, {"id": "org_10_2", "nome": "E.M. Nísia Vilela Fernandes", "andar_sala": "Bloco Escolar B", "ramal": "SMEDC"}, {"id": "org_10_3", "nome": "E.M. Paulo Roberto de Moraes Loureiro", "andar_sala": "Bloco Escolar C", "ramal": "SMEDC"}, {"id": "org_10_4", "nome": "CCAIC — Creche Parque Muísa", "andar_sala": "Bloco de Educação Infantil", "ramal": "SMEDC"}]}, {"id": "hub_11", "nome": "Complexo Social e Comunitário Centenário", "tipo": "Polo de Assistência Social e Convivência", "endereco": "Rua Manoel Vieira, s/nº", "bairro": "Centenário", "distrito": "1", "cep": "25030-000", "lat": -22.782, "lon": -43.315, "descricao": "Central de acolhimento social que abriga a proteção básica (CRAS), média (CREAS) e terceira idade.", "orgaos": [{"id": "org_11_1", "nome": "CRAS Centenário (Proteção Social Básica)", "andar_sala": "Térreo - Recepção Geral", "ramal": "2673-4422"}, {"id": "org_11_2", "nome": "CREAS Centenário (Proteção Social Especial)", "andar_sala": "1º Andar - Equipe Técnica", "ramal": "2673-4455"}, {"id": "org_11_3", "nome": "Centro de Convivência do Idoso", "andar_sala": "Salão de Oficinas e Convivência", "ramal": "2673-4422"}]}, {"id": "hub_12", "nome": "Polo Cívico e Histórico da 25 de Agosto", "tipo": "Sede Administrativa e Segurança", "endereco": "Praça Governador Roberto Silveira, 31", "bairro": "25 de Agosto", "distrito": "1", "cep": "25075-010", "lat": -22.7895, "lon": -43.306, "descricao": "Prédio histórico da Prefeitura abrigando a Segurança Pública e atendimento institucional.", "orgaos": [{"id": "org_12_1", "nome": "Sede Histórica da Prefeitura de Caxias", "andar_sala": "Térreo e Salão Nobre", "ramal": "2773-6200"}, {"id": "org_12_2", "nome": "Secretaria Municipal de Segurança Pública", "andar_sala": "4º Andar", "ramal": "2676-9600"}]}];
-    const PMDC_DB_VERSION = '2026_v11_oficial_466_dedup';
-    const BAIRROS_COORDENADAS = {"centro": [-22.7905, -43.308, "1"], "25 de agosto": [-22.7885, -43.3045, "1"], "jardim vinte e cinco de agosto": [-22.7885, -43.3045, "1"], "parque duque": [-22.7895, -43.306, "1"], "beira mar": [-22.7843, -43.2842, "1"], "parque beira mar": [-22.7843, -43.2842, "1"], "vila sao luis": [-22.7805, -43.295, "1"], "doutor laureano": [-22.7666, -43.2955, "1"], "bar dos cavaleiros": [-22.786, -43.298, "1"], "centenario": [-22.776, -43.308, "1"], "vila centenario": [-22.777, -43.309, "1"], "jardim gramacho": [-22.7569, -43.2842, "1"], "gramacho": [-22.7569, -43.2842, "1"], "olavo bilac": [-22.768, -43.318, "1"], "parque lafaiete": [-22.782, -43.315, "1"], "parque fluminense": [-22.765, -43.312, "1"], "vila sarapui": [-22.76, -43.305, "1"], "sarapui": [-22.76, -43.305, "1"], "vila ideal": [-22.787, -43.302, "1"], "engenho do porto": [-22.793, -43.299, "1"], "corte oito": [-22.775, -43.301, "1"], "trevo das missoes": [-22.812, -43.292, "1"], "parque das missoes": [-22.812, -43.292, "1"], "pauliceia": [-22.784, -43.291, "1"], "periquitos": [-22.792, -43.288, "1"], "prainha": [-22.792, -43.288, "1"], "chacrinha": [-22.779, -43.303, "1"], "vila leopoldina": [-22.785, -43.293, "1"], "vila operaria": [-22.777, -43.298, "1"], "vila meriti": [-22.788, -43.314, "1"], "vila guanabara": [-22.798, -43.295, "1"], "vila itamarati": [-22.774, -43.299, "1"], "vila flavia": [-22.781, -43.307, "1"], "vila sao sebastiao": [-22.771, -43.302, "1"], "parque felicidade": [-22.773, -43.311, "1"], "parque santa marta": [-22.778, -43.313, "1"], "parque senhor do bonfim": [-22.772, -43.309, "1"], "jardim leal": [-22.771, -43.294, "1"], "copacabana": [-22.778, -43.29, "1"], "itatiaia": [-22.782, -43.295, "1"], "lagunas e dourados": [-22.769, -43.289, "1"], "campos eliseos": [-22.7058, -43.2745, "2"], "jardim primavera": [-22.6851, -43.2839, "2"], "saracuruna": [-22.6778, -43.2472, "2"], "cangulo": [-22.695, -43.242, "2"], "pilar": [-22.712, -43.285, "2"], "figueira": [-22.735, -43.268, "2"], "sao bento": [-22.748, -43.283, "2"], "chacaras rio-petropolis": [-22.718, -43.265, "2"], "chacaras arcampo": [-22.668, -43.248, "2"], "cidade dos meninos": [-22.688, -43.272, "2"], "vila maria helena": [-22.665, -43.241, "2"], "sao judas tadeu": [-22.702, -43.265, "2"], "pantanal": [-22.723, -43.281, "2"], "vila rosario": [-22.695, -43.26, "2"], "vila santo antonio": [-22.689, -43.255, "2"], "jardim balneario ana clara": [-22.682, -43.262, "2"], "jardim santa rita": [-22.679, -43.251, "2"], "jardim vila nova": [-22.675, -43.255, "2"], "jardim das oliveiras": [-22.691, -43.248, "2"], "parque comercial": [-22.687, -43.258, "2"], "parque independencia": [-22.68, -43.249, "2"], "parque nossa senhora do carmo": [-22.684, -43.253, "2"], "nossa senhora do carmo": [-22.684, -43.253, "2"], "bom retiro": [-22.712, -43.258, "2"], "conjunto nova esperanca": [-22.685, -43.268, "2"], "santa isabel": [-22.692, -43.263, "2"], "imbarie": [-22.6299, -43.2564, "3"], "santa cruz da serra": [-22.6428, -43.281, "3"], "santa lucia": [-22.6269, -43.2118, "3"], "nova campinas": [-22.6466, -43.2481, "3"], "parada angelica": [-22.6183, -43.2045, "3"], "parada morabi": [-22.622, -43.219, "3"], "jardim anhanga": [-22.6464, -43.2317, "3"], "parque paulista": [-22.619, -43.242, "3"], "parque equitativa": [-22.6352, -43.2659, "3"], "taquara": [-22.631, -43.275, "3"], "jardim barro branco": [-22.641, -43.245, "3"], "jardim rotsen": [-22.638, -43.239, "3"], "parque capivari": [-22.628, -43.268, "3"], "parque eldorado": [-22.625, -43.249, "3"], "vila araci": [-22.632, -43.243, "3"], "vila canaa": [-22.63, -43.238, "3"], "cristovao colombo": [-22.634, -43.246, "3"], "conjunto 22 de abril": [-22.633, -43.251, "3"], "xerem": [-22.5757, -43.3063, "4"], "mantiquira": [-22.5881, -43.3048, "4"], "amapa": [-22.605, -43.3, "4"], "barao do amapa": [-22.605, -43.3, "4"], "capivari": [-22.598, -43.312, "4"], "santo antonio": [-22.591, -43.298, "4"], "tabuleiro": [-22.582, -43.31, "4"], "parque xerem": [-22.573, -43.308, "4"], "barreiro": [-22.589, -43.292, "4"], "chapeu do sol": [-22.584, -43.301, "4"], "fazenda piranema": [-22.602, -43.288, "4"], "fazenda sao lourenco": [-22.609, -43.295, "4"], "igreja velha": [-22.579, -43.297, "4"], "jardim olimpo": [-22.586, -43.303, "4"], "pedreira": [-22.593, -43.295, "4"], "vila bonanca": [-22.581, -43.306, "4"], "vila nossa senhora das gracas": [-22.587, -43.302, "4"]};
+    const DEFAULT_HUBS = [{"id": "hub_1", "nome": "Centro Cívico / Paço Municipal (Prefeitura)", "tipo": "Complexo Administrativo Central", "endereco": "Alameda Dona Esmeralda, 206", "bairro": "Jardim Primavera", "distrito": "2", "cep": "25215-260", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.68515, "lon": -43.28399, "descricao": "Sede principal do Poder Executivo Municipal, abrigando o Gabinete e os principais centros de gestão fiscal, orçamentária e administrativa.", "orgaos": [{"id": "org_1_1", "nome": "Gabinete do Prefeito", "andar_sala": "Prédio Principal - Gabinete", "ramal": "Gabinete / 2773-5500"}, {"id": "org_1_2", "nome": "Secretaria Municipal de Governo (SMG)", "andar_sala": "Prédio Principal - 2º Andar", "ramal": "2773-5500"}, {"id": "org_1_3", "nome": "Secretaria Municipal de Administração, Planejamento e Orçamento (SMAPO)", "andar_sala": "Prédio A - Térreo e 1º Andar", "ramal": "2773-5510"}, {"id": "org_1_4", "nome": "Secretaria Municipal de Fazenda (SMF)", "andar_sala": "Prédio Principal - Térreo (Arrecadação)", "ramal": "2773-5520"}, {"id": "org_1_5", "nome": "Secretaria Municipal de Comunicação Social e Relações Públicas (SMCSRP)", "andar_sala": "Prédio Principal - 2º Andar", "ramal": "2773-5530"}, {"id": "org_1_6", "nome": "Secretaria Municipal de Articulação Institucional (SMAI)", "andar_sala": "Prédio Principal - Sala 12", "ramal": "2773-5500"}, {"id": "org_1_7", "nome": "Ouvidoria Geral do Município", "andar_sala": "Prédio de Atendimento ao Cidadão", "ramal": "2773-5540"}, {"id": "org_1_8", "nome": "FUNDEC — Sede Administrativa Central", "andar_sala": "Prédio Anexo FUNDEC", "ramal": "2773-5500"}]}, {"id": "hub_2", "nome": "Edifício Barão de Mauá / Polo Parque Duque", "tipo": "Complexo do Trabalho, Assistência e Ensino Técnico", "endereco": "Av. Brigadeiro Lima e Silva, 131", "bairro": "Parque Duque", "distrito": "1", "cep": "25085-131", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.7954, "lon": -43.2982, "descricao": "Hub integrado de capacitação profissional, geração de emprego, assistência social e inovação tecnológica.", "orgaos": [{"id": "org_2_1", "nome": "FUNDEC — Sede Operacional e Presidência", "andar_sala": "Prédio Principal", "ramal": "2672-5650"}, {"id": "org_2_2", "nome": "FUNDEC Polo Inclusão e Trabalho", "andar_sala": "Térreo - Acessibilidade", "ramal": "2672-5650"}, {"id": "org_2_3", "nome": "FUNDEC Cisco Networking Academy & Polo Marcenaria", "andar_sala": "Laboratórios Técnicos", "ramal": "2672-5650"}, {"id": "org_2_4", "nome": "Secretaria Municipal de Trabalho, Emprego e Renda (SMTER)", "andar_sala": "2º Andar / Balcão de Empregos", "ramal": "2672-5660"}, {"id": "org_2_5", "nome": "Secretaria Municipal de Assistência Social e Direitos Humanos (SMASDH)", "andar_sala": "3º Andar / Gestão do SUAS", "ramal": "2672-5670"}]}, {"id": "hub_3", "nome": "Complexo Hospitalar Beira Mar", "tipo": "Complexo de Alta Complexidade e Urgência", "endereco": "Rodovia Washington Luiz, 3200", "bairro": "Parque Beira Mar", "distrito": "1", "cep": "25085-009", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.799, "lon": -43.295, "descricao": "O maior polo de urgência, emergência e cirurgias do município de Duque de Caxias.", "orgaos": [{"id": "org_3_1", "nome": "Hospital Municipal Dr. Moacyr Rodrigues do Carmo (HMMRC)", "andar_sala": "Bloco Hospitalar Principal, UTI e Maternidade", "ramal": "0800-025-1080"}, {"id": "org_3_2", "nome": "UPA 24h Parque Beira Mar", "andar_sala": "Prédio Anexo de Pronto Atendimento 24 Horas", "ramal": "2772-8800"}]}, {"id": "hub_4", "nome": "Complexo Pediátrico do Centro", "tipo": "Complexo de Urgência e Internação Infantil", "endereco": "Avenida Presidente Kennedy, s/nº", "bairro": "Centro", "distrito": "1", "cep": "25010-001", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.787, "lon": -43.307, "descricao": "Polo exclusivo de saúde e emergência materno-infantil de Duque de Caxias.", "orgaos": [{"id": "org_4_1", "nome": "Hospital Infantil Ismália da Silveira", "andar_sala": "Bloco Cirúrgico e Enfermarias Pediátricas", "ramal": "2671-5500"}, {"id": "org_4_2", "nome": "UPA Infantil Walter Garcia", "andar_sala": "Pronto Socorro Pediátrico 24h", "ramal": "2671-5510"}]}, {"id": "hub_5", "nome": "Complexo Sarapuí de Saúde, Reabilitação e Educação", "tipo": "Polo Multidisciplinar Integrado", "endereco": "Av. República do Paraguai, s/nº", "bairro": "Vila Sarapuí", "distrito": "1", "cep": "25050-100", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.775, "lon": -43.295, "descricao": "Área integrada que reúne pronto socorro de urgência, centro de reabilitação e equipamentos de ensino fundamental.", "orgaos": [{"id": "org_5_1", "nome": "UPA 24h Sarapuí", "andar_sala": "Prédio de Urgência e Emergência 24h", "ramal": "2771-8800"}, {"id": "org_5_2", "nome": "Centro Especializado em Reabilitação — CER IV", "andar_sala": "Pavilhão de Reabilitação Auditiva, Física, Intelectual e Visual", "ramal": "2771-8820"}, {"id": "org_5_3", "nome": "CIEP Brizolão Municipalizado 097 - Carlos Chagas", "andar_sala": "Módulo Escolar CIEP", "ramal": "SMEDC"}, {"id": "org_5_4", "nome": "Creche e E.M. Poetisa Cecília Meireles", "andar_sala": "Módulo de Educação Infantil", "ramal": "SMEDC"}]}, {"id": "hub_6", "nome": "Polo Integrado Jardim Primavera — Alameda James Franco", "tipo": "Sede Administrativa Setorial", "endereco": "Alameda James Franco, 03", "bairro": "Jardim Primavera", "distrito": "2", "cep": "25215-265", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.6855, "lon": -43.284, "descricao": "Prédio administrativo que centraliza as decisões da Saúde Pública e Políticas Ambientais.", "orgaos": [{"id": "org_6_1", "nome": "Secretaria Municipal de Saúde (SMS)", "andar_sala": "1º e 2º Pavimentos", "ramal": "2773-5560"}, {"id": "org_6_2", "nome": "Secretaria Municipal de Meio Ambiente (SMMA)", "andar_sala": "Térreo", "ramal": "2773-5570"}, {"id": "org_6_3", "nome": "Conselho Tutelar do 2º Distrito", "andar_sala": "Anexo de Atendimento", "ramal": "2773-4455"}]}, {"id": "hub_7", "nome": "Polo Integrado Jardim Primavera — Bartolomeu Gusmão", "tipo": "Polo de Urbanismo e Proteção Animal", "endereco": "Alameda Bartolomeu Gusmão, 85", "bairro": "Jardim Primavera", "distrito": "2", "cep": "25215-320", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.6865, "lon": -43.285, "descricao": "Complexo de licenciamento urbanístico, obras particulares, habitação e bem-estar animal.", "orgaos": [{"id": "org_7_1", "nome": "Secretaria Municipal de Urbanismo e Habitação (SMUH)", "andar_sala": "Prédio Principal", "ramal": "2773-5580"}, {"id": "org_7_2", "nome": "Secretaria Municipal de Proteção Animal (SMPA)", "andar_sala": "Prédio Anexo / Atendimento", "ramal": "2773-5590"}]}, {"id": "hub_8", "nome": "Complexo de Saúde e Especialidades Parque Bonfim", "tipo": "Polo de Especialidades Ambulatoriais", "endereco": "Rua Manoel Lucas, s/nº", "bairro": "Parque Senhor do Bonfim", "distrito": "1", "cep": "25025-140", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.784, "lon": -43.312, "descricao": "Polo especializado de cirurgias ambulatoriais, especialidades médicas e atendimento à juventude.", "orgaos": [{"id": "org_8_1", "nome": "Policlínica Hospital Duque de Caxias", "andar_sala": "Pavilhão Ambulatorial", "ramal": "2671-8800"}, {"id": "org_8_2", "nome": "Centro de Atenção Total ao Adolescente — CEATA", "andar_sala": "Ala Especializada da Juventude", "ramal": "2671-8810"}]}, {"id": "hub_9", "nome": "Complexo de Atenção Psicossocial e Reabilitação do Centro", "tipo": "Polo de Saúde Mental e Reabilitação Especial", "endereco": "Rua Nilo Vieira, 353", "bairro": "Centro", "distrito": "1", "cep": "25010-140", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.788, "lon": -43.3065, "descricao": "Centro integrado de acolhimento em dependência química e reabilitação auditiva/física.", "orgaos": [{"id": "org_9_1", "nome": "CAPS AD Renato Russo (Álcool e Outras Drogas)", "andar_sala": "Acolhimento Térreo e Leitos Dia", "ramal": "2673-6144"}, {"id": "org_9_2", "nome": "Centro de Atenção ao Portador de Deficiências — CEAPD (CER II)", "andar_sala": "Pavilhão de Fisioterapia e Fonoaudiologia", "ramal": "2673-6150"}]}, {"id": "hub_10", "nome": "Campus Integrado Educacional São Bento (Antiga FEUDUC)", "tipo": "Pólo Universitário e Escolar Municipal", "endereco": "Avenida Presidente Kennedy, s/nº", "bairro": "São Bento", "distrito": "2", "cep": "25040-004", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.715, "lon": -43.285, "descricao": "Campus educacional que reúne 3 escolas municipais e 1 creche comunitária no espaço integrado.", "orgaos": [{"id": "org_10_1", "nome": "E.M. José Camilo dos Santos", "andar_sala": "Bloco Escolar A", "ramal": "SMEDC"}, {"id": "org_10_2", "nome": "E.M. Nísia Vilela Fernandes", "andar_sala": "Bloco Escolar B", "ramal": "SMEDC"}, {"id": "org_10_3", "nome": "E.M. Paulo Roberto de Moraes Loureiro", "andar_sala": "Bloco Escolar C", "ramal": "SMEDC"}, {"id": "org_10_4", "nome": "CCAIC — Creche Parque Muísa", "andar_sala": "Bloco de Educação Infantil", "ramal": "SMEDC"}]}, {"id": "hub_11", "nome": "Complexo Social e Comunitário Centenário", "tipo": "Polo de Assistência Social e Convivência", "endereco": "Rua Manoel Vieira, s/nº", "bairro": "Centenário", "distrito": "1", "cep": "25030-000", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.782, "lon": -43.315, "descricao": "Central de acolhimento social que abriga a proteção básica (CRAS), média (CREAS) e terceira idade.", "orgaos": [{"id": "org_11_1", "nome": "CRAS Centenário (Proteção Social Básica)", "andar_sala": "Térreo - Recepção Geral", "ramal": "2673-4422"}, {"id": "org_11_2", "nome": "CREAS Centenário (Proteção Social Especial)", "andar_sala": "1º Andar - Equipe Técnica", "ramal": "2673-4455"}, {"id": "org_11_3", "nome": "Centro de Convivência do Idoso", "andar_sala": "Salão de Oficinas e Convivência", "ramal": "2673-4422"}]}, {"id": "hub_12", "nome": "Polo Cívico e Histórico da 25 de Agosto", "tipo": "Sede Administrativa e Segurança", "endereco": "Praça Governador Roberto Silveira, 31", "bairro": "25 de Agosto", "distrito": "1", "cep": "25075-010", "cidade": "Duque de Caxias", "uf": "RJ", "lat": -22.7895, "lon": -43.306, "descricao": "Prédio histórico da Prefeitura abrigando a Segurança Pública e atendimento institucional.", "orgaos": [{"id": "org_12_1", "nome": "Sede Histórica da Prefeitura de Caxias", "andar_sala": "Térreo e Salão Nobre", "ramal": "2773-6200"}, {"id": "org_12_2", "nome": "Secretaria Municipal de Segurança Pública", "andar_sala": "4º Andar", "ramal": "2676-9600"}]}];
+    const PMDC_DB_VERSION = '2026_v12_oficial_calibrado';
+    const BAIRROS_COORDENADAS = {"centro": [-22.7905, -43.308, "1"], "25 de agosto": [-22.7885, -43.3045, "1"], "jardim vinte e cinco de agosto": [-22.7885, -43.3045, "1"], "parque duque": [-22.7895, -43.306, "1"], "beira mar": [-22.7843, -43.2842, "1"], "parque beira mar": [-22.7843, -43.2842, "1"], "vila sao luis": [-22.7805, -43.295, "1"], "doutor laureano": [-22.7666, -43.2955, "1"], "bar dos cavaleiros": [-22.786, -43.298, "1"], "centenario": [-22.776, -43.308, "1"], "vila centenario": [-22.777, -43.309, "1"], "jardim gramacho": [-22.7569, -43.2842, "1"], "gramacho": [-22.7569, -43.2842, "1"], "olavo bilac": [-22.768, -43.318, "1"], "parque lafaiete": [-22.782, -43.315, "1"], "parque fluminense": [-22.765, -43.312, "2"], "vila sarapui": [-22.76, -43.305, "1"], "sarapui": [-22.76, -43.305, "1"], "vila ideal": [-22.787, -43.302, "1"], "engenho do porto": [-22.793, -43.299, "1"], "corte oito": [-22.775, -43.301, "1"], "trevo das missoes": [-22.812, -43.292, "1"], "parque das missoes": [-22.812, -43.292, "1"], "pauliceia": [-22.784, -43.291, "1"], "periquitos": [-22.792, -43.288, "1"], "prainha": [-22.792, -43.288, "1"], "chacrinha": [-22.779, -43.303, "1"], "vila leopoldina": [-22.785, -43.293, "1"], "vila operaria": [-22.777, -43.298, "1"], "vila meriti": [-22.788, -43.314, "1"], "vila guanabara": [-22.798, -43.295, "1"], "vila itamarati": [-22.774, -43.299, "1"], "vila flavia": [-22.781, -43.307, "1"], "vila sao sebastiao": [-22.771, -43.302, "1"], "parque felicidade": [-22.773, -43.311, "1"], "parque santa marta": [-22.778, -43.313, "1"], "parque senhor do bonfim": [-22.772, -43.309, "1"], "jardim leal": [-22.771, -43.294, "1"], "copacabana": [-22.778, -43.29, "1"], "itatiaia": [-22.782, -43.295, "1"], "lagunas e dourados": [-22.769, -43.289, "1"], "campos eliseos": [-22.7058, -43.2745, "2"], "jardim primavera": [-22.6851, -43.2839, "2"], "saracuruna": [-22.6778, -43.2472, "2"], "cangulo": [-22.695, -43.242, "2"], "pilar": [-22.712, -43.285, "2"], "figueira": [-22.735, -43.268, "2"], "sao bento": [-22.748, -43.283, "2"], "chacaras rio-petropolis": [-22.648, -43.298, "4"], "chacaras arcampo": [-22.668, -43.248, "2"], "cidade dos meninos": [-22.688, -43.272, "2"], "vila maria helena": [-22.665, -43.241, "2"], "sao judas tadeu": [-22.702, -43.265, "2"], "pantanal": [-22.723, -43.281, "2"], "vila rosario": [-22.695, -43.26, "2"], "vila santo antonio": [-22.689, -43.255, "2"], "jardim balneario ana clara": [-22.682, -43.262, "2"], "jardim santa rita": [-22.679, -43.251, "2"], "jardim vila nova": [-22.675, -43.255, "2"], "jardim das oliveiras": [-22.691, -43.248, "2"], "parque comercial": [-22.687, -43.258, "2"], "parque independencia": [-22.68, -43.249, "2"], "parque nossa senhora do carmo": [-22.684, -43.253, "2"], "nossa senhora do carmo": [-22.684, -43.253, "2"], "bom retiro": [-22.712, -43.258, "2"], "conjunto nova esperanca": [-22.685, -43.268, "2"], "santa isabel": [-22.692, -43.263, "2"], "imbarie": [-22.6299, -43.2564, "3"], "santa cruz da serra": [-22.6428, -43.281, "3"], "santa lucia": [-22.6269, -43.2118, "3"], "nova campinas": [-22.6466, -43.2481, "3"], "parada angelica": [-22.6183, -43.2045, "3"], "parada morabi": [-22.622, -43.219, "3"], "jardim anhanga": [-22.6464, -43.2317, "3"], "parque paulista": [-22.619, -43.242, "3"], "parque equitativa": [-22.6352, -43.2659, "3"], "taquara": [-22.631, -43.275, "3"], "jardim barro branco": [-22.641, -43.245, "3"], "jardim rotsen": [-22.638, -43.239, "3"], "parque capivari": [-22.598, -43.312, "4"], "parque eldorado": [-22.592, -43.289, "4"], "vila araci": [-22.632, -43.243, "3"], "vila canaa": [-22.63, -43.238, "3"], "cristovao colombo": [-22.634, -43.246, "3"], "conjunto 22 de abril": [-22.633, -43.251, "3"], "xerem": [-22.5757, -43.3063, "4"], "mantiquira": [-22.5881, -43.3048, "4"], "amapa": [-22.605, -43.3, "4"], "barao do amapa": [-22.605, -43.3, "4"], "capivari": [-22.598, -43.312, "4"], "santo antonio": [-22.591, -43.298, "4"], "tabuleiro": [-22.582, -43.31, "4"], "parque xerem": [-22.573, -43.308, "4"], "barreiro": [-22.589, -43.292, "4"], "chapeu do sol": [-22.584, -43.301, "4"], "fazenda piranema": [-22.602, -43.288, "4"], "fazenda sao lourenco": [-22.609, -43.295, "4"], "igreja velha": [-22.579, -43.297, "4"], "jardim olimpo": [-22.586, -43.303, "4"], "pedreira": [-22.593, -43.295, "4"], "vila bonanca": [-22.581, -43.306, "4"], "vila nossa senhora das gracas": [-22.587, -43.302, "4"]};
 
     function deduplicateEquipData(list) {
       if (!Array.isArray(list)) return [];
@@ -35,7 +35,8 @@
     window.hubsData = hubsData;
     let filteredEquipList = [];
     let currentPage = 1;
-    const itemsPerPage = 25;
+    let itemsPerPage = Number(localStorage.getItem('sigem_items_per_page')) || 25;
+    window.itemsPerPage = itemsPerPage;
     let isSpreadsheetMode = false;
     let currentViewingEquipId = null;
 
@@ -122,37 +123,62 @@
       }
     }
 
+    function computeTwoLetterInitials(displayName) {
+      if (!displayName) return 'US';
+      const parts = String(displayName).trim().split(/\s+/);
+      if (parts.length >= 2) {
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      }
+      return String(displayName).substring(0, 2).toUpperCase();
+    }
+
     function initUserSession() {
       try {
-        const session = localStorage.getItem('simac_auth_session');
-        let name = 'Wellington Ribeiro';
-        let role = 'Membro';
-        if (session) {
-          const parsed = JSON.parse(session);
+        let name = 'Administrador Master';
+        let role = 'admin';
+        const globalUserRaw = localStorage.getItem('user');
+        const sessionRaw = localStorage.getItem('simac_auth_session');
+
+        if (globalUserRaw) {
+          try {
+            const gu = JSON.parse(globalUserRaw);
+            if (gu.name || gu.username) name = gu.name || gu.username;
+            if (gu.role) role = gu.role;
+          } catch (_) {}
+        } else if (sessionRaw) {
+          const parsed = JSON.parse(sessionRaw);
           if (parsed.name) name = parsed.name;
-          else if (parsed.user === 'admin') name = 'Wellington Ribeiro';
+          else if (parsed.user && typeof parsed.user === 'object' && (parsed.user.name || parsed.user.username)) {
+            name = parsed.user.name || parsed.user.username;
+          } else if (parsed.user === 'admin') {
+            name = 'Administrador Geral PMDC';
+          }
           if (parsed.role) role = parsed.role;
+          else if (parsed.user && typeof parsed.user === 'object' && parsed.user.role) role = parsed.user.role;
         }
 
-        // Atualiza Sidebar
+        const displayRoleBadge = String(role).toLowerCase() === 'admin' ? 'MASTER' : 'GESTOR';
+        const initials = computeTwoLetterInitials(name);
+
+        // Atualiza Sidebar alinhada ao nav.js global
         const sidebarNameEl = document.getElementById('sidebarUserName');
         if (sidebarNameEl) sidebarNameEl.textContent = name;
 
         const sidebarRoleEl = document.getElementById('sidebarUserRole');
-        if (sidebarRoleEl) sidebarRoleEl.textContent = role;
+        if (sidebarRoleEl) sidebarRoleEl.textContent = displayRoleBadge;
 
         const sidebarAvatarEl = document.getElementById('sidebarAvatar');
-        if (sidebarAvatarEl) sidebarAvatarEl.textContent = (name.charAt(0) || 'W').toUpperCase();
+        if (sidebarAvatarEl) sidebarAvatarEl.textContent = initials;
 
         // Atualiza Barra Superior
         const topGreetingEl = document.getElementById('topGreetingUser');
         if (topGreetingEl) topGreetingEl.textContent = name;
 
-        // Atualiza Configurações
+        // Atualiza Diagnóstico/Sessão
         const configUserEl = document.getElementById('configUserName');
         if (configUserEl) configUserEl.textContent = name;
         const configRoleEl = document.getElementById('configUserRole');
-        if (configRoleEl) configRoleEl.textContent = role;
+        if (configRoleEl) configRoleEl.textContent = displayRoleBadge;
 
         // Ativa painel restrito exclusivo para Administrador (ADM)
         const isAdmin = checkIsAdmin();
@@ -180,6 +206,17 @@
         if (adminSection) {
           adminSection.style.display = isAdmin ? 'flex' : 'none';
         }
+
+        // 🛡️ Segurança: Card e botão de Chave Google visíveis APENAS para administradores
+        const btnGoogleInModal = document.getElementById('btnConfigGoogleKeyInModal');
+        if (btnGoogleInModal) {
+          btnGoogleInModal.style.display = isAdmin ? 'inline-flex' : 'none';
+        }
+        const cardGoogle = document.getElementById('configGoogleKeyCard');
+        if (cardGoogle) {
+          cardGoogle.style.display = isAdmin ? 'flex' : 'none';
+        }
+
         if (isAdmin) {
           carregarAuditoriaResumo();
         }
@@ -211,10 +248,12 @@
 
     function checkIsAdmin() {
       try {
+        const gu = JSON.parse(localStorage.getItem('user') || '{}');
+        if (gu && String(gu.role || '').toLowerCase() === 'admin') return true;
         const session = JSON.parse(localStorage.getItem('simac_auth_session') || '{}');
-        const role = session.role || '';
-        const user = session.user || '';
-        return (role && (role.toLowerCase().includes('admin') || role.toLowerCase().includes('gestor'))) || user === 'admin';
+        const role = String(session.role || (session.user && session.user.role) || '').toLowerCase();
+        const username = typeof session.user === 'string' ? session.user : (session.user?.username || '');
+        return role === 'admin' || username === 'admin';
       } catch (e) {
         return false;
       }
@@ -343,10 +382,25 @@
       }
     }
 
+    async function loadHubsFromApi() {
+      try {
+        const res = await apiRequest('./api/hubs');
+        if (res.ok && Array.isArray(res.data) && res.data.length > 0) {
+          hubsData = res.data;
+          window.hubsData = hubsData;
+          localStorage.setItem('pmdc_hubs_db', JSON.stringify(hubsData));
+          renderHubsCards();
+          if (map) updateMapLayers();
+        }
+      } catch (e) {
+        console.warn('[SIGEM] Falha ao sincronizar hubs pela API:', e.message);
+      }
+    }
+
     async function manualSyncFromApi() {
-      showToast('Sincronizando dados com o banco SQLite central...');
-      await loadEquipamentosFromApi();
-      showToast('Sincronização com SQLite concluída com sucesso!');
+      showToast('Sincronizando dados com o banco central...');
+      await Promise.all([loadEquipamentosFromApi(), loadHubsFromApi()]);
+      showToast('Sincronização concluída com sucesso!');
     }
 
     function getGoogleApiKey() {
@@ -359,7 +413,6 @@
       if (!key) {
         localStorage.removeItem('google_maps_api_key');
         updateGoogleKeyStatusBadge();
-      carregarCategorias();
         closeGoogleKeyModal();
         showToast('Chave Google removida. Usando geocodificação padrão.');
         return;
@@ -555,6 +608,11 @@
 
           document.getElementById('editEquipLat').value = lat.toFixed(6);
           document.getElementById('editEquipLon').value = lon.toFixed(6);
+          const boEl = document.getElementById('editEquipBairroOficial');
+          if (boEl) boEl.value = d.bairro_oficial || (d.inDuqueDeCaxias === false ? 'Fora do Limite Municipal' : bairro);
+          if (d.districtId) {
+            document.getElementById('editEquipDist').value = String(d.districtId);
+          }
           if (typeof window.setModalPrecisaoGeo === 'function') {
             window.setModalPrecisaoGeo(precisao);
           }
@@ -627,6 +685,11 @@
           const safeLon = (!isNaN(dLon) && dLon !== 0) ? dLon : -43.305000;
           document.getElementById('editEquipLat').value = safeLat.toFixed(6);
           document.getElementById('editEquipLon').value = safeLon.toFixed(6);
+          const boEl = document.getElementById('editEquipBairroOficial');
+          if (boEl && d.bairro_oficial) boEl.value = d.bairro_oficial;
+          if (d.districtId) {
+            document.getElementById('editEquipDist').value = String(d.districtId);
+          }
           if (typeof window.setModalPrecisaoGeo === 'function') {
             window.setModalPrecisaoGeo(d.precisao_geo || 'NUMERO_EXATO');
           }

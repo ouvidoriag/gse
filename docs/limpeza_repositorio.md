@@ -60,3 +60,16 @@ Nenhuma exclusão ou alteração estrutural é realizada de forma automática ou
 | `public/index.html` | Raiz de `public/` | Cópia estática duplicada do dashboard antigo. Interceptava a raiz `/`. |
 | `public/sigem/index.html.original` | `public/sigem/` | Backup não utilizado de 259 KB. |
 | `public/docs/` | Raiz de `public/` | Redundância com `public/api/` (atendido diretamente por rota unificada). |
+| `enderecos_duque_de_caxias_v2_backup_pre_google_sync_1791985688204.db` | `dados/backups/` | Duplicata exata em bytes (mesmo SHA256) gerada em segundos de intervalo. |
+| `enderecos_duque_de_caxias_v2_backup_pre_google_sync_1791985713822.db` | `dados/backups/` | Duplicata exata em bytes (mesmo SHA256) gerada em segundos de intervalo. |
+| `public/logo.png` | `public/` | Cópia binária redundante (932 KB). Canônico unificado em `public/shared/logo.png`. |
+| `public/sigem/logo.png` | `public/sigem/` | Cópia binária redundante (932 KB). Canônico unificado em `public/shared/logo.png`. |
+| `public/shared/hub.css` | `public/shared/` | Cópia duplicada desnecessária. Mantido canônico no módulo `public/hub/hub.css`. |
+| `public/shared/hub.js` | `public/shared/` | Cópia duplicada desnecessária. Mantido canônico no módulo `public/hub/hub.js`. |
+| `public/cds/formulario.html` | `public/cds/` | Formulário estático legado e abandonado, sem rotas ou imports no sistema ativo. |
+| `public/cds/login.js` | `public/cds/` | Script de formulário legado abandonado, substituído pelo SSO centralizado. |
+| `scripts/atualizar_comunidades_acoes.js` | `scripts/` | Script quebrado com erro `ENOENT` fatal, dependia de caminhos inexistentes no Desktop de dev. |
+| `scripts/gerar_json_mapa_completo.js` | `scripts/` | Script quebrado e de risco que dependia de diretório externo inexistente e corrompia GeoJSONs. |
+| `scripts/check_db_summary.js` | `scripts/` | Script simplificado e redundante com o validador oficial `check_full_integrity.js`. |
+| `scripts/dump_sqlite_schema.js` | `scripts/` | Script descartável de 14 linhas utilizado uma única vez na fase de migração preliminar. |
+| `scripts/migrar_sqlite_para_mysql.js` | `scripts/` | Rotina de migração preliminar concluída; removida para prevenir acionamento destrutivo acidental de DDL. |

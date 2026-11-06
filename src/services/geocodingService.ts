@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import mysqlPool from '../database/mysql';
+import { getSystemSetting } from '../routes/adminSettings';
 
 export interface GeocodeResult {
   success: boolean;
@@ -13,6 +14,8 @@ export interface GeocodeResult {
   insideCaxias: boolean;
   districtId: number | null;
   districtName: string | null;
+  bairro_oficial?: string | null;
+  distrito_oficial?: string | null;
   warning?: string;
   error?: string;
 }
@@ -27,8 +30,9 @@ export const CAXIAS_BBOX = {
   maxLon: -43.100,
 };
 
-// Carregar GeoJSON dos 4 Distritos Administrativos de Duque de Caxias
+// Carregar GeoJSON dos 4 Distritos Administrativos e Bairros Oficiais de Duque de Caxias
 let distritosGeoJson: any = null;
+let bairrosOficiaisGeoJson: any = null;
 
 function getDistritosGeoJson(): any {
   if (distritosGeoJson) return distritosGeoJson;
@@ -41,6 +45,25 @@ function getDistritosGeoJson(): any {
     console.error('[GeocodingService] Erro ao carregar distritos.geojson:', err);
   }
   return distritosGeoJson;
+}
+
+function getBairrosOficiaisGeoJson(): any {
+  if (bairrosOficiaisGeoJson) return bairrosOficiaisGeoJson;
+  try {
+    const candidates = [
+      path.join(__dirname, '..', '..', 'public', 'sigem', 'dados', 'geojson', 'bairros_oficiais.geojson'),
+      path.join(__dirname, '..', '..', 'dados', 'geojson', 'bairros_oficiais.geojson'),
+    ];
+    for (const p of candidates) {
+      if (fs.existsSync(p)) {
+        bairrosOficiaisGeoJson = JSON.parse(fs.readFileSync(p, 'utf8'));
+        break;
+      }
+    }
+  } catch (err) {
+    console.error('[GeocodingService] Erro ao carregar bairros_oficiais.geojson:', err);
+  }
+  return bairrosOficiaisGeoJson;
 }
 
 // Algoritmo Ray-Casting (Point in Polygon)
@@ -111,6 +134,54 @@ export function validatePointInDistricts(lat: number, lon: number): { insideCaxi
     insideCaxias: false,
     districtId: null,
     districtName: null,
+  };
+}
+
+/**
+ * Identifica o Bairro Oficial Cartográfico (Lei Municipal nº 1.488) e Distrito Oficial via Point-in-Polygon
+ */
+export function findOfficialBairroByPoint(
+  lat: number | null | undefined,
+  lon: number | null | undefined
+): {
+  insideCaxias: boolean;
+  bairroOficial: string | null;
+  distritoOficial: string | null;
+  districtId: number | null;
+} {
+  const numLat = Number(lat);
+  const numLon = Number(lon);
+  if (lat === null || lon === null || lat === undefined || lon === undefined || isNaN(numLat) || isNaN(numLon) || numLat === 0 || numLon === 0) {
+    return { insideCaxias: false, bairroOficial: null, distritoOficial: null, districtId: null };
+  }
+
+  const pt: [number, number] = [numLon, numLat];
+  const bairrosGeo = getBairrosOficiaisGeoJson();
+  if (bairrosGeo && Array.isArray(bairrosGeo.features)) {
+    for (const feat of bairrosGeo.features) {
+      if (pointInGeometry(pt, feat.geometry)) {
+        const props = feat.properties || {};
+        const bName = String(props.Name || props.NM_BAIRRO || props.nome || '').trim() || null;
+        const dRaw = String(props.Distrito || props.NM_DIST || '').trim() || null;
+        const dMatch = dRaw ? dRaw.match(/(\d+)/) : null;
+        const dId = dMatch ? Number(dMatch[1]) : null;
+        const distInfo = validatePointInDistricts(numLat, numLon);
+        return {
+          insideCaxias: true,
+          bairroOficial: bName,
+          distritoOficial: distInfo.districtName || dRaw,
+          districtId: dId || distInfo.districtId,
+        };
+      }
+    }
+  }
+
+  const distOnly = validatePointInDistricts(numLat, numLon);
+  return {
+    insideCaxias: distOnly.insideCaxias,
+    bairroOficial: null,
+    distritoOficial: distOnly.districtName,
+    districtId: distOnly.districtId,
   };
 }
 
@@ -261,10 +332,16 @@ export async function geocodeLocation(params: {
     fullAddress = `${logradouro}, ${numPart}${bPart}Duque de Caxias, RJ, Brasil`;
   }
 
-  // 1. Chave da Google API: Prioridade absoluta para a chave configurada no servidor (.env)
+  // 1. Chave da Google API: Prioridade absoluta para a chave configurada no servidor (.env ou system_settings)
   let googleApiKey = (process.env.GOOGLE_MAPS_API_KEY || process.env.GOOGLE_GEOCODING_API_KEY || '').trim();
-  
-  // Se o servidor não tiver chave configurada, aceita chave informada pelo operador com validação estrita de formato
+  if (!googleApiKey) {
+    try {
+      const savedKey = await getSystemSetting('google_maps_api_key', '');
+      if (savedKey && savedKey.trim()) googleApiKey = savedKey.trim();
+    } catch (_) { }
+  }
+
+  // Se o servidor não tiver chave configurada, aceita chave informada pelo administrador com validação estrita de formato
   if (!googleApiKey && userKey) {
     const trimmed = String(userKey).trim();
     if (/^AIza[0-9A-Za-z\-_]{35}$/.test(trimmed)) {
@@ -282,11 +359,13 @@ export async function geocodeLocation(params: {
 
       if (googleRes) {
         const spatial = validatePointInDistricts(googleRes.lat, googleRes.lon);
+        const oficial = findOfficialBairroByPoint(googleRes.lat, googleRes.lon);
+        const effDistId = oficial.districtId || spatial.districtId;
 
         // Se o equipamento possui distrito esperado, verificar se o Google não caiu em homônimo em outro distrito
         let warning: string | undefined;
-        if (distrito && spatial.districtId && Number(distrito) !== spatial.districtId) {
-          warning = `Atenção: Endereço geocodificado caiu no ${spatial.districtId}º Distrito, mas o cadastro pertence ao ${distrito}º Distrito. Verifique se há rua homônima.`;
+        if (distrito && effDistId && Number(distrito) !== effDistId) {
+          warning = `Atenção: Endereço geocodificado caiu no ${effDistId}º Distrito${oficial.bairroOficial ? ` (${oficial.bairroOficial})` : ''}, mas o cadastro informou ${distrito}º Distrito.`;
         }
 
         const isRooftop = googleRes.locationType === 'ROOFTOP';
@@ -299,8 +378,10 @@ export async function geocodeLocation(params: {
           source: 'google',
           formatted_address: googleRes.address,
           insideCaxias: spatial.insideCaxias,
-          districtId: spatial.districtId,
-          districtName: spatial.districtName,
+          districtId: effDistId,
+          districtName: oficial.distritoOficial || spatial.districtName,
+          bairro_oficial: oficial.bairroOficial,
+          distrito_oficial: oficial.distritoOficial || spatial.districtName,
           warning,
         };
       }
@@ -315,6 +396,7 @@ export async function geocodeLocation(params: {
       const osmRes = await queryNominatim(fullAddress);
       if (osmRes) {
         const spatial = validatePointInDistricts(osmRes.lat, osmRes.lon);
+        const oficial = findOfficialBairroByPoint(osmRes.lat, osmRes.lon);
         return {
           success: true,
           lat: Number(osmRes.lat.toFixed(6)),
@@ -324,8 +406,10 @@ export async function geocodeLocation(params: {
           source: 'nominatim',
           formatted_address: osmRes.address,
           insideCaxias: spatial.insideCaxias,
-          districtId: spatial.districtId,
-          districtName: spatial.districtName,
+          districtId: oficial.districtId || spatial.districtId,
+          districtName: oficial.distritoOficial || spatial.districtName,
+          bairro_oficial: oficial.bairroOficial,
+          distrito_oficial: oficial.distritoOficial || spatial.districtName,
         };
       }
     } catch (err: any) {
@@ -335,6 +419,7 @@ export async function geocodeLocation(params: {
 
   // PRIORIDADE 3: Centróide do Bairro / Distrito
   const centroid = await getCentroidForBairro(bairro || '', distrito);
+  const oficialCent = findOfficialBairroByPoint(centroid.lat, centroid.lon);
   return {
     success: true,
     lat: Number(centroid.lat.toFixed(6)),
@@ -346,6 +431,8 @@ export async function geocodeLocation(params: {
     insideCaxias: true,
     districtId: centroid.districtId,
     districtName: centroid.districtName,
+    bairro_oficial: oficialCent.bairroOficial || bairro || null,
+    distrito_oficial: oficialCent.distritoOficial || centroid.districtName,
     warning: 'Coordenadas aproximadas com base no bairro/distrito. Recomenda-se o ajuste fino visual no satélite.',
   };
 }

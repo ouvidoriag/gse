@@ -36,30 +36,140 @@
       updateKPIs();
     }
 
-    function updateKPIs() {
+    function hasActiveEquipFilters() {
+      const q = (document.getElementById('searchEquip')?.value || '').trim();
+      const dist = document.getElementById('filterDistrito')?.value || '';
+      const cat = document.getElementById('filterCategoria')?.value || '';
+      const status = document.getElementById('filterStatus')?.value || '';
+      const sec = document.getElementById('filterSecretaria')?.value || '';
+      return Boolean(q || dist || cat || status || sec);
+    }
+
+    function detectExternalEntity(item) {
+      if (!item) return null;
+      const nome = String(item.nome || '').toUpperCase();
+      const sigla = String(item.sigla || '').toUpperCase();
+      const desc = String(item.descricao || '').toUpperCase();
+
+      if (nome.includes('ESTAÇÃO FERROVIÁRIA') || nome.includes('ESTACAO FERROVIARIA') || nome.includes('SUPERVIA') || sigla.includes('SUPERVIA')) {
+        return { type: 'CONCESSIONARIA', tag: 'SUPERVIA', label: 'Concessionária SuperVia (Trem)', icon: 'ri-train-line' };
+      }
+      if (nome.includes('ÁGUAS DO RIO') || nome.includes('AGUAS DO RIO')) {
+        return { type: 'CONCESSIONARIA', tag: 'ÁGUAS DO RIO', label: 'Concessionária Águas do Rio', icon: 'ri-drop-line' };
+      }
+      if (nome.includes('ENEL ') || sigla === 'ENEL') {
+        return { type: 'CONCESSIONARIA', tag: 'ENEL', label: 'Concessionária Enel Distribuição', icon: 'ri-flashlight-line' };
+      }
+      if (nome.includes('NATURGY') || nome.includes('CEG ')) {
+        return { type: 'CONCESSIONARIA', tag: 'NATURGY', label: 'Concessionária Naturgy Gás', icon: 'ri-fire-line' };
+      }
+      if (nome.includes('DETRAN') || sigla.includes('DETRAN')) {
+        return { type: 'ORGAO_EXTERNO', tag: 'DETRAN-RJ', label: 'Órgão Estadual — DETRAN/RJ', icon: 'ri-car-line' };
+      }
+      if (nome.includes('DELEGACIA') || nome.includes('DEAM') || /\b\d+ª\s*DP\b/.test(nome)) {
+        return { type: 'ORGAO_EXTERNO', tag: 'PCERJ', label: 'Órgão Estadual — Polícia Civil RJ', icon: 'ri-shield-star-line' };
+      }
+      if (nome.includes('BATALHÃO') || nome.includes('BPM') || nome.includes('POLÍCIA MILITAR') || nome.includes('CBMERJ') || nome.includes('CORPO DE BOMBEIROS')) {
+        return { type: 'ORGAO_EXTERNO', tag: 'GOVERNO RJ', label: 'Órgão Estadual de Segurança / Defesa', icon: 'ri-shield-flash-line' };
+      }
+      if (nome.includes('INSS') || nome.includes('RECEITA FEDERAL') || nome.includes('JUSTIÇA FEDERAL') || nome.includes('UFRJ') || nome.includes('IFRJ') || nome.includes('CEFET')) {
+        return { type: 'ORGAO_EXTERNO', tag: 'FEDERAL', label: 'Órgão / Autarquia Federal', icon: 'ri-bank-line' };
+      }
+      if (nome.includes('FÓRUM') || nome.includes('FORUM') || nome.includes('DEFENSORIA PÚBLICA') || nome.includes('MINISTÉRIO PÚBLICO') || desc.includes('ESTADUAL')) {
+        return { type: 'ORGAO_EXTERNO', tag: 'JUDICIÁRIO / RJ', label: 'Sistema de Justiça / Estadual', icon: 'ri-scales-3-line' };
+      }
+      return null;
+    }
+    window.detectExternalEntity = detectExternalEntity;
+
+    function normalizeEverydaySigla(rawSigla) {
+      const s = String(rawSigla || '').trim().toUpperCase();
+      if (!s) return 'PMDC';
+      const aliasMap = {
+        'SMSDC': 'SMS',
+        'SME': 'SMEDC',
+        'SMASDH': 'SEASDIH',
+        'SASDH': 'SEASDIH',
+        'SMSP': 'SMSEG',
+        'SMAPO': 'SMA',
+        'SMTER': 'SMDET'
+      };
+      return aliasMap[s] || s;
+    }
+    window.normalizeEverydaySigla = normalizeEverydaySigla;
+
+    function renderEquipEntityBadges(item) {
+      const secSigla = normalizeEverydaySigla(item?.secretaria_sigla || 'PMDC');
+      const secNome = item?.secretaria_nome || 'Prefeitura Municipal de Duque de Caxias';
+      const ext = detectExternalEntity(item);
+      let html = `
+        <span class="badge-sec badge-sec-${secSigla.toLowerCase()}" title="Secretaria / Órgão Gestor: ${escapeStr(secNome)}">
+          <i class="ri-government-line"></i> ${escapeHtml(secSigla)}
+        </span>
+      `;
+      if (ext) {
+        const cls = ext.type === 'CONCESSIONARIA' ? 'badge-ext-concessionaria' : 'badge-ext-orgao';
+        html += `
+          <span class="${cls}" title="${escapeStr(ext.label)}">
+            <i class="${ext.icon}"></i> ${escapeHtml(ext.tag)}
+          </span>
+        `;
+      }
+      return html;
+    }
+    window.renderEquipEntityBadges = renderEquipEntityBadges;
+
+    function updateKPIs(customList) {
+      const isFiltered = hasActiveEquipFilters();
+      const targetList = Array.isArray(customList) ? customList : (isFiltered ? filteredEquipList : equipData);
+
       let ativos = 0;
       let pendentes = 0;
-      let desat = 0;
+      let georref = 0;
 
-      equipData.forEach(e => {
-        const s = e.status || 'Pendente de revisão';
-        if (s === 'Ativo') ativos++;
-        else if (s === 'Pendente de revisão') pendentes++;
-        else if (s === 'Desatualizado') desat++;
+      targetList.forEach(e => {
+        const s = String(e.status || 'Pendente de revisão').trim().toLowerCase();
+        if (s === 'ativo') ativos++;
         else pendentes++;
+
+        const lat = Number(e.lat);
+        const lon = Number(e.lon);
+        if (!isNaN(lat) && !isNaN(lon) && lat !== 0 && lon !== 0) georref++;
       });
 
       const elTotal = document.getElementById('kpiTotal');
-      if (elTotal) elTotal.innerText = equipData.length;
+      if (elTotal) elTotal.innerText = targetList.length;
       const elAtivos = document.getElementById('kpiAtivos');
       if (elAtivos) elAtivos.innerText = ativos;
       const elPendentes = document.getElementById('kpiPendentes');
       if (elPendentes) elPendentes.innerText = pendentes;
-      const elDesat = document.getElementById('kpiDesatualizados');
-      if (elDesat) elDesat.innerText = desat;
+      const elGeo = document.getElementById('kpiGeorreferenciados') || document.getElementById('kpiDesatualizados');
+      if (elGeo) elGeo.innerText = georref;
       const elBadge = document.getElementById('badgeTotalEquip');
-      if (elBadge) elBadge.innerText = `${equipData.length} cadastrados`;
+      if (elBadge) {
+        elBadge.innerText = isFiltered
+          ? `${targetList.length} de ${equipData.length}`
+          : `${equipData.length} cadastrados`;
+      }
+      const cfgTotEq = document.getElementById('configTotalEquipCount');
+      if (cfgTotEq && equipData.length > 0) cfgTotEq.innerText = equipData.length;
+      const cfgTotHubs = document.getElementById('configTotalHubsCount');
+      if (cfgTotHubs && hubsData.length > 0) cfgTotHubs.innerText = hubsData.length;
+      const badgeHubsSide = document.getElementById('badgeTotalHubsSidebar');
+      if (badgeHubsSide && hubsData.length > 0) badgeHubsSide.innerText = `${hubsData.length} polos municipais`;
     }
+
+    function changeItemsPerPage(val) {
+      const num = parseInt(val, 10);
+      if (!isNaN(num) && num > 0) {
+        itemsPerPage = num;
+        window.itemsPerPage = num;
+        localStorage.setItem('sigem_items_per_page', String(num));
+        currentPage = 1;
+        renderEquipTable();
+      }
+    }
+    window.changeItemsPerPage = changeItemsPerPage;
 
     function saveToStorage() {
       localStorage.setItem('pmdc_equipamentos_db', JSON.stringify(equipData));
@@ -120,16 +230,18 @@
 
         let statusClass = 'badge-status-pendente';
         let statusIcon = '<i class="ri-time-fill" style="color: #f59e0b; font-size: 13px;"></i>';
-        if (itemStatus === 'Ativo') {
+        const normStatus = String(itemStatus).trim();
+        const displayStatus = normStatus.toLowerCase() === 'ativo' ? 'Ativo' : normStatus;
+        if (displayStatus === 'Ativo') {
           statusClass = 'badge-status-ativo';
           statusIcon = '<i class="ri-checkbox-circle-fill" style="color: #10b981; font-size: 13px;"></i>';
-        } else if (itemStatus === 'Desatualizado') {
+        } else if (displayStatus === 'Desatualizado' || displayStatus.toUpperCase() === 'INATIVO') {
           statusClass = 'badge-status-desatualizado';
           statusIcon = '<i class="ri-alert-fill" style="color: #ef4444; font-size: 13px;"></i>';
         }
 
         const podeEditar = canUserEditEquip(item);
-        const secSigla = item.secretaria_sigla || 'PMDC';
+        const secSigla = normalizeEverydaySigla(item.secretaria_sigla || 'PMDC');
         const secNome = item.secretaria_nome || 'Prefeitura Municipal';
 
         if (!isSpreadsheetMode) {
@@ -142,11 +254,9 @@
               <div>
                 <strong style="color: var(--navy-900); font-weight: 700;">${item.nome}</strong>
                 ${item.sigla ? `<span style="font-size: 11px; color: var(--text-muted); margin-left: 4px;">(${item.sigla})</span>` : ''}
-                <div style="margin-top: 3px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                  <span class="badge-sec ${item.secretaria_sigla ? 'badge-sec-' + item.secretaria_sigla.toLowerCase() : ''}" title="Gestão Oficial: ${escapeStr(secNome)}">
-                    <i class="ri-government-line"></i> ${secSigla}
-                  </span>
-                  ${item.hub_nome ? `<span class="badge-hub" onclick="event.stopPropagation(); filterByHub('${item.hub_nome}')"><i class="ri-building-line"></i> ${item.hub_nome}</span>` : ''}
+                <div style="margin-top: 4px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                  ${renderEquipEntityBadges(item)}
+                  ${item.hub_nome ? `<span class="badge-hub" onclick="event.stopPropagation(); filterByHub('${escapeStr(item.hub_nome)}')"><i class="ri-building-line"></i> ${escapeHtml(item.hub_nome)}</span>` : ''}
                 </div>
               </div>
             </td>
@@ -171,7 +281,7 @@
             <td><div>${item.telefone || '-'}</div></td>
             <td>
               <span class="badge-status ${statusClass}" style="display: inline-flex; align-items: center; gap: 4px;">
-                ${statusIcon} <span>${itemStatus}</span>
+                ${statusIcon} <span>${displayStatus}</span>
               </span>
             </td>
             <td style="text-align: right;" onclick="event.stopPropagation()">
@@ -349,7 +459,6 @@
       const item = equipData.find(x => x.id === id);
       if (!item) return;
       if (item.status === 'Ativo') item.status = 'Pendente de revisão';
-      else if (item.status === 'Pendente de revisão') item.status = 'Desatualizado';
       else item.status = 'Ativo';
       saveToStorage();
       renderEquipTable();
@@ -408,15 +517,27 @@
 
       filteredEquipList = equipData.filter(item => {
         if (dist && String(item.distrito) !== String(dist)) return false;
-        if (cat && !item.categoria.includes(cat)) return false;
-        if (status && (item.status || 'Pendente de revisão') !== status) return false;
-        if (sec && item.secretaria_sigla !== sec) return false;
+        if (cat && !(item.categoria || '').toLowerCase().includes(cat.toLowerCase())) return false;
+        if (status && String(item.status || 'Pendente de revisão').trim().toLowerCase() !== status.toLowerCase()) return false;
+        if (sec) {
+          const ext = detectExternalEntity(item);
+          if (sec === 'EXT:CONCESSIONARIA') {
+            if (!ext || ext.type !== 'CONCESSIONARIA') return false;
+          } else if (sec === 'EXT:ORGAO_EXTERNO') {
+            if (!ext || ext.type !== 'ORGAO_EXTERNO') return false;
+          } else {
+            const normItemSigla = normalizeEverydaySigla(item.secretaria_sigla);
+            if (normItemSigla !== sec && item.secretaria_sigla !== sec) return false;
+          }
+        }
 
         if (query) {
+          const ext = detectExternalEntity(item);
           const searchCorpus = [
             item.nome, item.sigla, item.categoria, item.secretaria_responsavel,
             item.secretaria_sigla, item.secretaria_nome,
-            item.bairro, item.bairro_oficial, item.distrito_oficial, item.endereco, item.cep, item.telefone, item.hub_nome,
+            ext ? ext.tag : '', ext ? ext.label : '',
+            item.bairro, item.bairro_oficial, item.distrito_oficial, item.endereco, item.logradouro, item.cep, item.telefone, item.hub_nome,
             item.predio_sala, item.numero, item.ponto_referencia
           ].filter(Boolean).join(' ').toLowerCase();
 
@@ -426,6 +547,7 @@
       });
 
       currentPage = 1;
+      updateKPIs(filteredEquipList);
       renderEquipTable();
     }
 
@@ -443,6 +565,7 @@
       }
       filteredEquipList = equipData;
       currentPage = 1;
+      updateKPIs(equipData);
       renderEquipTable();
     }
 
@@ -521,7 +644,7 @@
           <div class="hub-card-head">
             <div>
               <h3>${escapeHtml(hub.nome)}</h3>
-              <div class="hub-addr"><i class="ri-map-pin-line" style="color: var(--primary);"></i> ${escapeHtml(hub.endereco)} — <strong>${escapeHtml(hub.bairro)}</strong> (${escapeHtml(hub.distrito)}º Distrito)</div>
+              <div class="hub-addr"><i class="ri-map-pin-line" style="color: var(--primary);"></i> ${escapeHtml(hub.endereco)} — <strong>${escapeHtml(hub.bairro)}</strong> (${escapeHtml(hub.distrito)}º Distrito${hub.cep ? ' • CEP ' + escapeHtml(hub.cep) : ''})</div>
             </div>
             <span class="badge-cat" style="background: ${orgaos.length > 0 ? '#eff6ff' : '#f8fafc'}; color: ${orgaos.length > 0 ? '#0284c7' : '#94a3b8'}; border-color: ${orgaos.length > 0 ? '#bfdbfe' : '#e2e8f0'}; font-weight: 700; white-space: nowrap;">
               ${orgaos.length} ${orgaos.length === 1 ? 'Unidade' : 'Unidades'}
@@ -535,8 +658,11 @@
             </div>
             <ul class="hub-orgaos-list" style="max-height: 200px;">${orgaosListHtml}</ul>
           </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 4px;">
-            <button class="btn btn-secondary btn-xs" onclick="openNewEquipInHub('${hub.id}')" style="background: #f0fdf4; color: #15803d; border-color: #bbf7d0;"><i class="ri-add-circle-line"></i> + Nova Unidade</button>
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-secondary btn-xs" onclick="openNewEquipInHub('${hub.id}')" style="background: #f0fdf4; color: #15803d; border-color: #bbf7d0;"><i class="ri-add-circle-line"></i> + Nova Unidade</button>
+              ${checkIsAdmin() ? `<button class="btn btn-secondary btn-xs" onclick="deleteHubCompleto('${hub.id}', '${escapeStr(hub.nome)}')" style="color: var(--red-600); border-color: #fecaca; background: #fff5f5;"><i class="ri-delete-bin-line"></i> Excluir Polo</button>` : ''}
+            </div>
             <div style="display: flex; gap: 6px;">
               <button class="btn btn-secondary btn-xs" onclick="filterByHub('${escapeStr(hub.nome)}')"><i class="ri-search-line"></i> Filtrar Tabela</button>
               <button class="btn btn-primary btn-xs" onclick="focusHubOnMap(${hub.lat || -22.785}, ${hub.lon || -43.305}, '${escapeStr(hub.nome)}')"><i class="ri-map-pin-2-line"></i> Mapa</button>
@@ -566,6 +692,57 @@
         return false;
       });
     }
+
+    async function deleteHubCompleto(hubId, hubNome) {
+      if (!checkIsAdmin()) {
+        showToast('Apenas administradores podem excluir complexos/polos.', 'error');
+        return;
+      }
+
+      const orgaos = getEquipsForHub(hubId);
+      const aviso = orgaos.length > 0 
+        ? `ATENÇÃO: Este polo abriga ${orgaos.length} unidade(s) instalada(s).\n\nAo excluir, todas as unidades serão automaticamente desvinculadas e mantidas como imóveis isolados no sistema.\n\nDeseja realmente excluir o polo "${hubNome}"?`
+        : `Deseja realmente excluir o polo "${hubNome}"?`;
+
+      if (!confirm(aviso)) return;
+
+      try {
+        const token = getAuthToken();
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const res = await fetch(`./api/hubs/${encodeURIComponent(hubId)}`, {
+          method: 'DELETE',
+          headers
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Erro ao excluir polo.');
+
+        // Desvincula localmente os equipamentos que apontavam para o Hub
+        equipData.forEach(e => {
+          if (String(e.hub_id) === String(hubId) || (e.hub_nome && e.hub_nome.toLowerCase().trim() === hubNome.toLowerCase().trim())) {
+            e.hub_id = '';
+            e.hub_nome = '';
+          }
+        });
+
+        // Remove do array local
+        hubsData = hubsData.filter(h => String(h.id) !== String(hubId));
+        saveToStorage();
+
+        renderHubsCards();
+        renderEquipTable();
+        if (map) updateMapLayers();
+        populateHubSelect('');
+
+        showToast(data.message || `Polo "${hubNome}" excluído com sucesso!`);
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Erro ao excluir polo.', 'error');
+      }
+    }
+    window.deleteHubCompleto = deleteHubCompleto;
 
     function removeEquipFromHub(equipId) {
       const item = equipData.find(x => x.id === equipId);
@@ -602,29 +779,135 @@
       }
     }
 
-    function exportData(type, format) {
-      const data = filteredEquipList.length > 0 ? filteredEquipList : equipData;
+    async function exportData(type, format) {
+      const isFiltered = hasActiveEquipFilters();
+      const data = isFiltered ? filteredEquipList : equipData;
+
+      if (!data || data.length === 0) {
+        showToast('Nenhum equipamento encontrado nos filtros atuais para exportar.');
+        return;
+      }
+
+      const dateStr = new Date().toISOString().slice(0, 10);
+      const suffix = isFiltered ? 'filtrado' : 'completo';
+
+      if (format === 'xlsx') {
+        try {
+          showToast(`Gerando planilha Excel (.xlsx) com ${data.length} endereços...`);
+          const token = getAuthToken();
+          const headers = { 'Content-Type': 'application/json' };
+          if (token) headers['Authorization'] = `Bearer ${token}`;
+          const res = await fetch('./api/equipamentos/export-xlsx', {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({ ids: data.map(x => x.id) })
+          });
+          if (!res.ok) throw new Error('Falha ao gerar XLSX no servidor');
+          const blob = await res.blob();
+          downloadBlob(blob, `enderecos_duque_de_caxias_${suffix}_${dateStr}.xlsx`);
+          showToast(`Planilha Excel exportada (${data.length} registros)!`);
+          return;
+        } catch (err) {
+          console.warn('[SIGEM] Fallback CSV ativado na exportação XLSX:', err);
+          showToast('Servidor indisponível para XLSX; exportando em formato CSV compatível com Excel.');
+          format = 'csv';
+        }
+      }
+
       if (format === 'json') {
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        downloadBlob(blob, `enderecos_duque_de_caxias_${new Date().toISOString().slice(0,10)}.json`);
+        downloadBlob(blob, `enderecos_duque_de_caxias_${suffix}_${dateStr}.json`);
+        showToast(`JSON exportado (${data.length} registros)!`);
       } else if (format === 'csv') {
-        let csv = "ID;Nome;Sigla;Categoria;Secretaria;Status;Distrito;Bairro;Endereco;Numero;CEP;Telefone;Email;Horario;Latitude;Longitude;Complexo" + String.fromCharCode(10);
+        const escCsv = (v) => String(v ?? '').replace(/"/g, '""');
+        let csv = "ID;Nome;Sigla;Categoria;Secretaria_Sigla;Secretaria_Nome;Concessionaria_Orgao_Externo;Status;Distrito;Bairro;Bairro_Oficial_Cartografico;Logradouro;Numero;Complemento;CEP;Cidade;UF;Telefone;Email;Horario;Latitude;Longitude;Complexo_Hub" + String.fromCharCode(10);
         data.forEach(x => {
-          csv += '"' + x.id + '";"' + (x.nome || '') + '";"' + (x.sigla || '') + '";"' + (x.categoria || '') + '";"' + (x.secretaria_responsavel || '') + '";"' + (x.status || 'Ativo') + '";"' + (x.distrito || '') + '";"' + (x.bairro || '') + '";"' + (x.endereco || '') + '";"' + (x.numero || '') + '";"' + (x.cep || '') + '";"' + (x.telefone || '') + '";"' + (x.email || '') + '";"' + (x.horario_funcionamento || '') + '";"' + (x.lat || '') + '";"' + (x.lon || '') + '";"' + (x.hub_nome || '') + '"' + String.fromCharCode(10);
+          const ext = detectExternalEntity(x);
+          const secSigla = normalizeEverydaySigla(x.secretaria_sigla || 'PMDC');
+          const secNome = x.secretaria_nome || x.secretaria_responsavel || 'Prefeitura Municipal de Duque de Caxias';
+          const extLabel = ext ? `${ext.tag} (${ext.label})` : '';
+          csv += [
+            x.id,
+            x.nome || '',
+            x.sigla || '',
+            x.categoria || '',
+            secSigla,
+            secNome,
+            extLabel,
+            x.status || 'Ativo',
+            x.distrito ? `${x.distrito}º Distrito` : '',
+            x.bairro || '',
+            x.bairro_oficial || x.bairro || '',
+            x.logradouro || x.endereco || '',
+            x.numero || 's/nº',
+            x.predio_sala || x.complemento || '',
+            x.cep || '',
+            'Duque de Caxias',
+            'RJ',
+            x.telefone || '',
+            x.email || '',
+            x.horario_funcionamento || '',
+            x.lat ?? '',
+            x.lon ?? '',
+            x.hub_nome || ''
+          ].map(v => `"${escCsv(v)}"`).join(';') + String.fromCharCode(10);
         });
         const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
-        downloadBlob(blob, `enderecos_duque_de_caxias_${new Date().toISOString().slice(0,10)}.csv`);
+        downloadBlob(blob, `enderecos_duque_de_caxias_${suffix}_${dateStr}.csv`);
+        showToast(`Planilha CSV exportada (${data.length} registros)!`);
       }
     }
 
-    function exportHubsData(format) {
-      let csv = "ID;Nome;Bairro;Distrito;Endereco;Latitude;Longitude;Total_Orgaos" + String.fromCharCode(10);
+    async function exportHubsData(format = 'csv') {
+      const dateStr = new Date().toISOString().slice(0, 10);
+
+      if (format === 'xlsx') {
+        try {
+          showToast('Gerando planilha completa de Hubs (.xlsx)...');
+          const token = getAuthToken();
+          const headers = {};
+          if (token) headers['Authorization'] = `Bearer ${token}`;
+          const res = await fetch('./api/hubs/export-xlsx', { headers });
+          if (!res.ok) throw new Error('Falha ao exportar XLSX de Hubs');
+          const blob = await res.blob();
+          downloadBlob(blob, `hubs_complexos_duque_de_caxias_${dateStr}.xlsx`);
+          showToast('Planilha de Hubs (.xlsx) com endereços completos exportada!');
+          return;
+        } catch (err) {
+          console.warn('[SIGEM] Fallback CSV para Hubs:', err);
+          format = 'csv';
+        }
+      }
+
+      const escCsv = (v) => String(v ?? '').replace(/"/g, '""');
+      let csv = "ID;Nome;Logradouro_e_Numero;Bairro;Distrito;Cidade;UF;CEP;Endereco_Completo;Latitude;Longitude;Total_Orgaos" + String.fromCharCode(10);
       hubsData.forEach(h => {
         const orgaos = getEquipsForHub(h);
-        csv += '"' + h.id + '";"' + (h.nome || '') + '";"' + (h.bairro || '') + '";"' + (h.distrito || '') + '";"' + (h.endereco || '') + '";"' + (h.lat || '') + '";"' + (h.lon || '') + '";"' + (orgaos.length) + '"' + String.fromCharCode(10);
+        const endBase = h.endereco || h.logradouro || '';
+        const bairroStr = h.bairro || '';
+        const distStr = h.distrito ? `${h.distrito}º Distrito` : '';
+        const cidadeStr = h.cidade || 'Duque de Caxias';
+        const ufStr = h.uf || 'RJ';
+        const cepStr = h.cep || '';
+        const enderecoCompleto = `${endBase}${bairroStr ? ' - ' + bairroStr : ''} (${distStr}), ${cidadeStr} - ${ufStr}${cepStr ? ', CEP ' + cepStr : ''}`;
+        csv += [
+          h.id,
+          h.nome || '',
+          endBase,
+          bairroStr,
+          distStr,
+          cidadeStr,
+          ufStr,
+          cepStr,
+          enderecoCompleto,
+          h.lat ?? '',
+          h.lon ?? '',
+          orgaos.length
+        ].map(v => `"${escCsv(v)}"`).join(';') + String.fromCharCode(10);
       });
       const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
-      downloadBlob(blob, `hubs_complexos_duque_de_caxias_${new Date().toISOString().slice(0,10)}.csv`);
+      downloadBlob(blob, `hubs_complexos_duque_de_caxias_${dateStr}.csv`);
+      showToast('Planilha CSV de Hubs com endereço completo exportada!');
     }
 
     function downloadBlob(blob, filename) {
@@ -649,8 +932,11 @@ document.addEventListener('DOMContentLoaded', () => {
       initUserSession();
       initDatabase();
 
-      // Inicia sincronização com o banco de dados central SQLite
+      // Inicia sincronização com o banco central (Equipamentos, Hubs, Categorias e Secretarias)
       loadEquipamentosFromApi();
+      if (typeof loadHubsFromApi === 'function') loadHubsFromApi();
+      if (typeof carregarCategorias === 'function') carregarCategorias();
+      if (typeof carregarSecretariasSigem === 'function') carregarSecretariasSigem();
 
       // Garante que os campos de filtro comecem desmarcados e limpos no carregamento inicial
       const searchEl = document.getElementById('searchEquip');
@@ -661,8 +947,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (catEl) catEl.value = '';
       const statusEl = document.getElementById('filterStatus');
       if (statusEl) statusEl.value = '';
+      const secEl = document.getElementById('filterSecretaria');
+      if (secEl) secEl.value = '';
 
       renderEquipTable();
       renderHubsCards();
       updateGoogleKeyStatusBadge();
+
+      // Suporte a navegação direta via hash (#mapa, #hubs, #relatorios, #config) vinda dos KPIs do Hub
+      const applyHashTab = () => {
+        const h = (window.location.hash || '').replace('#', '').trim().toLowerCase();
+        if (['equipamentos', 'hubs', 'mapa', 'relatorios', 'config'].includes(h)) {
+          const navEl = document.querySelector(`.sidebar-nav-item[data-tab="${h}"]`);
+          navigateTab(h, navEl);
+        }
+      };
+      applyHashTab();
+      window.addEventListener('hashchange', applyHashTab);
     });

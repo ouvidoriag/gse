@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GSE — Checklist & Auditoria de Melhorias e Correções</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Barlow:wght@600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --navy-900: #060e1c;
+      --navy-800: #0b1424;
+      --navy-700: #101c33;
+      --navy-600: #121e36;
+      --navy-500: #1a2d50;
+      --navy-400: #243d6e;
+      --accent: #ffcc00;
+      --accent-dim: #c9a200;
+      --blue: #0284c7;
+      --blue-light: #38bdf8;
+      --green: #22c55e;
+      --green-bg: #052e16;
+      --yellow: #facc15;
+      --yellow-bg: #2d2305;
+      --red: #ef4444;
+      --red-bg: #2d0b0b;
+      --orange: #f97316;
+      --orange-bg: #2c1400;
+      --purple: #a855f7;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #1e3a5f;
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy-900);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, var(--navy-800) 0%, var(--navy-700) 100%);
+      border-bottom: 3px solid var(--accent);
+      padding: 20px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, .5);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo .badge {
+      background: var(--accent);
+      color: var(--navy-900);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      letter-spacing: 1px;
+    }
+
+    .header-title h1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-title p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── AUDIT SUMMARY PILLS ── */
+    .audit-summary {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+
+    .summary-pill {
+      background: var(--navy-900);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .summary-pill strong {
+      font-size: 15px;
+    }
+
+    .summary-pill.s-done strong {
+      color: var(--green);
+    }
+
+    .summary-pill.s-partial strong {
+      color: var(--yellow);
+    }
+
+    .summary-pill.s-todo strong {
+      color: var(--red);
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar-wrap {
+      text-align: right;
+      min-width: 200px;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .progress-label strong {
+      color: var(--accent);
+    }
+
+    .progress-bar-bg {
+      background: var(--navy-500);
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--accent) 0%, var(--green) 100%);
+      height: 100%;
+      border-radius: 999px;
+      transition: width .4s ease;
+    }
+
+    /* ── CONTROLS ── */
+    .controls {
+      max-width: 1280px;
+      margin: 24px auto 0;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .control-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--navy-700);
+      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: var(--navy-900);
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .search-input {
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--navy-700);
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      width: 240px;
+      margin-left: auto;
+      transition: border-color .2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .reset-btn {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--red);
+      background: transparent;
+      color: var(--red);
+      font-size: 12.5px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .reset-btn:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      max-width: 1280px;
+      margin: 24px auto 60px;
+      padding: 0 24px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-icon {
+      font-size: 20px;
+      width: 36px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: #fff;
+    }
+
+    .section-count {
+      margin-left: auto;
+      background: var(--navy-500);
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .section-count .done {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* ── ITEM CARD ── */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item-card {
+      background: var(--navy-700);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, opacity .2s;
+      position: relative;
+    }
+
+    .item-card[data-audit="partial"] {
+      border-left: 4px solid var(--yellow);
+    }
+
+    .item-card[data-audit="done"] {
+      border-left: 4px solid var(--green);
+    }
+
+    .item-card:hover {
+      background: var(--navy-600);
+      border-color: var(--navy-400);
+    }
+
+    .item-card.done {
+      opacity: .72;
+    }
+
+    .item-card.done .item-text {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .item-card.hidden {
+      display: none;
+    }
+
+    .item-checkbox {
+      width: 22px;
+      height: 22px;
+      min-width: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      background: var(--navy-800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: all .2s;
+    }
+
+    .item-card.done .item-checkbox {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .item-checkbox svg {
+      display: none;
+    }
+
+    .item-card.done .item-checkbox svg {
+      display: block;
+    }
+
+    .item-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-text {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    .item-id-pill {
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(255, 204, 0, .1);
+      border: 1px solid rgba(255, 204, 0, .25);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+
+    .audit-note {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: rgba(6, 14, 28, 0.65);
+      border: 1px solid rgba(30, 58, 95, 0.8);
+      border-radius: 6px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+
+    .audit-note code {
+      font-family: Consolas, monospace;
+      font-size: 11.5px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--blue-light);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    .item-meta {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 999px;
+      letter-spacing: .3px;
+    }
+
+    .tag-bug {
+      background: rgba(239, 68, 68, .15);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, .3);
+    }
+
+    .tag-melhoria {
+      background: rgba(2, 132, 199, .15);
+      color: var(--blue-light);
+      border: 1px solid rgba(2, 132, 199, .3);
+    }
+
+    .tag-source {
+      background: var(--navy-500);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .tag-done {
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, .4);
+    }
+
+    .tag-partial {
+      background: var(--yellow-bg);
+      color: var(--yellow);
+      border: 1px solid rgba(250, 204, 21, .4);
+    }
+
+    .tag-todo {
+      background: rgba(148, 163, 184, .1);
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, .25);
+    }
+
+    .tag-prio-alta {
+      background: rgba(239, 68, 68, .15);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, .3);
+    }
+
+    .tag-prio-media {
+      background: rgba(249, 115, 22, .15);
+      color: var(--orange);
+      border: 1px solid rgba(249, 115, 22, .3);
+    }
+
+    .tag-prio-baixa {
+      background: rgba(168, 85, 247, .15);
+      color: var(--purple);
+      border: 1px solid rgba(168, 85, 247, .3);
+    }
+
+    .etapa-badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--accent);
+      color: var(--navy-900);
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: .5px;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: 1280px;
+      margin: 12px auto 0;
+      padding: 0 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--navy-900);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--navy-500);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <span class="badge">GSE</span>
+        <div class="header-title">
+          <h1>Checklist & Auditoria Técnica (41 Itens)</h1>
+          <p>Verificado no código-fonte, MySQL e SQLite — Prefeitura de Duque de Caxias · RJ</p>
+        </div>
+      </div>
+
+      <div class="audit-summary">
+        <div class="summary-pill s-done"><span>✅ Já Feito:</span> <strong>41</strong></div>
+        <div class="summary-pill s-partial"><span>🟡 Parcial no Código:</span> <strong>0</strong></div>
+        <div class="summary-pill s-todo"><span>❌ Não Feito:</span> <strong>0</strong></div>
+      </div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-label">
+          <strong id="doneCount">41</strong> / <strong id="totalCount">41</strong> marcados como concluídos
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill" style="width:100%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="control-group" id="moduleFilters">
+      <button class="filter-btn active" data-filter="all">🔎 Todos (41)</button>
+      <button class="filter-btn" data-filter="geral">⚙️ Geral (8)</button>
+      <button class="filter-btn" data-filter="hub">🏠 Hub (7)</button>
+      <button class="filter-btn" data-filter="indicadores">📊 Indicadores (2)</button>
+      <button class="filter-btn" data-filter="cds">📋 CDS (7)</button>
+      <button class="filter-btn" data-filter="sigem">📍 SIGEM (13)</button>
+      <button class="filter-btn" data-filter="hubs-complexos">🏢 Hubs & Complexos (4)</button>
+    </div>
+    <div class="control-group" id="statusFilters">
+      <button class="filter-btn" data-status="todo">❌ Não Feitos (0)</button>
+      <button class="filter-btn" data-status="partial">🟡 Parciais (0)</button>
+      <button class="filter-btn" data-status="done">✅ Concluídos (41)</button>
+      <button class="filter-btn" data-status="pending">⏳ Todos Pendentes</button>
+    </div>
+    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Buscar arquivo, código ou texto..." />
+    <button class="reset-btn" onclick="resetAll()">🔄 Restaurar Auditoria</button>
+  </div>
+
+  <div class="legend">
+    <span class="legend-item"><span class="tag tag-done">✅ JÁ FEITO</span> 100% ativo no código</span>
+    <span class="legend-item"><span class="tag tag-partial">🟡 PARCIAL NO CÓDIGO</span> Parte pronta / escondida / com
+      bug</span>
+    <span class="legend-item"><span class="tag tag-todo">❌ NÃO FEITO</span> Ainda não implementado</span>
+    <span style="margin-left: auto; color: var(--text-muted);">Clique em qualquer card para marcar/desmarcar · Salvo no
+      navegador</span>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main" id="mainContent">
+
+    <!-- ═══════════════════════════════════════════════════════════
+       SEÇÃO 1 — APLICAÇÃO GERAL (8 itens)
+  ═══════════════════════════════════════════════════════════════ -->
+    <div class="section" data-module="geral">
+      <div class="section-header">
+        <span class="section-icon">⚙️</span>
+        <span class="section-title">Aplicação Geral</span>
+        <span class="section-count" id="cnt-geral"></span>
+      </div>
+      <div class="item-list">
+
+        <div class="item-card done" data-module="geral" data-type="bug" data-audit="done" data-id="g1"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g1</span>Gestão de usuários e gestão da própria conta
+              ficava localizada dentro da Carta de Serviço — desacoplar para módulo global.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Módulo global em
+              <code>public/admin/usuarios.html</code>, modal global <code>openGlobalProfileModal()</code> em
+              <code>public/shared/nav.js</code> (corrigido <code>base</code>), e alinhados
+              <code>public/cds/dashboard.html</code> + <code>public/cds/index.html</code> removendo abas internas
+              redundantes de <em>Administração</em> e <em>Minha Conta</em>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="etapa-badge">ETAPA 1</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="geral" data-type="melhoria" data-audit="done" data-id="g2"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g2</span>Ícone de perfil do usuário deve ser link direto
+              para edição da conta, removendo botão extra separado.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> <code>#topUserPill</code> e
+              <code>.sidebar-user-card</code> em <code>public/shared/nav.js</code> abrem diretamente
+              <code>openGlobalProfileModal()</code>, e o botão extra <code>#menuBtnProfile</code> foi removido de
+              <code>cds/dashboard.html</code> e <code>cds/index.html</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO (ETAPA 1)</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="geral" data-type="bug" data-audit="done" data-id="g3"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g3</span>Menu de navegação altera em cada tela — o próprio
+              menu muda ao clicar, causando confusão sobre onde está e como navegar.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Função <code>renderUnifiedSidebar()</code> criada em
+              <code>public/shared/nav.js</code> renderizando uma árvore idêntica de navegação corporativa com os 4 módulos
+              principais + 2 módulos administrativos globais em todas as telas (Hub, CDS, SIGEM, Docs e Admin).</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 2</span>
+              <span class="tag tag-source">GSE.md · NILTON · RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="geral" data-type="melhoria" data-audit="done" data-id="g4"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g4</span>Deixar apenas um menu: ou o lateral ou o
+              superior. Os dois juntos estão confusos e redundantes.</div>
+            <div class="audit-note">✅ <strong>Concluído 100%:</strong> Menu único padronizado na barra superior (<code>.top-dashboard-bar</code>), eliminando a sidebar lateral redundante (<code>.sidebar-nav</code>) em todas as páginas, liberando 100% da largura horizontal para conteúdo e tabelas e evitando menus duplos.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 2</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="geral" data-type="melhoria" data-audit="done" data-id="g5"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g5</span>Simplificar a interface: priorizar
+              funcionalidades relevantes, agrupar elementos relacionados, reduzir informações exibidas simultaneamente e
+              padronizar hierarquia visual.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removidas seções redundantes de menus no topo,
+              enxugada a barra de ferramentas do SIGEM e padronizadas as seções de cabeçalho e filtros do CDS e SIGEM.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 2</span>
+              <span class="tag tag-source">NIKOLAS · NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="geral" data-type="melhoria" data-audit="done" data-id="g6"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g6</span>Ajustar a logo do GSE e a paleta de cores para se
+              adequar à identidade visual padrão das aplicações da Prefeitura de Duque de Caxias.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Brasão oficial <code>/shared/logo.png</code> e
+              favicon aplicados em Hub, CDS, SIGEM, Login, API, Usuários e Configurações (com injeção automática em
+              <code>public/shared/nav.js</code>) + paleta institucional PMDC (<code>#001428</code>,
+              <code>#002244</code>, <code>#003366</code> e <code>#ffcc00</code>) unificada em <code>nav.css</code>,
+              <code>hub.css</code> e <code>sigem/css/base.css</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="tag tag-source">NILTON · AVALIAÇÃO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="geral" data-type="melhoria" data-audit="done" data-id="g7"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g7</span>Melhorias visuais: aumentar espaçamento entre
+              informações, linhas e botões; ampliar títulos e texto para facilitar leitura; layout mais "clean" e
+              simétrico.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Ajustados espaçamentos, paddings de linhas,
+              proporção tipográfica e respiração visual em <code>nav.css</code>, <code>hub.css</code>,
+              <code>public/cds/dashboard.html</code> e <code>sigem/css/base.css</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="tag tag-source">NILTON · AVALIAÇÃO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="geral" data-type="melhoria" data-audit="done" data-id="g8"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">g8</span>Criar aba global de Configurações e preferências
+              do sistema (parâmetros, SMTP, chaves de API, logs de auditoria).</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Criados
+              <code>public/admin/configuracoes.html</code> (rota global <code>/admin/configuracoes</code>) e
+              <code>src/routes/adminSettings.ts</code> (tabela MySQL <code>system_settings</code> integrada em tempo
+              real com <code>mailer.ts</code>, <code>cdsEmail.ts</code> e <code>geocodingService.ts</code>, teste de
+              disparo SMTP e trilha de auditoria global), linkado no menu superior/lateral admin via
+              <code>nav.js</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 7</span>
+              <span class="tag tag-source">NIKOLAS · NILTON</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+       SEÇÃO 2 — GSE HUB (7 itens)
+  ═══════════════════════════════════════════════════════════════ -->
+    <div class="section" data-module="hub">
+      <div class="section-header">
+        <span class="section-icon">🏠</span>
+        <span class="section-title">GSE Hub — Tela Inicial</span>
+        <span class="section-count" id="cnt-hub"></span>
+      </div>
+      <div class="item-list">
+
+        <div class="item-card done" data-module="hub" data-type="bug" data-audit="done" data-id="h1"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h1</span>Página inicial ao entrar no sistema não era a
+              página de login — sistema exibia o Hub sem autenticação.</div>
+            <div class="audit-note">🔍 <strong>Já implementado na Etapa 1:</strong> Redirect 302 para
+              <code>/login</code> sem cookie <code>pmdc_session</code> em <code>src/index.ts:301-331</code> +
+              verificação de <code>hub_token</code> em <code>public/hub/index.html:13-22</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO (ETAPA 1)</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hub" data-type="bug" data-audit="done" data-id="h2" onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h2</span>Botões de navegação da sidebar do Hub não
+              funcionam / têm navegação estranha (apenas "API & Desenvolvedores" faz direcionamento real).</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Sidebar em <code>public/hub/index.html</code>
+              substituída por links reais de navegação para os módulos do portal (<code>Início</code>,
+              <code>Carta de Serviços</code>, <code>Endereços &amp; Mapa</code> e <code>API &amp; Docs</code>) + seção
+              <code>ADMINISTRAÇÃO</code>, além de corrigido o carregamento estático de <code>hub.css</code> e
+              <code>hub.js</code> na raiz <code>/</code> em <code>src/index.ts</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 2</span>
+              <span class="tag tag-source">GSE.md · RILDO · AVALIAÇÃO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hub" data-type="bug" data-audit="done" data-id="h3" onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h3</span>Números no texto e nos botões/cards de navegação
+              do Hub mostram valores diferentes (inconsistência de dados).</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Texto hero (<code>#heroNumServicos</code> e
+              <code>#heroNumEquipamentos</code>), KPIs e indicadores analíticos em <code>public/hub/index.html</code> +
+              <code>public/hub/hub.js</code> sincronizados dinamicamente via <code>/api/hub/stats</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 3</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hub" data-type="bug" data-audit="done" data-id="h4" onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h4</span>Card "Painel de Gestão e Governança" direciona
+              para a Carta de Serviços ao invés de um painel administrativo.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Atalho <code>#hubCardGovernancaAdmin</code> em
+              <code>public/hub/index.html</code> + <code>public/hub/hub.js</code> agora direciona para o módulo
+              administrativo global <code>/admin/usuarios</code> (exibido apenas para perfil <code>admin</code>).</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 2</span>
+              <span class="tag tag-source">NIKOLAS · NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hub" data-type="bug" data-audit="done" data-id="h5" onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h5</span>Botões "Busca Transversal" e "Módulos do Sistema"
+              na sidebar da tela inicial não estão funcionando / não são claros.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removidas as âncoras confusas
+              (<code>Busca Transversal</code> e <code>Módulos do Sistema</code>) da sidebar em
+              <code>public/hub/index.html</code>, padronizando o menu lateral com os módulos reais do Portal GSE.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 2</span>
+              <span class="tag tag-source">GSE.md · AVALIAÇÃO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hub" data-type="melhoria" data-audit="done" data-id="h6"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h6</span>KPIs (Serviços ao Cidadão / Equipamentos
+              Públicos) no Hub deveriam direcionar para as páginas que mostram esses dados ao clicar.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Todos os 4 <code>.kpi-card</code> em
+              <code>public/hub/index.html</code> convertidos em links clicáveis diretos
+              (<code>/cds/dashboard.html</code>, <code>/sigem/</code>, <code>/sigem/#mapa</code> e
+              <code>/sigem/#hubs</code>, com suporte a hash em <code>public/sigem/js/app.js</code>).</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 7</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hub" data-type="melhoria" data-audit="done" data-id="h7"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">h7</span>Tela inicial é apenas uma forma mais bonita da
+              sidebar. Transformar em dashboard com dados reais e informações sobre a aplicação.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Adicionado painel analítico institucional
+              <code>#painelAnaliticoHub</code> em <code>public/hub/index.html</code> + <code>public/hub/hub.js</code> +
+              <code>public/hub/hub.css</code> com banner explicativo sobre a arquitetura do GSE (Lei Federal nº
+              13.460/2017 + SIG Municipal), contadores cartográficos reais, gráficos ao vivo e modal direto de
+              <strong>Ficha Oficial com Impressão A4</strong> (<code>#hubFichaModal</code> +
+              <code>printCurrentHubFicha()</code>) ao clicar em qualquer resultado da busca global.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 7</span>
+              <span class="tag tag-source">GSE.md · NILTON</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+       SEÇÃO 3 — INDICADORES GERAIS (2 itens)
+  ═══════════════════════════════════════════════════════════════ -->
+    <div class="section" data-module="indicadores">
+      <div class="section-header">
+        <span class="section-icon">📊</span>
+        <span class="section-title">Indicadores Gerais</span>
+        <span class="section-count" id="cnt-indicadores"></span>
+      </div>
+      <div class="item-list">
+
+        <div class="item-card done" data-module="indicadores" data-type="bug" data-audit="done" data-id="i1"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i1</span>Cabeçalho e cartões informam 372 serviços e 449
+              equipamentos, mas os indicadores reais mostram 368 serviços e 466 equipamentos. Unificar contadores em
+              toda a aplicação.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removidos todos os números fixos
+              (<code>372</code>, <code>449</code>, <code>117</code> e <code>16</code>) em
+              <code>public/hub/index.html</code>, <code>public/cds/dashboard.html</code>,
+              <code>public/cds/index.html</code>, <code>public/sigem/index.html</code> e <code>src/routes/hub.ts</code>,
+              além de separado o contador <code>#mapEquipCount</code> (<code>466 pontos</code>) dos Polos
+              (<code>12 Polos</code>) em <code>public/sigem/js/map.js</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 3</span>
+              <span class="tag tag-source">NIKOLAS · NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="indicadores" data-type="melhoria" data-audit="done" data-id="i2"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">i2</span>Página de indicadores gerais deve exibir apenas
+              dados e números — remover os grandes "cards" redundantes abaixo e aproveitar o espaço para métricas.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removida a seção <code>#modulosPlataforma</code>
+              com os 4 cards gigantes redundantes em <code>public/hub/index.html</code>, substituída pelo 4º painel
+              analítico (<code>Complexos &amp; Territórios Populares</code> em <code>hub.js</code>) e barra enxuta de
+              atalhos institucionais.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 7</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+       SEÇÃO 4 — CDS / CARTA DE SERVIÇOS (7 itens)
+  ═══════════════════════════════════════════════════════════════ -->
+    <div class="section" data-module="cds">
+      <div class="section-header">
+        <span class="section-icon">📋</span>
+        <span class="section-title">CDS — Carta de Serviços ao Cidadão</span>
+        <span class="section-count" id="cnt-cds"></span>
+      </div>
+      <div class="item-list">
+
+        <div class="item-card done" data-module="cds" data-type="bug" data-audit="done" data-id="c1" onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c1</span>Ao selecionar uma categoria ou secretaria para
+              filtrar, a quantidade total de serviços exibida não é alterada.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> <code>renderServices()</code> e
+              <code>updateStatusCounts()</code> em <code>public/cds/dashboard.js</code> recalculam dinamicamente
+              <code>#statsTotalCount</code>, <code>#badgeTotalServicos</code>, <code>#countAll</code>,
+              <code>#countPublished</code> e <code>#countHidden</code> a cada filtro de categoria ou pesquisa.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">GSE.md · RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="cds" data-type="bug" data-audit="done" data-id="c2" onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c2</span>Exportação da tela de serviços ignora filtros
+              ativos, deixa diversas células vazias e grava a coluna "Órgão" sempre como "Consolidado".</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> <code>src/services/xlsxGenerator.ts</code> agora recebe
+              <code>s.orgao</code> (secretaria real de cada serviço) e preenche todas as células com padrões institucionais
+              oficiais sem vazios. <code>src/routes/cdsServices.ts</code> implementa <code>POST /export</code> com filtro por
+              <code>ids</code>, <code>status</code> e rótulo dinâmico, conectado ao <code>exportToExcel()</code> de <code>public/cds/dashboard.js</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">GSE.md · NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="cds" data-type="bug" data-audit="done" data-id="c3" onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c3</span>Ao filtrar por categoria, selecionar uma nova não
+              sobrepõe a anterior — soma, obrigando a desmarcar manualmente a primeira.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> <code>toggleCategoryFilter()</code> em
+              <code>public/cds/dashboard.js</code> convertido para seleção exclusiva (sobrepõe em 1 clique e suporta
+              múltiplas categorias separadas por <code>';'</code>), com pílulas horizontais compactas em
+              <code>cds/dashboard.html</code> e <code>cds/index.html</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="cds" data-type="bug" data-audit="done" data-id="c4" onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c4</span>Carta de Serviços: incluir todas as Secretarias
+              Municipais para garantir que todas as pastas estejam disponíveis.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Cadastradas as 4 secretarias faltantes no MySQL
+              (PGM, OGMDC, IPMDC, SMSEG), totalizando 22 pastas integradas, criadas as categorias correspondentes, adicionado
+              o endpoint <code>GET /api/cds/services/secretarias</code> e o seletor <code>#cdsFilterSecretaria</code> no CDS.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">AVALIAÇÃO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="cds" data-type="melhoria" data-audit="done" data-id="c5"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c5</span>Padronizar a caixa do título de todos os serviços
+              (todos maiúsculos ou capitalização consistente).</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Aplicado
+              <code>text-transform: uppercase;</code> em <code>.service-title</code> tanto em
+              <code>public/cds/dashboard.html</code> quanto em <code>public/cds/index.html</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="cds" data-type="melhoria" data-audit="done" data-id="c6"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c6</span>Remover o botão de exportação da sidebar do CDS,
+              mantendo apenas na área de pesquisa e filtragem de serviços.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removido o botão duplicado
+              <code>Exportar Planilha</code> da sidebar em <code>public/cds/dashboard.html</code> e
+              <code>public/cds/index.html</code>, mantendo apenas o botão na barra de busca/filtragem.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="cds" data-type="melhoria" data-audit="done" data-id="c7"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">c7</span>Adicionar busca por CEP no cadastro de serviço do
+              CDS, preenchendo automaticamente os dados de endereço.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Adicionados campos <code>#formCep</code>, <code>#formNumero</code>
+              e botão <code>Buscar CEP</code> chamando <code>buscarCepServicoCds()</code> integrado ao ViaCEP em <code>public/cds/dashboard.html</code>
+              e <code>public/cds/index.html</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 4</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+       SEÇÃO 5 — SIGEM / ENDEREÇOS & EQUIPAMENTOS (13 itens)
+  ═══════════════════════════════════════════════════════════════ -->
+    <div class="section" data-module="sigem">
+      <div class="section-header">
+        <span class="section-icon">📍</span>
+        <span class="section-title">SIGEM — Endereços & Equipamentos</span>
+        <span class="section-count" id="cnt-sigem"></span>
+      </div>
+      <div class="item-list">
+
+        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s1"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s1</span>Gerenciamento da chave da API Google Geocoding
+              podia ser acessado por qualquer usuário — restrito a administradores.</div>
+            <div class="audit-note">🔍 <strong>Já implementado na Etapa 1:</strong> Oculto em
+              <code>sigem/index.html:659, 1060</code>, controlado por <code>checkIsAdmin()</code> em
+              <code>api.js:184-192</code> / <code>modals.js:483-487</code> e validado por JWT
+              (<code>role === 'admin'</code>) em <code>src/routes/sigem.ts:279-291</code>. (Detalhe: ajustar
+              <code>checkIsAdmin()</code> em <code>api.js:228</code> se <code>gestor</code> não puder ver o botão.)
+            </div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO (ETAPA 1)</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s2"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s2</span>Transformar "Secretaria Responsável" em dropdown
+              com todas as secretarias cadastradas e preencher automaticamente ao escolher a Categoria.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> <code>#editEquipSecResp</code> convertido para
+              <code>&lt;select&gt;</code> em <code>public/sigem/index.html</code> populado via
+              <code>carregarSecretariasSigem()</code> (22 pastas de <code>/api/secretarias</code>), com vínculo
+              automático ao trocar <code>#editEquipCat</code> (<code>onModalCategoriaChange()</code> em
+              <code>modals.js</code>) e persistência real em <code>equipamento_secretarias</code> via
+              <code>resolveSecretariaSigemId()</code> em <code>src/routes/sigem.ts</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">GSE.md · NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s3"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s3</span>Ao visualizar um card de equipamento, selecionar
+              texto e soltar o clique fora do card fecha o modal indevidamente.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removido <code>onclick</code> ingênuo nos backdrops de
+              <code>public/sigem/index.html</code> e implementado listener global em <code>public/sigem/js/modals.js</code> validando
+              se <code>mousedown</code> e <code>click</code> ocorreram ambos exclusivamente no backdrop antes de fechar.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s4"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s4</span>Quantidade total de equipamentos não reflete o
+              número atual após aplicação de filtros.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> <code>updateKPIs(filteredEquipList)</code> em
+              <code>public/sigem/js/app.js</code> agora recalcula dinamicamente <code>#kpiTotal</code>,
+              <code>#kpiAtivos</code>, <code>#kpiPendentes</code>, <code>#kpiDesatualizados</code> e
+              <code>#badgeTotalEquip</code> (<code>X de Y</code>) sempre que qualquer filtro ou busca é aplicado ou
+              limpo (além de normalizar os 21 registros <code>'Ativo'</code> no banco).</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s5"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s5</span>Disponibilizar exportação de planilha de
+              endereços/equipamentos diretamente na tela de Equipamentos.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Adicionados botões diretos <strong>Exportar
+                Planilha (.xlsx)</strong> e <strong>CSV</strong> na barra de pesquisa/filtros da aba Equipamentos
+              (<code>public/sigem/index.html</code>) + endpoint
+              <code>POST/GET /api/sigem/equipamentos/export-xlsx</code> com <code>ExcelJS</code> em
+              <code>src/routes/sigem.ts</code> obedecendo estritamente aos filtros ativos.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s6"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s6</span>Opção "Categoria Oficial" na edição de endereços
+              não tem todas as categorias possíveis e exibe nomenclaturas antigas (ex: "Serviços Públicos e Obras").
+            </div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> <code>carregarCategorias()</code> acionado na
+              inicialização (<code>DOMContentLoaded</code> em <code>app.js</code>), removida chamada solta em
+              <code>saveGoogleApiKey()</code> (<code>api.js</code>) e atualizadas as 9 categorias oficiais em
+              <code>#editEquipCat</code> e <code>#filterCategoria</code> (<code>public/sigem/index.html</code>).</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s7"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s7</span>Status Cadastral exibe "Desatualizado" na
+              criação/edição — revisar regra ou remover opção sem uso.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removida a opção sem uso <code>Desatualizado</code>
+              dos selects <code>#filterStatus</code> e <code>#editEquipStatus</code> em <code>public/sigem/index.html</code>,
+              calibrado o toggle rápido para alternar entre <code>Ativo</code> e <code>Pendente de revisão</code>, corrigida a
+              contagem de <code>Ativo</code> case-insensitive em <code>app.js</code> e substituído o KPI morto por
+              <code>#kpiGeorreferenciados</code> (466 pontos com coordenadas GPS).</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="bug" data-audit="done" data-id="s8"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s8</span>Verificar Bairro Oficial Cartográfico e suas
+              aplicações — corrigir divergências entre localização dos equipamentos e indicação do distrito.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Calibrados no MySQL os distritos dos bairros
+              divergentes (<em>Chácaras Rio-Petrópolis</em>, <em>Parque Capivari</em> e <em>Parque Eldorado</em> → 4º
+              Distrito; <em>Parque Fluminense</em> → 2º Distrito), removidos 7 bairros duplicados órfãos, calibrado
+              <code>hub_1</code> no 2º Distrito (<em>Jardim Primavera</em>), marcadas as 3 estações limítrofes de Magé,
+              adicionado cálculo espacial automático <code>findOfficialBairroByPoint()</code> em
+              <code>geocodingService.ts</code> + <code>POST/PUT /equipamentos</code> e reexportada toda a base SIGEM.
+            </div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="melhoria" data-audit="done" data-id="s9"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s9</span>Adicionar opções de paginação de 25, 50 e 100
+              equipamentos por página.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Adicionado seletor <code>#itemsPerPageSelect</code>
+              (25, 50 e 100 itens) na barra de paginação de <code>public/sigem/index.html</code>, integrado à função
+              <code>changeItemsPerPage()</code> em <code>app.js</code> e persistido em <code>localStorage</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="melhoria" data-audit="done" data-id="s10"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s10</span>Adicionar TAGs padronizadas com siglas de todas
+              as Secretarias, órgãos externos e concessionárias.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Estilizadas todas as 22 siglas oficiais
+              (<code>.badge-sec-*</code>) + TAGs de concessionárias (<code>SUPERVIA</code>, <code>ÁGUAS DO RIO</code>,
+              <code>ENEL</code>, <code>NATURGY</code>) e órgãos externos/estaduais/federais em
+              <code>public/sigem/css/base.css</code>, renderizadas em <code>app.js</code> e <code>modals.js</code> e
+              integradas ao filtro <code>#filterSecretaria</code> com <code>optgroup</code> dedicado.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="melhoria" data-audit="done" data-id="s11"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s11</span>Remover o texto "Precisão cirúrgica" no item 3
+              do modal de cadastro de endereço.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Removida a expressão <em>"Precisão
+                Cirúrgica"</em> na seção 3 do modal de cadastro e no modal da chave Google em
+              <code>public/sigem/index.html</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">GSE.md</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="melhoria" data-audit="done" data-id="s12"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s12</span>Mover o toggle "Modo Planilha" e o botão "Novo
+              Equipamento" da sidebar para o topo da tabela/filtros.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Botões <code>Modo Planilha</code>
+              (<code>#btnSpreadsheetMode</code>) e <code>+ Novo Equipamento</code> movidos da sidebar para a barra
+              superior de ações da tabela em <code>public/sigem/index.html</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">GSE.md · NILTON</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="sigem" data-type="melhoria" data-audit="done" data-id="s13"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">s13</span>Esclarecer ou remover a sigla "GIS" da interface
+              — renomear para termo mais compreensível.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Substituído <code>"Endereços &amp; GIS"</code>
+              por <code>"Endereços &amp; Mapa"</code> em <code>public/shared/nav.js</code>, Hub, CDS, SIGEM, API e
+              módulos Admin.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 5</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+       SEÇÃO 6 — HUBS & COMPLEXOS (4 itens)
+  ═══════════════════════════════════════════════════════════════ -->
+    <div class="section" data-module="hubs-complexos">
+      <div class="section-header">
+        <span class="section-icon">🏢</span>
+        <span class="section-title">Hubs & Complexos</span>
+        <span class="section-count" id="cnt-hubs-complexos"></span>
+      </div>
+      <div class="item-list">
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="bug" data-audit="done" data-id="hc1"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc1</span>Botão "Novo Complexo" não está funcionando.
+            </div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Implementado modal <code>#modalNewHub</code>
+              em <code>public/sigem/index.html</code> com busca ViaCEP e preenchimento cartográfico, integrado ao endpoint
+              <code>POST /api/sigem/hubs</code> em <code>src/routes/sigem.ts</code> (inserção de endereço + registro do hub com código normalizado e auditoria).</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-alta">🔴 Alta</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="bug" data-audit="done" data-id="hc2"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc2</span>Permitir a exclusão completa de um Hub
+              (desvinculando unidades antes de remover).</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Implementada rota <code>DELETE /api/sigem/hubs/:id</code>
+              em <code>src/routes/sigem.ts</code> com desvinculação em massa das unidades instaladas para imóveis isolados
+              (<code>hub_id = NULL</code>), e botão administrativo <code>Excluir Polo</code> em <code>app.js</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="bug" data-audit="done" data-id="hc3"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc3</span>Incluir endereço completo (CEP, bairro e cidade)
+              na planilha exportada de Hubs em Indicadores & Dados.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Corrigido <code>GET /api/sigem/hubs</code> e
+              criado <code>GET /api/sigem/hubs/export-xlsx</code> em <code>src/routes/sigem.ts</code> + atualizado
+              <code>exportHubsData()</code> em <code>public/sigem/js/app.js</code> exportando Excel (<code>.xlsx</code>)
+              e CSV com <code>Logradouro e Número</code>, <code>Bairro</code>, <code>Distrito</code>,
+              <code>Cidade (Duque de Caxias)</code>, <code>UF (RJ)</code>, <code>CEP</code> e
+              <code>Endereço Oficial Completo</code>.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-bug">BUG</span>
+              <span class="tag tag-prio-media">🟡 Média</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">RILDO</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card done" data-module="hubs-complexos" data-type="melhoria" data-audit="done" data-id="hc4"
+          onclick="toggle(this)">
+          <div class="item-checkbox"><svg width="13" height="10" viewBox="0 0 13 10" fill="none">
+              <path d="M1.5 5L5.5 9L11.5 1" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+          <div class="item-body">
+            <div class="item-text"><span class="item-id-pill">hc4</span>Renomear "Hubs & Complexos" para um termo mais
+              compreensível aos pontos focais (ex: "Prédios Compartilhados & Polos").</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Renomeado para
+              <code>"Prédios Compartilhados"</code> / <code>"Prédios Compartilhados &amp; Polos Municipais"</code> na
+              sidebar, cabeçalho e camada do mapa em <code>public/sigem/index.html</code> e KPIs do Hub.</div>
+            <div class="item-meta">
+              <span class="tag tag-done">✅ JÁ FEITO</span>
+              <span class="tag tag-melhoria">MELHORIA</span>
+              <span class="tag tag-prio-baixa">🟣 Baixa</span>
+              <span class="etapa-badge">ETAPA 6</span>
+              <span class="tag tag-source">NILTON</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /main -->
+
+  <script>
+    const STORAGE_KEY = 'gse_checklist_audit_v5';
+
+    let activeModule = 'all';
+    let activeStatus = null;
+    let searchQuery = '';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        document.querySelectorAll('.item-card').forEach(card => {
+          const id = card.dataset.id;
+          if (typeof saved[id] === 'boolean') {
+            card.classList.toggle('done', saved[id]);
+          }
+        });
+      } catch (e) { }
+    }
+
+    function saveState() {
+      const state = {};
+      document.querySelectorAll('.item-card').forEach(card => {
+        state[card.dataset.id] = card.classList.contains('done');
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function toggle(card) {
+      card.classList.toggle('done');
+      saveState();
+      updateProgress();
+      updateSectionCounts();
+      applyFilters();
+    }
+
+    function updateProgress() {
+      const all = document.querySelectorAll('.item-card').length;
+      const done = document.querySelectorAll('.item-card.done').length;
+      document.getElementById('doneCount').textContent = done;
+      document.getElementById('totalCount').textContent = all;
+      document.getElementById('progressFill').style.width = all ? (done / all * 100).toFixed(1) + '%' : '0%';
+    }
+
+    function updateSectionCounts() {
+      const modules = ['geral', 'hub', 'indicadores', 'cds', 'sigem', 'hubs-complexos'];
+      modules.forEach(mod => {
+        const el = document.getElementById('cnt-' + mod);
+        if (!el) return;
+        const cards = document.querySelectorAll(`.item-card[data-module="${mod}"]`);
+        const done = [...cards].filter(c => c.classList.contains('done')).length;
+        el.innerHTML = `<span class="done">${done}</span>/${cards.length} concluídos`;
+      });
+    }
+
+    function applyFilters() {
+      const q = searchQuery.toLowerCase();
+      document.querySelectorAll('.item-card').forEach(card => {
+        const modOk = activeModule === 'all' || card.dataset.module === activeModule;
+        let statusOk = true;
+        if (activeStatus === 'done') statusOk = card.classList.contains('done');
+        if (activeStatus === 'pending') statusOk = !card.classList.contains('done');
+        if (activeStatus === 'partial') statusOk = card.dataset.audit === 'partial';
+        if (activeStatus === 'todo') statusOk = card.dataset.audit === 'todo' && !card.classList.contains('done');
+
+        const textOk = !q || card.innerText.toLowerCase().includes(q);
+        card.classList.toggle('hidden', !(modOk && statusOk && textOk));
+      });
+
+      document.querySelectorAll('.section').forEach(sec => {
+        const visible = [...sec.querySelectorAll('.item-card')].some(c => !c.classList.contains('hidden'));
+        sec.style.display = visible ? '' : 'none';
+      });
+    }
+
+    document.querySelectorAll('#moduleFilters .filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#moduleFilters .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeModule = btn.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    document.querySelectorAll('#statusFilters .filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('active')) {
+          btn.classList.remove('active');
+          activeStatus = null;
+        } else {
+          document.querySelectorAll('#statusFilters .filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeStatus = btn.dataset.status;
+        }
+        applyFilters();
+      });
+    });
+
+    document.getElementById('searchInput').addEventListener('input', e => {
+      searchQuery = e.target.value;
+      applyFilters();
+    });
+
+    function resetAll() {
+      if (!confirm('Restaurar o checklist exatamente para o estado real auditado no código (29 concluídos, 0 parciais, 12 não feitos)?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      document.querySelectorAll('.item-card').forEach(card => {
+        card.classList.toggle('done', card.dataset.audit === 'done');
+      });
+      updateProgress();
+      updateSectionCounts();
+      applyFilters();
+    }
+
+    loadState();
+    updateProgress();
+    updateSectionCounts();
+  </script>
+</body>
+
+</html>

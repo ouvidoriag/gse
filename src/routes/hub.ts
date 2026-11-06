@@ -97,6 +97,24 @@ hubRouter.get('/stats', async (_req: Request, res: Response) => {
       `);
       equipamentosPorMacrosetor = macroList || [];
 
+      // Contagem dinâmica de linhas de ônibus Tarifa Zero (GeoJSON oficial)
+      let totalLinhasOnibus = 20;
+      try {
+        const candidates = [
+          path.join(__dirname, '..', '..', 'dados', 'onibus_rotas.geojson'),
+          path.join(__dirname, '..', '..', 'public', 'sigem', 'dados', 'onibus_rotas.geojson'),
+        ];
+        for (const p of candidates) {
+          if (fs.existsSync(p)) {
+            const gj = JSON.parse(fs.readFileSync(p, 'utf-8'));
+            if (Array.isArray(gj?.features) && gj.features.length > 0) {
+              totalLinhasOnibus = gj.features.length;
+              break;
+            }
+          }
+        }
+      } catch (_) {}
+
       return res.json({
         success: true,
         timestamp: new Date().toISOString(),
@@ -108,7 +126,7 @@ hubRouter.get('/stats', async (_req: Request, res: Response) => {
           totalDistritos,
           totalBairros,
           totalHubs,
-          totalLinhasOnibus: 16,
+          totalLinhasOnibus,
           totalParadasOnibus: 1795,
           totalComunidades,
           totalComplexos,
@@ -165,14 +183,22 @@ hubRouter.get('/search', async (req: Request, res: Response) => {
 
   // Busca Serviços no MySQL (apenas publicados)
   try {
+    const likePattern = `%${query}%`;
     const [servRows]: any = await mysqlPool.query(
-      `SELECT s.id, s.name, s.description, sec.name as secretaria
+      `SELECT s.id, s.name, s.description, s.address, s.cost, s.max_deadline,
+              sec.name as secretaria,
+              GROUP_CONCAT(DISTINCT c.name ORDER BY c.name SEPARATOR '; ') as categoria
        FROM services s
        LEFT JOIN secretarias sec ON s.secretaria_id = sec.id
-       WHERE s.status = 'published'
-         AND (s.name LIKE ? OR s.description LIKE ?)
-       LIMIT 8`,
-      [`%${query}%`, `%${query}%`]
+       LEFT JOIN service_categories sc ON s.id = sc.service_id
+       LEFT JOIN categories c ON sc.category_id = c.id
+       WHERE (s.status = 'published' OR s.status IS NULL)
+         AND s.status NOT IN ('hidden', 'draft', 'archived')
+         AND (s.name LIKE ? OR s.description LIKE ? OR sec.name LIKE ? OR c.name LIKE ?)
+       GROUP BY s.id, sec.name
+       ORDER BY CASE WHEN s.name LIKE ? THEN 0 ELSE 1 END, s.name ASC
+       LIMIT 10`,
+      [likePattern, likePattern, likePattern, likePattern, likePattern]
     );
     results.servicos = servRows;
   } catch (e: any) {
@@ -209,11 +235,13 @@ hubRouter.get('/search', async (req: Request, res: Response) => {
     });
 
     const [equipRows]: any = await mysqlPool.query(`
-      SELECT id, nome, categoria, bairro, distrito, endereco
+      SELECT id, nome, sigla, categoria, secretaria_sigla, secretaria_nome,
+             bairro, bairro_oficial, distrito, endereco, cep, telefone, horario_funcionamento
       FROM vw_equipamentos_consolidada
       WHERE ${clauses}
-      LIMIT 8
-    `, sqlParams);
+      ORDER BY CASE WHEN nome LIKE ? THEN 0 ELSE 1 END, nome ASC
+      LIMIT 10
+    `, [...sqlParams, `%${query}%`]);
     results.equipamentos = equipRows || [];
 
     // Busca Comunidades, Favelas e Complexos (SIMAC) no MySQL

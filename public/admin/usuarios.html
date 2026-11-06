@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão Central de Usuários — Prefeitura de Duque de Caxias</title>
+  <link rel="icon" type="image/png" href="/shared/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="/shared/nav.css">
+
+  <script>
+    (function () {
+      const token = localStorage.getItem('token');
+      const userStr = localStorage.getItem('user');
+      if (!token || !userStr) {
+        const base = window.location.pathname.startsWith('/gse') ? '/gse' : '';
+        window.location.replace((base || '') + '/login?redirect=' + encodeURIComponent(window.location.pathname));
+        return;
+      }
+      try {
+        const u = JSON.parse(userStr);
+        if (u.role !== 'admin') {
+          alert('Acesso restrito ao Administrador Geral (role: admin).');
+          const base = window.location.pathname.startsWith('/gse') ? '/gse' : '';
+          window.location.replace((base || '') + '/');
+        }
+      } catch (_) {}
+    })();
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .admin-container {
+      padding: 28px 32px 48px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .admin-title-box h1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 27px;
+      font-weight: 800;
+      color: #002244;
+      margin: 0;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-title-box p {
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-pmdc {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #0284c7;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #0369a1;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+
+    .btn-secondary:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .card-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .search-filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .search-input-wrapper i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 16px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: #0284c7;
+    }
+
+    .filter-select {
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #ffffff;
+      outline: none;
+      min-width: 180px;
+    }
+
+    .users-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      table-layout: auto;
+    }
+
+    .users-table th {
+      background: #f8fafc;
+      padding: 13px 16px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #475569;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+    }
+
+    .users-table td {
+      padding: 14px 16px;
+      font-size: 13.5px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+      vertical-align: middle;
+      line-height: 1.45;
+    }
+
+    .login-code-badge {
+      display: inline-block;
+      max-width: 360px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: middle;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 12px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+      padding: 4px 8px;
+      border-radius: 5px;
+      line-height: 1.4;
+    }
+
+    .users-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    .role-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .role-admin {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .role-editor {
+      background: #e0f2fe;
+      color: #0284c7;
+    }
+
+    .role-viewer {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .action-btn-sm {
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .action-btn-sm:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .action-btn-delete {
+      color: #dc2626;
+      border-color: #fca5a5;
+    }
+
+    .action-btn-delete:hover {
+      background: #fef2f2;
+      border-color: #ef4444;
+    }
+
+    /* Modais */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #64748b;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: #0284c7;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #f8fafc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR PADRONIZADA (MENU LATERAL) -->
+    <aside class="sidebar-nav" id="sidebarNav">
+      <div class="sidebar-header">
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Recolher / Expandir Menu" aria-label="Alternar menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/" class="sidebar-brand-box" title="Portal Integrado PMDC">
+          <div class="sidebar-logo-badge"><img src="/shared/logo.png" alt="PMDC" class="sidebar-logo-img"></div>
+          <div class="sidebar-brand-text">
+            <span class="sidebar-app-title">PORTAL GSE</span>
+            <span class="sidebar-app-sub">Duque de Caxias · RJ</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-menu-scroll">
+        <div class="sidebar-section-header">Módulos do Sistema</div>
+
+        <a href="/" class="sidebar-nav-item">
+          <div class="nav-icon-box"><i class="ri-dashboard-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Início (GSE Hub)</span>
+            <span class="nav-sub-title">Visão Geral &amp; Busca</span>
+          </div>
+        </a>
+
+        <a href="/cds/dashboard.html" class="sidebar-nav-item">
+          <div class="nav-icon-box"><i class="ri-file-list-3-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Carta de Serviços</span>
+            <span class="nav-sub-title">Gestão de Serviços</span>
+          </div>
+        </a>
+
+        <a href="/sigem/" class="sidebar-nav-item">
+          <div class="nav-icon-box"><i class="ri-map-pin-2-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Endereços &amp; Mapa</span>
+            <span class="nav-sub-title">SIGEM &amp; Mobilidade</span>
+          </div>
+        </a>
+
+        <a href="/docs" class="sidebar-nav-item">
+          <div class="nav-icon-box"><i class="ri-code-s-slash-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">API &amp; Docs</span>
+            <span class="nav-sub-title">Integrações &amp; Chaves</span>
+          </div>
+        </a>
+
+        <div class="sidebar-section-header">Administração</div>
+
+        <a href="/admin/usuarios" class="sidebar-nav-item active" id="sidebarNavItemUsuarios">
+          <div class="nav-icon-box"><i class="ri-user-settings-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Gestão de Usuários</span>
+            <span class="nav-sub-title">Operadores &amp; Secretarias</span>
+          </div>
+        </a>
+
+        <a href="/admin/configuracoes" class="sidebar-nav-item" id="sidebarNavItemConfig">
+          <div class="nav-icon-box"><i class="ri-settings-4-line"></i></div>
+          <div class="nav-text-box">
+            <span class="nav-main-title">Configurações</span>
+            <span class="nav-sub-title">Parâmetros, SMTP &amp; Auditoria</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card" onclick="openGlobalProfileModal()" style="cursor: pointer;" title="Clique para editar seu perfil">
+          <div class="sidebar-avatar" id="sidebarAvatar">AM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name" id="sidebarUserName">Administrador Master</span>
+            <span class="sidebar-user-role" id="sidebarUserRole">MASTER</span>
+          </div>
+        </div>
+        <button class="sidebar-logout-btn" onclick="pmdcLogout()" title="Encerrar sessão no sistema">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="app-main">
+      <header class="top-dashboard-bar"></header>
+
+      <main class="main-body" style="flex:1;">
+        <div class="admin-container">
+          
+          <div class="admin-header">
+            <div class="admin-title-box">
+              <h1><i class="ri-user-settings-fill" style="color: #0284c7;"></i> Gestão Global de Usuários e Secretarias</h1>
+              <p>Cadastre novos operadores setoriais, configure senhas e gerencie permissões de acesso ao GSE.</p>
+            </div>
+            <div class="admin-actions">
+              <button class="btn-pmdc btn-secondary" onclick="openModalSecretaria()"><i class="ri-building-line"></i> + Nova Secretaria</button>
+              <button class="btn-pmdc btn-primary" onclick="openModalUsuario()"><i class="ri-user-add-line"></i> + Novo Usuário</button>
+            </div>
+          </div>
+
+          <div class="card-box">
+            <div class="search-filter-bar">
+              <div class="search-input-wrapper">
+                <i class="ri-search-line"></i>
+                <input type="text" id="filterSearch" class="search-input" placeholder="Buscar por login ou secretaria..." oninput="filtrarTabela()">
+              </div>
+              <select id="filterRole" class="filter-select" onchange="filtrarTabela()">
+                <option value="">Todos os Perfis</option>
+                <option value="admin">Administrador (admin)</option>
+                <option value="editor">Editor Setorial (editor)</option>
+                <option value="viewer">Visualizador (viewer)</option>
+              </select>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="users-table">
+                <thead>
+                  <tr>
+                    <th style="width: 34%;">Secretaria / Órgão</th>
+                    <th style="width: 32%;">Usuário (Login)</th>
+                    <th style="width: 14%;">Perfil de Acesso</th>
+                    <th style="width: 20%; min-width: 175px; text-align: right;">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="usuariosTableBody">
+                  <tr>
+                    <td colspan="4" style="text-align: center; color: #64748b; padding: 20px;">
+                      <i class="ri-loader-4-line ri-spin"></i> Carregando lista de operadores...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+  </div>
+
+  <!-- MODAL DE CADASTRO/EDIÇÃO DE USUÁRIO -->
+  <div class="modal-backdrop" id="modalUsuarioBackdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalUsuarioTitle">Novo Usuário</h3>
+        <button class="modal-close" onclick="closeModalUsuario()">&times;</button>
+      </div>
+      <form id="formUsuario" onsubmit="salvarUsuario(event)">
+        <input type="hidden" id="usuarioId">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="usuarioSecretaria">Secretaria Associada *</label>
+            <select id="usuarioSecretaria" class="form-control" required>
+              <option value="">Selecione uma secretaria...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="usuarioLogin">Login de Acesso (Username) *</label>
+            <input type="text" id="usuarioLogin" class="form-control" placeholder="Ex: sms_caxias" required>
+          </div>
+
+          <div class="form-group">
+            <label for="usuarioPerfil">Perfil de Acesso *</label>
+            <select id="usuarioPerfil" class="form-control" required>
+              <option value="editor">Editor (Gerencia serviços da secretaria)</option>
+              <option value="admin">Administrador Geral (Acesso total)</option>
+              <option value="viewer">Visualizador (Somente consulta)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="usuarioSenha" id="labelSenha">Senha de Acesso *</label>
+            <input type="password" id="usuarioSenha" class="form-control" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+            <small id="helpSenha" style="font-size: 11px; color: #64748b; margin-top: 4px; display: none;">Deixe em branco para manter a senha atual.</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-pmdc btn-secondary" onclick="closeModalUsuario()">Cancelar</button>
+          <button type="submit" class="btn-pmdc btn-primary" id="btnSalvarUsuario">Salvar Usuário</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE NOVA SECRETARIA -->
+  <div class="modal-backdrop" id="modalSecretariaBackdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Cadastrar Nova Secretaria</h3>
+        <button class="modal-close" onclick="closeModalSecretaria()">&times;</button>
+      </div>
+      <form id="formSecretaria" onsubmit="salvarSecretaria(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="secretariaNome">Nome Oficial do Órgão / Secretaria *</label>
+            <input type="text" id="secretariaNome" class="form-control" placeholder="Ex: Secretaria Municipal de Meio Ambiente" required>
+          </div>
+          <div class="form-group">
+            <label for="secretariaSigla">Sigla Oficial *</label>
+            <input type="text" id="secretariaSigla" class="form-control" placeholder="Ex: SMMA" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-pmdc btn-secondary" onclick="closeModalSecretaria()">Cancelar</button>
+          <button type="submit" class="btn-pmdc btn-primary">Salvar Secretaria</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/shared/nav.js"></script>
+
+  <script>
+    const ADMIN_BASE = window.location.pathname.toLowerCase().startsWith('/gse') ? '/gse' : '';
+    let listaUsuarios = [];
+    let listaSecretarias = [];
+
+    async function carregarSecretarias() {
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`${ADMIN_BASE}/cds/api/services/secretarias`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          listaSecretarias = await res.json();
+          const sel = document.getElementById('usuarioSecretaria');
+          sel.innerHTML = '<option value="">Selecione uma secretaria...</option>';
+          listaSecretarias.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.name;
+            sel.appendChild(opt);
+          });
+        }
+      } catch (e) {
+        console.error('Erro ao carregar secretarias:', e);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    async function carregarUsuarios() {
+      const token = localStorage.getItem('token');
+      const tbody = document.getElementById('usuariosTableBody');
+      try {
+        const res = await fetch(`${ADMIN_BASE}/cds/api/admin/users`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error('Não foi possível carregar os usuários.');
+        listaUsuarios = await res.json();
+        renderizarTabela(listaUsuarios);
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #dc2626; padding: 20px;">Erro: ${err.message}</td></tr>`;
+      }
+    }
+
+    function renderizarTabela(usuarios) {
+      const tbody = document.getElementById('usuariosTableBody');
+      if (usuarios.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #64748b; padding: 24px;">Nenhum usuário encontrado com os filtros aplicados.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '';
+      usuarios.forEach(u => {
+        const tr = document.createElement('tr');
+        const roleClass = u.role === 'admin' ? 'role-admin' : (u.role === 'editor' ? 'role-editor' : 'role-viewer');
+        const secNome = u.secretaria_nome || 'Administração Central';
+
+        tr.innerHTML = `
+          <td style="font-weight: 600; word-break: break-word;">${escapeHtml(secNome)}</td>
+          <td><code class="login-code-badge" title="${escapeHtml(u.username)}">${escapeHtml(u.username)}</code></td>
+          <td style="white-space: nowrap;"><span class="role-badge ${roleClass}">${escapeHtml(u.role)}</span></td>
+          <td style="text-align: right; white-space: nowrap; min-width: 175px;">
+            <button class="action-btn-sm" onclick="editarUsuario(${u.id}, '${escapeHtml(u.username)}', '${escapeHtml(u.role)}', ${u.secretaria_id})" title="Editar operador"><i class="ri-edit-line"></i> Editar</button>
+            <button class="action-btn-sm action-btn-delete" onclick="excluirUsuario(${u.id}, '${escapeHtml(u.username)}')" title="Excluir operador"><i class="ri-delete-bin-line"></i> Excluir</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filtrarTabela() {
+      const q = (document.getElementById('filterSearch').value || '').toLowerCase().trim();
+      const role = document.getElementById('filterRole').value;
+
+      const filtrados = listaUsuarios.filter(u => {
+        const matchQ = !q || u.username.toLowerCase().includes(q) || (u.secretaria_nome && u.secretaria_nome.toLowerCase().includes(q));
+        const matchRole = !role || u.role === role;
+        return matchQ && matchRole;
+      });
+
+      renderizarTabela(filtrados);
+    }
+
+    function openModalUsuario() {
+      document.getElementById('modalUsuarioTitle').textContent = 'Novo Usuário';
+      document.getElementById('usuarioId').value = '';
+      document.getElementById('usuarioLogin').value = '';
+      document.getElementById('usuarioSecretaria').value = '';
+      document.getElementById('usuarioPerfil').value = 'editor';
+      document.getElementById('usuarioSenha').value = '';
+      document.getElementById('usuarioSenha').required = true;
+      document.getElementById('labelSenha').textContent = 'Senha de Acesso *';
+      document.getElementById('helpSenha').style.display = 'none';
+      document.getElementById('modalUsuarioBackdrop').classList.add('active');
+    }
+
+    function editarUsuario(id, username, role, secId) {
+      document.getElementById('modalUsuarioTitle').textContent = 'Editar Usuário: ' + username;
+      document.getElementById('usuarioId').value = id;
+      document.getElementById('usuarioLogin').value = username;
+      document.getElementById('usuarioSecretaria').value = secId || '';
+      document.getElementById('usuarioPerfil').value = role;
+      document.getElementById('usuarioSenha').value = '';
+      document.getElementById('usuarioSenha').required = false;
+      document.getElementById('labelSenha').textContent = 'Nova Senha (Opcional)';
+      document.getElementById('helpSenha').style.display = 'block';
+      document.getElementById('modalUsuarioBackdrop').classList.add('active');
+    }
+
+    function closeModalUsuario() {
+      document.getElementById('modalUsuarioBackdrop').classList.remove('active');
+    }
+
+    async function salvarUsuario(e) {
+      e.preventDefault();
+      const token = localStorage.getItem('token');
+      const id = document.getElementById('usuarioId').value;
+      const username = document.getElementById('usuarioLogin').value.trim();
+      const secretaria_id = document.getElementById('usuarioSecretaria').value;
+      const role = document.getElementById('usuarioPerfil').value;
+      const password = document.getElementById('usuarioSenha').value;
+
+      const isEdit = !!id;
+      const url = isEdit ? `${ADMIN_BASE}/cds/api/admin/users/${id}` : `${ADMIN_BASE}/cds/api/admin/users`;
+      const method = isEdit ? 'PUT' : 'POST';
+
+      const payload = { username, secretaria_id, role };
+      if (password) payload.password = password;
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Erro ao salvar usuário.');
+
+        alert(data.message || 'Usuário salvo com sucesso!');
+        closeModalUsuario();
+        await carregarUsuarios();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    async function excluirUsuario(id, username) {
+      if (!confirm(`Deseja realmente excluir a conta do usuário "${username}"?`)) return;
+      const token = localStorage.getItem('token');
+      try {
+        const res = await fetch(`${ADMIN_BASE}/cds/api/admin/users/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Erro ao excluir usuário.');
+        alert('Usuário excluído com sucesso!');
+        await carregarUsuarios();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function openModalSecretaria() {
+      document.getElementById('secretariaNome').value = '';
+      document.getElementById('secretariaSigla').value = '';
+      document.getElementById('modalSecretariaBackdrop').classList.add('active');
+    }
+
+    function closeModalSecretaria() {
+      document.getElementById('modalSecretariaBackdrop').classList.remove('active');
+    }
+
+    async function salvarSecretaria(e) {
+      e.preventDefault();
+      const token = localStorage.getItem('token');
+      const name = document.getElementById('secretariaNome').value.trim();
+      const acronym = document.getElementById('secretariaSigla').value.trim();
+
+      try {
+        const res = await fetch(`${ADMIN_BASE}/cds/api/admin/secretarias`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ name, acronym })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Erro ao cadastrar secretaria.');
+        alert('Secretaria cadastrada com sucesso!');
+        closeModalSecretaria();
+        await carregarSecretarias();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await carregarSecretarias();
+      await carregarUsuarios();
+    });
+  </script>
+</body>
+</html>

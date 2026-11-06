@@ -13,6 +13,22 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* CORREÇÃO DE COSTURAS BRANCAS SUBPIXEL ENTRE TILES DO LEAFLET (DPI 125% / 150%) */
+.leaflet-container img.leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  outline: 1px solid transparent;
+  mix-blend-mode: normal;
+}
+
+.leaflet-tile-container img {
+  width: 256.5px !important;
+  height: 256.5px !important;
+}
+
 /* MINI MAPA NO MODAL */
 #modalMiniMap {
   width: 100%;
