@@ -832,60 +832,58 @@ html, body {
 }
 
 /* ==========================================
-   NAVEGAÇÃO UNIFICADA GSE (MENU ÚNICO: TOPBAR)
-   Atende feedback Nilton / Rildo (g4): "Deixar apenas um menu: ou o lateral ou o superior."
-   Mantém a TopBar corporativa padronizada e elimina a sidebar lateral redundante que ocupava 260px.
+   NAVEGAÇÃO UNIFICADA GSE (SIDEBAR CORPORATIVA COMO MENU PRINCIPAL)
    ========================================== */
 .sidebar-nav {
-  display: none !important;
-}
-
-.top-dashboard-bar {
+  width: 260px;
+  min-width: 260px;
+  background: var(--pmdc-navy-official);
   display: flex !important;
-  background: #002244 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-  padding: 8px 20px !important;
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 9999 !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25) !important;
+  flex-direction: column;
+  z-index: 900;
+  transition: width 0.2s ease, min-width 0.2s ease;
 }
 
 .app-layout {
-  display: block !important;
-  grid-template-columns: 1fr !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  width: 100% !important;
+  display: flex !important;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .main-body,
 .main-content,
 .hub-main {
-  margin-left: 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  box-sizing: border-box;
 }
 
-/* No mobile/tablet (<= 900px): Abas com scroll horizontal suave */
-@media (max-width: 900px) {
+/* Oculta a barra de abas redundante do topo no desktop */
+@media (min-width: 901px) {
   .top-dashboard-bar {
-    padding: 8px 12px !important;
-  }
-  .top-bar-center {
-    overflow-x: auto !important;
-    white-space: nowrap !important;
-    scrollbar-width: none !important;
-  }
-  .top-bar-center::-webkit-scrollbar {
     display: none !important;
   }
-  .top-nav-tabs {
-    flex-wrap: nowrap !important;
-    gap: 4px !important;
+}
+
+/* No mobile/tablet (<= 900px): Barra superior compacta com toggle de menu lateral */
+@media (max-width: 900px) {
+  .sidebar-nav {
+    position: fixed;
+    left: -260px;
+    top: 0;
+    bottom: 0;
+    transition: left 0.25s ease;
+    z-index: 10000;
   }
-  .top-nav-tab span {
-    font-size: 11.5px !important;
+  .sidebar-nav.open {
+    left: 0;
+  }
+  .top-dashboard-bar {
+    display: flex !important;
+    padding: 8px 14px;
+  }
+  .top-bar-center {
+    display: none !important;
   }
 }
