@@ -72,10 +72,25 @@ async function carregarSecretariasSigem() {
         }).join('');
         filterSec.innerHTML = `
           <option value="">Todas as Secretarias e Órgãos</option>
-          <optgroup label="Secretarias e Autarquias PMDC">${pmdcOpts}</optgroup>
-          <optgroup label="Concessionárias e Órgãos Externos">
-            <option value="EXT:CONCESSIONARIA">Concessionárias (SuperVia / Águas do Rio / Enel)</option>
-            <option value="EXT:ORGAO_EXTERNO">Órgãos Estaduais / Federais / Judiciário</option>
+          <optgroup label="Secretarias e Autarquias PMDC (${secretariasSigemCache.length})">${pmdcOpts}</optgroup>
+          <optgroup label="Concessionárias de Serviços Públicos">
+            <option value="EXT:SUPERVIA">SuperVia (Malha Ferroviária / 12 Estações)</option>
+            <option value="EXT:AGUAS_DO_RIO">Águas do Rio (Saneamento)</option>
+            <option value="EXT:ENEL">Enel Distribuição (Energia Elétrica)</option>
+            <option value="EXT:NATURGY">Naturgy (Gás Canalizado)</option>
+            <option value="EXT:CEDAE">CEDAE (Águas e Esgotos)</option>
+            <option value="EXT:CONCESSIONARIA">Todas as Concessionárias</option>
+          </optgroup>
+          <optgroup label="Órgãos Externos, Segurança e Judiciário">
+            <option value="EXT:DETRAN">DETRAN-RJ (Identificação e Habilitação)</option>
+            <option value="EXT:PCERJ">Polícia Civil RJ (Delegacias e DEAM)</option>
+            <option value="EXT:PMERJ">Polícia Militar RJ (15º BPM e Cias)</option>
+            <option value="EXT:CBMERJ">Corpo de Bombeiros Militar (CBMERJ)</option>
+            <option value="EXT:TJRJ">Poder Judiciário (TJRJ / Fóruns)</option>
+            <option value="EXT:DPERJ">Defensoria Pública do Estado</option>
+            <option value="EXT:MPRJ">Ministério Público do Estado</option>
+            <option value="EXT:INSS">Previdência Federal (INSS)</option>
+            <option value="EXT:ORGAO_EXTERNO">Todos os Órgãos Externos</option>
           </optgroup>
         `;
         if (curFilter) filterSec.value = curFilter;

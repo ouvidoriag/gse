@@ -1441,9 +1441,7 @@
           <div class="item-body">
             <div class="item-text"><span class="item-id-pill">c4</span>Carta de Serviços: incluir todas as Secretarias
               Municipais para garantir que todas as pastas estejam disponíveis.</div>
-            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Cadastradas as 4 secretarias faltantes no MySQL
-              (PGM, OGMDC, IPMDC, SMSEG), totalizando 22 pastas integradas, criadas as categorias correspondentes, adicionado
-              o endpoint <code>GET /api/cds/services/secretarias</code> e o seletor <code>#cdsFilterSecretaria</code> no CDS.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Desmembradas todas as pastas municipais (separando Habitação de Urbanismo, Trabalho e Renda de Desenvolvimento, e incluindo SMCAI, SMAPD, SECIN, SMCSRP, SMAI, SMEI, Gabinetes e PGM/OGMDC/IPMDC/SMSEG), totalizando 32 órgãos oficiais e 33 categorias com 387 serviços publicados. Cada uma das 32 pastas possui serviços reais disponíveis para consulta no filtro <code>#cdsFilterSecretaria</code>.</div>
             <div class="item-meta">
               <span class="tag tag-done">✅ JÁ FEITO</span>
               <span class="tag tag-bug">BUG</span>
@@ -1793,11 +1791,7 @@
           <div class="item-body">
             <div class="item-text"><span class="item-id-pill">s10</span>Adicionar TAGs padronizadas com siglas de todas
               as Secretarias, órgãos externos e concessionárias.</div>
-            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Estilizadas todas as 22 siglas oficiais
-              (<code>.badge-sec-*</code>) + TAGs de concessionárias (<code>SUPERVIA</code>, <code>ÁGUAS DO RIO</code>,
-              <code>ENEL</code>, <code>NATURGY</code>) e órgãos externos/estaduais/federais em
-              <code>public/sigem/css/base.css</code>, renderizadas em <code>app.js</code> e <code>modals.js</code> e
-              integradas ao filtro <code>#filterSecretaria</code> com <code>optgroup</code> dedicado.</div>
+            <div class="audit-note">🔍 <strong>Concluído 100%:</strong> Estilizadas e padronizadas as siglas de todas as 32 secretarias e órgãos municipais (<code>.badge-sec-*</code>) + TAGs específicas de concessionárias de serviços públicos (<code>SUPERVIA</code>, <code>ÁGUAS DO RIO</code>, <code>ENEL</code>, <code>NATURGY</code>, <code>CEDAE</code>) e órgãos externos/judiciário (<code>DETRAN-RJ</code>, <code>PCERJ</code>, <code>PMERJ</code>, <code>CBMERJ</code>, <code>TJRJ</code>, <code>DPERJ</code>, <code>MPRJ</code>, <code>INSS</code>, <code>FEDERAL</code>) em <code>public/sigem/css/base.css</code>, renderizadas na tabela, modal de visualização e popups do mapa (<code>app.js</code>, <code>modals.js</code>, <code>map.js</code>) e integradas ao filtro <code>#filterSecretaria</code> com optgroups dedicados.</div>
             <div class="item-meta">
               <span class="tag tag-done">✅ JÁ FEITO</span>
               <span class="tag tag-melhoria">MELHORIA</span>

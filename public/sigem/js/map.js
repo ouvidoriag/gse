@@ -144,8 +144,11 @@ let mainMapLabelsLayer = null;
             });
 
             let popupHtml = `
-              <div style="font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.4; max-width: 260px;">
+              <div style="font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.4; max-width: 270px;">
                 <strong style="font-size: 13px; color: #0f1b2d;">${escapeHtml(item.nome)}</strong><br>
+                <div style="margin: 4px 0 5px 0; display: flex; flex-wrap: wrap; gap: 4px;">
+                  ${typeof window.renderEquipEntityBadges === 'function' ? window.renderEquipEntityBadges(item) : ''}
+                </div>
                 <span style="color: #64748b; font-weight: 700;">${escapeHtml(item.categoria)} (${escapeHtml(item.distrito)}º Dist.)</span><br>
                 <i class="ri-map-pin-line" style="color: #64748b;"></i> ${escapeHtml(item.endereco)}<br>
                 <div style="font-size: 11px; color: #475569; margin: 2px 0;">

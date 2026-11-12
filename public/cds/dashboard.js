@@ -1336,7 +1336,8 @@ async function loadCdsPublicSecretarias() {
     const sel = document.getElementById('cdsFilterSecretaria');
     if (sel && Array.isArray(secs)) {
       const curVal = sel.value;
-      sel.innerHTML = '<option value="">Todas as 22 Secretarias</option>' + 
+      const labelTodas = secs.length > 0 ? `Todas as Secretarias Municipais (${secs.length})` : 'Todas as Secretarias Municipais';
+      sel.innerHTML = `<option value="">${labelTodas}</option>` + 
         secs.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
       if (curVal) sel.value = curVal;
     }

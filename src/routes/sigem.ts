@@ -6,6 +6,7 @@ import { authenticateToken, requireAdmin, RequestWithUser } from '../middlewares
 import { registrarAuditoria } from '../middlewares/audit';
 import { runSigemExport } from '../services/sigemExporter';
 import { geocodeLocation, findOfficialBairroByPoint } from '../services/geocodingService';
+import { buildEquipamentoPublicPayload, dispatchWebhookEvent } from '../services/webhookService';
 import { config } from '../config';
 
 export const sigemRouter = Router();
@@ -768,6 +769,11 @@ sigemRouter.post('/equipamentos', authenticateToken, async (req: RequestWithUser
 
     await syncFilesFromDatabase();
 
+    // Disparo de Webhook para Duque IA (Payload Completo)
+    buildEquipamentoPublicPayload(novoId).then(publicData => {
+      dispatchWebhookEvent('equipamento.criado', 'sigem', novoId, {}, publicData);
+    }).catch(e => console.warn('[Webhook Duque IA] Erro ao disparar criacao de equipamento:', e));
+
     const [createdRows]: any = await mysqlPool.query('SELECT * FROM vw_equipamentos_consolidada WHERE id = ?', [novoId]);
     res.status(201).json({
       success: true,
@@ -917,6 +923,20 @@ sigemRouter.put('/equipamentos/:id', authenticateToken, async (req: RequestWithU
 
       await syncFilesFromDatabase();
 
+      // Disparo de Webhook para Duque IA (Payload Completo)
+      const webhookAlteracoes: Record<string, { anterior: any; novo: any }> = {};
+      const camposComparar = ['nome', 'sigla', 'categoria_id', 'status', 'horario_funcionamento', 'descricao', 'logradouro', 'numero', 'bairro', 'cep', 'telefone'];
+      for (const c of camposComparar) {
+        const vAnt = (anterior as any)[c] !== undefined ? String((anterior as any)[c]) : '';
+        const vNov = (body as any)[c] !== undefined ? String((body as any)[c]) : '';
+        if (vNov && vAnt !== vNov) {
+          webhookAlteracoes[c] = { anterior: vAnt, novo: vNov };
+        }
+      }
+      buildEquipamentoPublicPayload(equipId).then(publicData => {
+        dispatchWebhookEvent('equipamento.atualizado', 'sigem', equipId, webhookAlteracoes, publicData);
+      }).catch(e => console.warn('[Webhook Duque IA] Erro ao disparar atualizacao de equipamento:', e));
+
       const [atualizadoRows]: any = await mysqlPool.query('SELECT * FROM vw_equipamentos_consolidada WHERE id = ?', [equipId]);
       res.json({
         success: true,
@@ -980,6 +1000,13 @@ sigemRouter.delete('/equipamentos/:id', authenticateToken, async (req: RequestWi
       conn.release();
 
       await syncFilesFromDatabase();
+
+      // Disparo de Webhook para Duque IA (Payload Completo)
+      buildEquipamentoPublicPayload(equipId).then(publicData => {
+        dispatchWebhookEvent('equipamento.desativado', 'sigem', equipId, {
+          status: { anterior: equip.status, novo: hardDelete ? 'EXCLUIDO' : 'INATIVO' }
+        }, { ...publicData, status: hardDelete ? 'EXCLUIDO' : 'INATIVO' });
+      }).catch(e => console.warn('[Webhook Duque IA] Erro ao disparar desativacao de equipamento:', e));
 
       res.json({
         success: true,

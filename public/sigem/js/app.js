@@ -51,33 +51,64 @@
       const sigla = String(item.sigla || '').toUpperCase();
       const desc = String(item.descricao || '').toUpperCase();
 
-      if (nome.includes('ESTAÇÃO FERROVIÁRIA') || nome.includes('ESTACAO FERROVIARIA') || nome.includes('SUPERVIA') || sigla.includes('SUPERVIA')) {
-        return { type: 'CONCESSIONARIA', tag: 'SUPERVIA', label: 'Concessionária SuperVia (Trem)', icon: 'ri-train-line' };
+      // CONCESSIONÁRIAS DE SERVIÇOS PÚBLICOS
+      if (nome.includes('ESTAÇÃO FERROVIÁRIA') || nome.includes('ESTACAO FERROVIARIA') || nome.includes('SUPERVIA') || sigla.includes('SUPERVIA') || desc.includes('SUPERVIA') || desc.includes('RAMAL')) {
+        return { type: 'CONCESSIONARIA', subType: 'SUPERVIA', tag: 'SUPERVIA', label: 'Concessionária SuperVia (Malha Ferroviária)', icon: 'ri-train-line', cls: 'badge-ext-supervia' };
       }
-      if (nome.includes('ÁGUAS DO RIO') || nome.includes('AGUAS DO RIO')) {
-        return { type: 'CONCESSIONARIA', tag: 'ÁGUAS DO RIO', label: 'Concessionária Águas do Rio', icon: 'ri-drop-line' };
+      if (nome.includes('ÁGUAS DO RIO') || nome.includes('AGUAS DO RIO') || sigla.includes('AGUAS DO RIO')) {
+        return { type: 'CONCESSIONARIA', subType: 'AGUAS_DO_RIO', tag: 'ÁGUAS DO RIO', label: 'Concessionária Águas do Rio (Saneamento)', icon: 'ri-drop-line', cls: 'badge-ext-aguas' };
       }
-      if (nome.includes('ENEL ') || sigla === 'ENEL') {
-        return { type: 'CONCESSIONARIA', tag: 'ENEL', label: 'Concessionária Enel Distribuição', icon: 'ri-flashlight-line' };
+      if (nome.includes('CEDAE') || sigla === 'CEDAE') {
+        return { type: 'CONCESSIONARIA', subType: 'CEDAE', tag: 'CEDAE', label: 'Companhia Estadual de Águas e Esgotos (CEDAE)', icon: 'ri-water-flash-line', cls: 'badge-ext-cedae' };
       }
-      if (nome.includes('NATURGY') || nome.includes('CEG ')) {
-        return { type: 'CONCESSIONARIA', tag: 'NATURGY', label: 'Concessionária Naturgy Gás', icon: 'ri-fire-line' };
+      if (nome.includes('ENEL ') || sigla === 'ENEL' || nome.includes('AMPLA ')) {
+        return { type: 'CONCESSIONARIA', subType: 'ENEL', tag: 'ENEL', label: 'Concessionária Enel Distribuição (Energia Elétrica)', icon: 'ri-flashlight-line', cls: 'badge-ext-enel' };
       }
-      if (nome.includes('DETRAN') || sigla.includes('DETRAN')) {
-        return { type: 'ORGAO_EXTERNO', tag: 'DETRAN-RJ', label: 'Órgão Estadual — DETRAN/RJ', icon: 'ri-car-line' };
+      if (nome.includes('NATURGY') || nome.includes('CEG ') || sigla === 'NATURGY') {
+        return { type: 'CONCESSIONARIA', subType: 'NATURGY', tag: 'NATURGY', label: 'Concessionária Naturgy (Gás Canalizado)', icon: 'ri-fire-line', cls: 'badge-ext-naturgy' };
       }
-      if (nome.includes('DELEGACIA') || nome.includes('DEAM') || /\b\d+ª\s*DP\b/.test(nome)) {
-        return { type: 'ORGAO_EXTERNO', tag: 'PCERJ', label: 'Órgão Estadual — Polícia Civil RJ', icon: 'ri-shield-star-line' };
+
+      // ÓRGÃOS EXTERNOS / ESTADUAIS / FEDERAIS / JUSTIÇA
+      if (nome.includes('DETRAN') || sigla.includes('DETRAN') || desc.includes('DETRAN')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'DETRAN', tag: 'DETRAN-RJ', label: 'Órgão Estadual — DETRAN/RJ (Trânsito e Identificação)', icon: 'ri-car-line', cls: 'badge-ext-detran' };
       }
-      if (nome.includes('BATALHÃO') || nome.includes('BPM') || nome.includes('POLÍCIA MILITAR') || nome.includes('CBMERJ') || nome.includes('CORPO DE BOMBEIROS')) {
-        return { type: 'ORGAO_EXTERNO', tag: 'GOVERNO RJ', label: 'Órgão Estadual de Segurança / Defesa', icon: 'ri-shield-flash-line' };
+      if (nome.includes('DELEGACIA') || nome.includes('DEAM') || nome.includes('DHBF') || /\b\d+ª\s*DP\b/.test(nome) || sigla.includes('PCERJ')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'PCERJ', tag: 'PCERJ', label: 'Órgão Estadual — Polícia Civil do Estado do Rio de Janeiro', icon: 'ri-shield-star-line', cls: 'badge-ext-pcerj' };
       }
-      if (nome.includes('INSS') || nome.includes('RECEITA FEDERAL') || nome.includes('JUSTIÇA FEDERAL') || nome.includes('UFRJ') || nome.includes('IFRJ') || nome.includes('CEFET')) {
-        return { type: 'ORGAO_EXTERNO', tag: 'FEDERAL', label: 'Órgão / Autarquia Federal', icon: 'ri-bank-line' };
+      if (nome.includes('BATALHÃO') || nome.includes('BPM') || nome.includes('15º BPM') || nome.includes('POLÍCIA MILITAR') || sigla.includes('PMERJ')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'PMERJ', tag: 'PMERJ', label: 'Órgão Estadual — Polícia Militar do Estado do Rio de Janeiro', icon: 'ri-shield-line', cls: 'badge-ext-pmerj' };
       }
-      if (nome.includes('FÓRUM') || nome.includes('FORUM') || nome.includes('DEFENSORIA PÚBLICA') || nome.includes('MINISTÉRIO PÚBLICO') || desc.includes('ESTADUAL')) {
-        return { type: 'ORGAO_EXTERNO', tag: 'JUDICIÁRIO / RJ', label: 'Sistema de Justiça / Estadual', icon: 'ri-scales-3-line' };
+      if (nome.includes('CORPO DE BOMBEIROS') || nome.includes('BOMBEIROS') || nome.includes('CBMERJ') || sigla.includes('CBMERJ')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'CBMERJ', tag: 'CBMERJ', label: 'Órgão Estadual — Corpo de Bombeiros Militar do RJ', icon: 'ri-alarm-warning-line', cls: 'badge-ext-cbmerj' };
       }
+      if (nome.includes('FÓRUM') || nome.includes('FORUM') || nome.includes('TRIBUNAL DE JUSTIÇA') || sigla.includes('TJRJ') || nome.includes('JUIZADO')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'TJRJ', tag: 'TJRJ', label: 'Poder Judiciário — Tribunal de Justiça do Estado do Rio de Janeiro', icon: 'ri-scales-3-line', cls: 'badge-ext-tjrj' };
+      }
+      if (nome.includes('DEFENSORIA PÚBLICA') || nome.includes('DEFENSORIA') || sigla.includes('DPERJ')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'DPERJ', tag: 'DPERJ', label: 'Órgão Autônomo — Defensoria Pública do Estado do Rio de Janeiro', icon: 'ri-hand-heart-line', cls: 'badge-ext-dperj' };
+      }
+      if (nome.includes('MINISTÉRIO PÚBLICO') || sigla.includes('MPRJ') || sigla.includes('MPERJ')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'MPRJ', tag: 'MPRJ', label: 'Órgão Autônomo — Ministério Público do Estado do Rio de Janeiro', icon: 'ri-scales-fill', cls: 'badge-ext-mprj' };
+      }
+      if (nome.includes('INSS') || sigla === 'INSS') {
+        return { type: 'ORGAO_EXTERNO', subType: 'INSS', tag: 'INSS', label: 'Autarquia Federal — Instituto Nacional do Seguro Social', icon: 'ri-bank-line', cls: 'badge-ext-inss' };
+      }
+      if (nome.includes('RECEITA FEDERAL') || sigla.includes('RFB')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'RECEITA_FEDERAL', tag: 'RECEITA FEDERAL', label: 'Órgão Federal — Secretaria Especial da Receita Federal do Brasil', icon: 'ri-government-fill', cls: 'badge-ext-federal' };
+      }
+      if (nome.includes('CORREIOS') || sigla === 'ECT') {
+        return { type: 'ORGAO_EXTERNO', subType: 'CORREIOS', tag: 'CORREIOS', label: 'Empresa Pública Federal — Correios e Telégrafos', icon: 'ri-mail-send-line', cls: 'badge-ext-federal' };
+      }
+      if (nome.includes('JUSTIÇA ELEITORAL') || nome.includes('CARTÓRIO ELEITORAL') || sigla.includes('TRE')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'TRE', tag: 'TRE-RJ', label: 'Justiça Eleitoral — Tribunal Regional Eleitoral do Rio de Janeiro', icon: 'ri-check-double-line', cls: 'badge-ext-federal' };
+      }
+      if (nome.includes('FAETEC') || sigla.includes('FAETEC')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'FAETEC', tag: 'FAETEC', label: 'Rede Estadual de Educação Técnica — FAETEC/RJ', icon: 'ri-graduation-cap-line', cls: 'badge-ext-orgao' };
+      }
+      if (nome.includes('IFRJ') || nome.includes('UFRJ') || nome.includes('UERJ') || nome.includes('CEFET')) {
+        return { type: 'ORGAO_EXTERNO', subType: 'UNIVERSIDADE', tag: 'ENSINO PÚBLICO', label: 'Instituição Pública Estadual / Federal de Ensino Superior', icon: 'ri-book-read-line', cls: 'badge-ext-orgao' };
+      }
+
       return null;
     }
     window.detectExternalEntity = detectExternalEntity;
@@ -92,23 +123,29 @@
         'SASDH': 'SEASDIH',
         'SMSP': 'SMSEG',
         'SMAPO': 'SMA',
-        'SMTER': 'SMDET'
+        'SMO': 'SMOAG',
+        'SMGIM': 'SMM',
+        'SMUH': 'SMU',
+        'SMDET': 'SMDE',
+        'OGM': 'OGMDC'
       };
       return aliasMap[s] || s;
     }
     window.normalizeEverydaySigla = normalizeEverydaySigla;
 
     function renderEquipEntityBadges(item) {
-      const secSigla = normalizeEverydaySigla(item?.secretaria_sigla || 'PMDC');
-      const secNome = item?.secretaria_nome || 'Prefeitura Municipal de Duque de Caxias';
+      const rawSigla = item?.secretaria_sigla || item?.sigla_secretaria || '';
+      const secSigla = normalizeEverydaySigla(rawSigla || 'PMDC');
+      const secNome = item?.secretaria_nome || item?.secretaria_responsavel || 'Prefeitura Municipal de Duque de Caxias';
       const ext = detectExternalEntity(item);
+      const secCls = `badge-sec badge-sec-${secSigla.toLowerCase()}`;
       let html = `
-        <span class="badge-sec badge-sec-${secSigla.toLowerCase()}" title="Secretaria / Órgão Gestor: ${escapeStr(secNome)}">
+        <span class="${secCls}" title="Secretaria / Órgão Gestor: ${escapeStr(secNome)}">
           <i class="ri-government-line"></i> ${escapeHtml(secSigla)}
         </span>
       `;
       if (ext) {
-        const cls = ext.type === 'CONCESSIONARIA' ? 'badge-ext-concessionaria' : 'badge-ext-orgao';
+        const cls = ext.cls || (ext.type === 'CONCESSIONARIA' ? 'badge-ext-concessionaria' : 'badge-ext-orgao');
         html += `
           <span class="${cls}" title="${escapeStr(ext.label)}">
             <i class="${ext.icon}"></i> ${escapeHtml(ext.tag)}
@@ -525,6 +562,12 @@
             if (!ext || ext.type !== 'CONCESSIONARIA') return false;
           } else if (sec === 'EXT:ORGAO_EXTERNO') {
             if (!ext || ext.type !== 'ORGAO_EXTERNO') return false;
+          } else if (sec.startsWith('EXT:')) {
+            const target = sec.replace('EXT:', '').toUpperCase();
+            if (!ext) return false;
+            const extTag = String(ext.tag || '').toUpperCase();
+            const extSub = String(ext.subType || '').toUpperCase();
+            if (extTag !== target && extSub !== target && !extTag.includes(target) && !extSub.includes(target)) return false;
           } else {
             const normItemSigla = normalizeEverydaySigla(item.secretaria_sigla);
             if (normItemSigla !== sec && item.secretaria_sigla !== sec) return false;

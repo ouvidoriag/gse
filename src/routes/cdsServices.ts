@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { mysqlPool as pool } from '../database/mysql';
 import { authenticateToken, RequestWithUser } from '../middlewares/auth';
 import { generateXlsx } from '../services/xlsxGenerator';
+import { buildServicePublicPayload, dispatchWebhookEvent } from '../services/webhookService';
 
 export const cdsServicesRouter = Router();
 export const servicesRouter = cdsServicesRouter;
@@ -552,6 +553,12 @@ servicesRouter.post('/', async (req: RequestWithUser, res: Response) => {
     await logAudit(connection, serviceId, req.user?.id || 0, 'INSERT', null, null, 'Serviço cadastrado no sistema', ip);
 
     await connection.commit();
+
+    // 9. Disparo de Webhook para Duque IA (Payload Completo)
+    buildServicePublicPayload(Number(serviceId)).then(publicData => {
+      dispatchWebhookEvent('servico.criado', 'cds', Number(serviceId), {}, publicData);
+    }).catch(e => console.warn('[Webhook Duque IA] Erro ao disparar criacao de servico:', e));
+
     res.status(201).json({ success: true, serviceId, message: 'Serviço cadastrado com sucesso!' });
   } catch (err) {
     await connection.rollback();
@@ -652,6 +659,23 @@ servicesRouter.put('/:id', async (req: RequestWithUser, res: Response) => {
     }
 
     await connection.commit();
+
+    // 9. Disparo de Webhook para Duque IA (Payload Completo)
+    const webhookAlteracoes: Record<string, { anterior: any; novo: any }> = {};
+    for (const field of fieldsToCompare) {
+      const oldVal = oldService[field] !== null && oldService[field] !== undefined ? String(oldService[field]) : '';
+      const newVal = (req.body as any)[field] !== null && (req.body as any)[field] !== undefined ? String((req.body as any)[field]) : '';
+      if (oldVal !== newVal) {
+        webhookAlteracoes[field] = { anterior: oldVal, novo: newVal };
+      }
+    }
+    if (oldCatIds !== newCatIds) {
+      webhookAlteracoes['categorias'] = { anterior: oldCatIds, novo: newCatIds };
+    }
+    buildServicePublicPayload(Number(serviceId)).then(publicData => {
+      dispatchWebhookEvent('servico.atualizado', 'cds', Number(serviceId), webhookAlteracoes, publicData);
+    }).catch(e => console.warn('[Webhook Duque IA] Erro ao disparar atualizacao de servico:', e));
+
     res.json({ success: true, message: 'Serviço atualizado com sucesso!' });
   } catch (err) {
     await connection.rollback();
@@ -702,6 +726,13 @@ servicesRouter.patch('/:id/status', async (req: RequestWithUser, res: Response) 
 
     await connection.commit();
 
+    // Disparo de Webhook para Duque IA (Payload Completo)
+    buildServicePublicPayload(Number(serviceId)).then(publicData => {
+      dispatchWebhookEvent('servico.atualizado', 'cds', Number(serviceId), {
+        status: { anterior: oldStatus, novo: status }
+      }, publicData);
+    }).catch(e => console.warn('[Webhook Duque IA] Erro ao disparar alteracao de status:', e));
+
     const isHidden = status === 'hidden';
     const msg = isHidden
       ? `O serviço "${serviceName}" foi ocultado. Ele não será exportado nem exibido publicamente.`
@@ -751,6 +782,14 @@ servicesRouter.delete('/:id', async (req: RequestWithUser, res: Response) => {
     await logAudit(connection, Number(serviceId), req.user?.id || 0, 'DELETE', 'status', oldStatus, 'archived', ip);
 
     await connection.commit();
+
+    // Disparo de Webhook para Duque IA (Payload Completo)
+    buildServicePublicPayload(Number(serviceId)).then(publicData => {
+      dispatchWebhookEvent('servico.desativado', 'cds', Number(serviceId), {
+        status: { anterior: oldStatus, novo: 'archived' }
+      }, { ...publicData, status: 'archived' });
+    }).catch(e => console.warn('[Webhook Duque IA] Erro ao disparar desativacao de servico:', e));
+
     res.json({ success: true, message: `Serviço "${serviceName}" arquivado e removido com sucesso!` });
   } catch (err) {
     await connection.rollback();

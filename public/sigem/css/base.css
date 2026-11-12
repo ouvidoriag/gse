@@ -817,7 +817,8 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   border-color: #bfdbfe;
 }
 
-.badge-sec-seasdih {
+.badge-sec-seasdih,
+.badge-sec-smasdh {
   background: #fef3c7;
   color: #92400e;
   border-color: #fde68a;
@@ -847,7 +848,8 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   border-color: #c7d2fe;
 }
 
-.badge-sec-ogmdc {
+.badge-sec-ogmdc,
+.badge-sec-ogm {
   background: #ecfeff;
   color: #155e75;
   border-color: #a5f3fc;
@@ -865,7 +867,8 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   border-color: #6ee7b7;
 }
 
-.badge-sec-smseg {
+.badge-sec-smseg,
+.badge-sec-smsp {
   background: #eff6ff;
   color: #1e3a8a;
   border-color: #93c5fd;
@@ -877,6 +880,7 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   border-color: #fecaca;
 }
 
+.badge-sec-smoag,
 .badge-sec-smo {
   background: #fff7ed;
   color: #9a3412;
@@ -889,6 +893,7 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   border-color: #f5d0fe;
 }
 
+.badge-sec-smde,
 .badge-sec-smdet {
   background: #fefce8;
   color: #854d0e;
@@ -907,12 +912,20 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   border-color: #99f6e4;
 }
 
+.badge-sec-smu,
 .badge-sec-smuh {
   background: #faf5ff;
   color: #581c87;
   border-color: #e9d5ff;
 }
 
+.badge-sec-smh {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.badge-sec-smm,
 .badge-sec-smgim {
   background: #f5f3ff;
   color: #4c1d95;
@@ -937,6 +950,70 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   border-color: #a5f3fc;
 }
 
+.badge-sec-smter {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #86efac;
+}
+
+.badge-sec-gp {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #64748b;
+  font-weight: 800;
+}
+
+.badge-sec-gvp {
+  background: #f8fafc;
+  color: #1e293b;
+  border-color: #94a3b8;
+}
+
+.badge-sec-secin {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #7dd3fc;
+}
+
+.badge-sec-smcai {
+  background: #fdf4ff;
+  color: #a21caf;
+  border-color: #f0abfc;
+}
+
+.badge-sec-smapd {
+  background: #e0e7ff;
+  color: #4338ca;
+  border-color: #a5b4fc;
+}
+
+.badge-sec-smcsrp {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #fcd34d;
+}
+
+.badge-sec-smai {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+.badge-sec-smei {
+  background: #ecfeff;
+  color: #0891b2;
+  border-color: #67e8f9;
+}
+
+.badge-sec-pmdc {
+  background: #f8fafc;
+  color: #002244;
+  border-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   TAGs PADRONIZADAS — CONCESSIONÁRIAS DE SERVIÇOS PÚBLICOS
+   ========================================================================== */
 .badge-ext-concessionaria {
   display: inline-flex;
   align-items: center;
@@ -952,6 +1029,84 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   letter-spacing: 0.02em;
 }
 
+.badge-ext-supervia {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fdba74;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-aguas {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #93c5fd;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-enel {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #fefce8;
+  color: #a16207;
+  border: 1px solid #fde047;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-naturgy {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fda4af;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-cedae {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #ecfeff;
+  color: #0e7490;
+  border: 1px solid #67e8f9;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   TAGs PADRONIZADAS — ÓRGÃOS EXTERNOS / ESTADUAIS / FEDERAIS / JUSTIÇA
+   ========================================================================== */
 .badge-ext-orgao {
   display: inline-flex;
   align-items: center;
@@ -963,6 +1118,127 @@ table.data-table tbody tr.equip-row-clickable:hover td strong {
   background: #eef2ff;
   color: #3730a3;
   border: 1px solid #a5b4fc;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-detran {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #fefce8;
+  color: #854d0e;
+  border: 1px solid #facc15;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-pcerj {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #18181b;
+  color: #fbbf24;
+  border: 1px solid #3f3f46;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-pmerj {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #0f172a;
+  color: #93c5fd;
+  border: 1px solid #334155;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-cbmerj {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-tjrj {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #faf5ff;
+  color: #6b21a8;
+  border: 1px solid #d8b4fe;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-dperj {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #86efac;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-mprj {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #4c0519;
+  color: #fecdd3;
+  border: 1px solid #881337;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.badge-ext-inss,
+.badge-ext-federal {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #7dd3fc;
   white-space: nowrap;
   letter-spacing: 0.02em;
 }

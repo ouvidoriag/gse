@@ -1,5 +1,6 @@
 import { Router, Response } from 'express';
 import nodemailer from 'nodemailer';
+import { getWebhookStatus, processWebhookRetryQueue } from '../services/webhookService';
 import { authenticateToken, requireAdmin, RequestWithUser } from '../middlewares/auth';
 import mysqlPool, { testMysqlConnection } from '../database/mysql';
 import { registrarAuditoria } from '../middlewares/audit';
@@ -163,6 +164,7 @@ adminSettingsRouter.get('/', async (_req: RequestWithUser, res: Response) => {
         totalUsers,
         totalServicos,
         totalEquipamentos,
+        duqueIaWebhook: getWebhookStatus(),
       },
       auditLogs,
     });
@@ -272,6 +274,35 @@ adminSettingsRouter.post('/test-smtp', async (req: RequestWithUser, res: Respons
       success: false,
       error: `Falha na verificação SMTP: ${err.message}`,
     });
+  }
+});
+
+/**
+ * GET /api/admin/settings/webhook
+ * Retorna o status da integração e fila de retentativas do Webhook Duque IA
+ */
+adminSettingsRouter.get('/webhook', (_req: RequestWithUser, res: Response) => {
+  res.json({
+    success: true,
+    data: getWebhookStatus(),
+  });
+});
+
+/**
+ * POST /api/admin/settings/webhook/retry
+ * Força o processamento imediato dos eventos pendentes na fila de retentativas
+ */
+adminSettingsRouter.post('/webhook/retry', async (_req: RequestWithUser, res: Response) => {
+  try {
+    const result = await processWebhookRetryQueue();
+    res.json({
+      success: true,
+      message: `Processamento de retentativas executado. Processados: ${result.processed}, Enviados: ${result.sent}, Pendentes: ${result.failed}`,
+      result,
+      status: getWebhookStatus(),
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: 'Erro ao processar retentativas: ' + err.message });
   }
 });
 
